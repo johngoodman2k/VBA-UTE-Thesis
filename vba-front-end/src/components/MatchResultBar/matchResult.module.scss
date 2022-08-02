@@ -1,0 +1,101 @@
+@import '/src/styles/Variables.scss';
+
+.__container {
+	position: relative;
+	display: flex;
+	clear: both;
+	align-items: center;
+	background: $primary-color;
+}
+
+.__team {
+	width: 50%;
+	position: relative;
+}
+
+.home {
+	padding-left: 6.5rem;
+	&__badgeContainer {
+		left: 0;
+		background: $second-color;
+		width: 3rem;
+		height: 3rem;
+		padding: 1rem;
+		position: absolute;
+		top: 0;
+		z-index: 10;
+		&__image {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -1.2rem 0 0 -1.2rem;
+			&--adjust {
+				width: 2.5rem;
+				height: 2.5rem;
+				object-fit: cover;
+			}
+		}
+	}
+}
+
+.away {
+	padding-right: 6.5rem;
+	&__badgeContainer {
+		right: 0;
+		background: $second-color;
+		width: 3rem;
+		height: 3rem;
+		padding: 1rem;
+		position: absolute;
+		top: 0;
+		z-index: 10;
+		&__image {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin: -1.2rem 0 0 -1.2rem;
+			&--adjust {
+				width: 2.5rem;
+				height: 2.5rem;
+				object-fit: cover;
+			}
+		}
+	}
+}
+
+.teamName {
+	font-size: 0.8rem;
+	font-weight: 600;
+	text-decoration: none;
+	color: $third-color;
+	height: 3rem;
+	vertical-align: middle;
+	display: table;
+	width: 100%;
+	transition: 0.2s;
+	font-family: $f-1;
+	&__home {
+		text-align: left;
+	}
+	&__away {
+		text-align: right;
+	}
+	&--adjust {
+		display: table-cell;
+		vertical-align: middle;
+	}
+}
+
+.__scoreContainer {
+	background: $primary-color;
+	display: flex;
+	justify-content: center;
+	&__score {
+		text-align: center;
+		width: 3rem;
+		font-size: 0.9rem;
+		line-height: 1.5rem;
+		margin: 0 auto;
+		font-weight: 600;
+	}
+}
