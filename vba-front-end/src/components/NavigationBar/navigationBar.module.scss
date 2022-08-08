@@ -1,0 +1,119 @@
+.__block {
+  background: rgba(255, 255, 255, 0);
+  height: 174px;
+}
+
+// .__wrapper {
+//   opacity: 1;
+// }
+// .__left::before {
+//   content: "";
+//   height: 100%;
+//   display: inline-block;
+//   vertical-align: middle;
+//   margin-right: 0;
+// }
+.__left {
+  z-index: 2;
+}
+.__right {
+  z-index: 2;
+}
+.__main-menu > ul {
+  position: relative;
+  display: inline block;
+  width: 100%;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.__main-menu li {
+  padding: 0;
+  margin: 0;
+  float: left;
+}
+.__main-menu > ul > li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.__left-divided {
+  list-style: none outside none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  &::before {
+    content: "";
+    display: table;
+  }
+  &__elements {
+    padding: 0 33px;
+    font-size: 17px;
+    text-transform: uppercase;
+    width: 100%;
+    position: relative;
+    display: inline-block;
+    line-height: 20px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+}
+
+.__center {
+  z-index: 1;
+  &__inner {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.__center::before {
+  content: "";
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0;
+}
+
+.__item__outer {
+  position: relative;
+  display: block;
+}
+.__item__text {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+}
+// .__item__outer::after {
+//   content: "";
+//   background-color: #3366cc;
+//   position: absolute;
+//   bottom: -9px;
+//   left: 0;
+//   display: inline-block;
+//   width: 0%;
+//   height: 4px;
+//   transform-origin: left;
+//   transition: 0.3s cubic-bezier(0.47, 0.11, 0, 0.96);
+// }
+.__item__hover {
+  background-color: #3366cc;
+  position: absolute;
+  bottom: -9px;
+  left: 0;
+  display: inline-block;
+  width: 0%;
+  height: 4px;
+  transform-origin: left;
+  transition: 0.3s cubic-bezier(0.47, 0.11, 0, 0.96);
+}
+
+.__left-divided__elements:hover .__item__hover {
+  width: 100%;
+  cursor: pointer;
+}
+
+.__active {
+  width: 100%;
+}

@@ -1,8 +1,13 @@
-import React from 'react';
-import classNames from 'classnames/bind';
-import styles from './matchDetailPage.module.scss';
+import React from "react";
+import { HeroBlock } from "../../components/Match/HeroBlock";
 
-const cx = classNames.bind(styles);
+import { NavigationBar } from "../../components/NavigationBar";
+
 export const MatchDetailPage = () => {
-	return <div>MatchDetailPage</div>;
+  return (
+    <>
+      <NavigationBar></NavigationBar>
+      <HeroBlock></HeroBlock>
+    </>
+  );
 };
