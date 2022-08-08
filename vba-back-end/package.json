@@ -1,0 +1,43 @@
+{
+  "name": "vba-back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "start": "nodemon --exec ts-node-dev src/app",
+    "dev": "nodemon --exec ts-node-dev src/app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config-plus": "^0.0.4",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.3",
+    "express-ext": "^0.1.18",
+    "logger-core": "^0.1.6",
+    "nanoid": "^3.0.0",
+    "onecore": "^0.0.27",
+    "pg": "^8.7.3",
+    "pg-extension": "^0.1.1",
+    "query-core": "^0.1.18",
+    "query-mappers": "^0.0.3",
+    "ts-node": "^10.9.1",
+    "types-validation": "^0.0.2",
+    "xmldom": "^0.6.0",
+    "xvalidators": "^0.0.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/pg": "^8.6.4",
+    "@types/xmldom": "^0.1.31",
+    "@typescript-eslint/eslint-plugin": "^5.13.0",
+    "@typescript-eslint/parser": "^5.13.0",
+    "eslint": "^8.10.0",
+    "nodemon": "^2.0.15",
+    "ts-node-dev": "^2.0.0",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.6.2"
+  }
+}
