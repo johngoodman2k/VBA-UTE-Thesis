@@ -1,0 +1,20 @@
+.Slider {
+  &__btnNext {
+    clip-path: polygon(
+      80% 0,
+      100% 0,
+      100% 100%,
+      51% 100%,
+      64% 52%
+    ); // clip-path: polygon(0 0, 100% 0, 0 100%, 40% 40%);
+    // clip-path: polygon(40% 0, 100% 0, 100% 100%, 40% 100%, 90% 50%);
+    // background-color: #088fd1;
+    background-color: #dd1c21;
+    transition: clip-path 0.2s;
+  }
+  &:hover {
+    & .Slider__btnNext {
+      clip-path: polygon(40% 0, 100% 0, 100% 100%, 40% 100%, 90% 50%);
+    }
+  }
+}
