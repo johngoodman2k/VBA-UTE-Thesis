@@ -1,0 +1,90 @@
+
+.blockWarp{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    &:hover{
+        & .blockWarp__block{
+            background-color: #088FD1;
+            height: 100%;
+            cursor: pointer;
+        }
+        & .blockWarp__textBlock{
+            z-index: 4;
+            // bottom: 50px;
+            // transform: translateY(20%);
+        }
+
+    }
+    &__detailtBlock{
+        display: flex;
+        width: 100%;
+        height: auto;
+        justify-content: flex-start;
+        align-items:center ;
+    }
+    &__arrow{
+        display: inline-block;
+        width: auto;
+        height: 100%;
+        color: white;
+        transition: transform 0.2s;
+        &:hover{
+            transform: translateX(10%);
+        }
+    }
+    &__detailtBtn{
+        padding: 20px 20px;
+        text-align: center;
+        height: 100%;
+    }
+    &__imageBlock{
+        z-index: 1;
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    &__textBlock{
+        z-index: 2;
+        position: absolute;
+        width: 100%;
+        height: auto;
+        bottom: 30px;
+        left: 0;
+        padding: 0 30px;
+        color: white;
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        text-transform: uppercase;
+        
+    }
+    &__titleBlock{
+        font-weight: 700;
+        font-size: 2em;
+    }
+    
+ 
+    &__image{
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+    &__block{
+        display: block;
+        z-index: 3;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        height: 0px;
+        // background-color: transparent;
+        // transform: rotate(180deg);
+        transition: .5s cubic-bezier(.24,.06,0,.91);
+    }
+}
+
+// .blockWarp__imageBlock:hover .blockWarp__block{
+//     background-color: #088FD1;
+//     height: 100%;
+//     cursor: pointer;
+
+// }

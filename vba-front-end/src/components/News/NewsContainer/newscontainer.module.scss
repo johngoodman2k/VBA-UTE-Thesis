@@ -1,0 +1,10 @@
+.newsContainer{
+    background-color: transparent;
+    height: auto;
+    padding: 10% 0 10% 0;
+    &__ItemBlock{
+        height: 100%;
+        width: 100%;
+        background-color: transparent;
+    }
+}

@@ -12,7 +12,6 @@ export interface Match {
   awayResult: string;
   createdAt: Date;
   matchDay: Date;
-
   referee?: string;
   spectators?: string;
 

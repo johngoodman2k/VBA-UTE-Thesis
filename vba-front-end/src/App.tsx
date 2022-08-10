@@ -1,13 +1,13 @@
 import "./App.css";
-import { HeroBlock } from "./components/Match/HeroBlock";
+// import { HeroBlock } from "./components/HeroBlock";
+import { NewsContainer } from "./components/News/NewsContainer";
+import { RelatedNews } from "./components/NewsDetail/RelatedNews";
 import { Slider } from "./components/Slider";
-import { LandingPage } from "./pages/LandingPage";
-import { LandingPageScroll } from "./pages/LandingPageScroll";
 
-import { MatchDetailPage } from "./pages/MatchDetailPage";
+// import { News } from "./components/News/NewsBlock";
 
 function App() {
-  return <LandingPageScroll></LandingPageScroll>;
+  return <Slider></Slider>;
 }
 
 export default App;
