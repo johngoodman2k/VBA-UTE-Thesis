@@ -6,6 +6,9 @@
   // overflow: hidden;
 
   & section {
+    background-image: url(https://teamnigma.com/wp-content/uploads/2020/07/Nigma-Pattern-Smaller.png);
+    background-repeat: repeat;
+    background-position: 0 0;
     position: relative;
     height: 100vh;
     vertical-align: center;
@@ -17,6 +20,7 @@
   display: grid;
   grid-template-columns: [left-start] 50vw [left-end right-start] 50vw [right-end];
   grid-template-rows: 100vh;
+  position: relative;
 }
 .__header__block {
   opacity: 0;
@@ -24,10 +28,14 @@
 }
 
 .__left {
-  display: grid;
-  grid-column: left-start/left-end;
-  grid-template-rows: 60px 1fr 120px;
+  // display: grid;
+  // grid-column: left-start/left-end;
+  // grid-template-rows: 60px 1fr 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: background-color 1s 0.3 ease-in-out;
+  position: relative;
   &__title {
     // color: black;
     display: inline-block;
@@ -54,8 +62,8 @@
 .__intro {
   margin-top: -174px;
   height: 100vh;
-  // position: relative;
-  z-index: 1;
+  position: relative;
+  z-index: 2;
   width: 100%;
 
   & video {
@@ -63,6 +71,9 @@
     height: 100%;
     width: 100%;
     object-fit: cover;
+    background-image: url(https://teamnigma.com/wp-content/uploads/2020/07/Nigma-Pattern-Smaller.png);
+    background-repeat: repeat;
+    background-position: 0 0;
   }
   & h1 {
   }
