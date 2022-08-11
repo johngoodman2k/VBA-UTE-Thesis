@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./slider.module.scss";
+import styles from "./slider1.module.scss";
 import classNames from "classnames/bind";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { Autoplay } from "swiper";
@@ -20,7 +20,7 @@ const data = [
   },
 ];
 
-export const Slider = () => {
+export const Slider1 = () => {
   return (
     <div className={`w-screen h-screen`}>
       <div className="w-full h-1/5"></div>
@@ -49,7 +49,7 @@ export const Slider = () => {
                 <div className="w-full h-full  relative">
                   <img
                     src={item.img}
-                    className="w-full h-full object-cover "
+                    className="w-full h-full object-content "
                     alt=""
                   ></img>
                 </div>
@@ -62,7 +62,7 @@ export const Slider = () => {
                   <div className="w-full h-full  relative">
                     <img
                       src={item.img}
-                      className="w-full h-full object-cover "
+                      className="w-full h-full object-content "
                       alt=""
                     ></img>
                   </div>
