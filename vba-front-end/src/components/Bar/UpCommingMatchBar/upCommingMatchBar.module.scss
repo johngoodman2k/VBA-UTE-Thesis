@@ -1,0 +1,120 @@
+@import "/src/styles/Variables.scss";
+.upcommingMatches > time {
+  text-align: center;
+  display: block;
+  padding: 0 1rem 0.8rem;
+  font-size: 0.8rem;
+  color: #2f2f2f;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+.__wrapper {
+  position: relative;
+}
+
+.__block {
+  background-color: $fourth-color;
+  padding: 0.8rem 1rem;
+  // border-bottom: 1px solid $fourth-color;
+  transition: all 0.2s linear;
+  display: block;
+  color: $third-color !important;
+  position: relative;
+  transition: all 0.2s;
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 1.2rem;
+  text-align: center;
+  &__homeName {
+    background-color: transparent !important;
+    font-weight: 600;
+    min-width: 3.8rem;
+    font-size: 1rem;
+    text-align: right;
+  }
+  &__homeBadge {
+    background-color: transparent !important;
+    margin: 0 0.5rem;
+    &--adjust {
+      background-color: transparent !important;
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+  &__awayName {
+    background-color: transparent !important;
+    font-weight: 600;
+    min-width: 3.8rem;
+    font-size: 1rem;
+    text-align: left;
+  }
+  &__awayBadge {
+    background-color: transparent !important;
+    margin: 0 0.5rem;
+    &--adjust {
+      background-color: transparent !important;
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+  &__icon {
+    background-color: transparent !important;
+    &--adjust {
+      background-color: transparent !important;
+      position: absolute;
+      top: 1.7rem;
+      right: 1.6rem;
+      width: 15px;
+      height: 14px;
+      transition: right 0.2s;
+    }
+  }
+}
+
+.__block span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.__block__homeName abbr {
+  background-color: transparent !important;
+  text-decoration: none;
+  border: 0;
+}
+.__block__awayName abbr {
+  background-color: transparent !important;
+  text-decoration: none;
+  border: 0;
+}
+.__block time {
+  background-color: transparent !important;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 0.5rem;
+  line-height: 1;
+  background: #fff;
+  border: 1px solid $third-color;
+  color: #2f2f2f;
+  transition: all 0.2s;
+  min-width: 4.6rem;
+  min-height: 2.4rem;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.__block:hover {
+  background: linear-gradient(
+    to right,
+    $primary-color,
+    $fourth-color,
+    $second-color,
+    $primary-color,
+    $third-color
+  );
+  color: white !important;
+  cursor: pointer;
+}
+
+.__block:hover .__block__icon--adjust {
+  right: 1.2rem;
+}
