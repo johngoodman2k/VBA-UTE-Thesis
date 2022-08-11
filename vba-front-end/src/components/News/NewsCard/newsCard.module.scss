@@ -1,0 +1,200 @@
+.__hero {
+  margin-top: -2rem;
+  padding: 6rem 0 4rem;
+  position: relative;
+  margin-bottom: 3rem;
+  &__figcaption {
+    padding: 2.4rem;
+    position: relative;
+    flex-basis: 50%;
+    background: rgba(55, 0, 60, 0.9);
+    text-align: left;
+    &::before {
+      content: "";
+      width: 0.4rem;
+      height: 100%;
+      position: absolute;
+      left: -0.4rem;
+      top: 0;
+      display: block;
+      background-image: linear-gradient(0deg, #963cff, #05f0ff);
+    }
+    &__span {
+      color: #05f0ff;
+      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      font-style: italic;
+    }
+    &__title {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      margin-bottom: 2rem;
+      transition: 0.2s;
+      font-weight: 800;
+    }
+    &__desc {
+      font-size: 0.8rem;
+      color: #fff;
+      opacity: 0.8;
+      line-height: 1.62;
+      padding-top: 2rem;
+    }
+  }
+}
+.__thumbnail {
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  box-shadow: 0 1px 12px 0 rgb(0 0 0 / 25%);
+  position: relative;
+  z-index: 1;
+  &:hover {
+    .__thumbnail__image--adjust {
+      transform: scale(1.2);
+    }
+  }
+  &__figure {
+    display: flex;
+    height: 100%;
+  }
+  &__image {
+    float: left;
+    overflow: hidden;
+    position: relative;
+    width: 50%;
+    flex-basis: 50%;
+    display: block;
+    min-height: 28rem;
+    background: rgba(55, 0, 60, 0.9);
+    &--adjust {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      transition: all 2s;
+    }
+  }
+}
+
+.__secondary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 1.6rem;
+  &__news {
+    width: calc(50% - 4px);
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    box-shadow: 0 1px 12px 0 rgb(0 0 0 / 25%);
+    position: relative;
+    &--figure {
+      display: flex;
+      height: 100%;
+      &:hover {
+        .__secondary__pics--adjust {
+          transform: scale(1.2);
+        }
+      }
+    }
+    &--figcaption {
+      text-align: left;
+      padding: 0.5rem 2rem;
+      flex-basis: auto;
+      display: flex;
+      align-self: stretch;
+      flex-direction: column;
+      justify-content: center;
+
+      width: 100%;
+      position: relative;
+      background-color: rgba(55, 0, 60, 0.9);
+
+      &::before {
+        content: "";
+        width: 0.4rem;
+        height: 100%;
+        position: absolute;
+        left: -0.4rem;
+        top: 0;
+        display: block;
+        background-image: linear-gradient(0deg, #963cff, #05f0ff);
+      }
+      &--caption {
+        color: #05f0ff;
+        margin-bottom: 0.5rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        font-style: italic;
+      }
+      &--title {
+        margin-bottom: 0;
+        font-size: 0.8rem;
+        color: white;
+        font-weight: 600;
+        line-height: 1rem;
+      }
+    }
+  }
+  &__pics {
+    position: relative;
+    display: block;
+    background: rgba(55, 0, 60, 0.9);
+    width: 9rem;
+    min-height: 6.4rem;
+    min-width: 9rem;
+    flex-basis: auto;
+    float: left;
+    overflow: hidden;
+    &--adjust {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      transition: all 2s;
+    }
+  }
+}
+
+// .tournamentHome_main-hero--thumbnail:hover
+//   .tournamentHome_main-hero--thumbnail---image----adjust {
+//   transform: scale(1.2);
+// }
+
+// .tournamentHome_main-hero--figcaption::before {
+//   content: "";
+//   width: 0.4rem;
+//   height: 100%;
+//   position: absolute;
+//   left: -0.4rem;
+//   top: 0;
+//   display: block;
+//   background-image: linear-gradient(0deg, #963cff, #05f0ff);
+// }
+
+// .tournamentHome_secondary-wrapper--news---figure:hover
+//   .tournamentHome_secondary-pics--adjust {
+//   transform: scale(1.2);
+// }
+
+// .tournamentHome_secondary-wrapper--news---figcaption::before {
+//   content: "";
+//   width: 0.4rem;
+//   height: 100%;
+//   position: absolute;
+//   left: -0.4rem;
+//   top: 0;
+//   display: block;
+//   background-image: linear-gradient(0deg, #963cff, #05f0ff);
+// }
