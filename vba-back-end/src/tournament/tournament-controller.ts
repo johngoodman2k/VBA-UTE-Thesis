@@ -42,6 +42,8 @@ export class TournamentController extends Controller<
       tournament
     );
 
+    // console.log("a", tournamentResult);
+
     if (!tournamentResult)
       return res.status(400).json({ err: "  Failed to get tournament" });
 
@@ -49,99 +51,141 @@ export class TournamentController extends Controller<
       return res.status(200).json(tournamentResult);
 
     const teams = await this.tournamentService.getTeamByTournament(tournament);
+
+    // console.log("b", teams);
+
     if (!teams) return res.status(400).json({ err: "Failed to get teams" });
     console.log(teams);
 
     if (tournamentResult[0].rounds === null) {
-      let indexRound = teams.length;
-      let teamLength = teams.length;
-
-      if (indexRound % 2 === 0 && indexRound >= 0) {
-        indexRound = indexRound - 1;
-        teamLength = teamLength - 1;
-      }
-
       let roundArray = [];
       let matchesArray = [];
-      let saveTeam = [];
-      const team = randomTeam(teams, tournamentResult[0].competitor);
+      if (tournamentResult[0].type === "roundrobin") {
+        let indexRound = teams.length;
+        let teamLength = teams.length;
 
-      while (indexRound > 0) {
+        if (indexRound % 2 === 0 && indexRound >= 0) {
+          indexRound = indexRound - 1;
+          teamLength = teamLength - 1;
+        }
+
+        let saveTeam = [];
+        const team = randomTeam(teams);
+
+        while (indexRound > 0) {
+          const roundId = nanoid();
+          const teamGenerated = generateRound(team);
+
+          team.push(team[1]);
+          team.splice(1, 1);
+
+          saveTeam = [...saveTeam, teamGenerated];
+
+          const newTeamGenerated = splitTheTeam(teamGenerated);
+          const matches = convertTeamsGeneratedToMatches(
+            newTeamGenerated,
+            tournament,
+            roundId,
+            "roundrobin",
+            teamLength - indexRound
+          );
+
+          // // console.log(Date.now);
+          const newMatches = checkGhostTeamAndRemove(matches);
+
+          // console.log(newMatches);
+          matchesArray.push(...newMatches);
+
+          roundArray = [
+            ...roundArray,
+            {
+              id: roundId,
+              matches: newMatches,
+              roundname: (teamLength - indexRound + 1).toString(),
+              tournamentId: tournament,
+              createdAt: new Date(Date.now()),
+            },
+          ];
+
+          indexRound--;
+        }
+
+        if (tournamentResult[0].competitor === "double") {
+          let indexReverse = teams.length;
+          let teamLength = teams.length;
+          if (indexReverse % 2 === 0 && indexReverse >= 0) {
+            indexReverse = indexReverse - 1;
+            teamLength = teamLength - 1;
+          }
+
+          while (indexReverse > 0) {
+            saveTeam.forEach((element) => {
+              const roundId = nanoid();
+              const teamReversed = element.reverse();
+
+              const newTeamGenerated = splitTheTeam(teamReversed);
+
+              const matches = convertTeamsGeneratedToMatches(
+                newTeamGenerated,
+                tournament,
+                roundId,
+                "roundrobin",
+                teamLength * 2 - indexReverse
+              );
+              // // console.log(Date.now);
+              const newMatches = checkGhostTeamAndRemove(matches);
+
+              // console.log(newMatches);
+              matchesArray.push(...newMatches);
+
+              roundArray = [
+                ...roundArray,
+                {
+                  id: roundId,
+                  matches: newMatches,
+                  roundname: (teamLength * 2 - indexReverse + 1).toString(),
+                  tournamentId: tournament,
+                  createdAt: new Date(Date.now()),
+                },
+              ];
+
+              indexReverse--;
+            });
+          }
+        }
+      } else {
+        const newTeam = randomTeam(teams);
+        const newTeamGenerated = splitTheTeam(newTeam);
         const roundId = nanoid();
-        const teamGenerated = generateRound(team);
 
-        team.push(team[1]);
-        team.splice(1, 1);
-
-        saveTeam = [...saveTeam, teamGenerated];
-
-        const newTeamGenerated = splitTheTeam(teamGenerated);
         const matches = convertTeamsGeneratedToMatches(
           newTeamGenerated,
           tournament,
           roundId,
-          teamLength - indexRound
+          "elimination",
+          1
         );
-        // // console.log(Date.now);
-        const newMatches = checkGhostTeamAndRemove(matches);
 
-        // console.log(newMatches);
+        const newMatches = checkGhostTeamAndRemove(matches);
         matchesArray.push(...newMatches);
 
-        roundArray = [
-          ...roundArray,
-          {
-            id: roundId,
-            matches: newMatches,
-            roundname: (teamLength - indexRound + 1).toString(),
-            tournamentId: tournament,
-            createdAt: new Date(Date.now()),
-          },
-        ];
+        let round = 2;
+        let remainingRounds = teams.length / 2;
 
-        indexRound--;
-      }
+        while (remainingRounds > 0) {
+          remainingRounds = remainingRounds / 2;
 
-      if (tournamentResult[0].competitor === "double") {
-        let indexReverse = teams.length;
-        let teamLength = teams.length;
-        if (indexReverse % 2 === 0 && indexReverse >= 0) {
-          indexReverse = indexReverse - 1;
-          teamLength = teamLength - 1;
-        }
+          const matches = convertTeamsGeneratedToMatches(
+            newTeamGenerated,
+            tournament,
+            roundId,
+            "elimination",
+            round
+          );
 
-        while (indexReverse > 0) {
-          saveTeam.forEach((element) => {
-            const roundId = nanoid();
-            const teamReversed = element.reverse();
+          matchesArray.push(...newMatches);
 
-            const newTeamGenerated = splitTheTeam(teamReversed);
-
-            const matches = convertTeamsGeneratedToMatches(
-              newTeamGenerated,
-              tournament,
-              roundId,
-              teamLength * 2 - indexReverse
-            );
-            // // console.log(Date.now);
-            const newMatches = checkGhostTeamAndRemove(matches);
-
-            // console.log(newMatches);
-            matchesArray.push(...newMatches);
-
-            roundArray = [
-              ...roundArray,
-              {
-                id: roundId,
-                matches: newMatches,
-                roundname: (teamLength * 2 - indexReverse + 1).toString(),
-                tournamentId: tournament,
-                createdAt: new Date(Date.now()),
-              },
-            ];
-
-            indexReverse--;
-          });
+          round++;
         }
       }
 
@@ -150,6 +194,7 @@ export class TournamentController extends Controller<
       );
       if (!createMatches || createMatches === 0)
         return res.status(400).json({ err: "Save matches failed" });
+
       const createRound = await this.tournamentService.buildToInsertRound(
         roundArray
       );
@@ -174,7 +219,7 @@ export class TournamentController extends Controller<
     // this.tournamentService
     //   .getTournamentById(tournament)
     //   .then((tournamentResult) => {
-    //     // console.log(tournamentResult);
+    //     console.log(tournamentResult);
     //     this.tournamentService
     //       .getTeamByTournament(tournament)
     //       .then((teams) => {
@@ -193,7 +238,7 @@ export class TournamentController extends Controller<
     //           let roundArray = [];
     //           let matchesArray = [];
     //           let saveTeam = [];
-    //           const team = randomTeam(teams, tournamentResult[0].competitor);
+    //           const team = randomTeam(teams);
 
     //           while (indexRound > 0) {
     //             const roundId = nanoid();

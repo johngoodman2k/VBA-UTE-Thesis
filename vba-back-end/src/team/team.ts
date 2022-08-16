@@ -9,8 +9,34 @@ export interface Team {
   description: string;
   status: string;
   color: string;
-  tournamentId: string;
+  tournaments: Tournament[];
+  players: Player[];
   eliminated: boolean;
+  createdAt: Date;
+}
+
+export interface Player {
+  id: string;
+  name: string;
+  dateOfBirth: Date;
+  image: string;
+  shirtNumber: string;
+  createdAt: Date;
+  card: Card;
+}
+interface Card {
+  red: string;
+  yellow: string;
+}
+
+export interface Tournament {
+  id: string;
+  name: string;
+  description: string;
+  startDate?: string;
+  endDate?: string;
+  type: string;
+  status: string;
   createdAt: Date;
 }
 
@@ -36,7 +62,7 @@ export const teamModel: Attributes = {
   description: {},
   status: {},
   color: {},
-  tournamentId: {},
+  tournament: {},
   eliminated: {
     default: false,
   },
@@ -52,7 +78,8 @@ export interface TeamFilter extends Filter {
   description: string;
   status: string;
   color: string;
-  tournamentId: string;
+  tournament: Tournament[];
+  players: Player[];
   eliminated: boolean;
   createdAt: Date;
 }

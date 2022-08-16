@@ -10,6 +10,7 @@ export interface Tournament {
   status: string;
   competitor: string;
   rounds: Round[];
+  team: Team[];
   standingId: string;
   createdAt: Date;
 }
@@ -33,9 +34,25 @@ export interface Team {
   stadiumpic?: string;
   description?: string;
   status?: string;
-  tournamentId?: string;
   eliminated?: boolean;
+  players: Player[];
   createdAt: Date;
+}
+
+export interface Player {
+  id: string;
+  name: string;
+  dateOfBirth: Date;
+  image: string;
+  shirtNumber: string;
+  scored: string;
+  createdAt: Date;
+  card: Card;
+}
+
+interface Card {
+  red: string;
+  yellow: string;
 }
 
 export interface Round {
@@ -122,6 +139,8 @@ export interface TournamentService
   createTournament(tournament: Tournament, ctx?: any): Promise<number>;
 
   createStandings(standings: Standings, ctx?: any): Promise<number>;
+
+  // addTeamForTournament();
 }
 
 export const tournamentModel: Attributes = {

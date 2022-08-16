@@ -24,10 +24,27 @@ app.use(allow(conf.allow), json(), middleware.log);
 // const templates = loadTemplates(conf.template, buildTemplates, trim, [
 //   "./src/query.xml",
 // ]);
+// const devConfig = `postgresql://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.database}`;
 
-const pool = new Pool(conf.db);
+var pool = new Pool({
+  user: config.db.user,
+  password: config.db.password,
+  database: config.db.database,
+  port: config.db.port,
+  host: config.db.host,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
-//test
+const proConfig = conf.db.url;
+// connectionString: process.env.DATABASE_URL,conf.db.url,
+
+// const pool = new Pool({
+//   connectionString: proConfig,
+// });
+
+// test;
 pool.connect().then((client) => {
   client
     .query("select $1::text as name", ["pg-pool"])
@@ -40,7 +57,6 @@ pool.connect().then((client) => {
       console.error("query error", e.message, e.stack);
     });
 });
-
 
 const db = log(new PoolManager(pool), conf.log.db, logger, "sql");
 const ctx = useContext(db, logger, middleware);

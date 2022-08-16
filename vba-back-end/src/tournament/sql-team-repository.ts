@@ -3,7 +3,7 @@ import { matchModel } from "match";
 import { param } from "pg-extension";
 import { buildToInsertBatch, DB, Repository } from "query-core";
 import { teamModel } from "../team/team";
-import { getAllTeams } from "./query";
+import { getAllTeamsByTournamentId } from "./query";
 import { TeamRepository } from "./tournament";
 import {
   Match,
@@ -23,6 +23,6 @@ export class SqlTeamRepository
   }
 
   getTeamByTournament(tournament: string): Promise<Team[]> {
-    return this.query<Team>(getAllTeams, [tournament]);
+    return this.query<Team>(getAllTeamsByTournamentId, [tournament]);
   }
 }

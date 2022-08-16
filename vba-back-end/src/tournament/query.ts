@@ -11,7 +11,7 @@ import e from "express";
 
 export const getTournamentById = `select * from tournaments where id = $1`;
 
-export const getAllTeams = `select * from teams where tournamentId = $1`;
+export const getAllTeamsByTournamentId = `select * from teams where $1 = ANY(tournaments)`;
 export const getRoundByTournamentId = `select * from rounds where tournamentId = $1`;
 
 export function buildQuery(s: TournamentFilter): Statement {
@@ -111,7 +111,7 @@ export const checkDuplicateMatch = (
   return duplicate;
 };
 
-export const randomTeam = (teamArray: Team[], competitor: string): Team[] => {
+export const randomTeam = (teamArray: Team[]): Team[] => {
   const flagArray: number[] = [];
   const round = [];
   let index = teamArray.length;
@@ -164,10 +164,25 @@ const matchDayGenerated = (
   return date;
 };
 
+// const matchDayGeneratedWithTypeElimination = (
+//   indexRound: number,
+//   index:number,
+// ): Date => {
+//   const date = new Date(
+//     Date.now() +
+//     (indexRound * team + index + indexRound * 4) * 60 * 60 * 1000 * 24  );
+
+//   date.setMinutes(0);
+//   date.setSeconds(0);
+
+//   return date;
+// };
+
 export const convertTeamsGeneratedToMatches = (
   teamGenerated: Match[],
   tournamentId: string,
   round: string,
+  type: "roundrobin" | "elimination",
   indexRound: number
 ): Match[] => {
   const matches = [];
@@ -178,11 +193,14 @@ export const convertTeamsGeneratedToMatches = (
       tournamentId: tournamentId,
       home: teamDuo[0],
       away: teamDuo[1],
-      homeResult: "0",
-      awayResult: "0",
+      homeResult: null,
+      awayResult: null,
       round: round,
       createdAt: new Date(Date.now()),
-      matchDay: matchDayGenerated(indexRound, index, team),
+      matchDay:
+        type === "roundrobin"
+          ? matchDayGenerated(indexRound, index, team)
+          : matchDayGenerated(indexRound, index, team),
     });
   });
   return matches;

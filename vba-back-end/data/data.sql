@@ -11,6 +11,7 @@ create table tournaments
     competitor character varying(10),
     rounds jsonb[],
     standingId character varying(40),
+    team jsonb[],
     createdAt timestamp with time zone default now(),
     constraint tournaments_pkey primary key (id)
 );
@@ -45,22 +46,23 @@ create table matches (
 
 
 
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('1','A','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('2','B','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('3','C','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('4','D','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('5','E','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('6','F','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('7','G','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('8','H','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('9','M','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('10','N','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('11','R','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('12','T','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('13','Y','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('14','U','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('15','I','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
-insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournamentId) values ('16','O','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft','1');
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('1','A','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('2','B','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('3','C','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('4','D','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('5','E','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('6','F','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('7','G','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('8','H','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('9','M','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('10','N','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('11','R','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('12','T','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('13','Y','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('14','U','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('15','I','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('16','O','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
 
 create table teams (
     id character varying(40),
@@ -71,8 +73,9 @@ create table teams (
     description character varying(200),
     status character varying(40),
     color character varying(40),
-    tournamentId character varying(40),
+    tournaments jsonb[],
     eliminated boolean default false,
+    players json[],
     createdAt timestamp with time zone default now(),
     constraint teams_pkey primary key (id)
 ); 
