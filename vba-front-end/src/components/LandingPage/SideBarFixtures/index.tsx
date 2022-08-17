@@ -1,44 +1,60 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./sideBarFixtures.module.scss";
 import classNames from "classnames/bind";
 import { UpCommingMatchBar } from "../../Bar/UpCommingMatchBar";
+import { vbaContext } from "../../../Services/services";
+import { Tournament } from "../../../Services/models";
+import { dateFormat, timeFormat } from "../../../utils/dateFormat";
 
 const cx = classNames.bind(styles);
+const tournamentServices = vbaContext.getTournamentServices();
+
 export const SidebarFixture = () => {
+  const [upCommingMatches, setUpCommingMatches] = React.useState<Tournament>();
+  useEffect(() => {
+    (async () => {
+      const res = await tournamentServices.getTournamentById("2");
+      console.log("17", res);
+      setUpCommingMatches(res);
+    })();
+  }, []);
   return (
     <div className={cx("wrapper")}>
-      <header>
-        <div className={cx("__week")}>Match Week 1</div>
-        <div className={cx("__logoWrapper")}>
-          <img
-            className={cx("__logoWrapper--adjust")}
-            src="https://www.tma.vn/Themes/TMAVN.Theme/Images/TMA-logo2.png"
-            alt=""
-          />
-        </div>
-        <div className={cx("__localTime")}>
-          All times shown are your <strong>local time</strong>
-        </div>
-      </header>
-      <div className={cx("__matchList")}>
-        <time>Saturday 6 August</time>
-        <div className={cx("__matchList--adjust")}>
-          <UpCommingMatchBar
-            homeName="MIA"
-            homeBadge="https://cdn.nba.com/logos/nba/1610612748/global/L/logo.svg"
-            awayName="MIA"
-            awayBadge="https://cdn.nba.com/logos/nba/1610612748/global/L/logo.svg"
-            time="2:00"
-          ></UpCommingMatchBar>
-          <UpCommingMatchBar
-            homeName="MIA"
-            homeBadge="https://cdn.nba.com/logos/nba/1610612748/global/L/logo.svg"
-            awayName="MIA"
-            awayBadge="https://cdn.nba.com/logos/nba/1610612748/global/L/logo.svg"
-            time="2:00"
-          ></UpCommingMatchBar>
-        </div>
-      </div>
+      {upCommingMatches?.rounds.map((x: any, i: number) => {
+        return (
+          <>
+            <header>
+              <div className={cx("__week")}>Match Week {x.roundname}</div>
+              <div className={cx("__logoWrapper")}>
+                <img
+                  className={cx("__logoWrapper--adjust")}
+                  src="https://www.tma.vn/Themes/TMAVN.Theme/Images/TMA-logo2.png"
+                  alt=""
+                />
+              </div>
+              <div className={cx("__localTime")}>
+                All times shown are your <strong>local time</strong>
+              </div>
+            </header>
+            <div className={cx("__matchList")}>
+              <time>{dateFormat(x.createdAt)}</time>
+              <div className={cx("__matchList--adjust")}>
+                {x.matches.rounds?.map((y: any) => {
+                  return (
+                    <UpCommingMatchBar
+                      homeName={y.home.teamname}
+                      homeBadge={y.home.teamlogo}
+                      awayName={y.away.teamname}
+                      awayBadge={y.away.teamlogo}
+                      time={timeFormat(y.matchDay).toString()}
+                    ></UpCommingMatchBar>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        );
+      })}
     </div>
   );
 };
