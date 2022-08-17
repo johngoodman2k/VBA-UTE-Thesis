@@ -24,13 +24,13 @@ export const config = {
     size: "size",
   },
   db: {
-    user: "ffieihcycxlxxe",
-    host: "ec2-34-247-72-29.eu-west-1.compute.amazonaws.com",
+    user: "dsyolioonliiii",
+    host: "ec2-34-251-115-141.eu-west-1.compute.amazonaws.com",
     password:
-      "5b83da7d10731314799ba92b09235bda953bb963cec4527691b3002ff74ae008",
-    database: "di4hair2a6nc5",
+      "893c1649e656a75cb9d04980077d99ed640483c6e45e196648662d3d8c2940b4",
+    database: "d73419p6mm4jj9",
     port: 5432,
-    url: "postgres://ffieihcycxlxxe:5b83da7d10731314799ba92b09235bda953bb963cec4527691b3002ff74ae008@ec2-34-247-72-29.eu-west-1.compute.amazonaws.com:5432/di4hair2a6nc5",
+    url: "postgres://dsyolioonliiii:893c1649e656a75cb9d04980077d99ed640483c6e45e196648662d3d8c2940b4@ec2-34-251-115-141.eu-west-1.compute.amazonaws.com:5432/d73419p6mm4jj9",
   },
   dblocal: {
     user: "postgres",

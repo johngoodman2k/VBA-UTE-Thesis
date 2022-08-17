@@ -25,17 +25,17 @@ app.use(allow(conf.allow), json(), middleware.log);
 //   "./src/query.xml",
 // ]);
 // const devConfig = `postgresql://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.database}`;
-var pool = new Pool(config.dblocal);
-// var pool = new Pool({
-//   user: config.db.user,
-//   password: config.db.password,
-//   database: config.db.database,
-//   port: config.db.port,
-//   host: config.db.host,
-//   ssl: {
-//     rejectUnauthorized: false,
-//   },
-// });
+// var pool = new Pool(config.dblocal);
+var pool = new Pool({
+  user: config.db.user,
+  password: config.db.password,
+  database: config.db.database,
+  port: config.db.port,
+  host: config.db.host,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 
 const proConfig = conf.db.url;
 // connectionString: process.env.DATABASE_URL,conf.db.url,
