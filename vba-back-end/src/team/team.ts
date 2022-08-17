@@ -12,6 +12,7 @@ export interface Team {
   tournaments: Tournament[];
   players: Player[];
   eliminated: boolean;
+  shortname: string;
   createdAt: Date;
 }
 
@@ -66,6 +67,8 @@ export const teamModel: Attributes = {
   eliminated: {
     default: false,
   },
+  shortname: {},
+  players: { type: "array" },
   createdAt: { type: "datetime" },
 };
 
@@ -81,5 +84,6 @@ export interface TeamFilter extends Filter {
   tournament: Tournament[];
   players: Player[];
   eliminated: boolean;
+  shortname: string;
   createdAt: Date;
 }

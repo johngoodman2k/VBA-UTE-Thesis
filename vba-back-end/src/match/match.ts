@@ -14,9 +14,9 @@ export interface Match {
   matchDay: Date;
   referee?: string;
   spectators?: string;
-
   assistance?: Player;
   process?: Process[];
+  endmatch: boolean;
 }
 
 interface Process {
@@ -28,7 +28,7 @@ interface Process {
 interface Player {
   name: string;
   image: string;
-  playernumber: number;
+  shirtNumber: number;
 }
 
 export interface MatchRepository extends Repository<Match, string> {
@@ -64,6 +64,7 @@ export const matchModel: Attributes = {
   matchDay: {},
   assistance: {},
   process: {},
+  endmatch: {},
 };
 
 export interface MatchFilter extends Filter {
@@ -80,4 +81,5 @@ export interface MatchFilter extends Filter {
   spectators?: string;
   assistance?: string;
   process?: string;
+  endmatch: boolean;
 }

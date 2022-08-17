@@ -193,9 +193,12 @@ export const convertTeamsGeneratedToMatches = (
       tournamentId: tournamentId,
       home: teamDuo[0],
       away: teamDuo[1],
-      homeResult: null,
-      awayResult: null,
+      homeResult: "0",
+      awayResult: "0",
       round: round,
+      endmatch: false,
+      refeere: "",
+      spectators: "",
       createdAt: new Date(Date.now()),
       matchDay:
         type === "roundrobin"

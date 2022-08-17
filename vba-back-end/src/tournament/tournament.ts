@@ -23,6 +23,7 @@ export interface Match {
   homeResult: string;
   awayResult: string;
   matchDay: Date;
+  endmatch: boolean;
   createdAt: Date;
 }
 

@@ -57,7 +57,7 @@ export class TournamentController extends Controller<
     // console.log("b", teams);
 
     if (!teams) return res.status(400).json({ err: "Failed to get teams" });
-    console.log(teams);
+    // console.log(teams);
 
     if (tournamentResult[0].rounds === null) {
       let roundArray = [];
@@ -175,24 +175,36 @@ export class TournamentController extends Controller<
 
         matchesArray.push(...newMatches);
 
+        roundArray = [
+          ...roundArray,
+          {
+            id: roundId,
+            matches: newMatches,
+            roundname: `1/${newTeam.length}`,
+            tournamentId: tournament,
+            createdAt: new Date(Date.now()),
+          },
+        ];
+
         let round = 2;
         let remainingTeams = newTeam.length / 2;
         const flag = remainingTeams;
         let newTeam1 = [];
 
-        while (remainingTeams > 0) {
+        while (remainingTeams >= 1) {
           const roundId1 = nanoid();
 
           for (let i = 0; i < remainingTeams - 1; i++) {
             newTeam1.push({
-              teamname: "Team" + (i + 1) + "#" + 1 / remainingTeams,
+              teamname: "W" + "#" + (i + 1) + " " + "1/" + remainingTeams * 2,
             });
           }
           if (remainingTeams === flag && teamPlayWithGhostTeam) {
             newTeam1.push(teamPlayWithGhostTeam);
           } else {
             const lastTeam = {
-              teamname: "Team" + remainingTeams + "#" + 1 / remainingTeams,
+              teamname:
+                "W" + "#" + remainingTeams + " " + "1/" + remainingTeams * 2,
             };
             newTeam1.push(lastTeam);
 
@@ -214,7 +226,7 @@ export class TournamentController extends Controller<
           roundArray = [
             ...roundArray,
             {
-              id: roundId,
+              id: roundId1,
               matches: matches,
               roundname: `1/${remainingTeams}`,
               tournamentId: tournament,
@@ -226,15 +238,20 @@ export class TournamentController extends Controller<
         }
       }
 
+      // return res.status(200).json(roundArray);
+
+      // console.log("OK!");
       const createMatches = await this.tournamentService.buildToInsertMatches(
         matchesArray
       );
+
       if (!createMatches || createMatches === 0)
         return res.status(400).json({ err: "Save matches failed" });
 
       const createRound = await this.tournamentService.buildToInsertRound(
         roundArray
       );
+
       if (!createRound || createRound === 0)
         return res.status(400).json({ err: "Save rounds failed" });
 
@@ -244,6 +261,8 @@ export class TournamentController extends Controller<
       );
       if (!newTournament || newTournament === 0)
         return res.status(400).json({ err: "Update tournament failed" });
+
+      // console.log("OK!");
 
       return res.status(200).json({ message: "Generate succedded" });
     } else {
