@@ -1,0 +1,52 @@
+.matchEvent {
+  &__block {
+    position: relative;
+    padding-top: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 400;
+    & a {
+      font-size: 0.8rem;
+      font-weight: 400;
+      //   &:hover {
+      //     text-decoration: underline;
+      //   }
+    }
+
+    &__icon {
+      width: 2rem;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+
+      &--adjust {
+        display: block;
+        margin: 0.6rem auto 0 auto;
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+}
+
+.home {
+  &__block {
+    padding-right: 2rem;
+    &__icon {
+      right: 0;
+    }
+  }
+}
+
+.away {
+  &__block {
+    padding-left: 2rem;
+    &__icon {
+      left: 0;
+    }
+  }
+}
+
+.matchEvent__block a:hover {
+  text-decoration: underline !important;
+  cursor: pointer;
+}

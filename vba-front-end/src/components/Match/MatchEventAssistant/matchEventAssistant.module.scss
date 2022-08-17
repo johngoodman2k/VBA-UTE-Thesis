@@ -1,0 +1,21 @@
+.matchEventAssistant {
+  // &__home {
+  //   padding-right: 7rem;
+  //   text-align: right;
+  //   float: left;
+  //   width: 50%;
+  // }
+  // &__away {
+  //   padding-left: 7rem;
+  //   text-align: left;
+  //   float: left;
+  //   width: 50%;
+  // }
+  &__event {
+    padding: 0.5rem 0;
+    font-size: 0.7rem;
+    & a {
+      color: inherit !important;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+.wrapper {
+  color: white;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  z-index: 100;
+}
+
+.content {
+  margin: 70px auto;
+  padding: 20px;
+  background-image: url(https://teamnigma.com/wp-content/uploads/2020/07/Nigma-Pattern-Smaller.png);
+  background-repeat: repeat;
+  background-position: 0 0;
+  border-radius: 5px;
+  width: 50%;
+  position: relative;
+  transition: all 3s ease-in-out;
+}

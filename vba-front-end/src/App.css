@@ -12,6 +12,13 @@ body {
   margin: 0;
 }
 
+input {
+  color: black;
+}
+
+abbr:where([title]) {
+  text-decoration: none;
+}
 /* .container {
   max-width: 1376px;
   margin-left: auto;
