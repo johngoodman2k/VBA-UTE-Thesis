@@ -8,6 +8,7 @@ import {
   TournamentService,
   Statistics,
   Standings,
+  Team,
 } from "./tournament";
 import { buildToInsertBatch } from "query-core";
 import {
@@ -15,6 +16,7 @@ import {
   checkGhostTeamAndRemove,
   convertTeamsGeneratedToMatches,
   generateRound,
+  getTeamPlayWithGhostTeam,
   isCompetitor,
   randomTeam,
   splitTheTeam,
@@ -158,6 +160,8 @@ export class TournamentController extends Controller<
         const newTeamGenerated = splitTheTeam(newTeam);
         const roundId = nanoid();
 
+        // return res.status(200).json(newTeamGenerated);
+
         const matches = convertTeamsGeneratedToMatches(
           newTeamGenerated,
           tournament,
@@ -166,25 +170,58 @@ export class TournamentController extends Controller<
           1
         );
 
+        const teamPlayWithGhostTeam = getTeamPlayWithGhostTeam(matches);
         const newMatches = checkGhostTeamAndRemove(matches);
+
         matchesArray.push(...newMatches);
 
         let round = 2;
-        let remainingRounds = teams.length / 2;
+        let remainingTeams = newTeam.length / 2;
+        const flag = remainingTeams;
+        let newTeam1 = [];
 
-        while (remainingRounds > 0) {
-          remainingRounds = remainingRounds / 2;
+        while (remainingTeams > 0) {
+          const roundId1 = nanoid();
+
+          for (let i = 0; i < remainingTeams - 1; i++) {
+            newTeam1.push({
+              teamname: "Team" + (i + 1) + "#" + 1 / remainingTeams,
+            });
+          }
+          if (remainingTeams === flag && teamPlayWithGhostTeam) {
+            newTeam1.push(teamPlayWithGhostTeam);
+          } else {
+            const lastTeam = {
+              teamname: "Team" + remainingTeams + "#" + 1 / remainingTeams,
+            };
+            newTeam1.push(lastTeam);
+
+            // newTeam1.push(teamPlayWithGhostTeam);
+          }
+
+          const teamSplited = splitTheTeam(newTeam1);
 
           const matches = convertTeamsGeneratedToMatches(
-            newTeamGenerated,
+            teamSplited,
             tournament,
-            roundId,
+            roundId1,
             "elimination",
             round
           );
 
-          matchesArray.push(...newMatches);
+          matchesArray.push(...matches);
 
+          roundArray = [
+            ...roundArray,
+            {
+              id: roundId,
+              matches: matches,
+              roundname: `1/${remainingTeams}`,
+              tournamentId: tournament,
+              createdAt: new Date(Date.now()),
+            },
+          ];
+          remainingTeams = remainingTeams / 2;
           round++;
         }
       }

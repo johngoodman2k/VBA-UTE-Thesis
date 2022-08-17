@@ -64,6 +64,15 @@ insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,st
 insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('15','I','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
 insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('16','O','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
 
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('1','Hanoi Buffaloes','http://api-news.vba.vn/storage/images/hanoi-buffaloes-logo.png','Hoàng Mai','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('2','Thang Long Warriors','http://api-news.vba.vn/storage/images/tlw-audi.png','Tây Hồ','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('3','Da Nang Dragons','http://api-news.vba.vn/storage/images/danang-dragons-logo.png','Quân Khu 5','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('4','Nha Trang Dolphins','http://api-news.vba.vn/storage/images/nha-trang-dolphins-2.png','Nha Trang University','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('5','Sai Gon Heat','http://api-news.vba.vn/storage/images/logo-7.png','CIS','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('6','Ho Chi Minh City Wings','http://api-news.vba.vn/storage/images/hcmc-wings-new-logo.png','Hồ Xuân Hương','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,status,tournaments) values ('7','Can Tho Catfish','http://api-news.vba.vn/storage/images/ctc-white.png','Tân Bình','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+
+
 create table teams (
     id character varying(40),
     teamname character varying(40),

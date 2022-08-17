@@ -32,6 +32,13 @@ export const config = {
     port: 5432,
     url: "postgres://ffieihcycxlxxe:5b83da7d10731314799ba92b09235bda953bb963cec4527691b3002ff74ae008@ec2-34-247-72-29.eu-west-1.compute.amazonaws.com:5432/di4hair2a6nc5",
   },
+  dblocal: {
+    user: "postgres",
+    host: "localhost",
+    password: "123321",
+    database: "masterdata2",
+    port: 5432,
+  },
 };
 
 export const env = {

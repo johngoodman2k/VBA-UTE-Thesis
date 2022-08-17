@@ -220,3 +220,23 @@ export const checkGhostTeamAndRemove = (matches: Match[]) => {
   });
   return result;
 };
+
+export const getTeamPlayWithGhostTeam = (matches: Match[]) => {
+  // console.log(matches);
+  let result1 = undefined;
+  let result2 = undefined;
+  matches.forEach((match) => {
+    if (match.home.teamname === "ghostteam") {
+      result1 = match.away;
+    } else if (match.away.teamname === "ghostteam") {
+      result2 = match.home;
+    }
+  });
+  if (result1) {
+    return result1;
+  } else if (result2) {
+    return result2;
+  } else {
+    return undefined;
+  }
+};
