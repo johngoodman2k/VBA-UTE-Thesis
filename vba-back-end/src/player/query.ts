@@ -1,7 +1,8 @@
 import { Statement } from "query-core";
 import { PlayerFilter } from "./player";
 
-export const getPlayersByTeamId = "Select * from players where $1 = ANY(teams)";
+export const getPlayersByTeamId =
+  "select * from players where $1 <@ ANY(teams)";
 
 export function buildQuery(s: PlayerFilter): Statement {
   let query = `select * from players`;

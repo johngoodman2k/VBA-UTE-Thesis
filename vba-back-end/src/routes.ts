@@ -34,16 +34,16 @@ export function routes(app: Application, ctx: ApplicationContext): void {
   app.put("/players/:id", ctx.player.update);
   app.patch("/players/:id", ctx.player.patch);
   app.delete("/players/:id", ctx.player.delete);
-  app.get("/players/getPlayersByTeamId/:id", ctx.player.getPlayersByTeamId);
+  app.get("/players/getplayersbyteamid/:id", ctx.player.getPlayersByTeamId);
 
-  app.post("/matchs/search", ctx.match.search);
-  app.get("/matchs/search", ctx.match.search);
-  app.get("/matchs/:id", ctx.match.load);
-  app.post("/matchs", ctx.match.create);
-  app.put("/matchs/:id", ctx.match.update);
-  app.patch("/matchs/:id", ctx.match.patch);
-  app.delete("/matchs/:id", ctx.match.delete);
-  app.get("/matchs/:tournament/:round", ctx.match.getMatches);
+  app.post("/matches/search", ctx.match.search);
+  app.get("/matches/search", ctx.match.search);
+  app.get("/matches/:id", ctx.match.load);
+  app.post("/matches", ctx.match.create);
+  app.put("/matches/:id", ctx.match.update);
+  app.patch("/matches/:id", ctx.match.patch);
+  app.delete("/matches/:id", ctx.match.delete);
+  app.get("/matches/:tournament/:round", ctx.match.getMatches);
 
   app.post("/teams/search", ctx.team.search);
   app.get("/teams/search", ctx.team.search);

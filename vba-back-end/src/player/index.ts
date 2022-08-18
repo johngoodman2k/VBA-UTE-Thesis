@@ -7,6 +7,7 @@ import {
   playerModel,
   PlayerRepository,
   PlayerService,
+  Team,
 } from "./player";
 import { PlayerController } from "./player-controller";
 export * from "./player";
@@ -24,7 +25,7 @@ export class PlayerManager
     super(search, playerrepository);
   }
 
-  getPlayersByTeamId(teamId: string): Promise<Player[]> {
+  getPlayersByTeamId(teamId: Team): Promise<Player[]> {
     return this.playerrepository.getPlayersByTeamId(teamId);
   }
 }

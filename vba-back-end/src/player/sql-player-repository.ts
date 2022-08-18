@@ -1,4 +1,5 @@
 import { DB, Repository } from "query-core";
+import { Team } from "./player";
 import { Player, playerModel, PlayerRepository } from "./player";
 import { getPlayersByTeamId } from "./query";
 
@@ -9,7 +10,7 @@ export class SqlPlayerRepository
   constructor(db: DB) {
     super(db, "players", playerModel);
   }
-  getPlayersByTeamId(teamId: string): Promise<Player[]> {
+  getPlayersByTeamId(teamId: Team): Promise<Player[]> {
     return this.query<Player>(getPlayersByTeamId, [teamId]);
   }
 }

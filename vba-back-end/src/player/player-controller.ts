@@ -10,7 +10,7 @@ export class PlayerController extends Controller<Player, string, PlayerFilter> {
 
   async getPlayersByTeamId(req: Request, res: Response) {
     const { teamId } = req.params;
-    const players = await this.playerService.getPlayersByTeamId(teamId);
+    const players = await this.playerService.getPlayersByTeamId({ id: teamId });
 
     if (!players) return res.status(400).json({ err: "Failed to get players" });
 

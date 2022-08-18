@@ -12,7 +12,7 @@ export interface Player {
   card: Card;
 }
 
-interface Team {
+export interface Team {
   id: string;
 }
 
@@ -31,10 +31,10 @@ export interface PlayerFilter extends Filter {
   card: Card;
 }
 export interface PlayerRepository extends Repository<Player, string> {
-  getPlayersByTeamId(teamId: string): Promise<Player[]>;
+  getPlayersByTeamId(teamId: Team): Promise<Player[]>;
 }
 export interface PlayerService extends Service<Player, string, PlayerFilter> {
-  getPlayersByTeamId(teamId: string): Promise<Player[]>;
+  getPlayersByTeamId(teamId: Team): Promise<Player[]>;
 }
 export const playerModel: Attributes = {
   id: {
