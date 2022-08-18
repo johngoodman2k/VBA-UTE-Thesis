@@ -6,13 +6,13 @@ export function routes(app: Application, ctx: ApplicationContext): void {
   app.patch("/log", ctx.log.config);
   app.patch("/middleware", ctx.middleware.config);
 
-//   app.post("/users/search", ctx.user.search);
-//   app.get("/users/search", ctx.user.search);
-//   app.get("/users/:id", ctx.user.load);
-//   app.post("/users", ctx.user.create);
-//   app.put("/users/:id", ctx.user.update);
-//   app.patch("/users/:id", ctx.user.patch);
-//   app.delete("/users/:id", ctx.user.delete);
+  //   app.post("/users/search", ctx.user.search);
+  //   app.get("/users/search", ctx.user.search);
+  //   app.get("/users/:id", ctx.user.load);
+  //   app.post("/users", ctx.user.create);
+  //   app.put("/users/:id", ctx.user.update);
+  //   app.patch("/users/:id", ctx.user.patch);
+  //   app.delete("/users/:id", ctx.user.delete);
 
   app.get("/tournaments/getall", ctx.tournament.getAllTournament);
   app.post("/tournaments/search", ctx.tournament.search);
@@ -34,6 +34,7 @@ export function routes(app: Application, ctx: ApplicationContext): void {
   app.put("/players/:id", ctx.player.update);
   app.patch("/players/:id", ctx.player.patch);
   app.delete("/players/:id", ctx.player.delete);
+  app.get("/players/getPlayersByTeamId/:id", ctx.player.getPlayersByTeamId);
 
   app.post("/matchs/search", ctx.match.search);
   app.get("/matchs/search", ctx.match.search);
@@ -52,5 +53,4 @@ export function routes(app: Application, ctx: ApplicationContext): void {
   app.patch("/teams/:id", ctx.team.patch);
   app.delete("/teams/:id", ctx.team.delete);
   app.get("/teams/:tournament", ctx.team.getTeamByTournamentId);
-
 }

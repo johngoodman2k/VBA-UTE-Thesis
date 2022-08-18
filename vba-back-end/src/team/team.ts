@@ -25,6 +25,7 @@ export interface Player {
   createdAt: Date;
   card: Card;
 }
+
 interface Card {
   red: string;
   yellow: string;
@@ -45,8 +46,13 @@ export interface TeamRepository extends Repository<Team, string> {
   getTeamByTournamentId(tournamentId: string): Promise<Team[]>;
 }
 
+export interface PlayerRepository extends Repository<Player, string> {
+  addPlayer(player: Player, ctx?: any): Promise<number>;
+}
+
 export interface TeamService extends Service<Team, string, TeamFilter> {
   getTeamByTournamentId(tournamentId: string): Promise<Team[]>;
+  addPlayer(player: Player, ctx?: any): Promise<number>;
 }
 
 export const teamModel: Attributes = {
@@ -57,17 +63,18 @@ export const teamModel: Attributes = {
   teamname: {
     required: true,
   },
-  teamlogo: {},
-  stadiumname: {},
-  stadiumpic: {},
-  description: {},
-  status: {},
-  color: {},
-  tournament: {},
+  teamlogo: { type: "string" },
+  stadiumname: { type: "string" },
+  stadiumpic: { type: "string" },
+  description: { type: "string" },
+  status: { type: "string" },
+  color: { type: "string" },
+  tournament: { type: "array" },
   eliminated: {
     default: false,
+    type: "boolean",
   },
-  shortname: {},
+  shortname: { type: "string" },
   players: { type: "array" },
   createdAt: { type: "datetime" },
 };

@@ -122,9 +122,12 @@ create table players
     shirtNumber character varying(40),
     createdAt  timestamp with time zone default now(),
     teams jsonb[],
-    card jsonb[],
+    card jsonb,
     constraint player_pkey primary key (id)
 
 );
 --player
-insert into players (id, name, image,shirtNumber,teams,card) values ('1','A','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg','unknown','hello form downtown','2022-2023 NBA Champs','draft',array['1']::jsonb[]);
+insert into players (id, name, dateOfBirth, image, shirtNumber, teams, card) values ('1', 'Shane Henry', '2000-10-10', 'https://newsmd2fr.keeng.net/tiin/archive/imageslead/2022/06/25/90_e18184d88e8fe3b9dd0271d1f1a6f7d1.jpg', '8',array['1']::jsonb[] ,'{"red":"0","yellow":"0"}'::jsonb);
+insert into players (id, name, dateOfBirth, image, shirtNumber, teams, card) values ('2', 'Jefferey Stubbs', '2000-10-10', 'https://kenh14cdn.com/thumb_w/660/203336854389633024/2022/6/16/694686633659241176280292943390252027793047n-1655364408144465259158.jpg', '15',array['1']::jsonb[] ,'{"red":"0","yellow":"0"}'::jsonb);
+insert into players (id, name, dateOfBirth, image, shirtNumber, teams, card) values ('3', 'Đinh Thanh Tâm', '2000-10-10', 'https://znews-photo.zingcdn.me/w660/Uploaded/qxjrcqjwq/2022_07_31/Tam_Dinh_an_mung_3_diem.jpg', '23',array['1']::jsonb[] ,'{"red":"0","yellow":"0"}'::jsonb);
+

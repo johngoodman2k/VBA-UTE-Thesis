@@ -211,6 +211,16 @@ export class TournamentController extends Controller<
             // newTeam1.push(teamPlayWithGhostTeam);
           }
 
+          if (remainingTeams === 1) {
+            const bronzeMatchTeam1 = {
+              teamname: "L" + "#" + 1 + " " + "1/" + remainingTeams * 2,
+            };
+            const bronzeMatchTeam2 = {
+              teamname: "L" + "#" + 2 + " " + "1/" + remainingTeams * 2,
+            };
+            newTeam1.push(bronzeMatchTeam1, bronzeMatchTeam2);
+          }
+
           const teamSplited = splitTheTeam(newTeam1);
 
           const matches = convertTeamsGeneratedToMatches(

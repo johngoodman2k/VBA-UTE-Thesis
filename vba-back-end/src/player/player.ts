@@ -1,5 +1,5 @@
 import { Attributes, Filter, Repository, Service } from "onecore";
-import { Team } from "../team/team";
+// import { Team } from "../team/team";
 
 export interface Player {
   id: string;
@@ -12,6 +12,10 @@ export interface Player {
   card: Card;
 }
 
+interface Team {
+  id: string;
+}
+
 interface Card {
   red: string;
   yellow: string;
@@ -20,19 +24,28 @@ export interface PlayerFilter extends Filter {
   id: string;
   name: string;
   dateOfBirth: Date;
+  image: string;
+  shirtNumber: string;
+  createdAt: Date;
+  teams: Team[];
+  card: Card;
 }
-export interface PlayerRepository extends Repository<Player, string> {}
-export interface PlayerService extends Service<Player, string, PlayerFilter> {}
-export const PlayerModel: Attributes = {
+export interface PlayerRepository extends Repository<Player, string> {
+  getPlayersByTeamId(teamId: string): Promise<Player[]>;
+}
+export interface PlayerService extends Service<Player, string, PlayerFilter> {
+  getPlayersByTeamId(teamId: string): Promise<Player[]>;
+}
+export const playerModel: Attributes = {
   id: {
     key: true,
     match: "equal",
   },
-  name: {},
+  name: { type: "string" },
   dateOfBirth: { type: "datetime" },
-  image: {},
-  shirtNumber: {},
+  image: { type: "string" },
+  shirtNumber: { type: "string" },
   createdAt: { type: "datetime" },
-  teams: {},
-  card: {},
+  teams: { type: "array" },
+  card: { type: "object" },
 };

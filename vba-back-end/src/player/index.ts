@@ -4,7 +4,7 @@ import { buildQuery } from "./query";
 import {
   Player,
   PlayerFilter,
-  PlayerModel,
+  playerModel,
   PlayerRepository,
   PlayerService,
 } from "./player";
@@ -19,21 +19,25 @@ export class PlayerManager
 {
   constructor(
     search: Search<Player, PlayerFilter>,
-    repository: PlayerRepository
+    protected playerrepository: PlayerRepository
   ) {
-    super(search, repository);
+    super(search, playerrepository);
+  }
+
+  getPlayersByTeamId(teamId: string): Promise<Player[]> {
+    return this.playerrepository.getPlayersByTeamId(teamId);
   }
 }
 export function usePlayerService(db: DB): PlayerService {
   const builder = new SearchBuilder<Player, PlayerFilter>(
     db.query,
     "players",
-    PlayerModel,
+    playerModel,
     postgres,
     buildQuery
   );
-  const repository = new SqlPlayerRepository(db);
-  return new PlayerManager(builder.search, repository);
+  const playerrepository = new SqlPlayerRepository(db);
+  return new PlayerManager(builder.search, playerrepository);
 }
 export function usePlayerController(log: Log, db: DB): PlayerController {
   return new PlayerController(log, usePlayerService(db));
