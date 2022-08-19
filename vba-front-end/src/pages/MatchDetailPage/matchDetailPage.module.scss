@@ -260,6 +260,10 @@
   background-color: $primary-color !important;
 }
 
+.__updateActive {
+  background-color: $primary-color !important;
+}
+
 .__editBlock {
   position: relative;
   z-index: 10;
@@ -281,6 +285,7 @@
       cursor: pointer;
       border-radius: 3px;
       font-weight: 400;
+      margin: 0 1rem;
     }
   }
 }
@@ -446,7 +451,7 @@
   -webkit-appearance: none;
   background-color: #fff;
   border-color: rgba(153, 153, 153, 0.4) !important;
-
+  text-align: center;
   border-radius: 2px !important;
 }
 
@@ -461,6 +466,23 @@
     border-width: 5px;
     position: absolute;
     right: 63px;
+    top: 50%;
+    margin-top: -2.5px;
+    pointer-events: none;
+  }
+}
+
+.__optionsNameCard {
+  &::after {
+    content: "";
+    height: 0;
+    width: 0;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+
+    border-width: 5px;
+    position: absolute;
+    right: 90px;
     top: 50%;
     margin-top: -2.5px;
     pointer-events: none;

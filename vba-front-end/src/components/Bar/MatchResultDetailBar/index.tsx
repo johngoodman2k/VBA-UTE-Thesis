@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames/bind";
 import styles from "./matchResultDetailBar.module.scss";
+import { RightClickModal } from "../../Modal/RightClickModal";
 
 type MatchResultDetailBarProps = {
   homeBadge?: string;
@@ -13,10 +14,30 @@ type MatchResultDetailBarProps = {
 
 const cx = classNames.bind(styles);
 export const MatchResultDetailBar = (props: MatchResultDetailBarProps) => {
+  const [show, setShow] = React.useState(false);
+  const [positions, setPositions] = React.useState({ x: 0, y: 0 });
+
+  const handleContextMenu = (e: any) => {
+    console.log("context menu clicked");
+    e.preventDefault();
+    setShow(true);
+    setPositions({ x: e.pageX, y: e.pageY });
+    // context.current.style.transform = `translate(${positions.x}, ${positions.y})`;
+    console.log(positions.x, positions.y);
+  };
+  useEffect(() => {
+    const handleClick = () => setShow(false);
+    window.addEventListener("click", handleClick);
+    return () => window.removeEventListener("click", handleClick);
+  }, []);
+
   return (
     <div className={cx("__container")}>
       <div className={cx("__team", "home")}>
-        <a className={cx("home__badgeContainer")}>
+        <a
+          onContextMenu={handleContextMenu}
+          className={cx("home__badgeContainer")}
+        >
           <span className={cx("home__badgeContainer__image")}>
             <img
               className={cx("home__badgeContainer__image--adjust")}
@@ -24,7 +45,12 @@ export const MatchResultDetailBar = (props: MatchResultDetailBarProps) => {
             ></img>
           </span>
         </a>
-        <a href="" className={cx("teamName", "teamName__home")}>
+
+        <a
+          onContextMenu={handleContextMenu}
+          href=""
+          className={cx("teamName", "teamName__home")}
+        >
           <span className={cx("teamName--adjust")}>{props.homeName}</span>
         </a>
       </div>
@@ -35,7 +61,7 @@ export const MatchResultDetailBar = (props: MatchResultDetailBarProps) => {
         </div>
       </div>
 
-      <div className={cx("__team", "away")}>
+      <div className={cx("__team", "away")} onContextMenu={handleContextMenu}>
         <a href="" className={cx("teamName", "teamName__away")}>
           <span className={cx("teamName--adjust")}>{props.awayName}</span>
         </a>
@@ -48,6 +74,12 @@ export const MatchResultDetailBar = (props: MatchResultDetailBarProps) => {
           </span>
         </a>
       </div>
+
+      {show === true ? (
+        <RightClickModal x={positions.x} y={positions.y}></RightClickModal>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

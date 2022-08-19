@@ -2,6 +2,7 @@ import { HttpRequest } from "axios-core";
 import { Match, Tournament, Process, Team, Player } from "./models";
 import {
   MatchServicesRoot,
+  PlayerServicesRoot,
   TeamServicesRoot,
   TournamentServicesRoot,
 } from "./servicesroot";
@@ -51,5 +52,19 @@ export class TeamServices implements TeamServicesRoot {
   ): Promise<Team> {
     const url = `${this.url}/${id}`;
     return this.httpRequest.get<Team>(url);
+  }
+}
+
+export class PlayerServices implements PlayerServicesRoot {
+  constructor(private url: string, private httpRequest: HttpRequest) {
+    this.getPlayersByTeamId = this.getPlayersByTeamId.bind(this);
+  }
+
+  getPlayersByTeamId(
+    teamid: string | undefined,
+    globalHost?: string
+  ): Promise<Player[]> {
+    const url = `${this.url}/getplayersbyteamid/${teamid}`;
+    return this.httpRequest.get<Player[]>(url);
   }
 }

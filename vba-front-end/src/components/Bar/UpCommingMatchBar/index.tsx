@@ -17,9 +17,9 @@ type UpCommingMatchBarProps = {
 export const UpCommingMatchBar = (props: UpCommingMatchBarProps) => {
   return (
     <>
-      {/* <Link to></Link> */}
+      {/* <Link to={`/fixtures/match/${props.id}`}> */}
       {/* <span className={cx("__wrapper")}> */}
-      <a className={cx("__block")}>
+      <a href={`${props.id}`} className={cx("__block")}>
         <span className={cx("__block__homeName")}>
           <abbr title="Miami Heat">{props.homeName}</abbr>
         </span>
@@ -51,6 +51,7 @@ export const UpCommingMatchBar = (props: UpCommingMatchBarProps) => {
         </span>
       </a>
       {/* </span> */}
+      {/* </Link> */}
     </>
   );
 };

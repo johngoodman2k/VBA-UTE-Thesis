@@ -15,13 +15,14 @@ import {
 } from "../../Services/models";
 import { MatchEventAssistant } from "../../components/Match/MatchEventAssistant";
 import { MatchEventTimeLine } from "../../components/Match/MatchEventTimeLine";
-import { Modal } from "../../components/Modal";
+import { ModalBlock } from "../../components/Modal/ModalBlock";
 import { ContentWrapper } from "../../components/Container/ContentWrapper";
 import { vbaContext } from "../../Services/services";
 import { Match } from "../../Services/models";
 import { dateFormat } from "../../utils/dateFormat";
 import { useParams } from "react-router-dom";
 import { convertCompilerOptionsFromJson } from "typescript";
+import { RightClickModal } from "../../components/Modal/RightClickModal";
 
 const cx = classNames.bind(styles);
 
@@ -102,53 +103,93 @@ const test: MatchEventInterface[] = [
 ];
 const matchServices = vbaContext.getMatchServices();
 const teamServices = vbaContext.getTeamServices();
+const playerServices = vbaContext.getPlayerServices();
 export const MatchDetailPage = () => {
   const params = useParams();
   const [clickedId, setClickedId] = useState("");
   // const [clickedType, setClickedType] = useState("");
-  const [typeSelected, setTypeSelected] = useState("goal");
   const [cardType, setCardType] = useState("yellow");
-  const [side, setSide] = useState("home");
-  const [homePlayers, setHomePlayers] = useState<Team>();
-  const [awayPlayers, setAwayPlayers] = useState<Team>();
-
+  const [homePlayers, setHomePlayers] = useState<Player[]>([]);
+  const [awayPlayers, setAwayPlayers] = useState<Player[]>([]);
+  const [typeSelected, setTypeSelected] = useState("goal");
+  const [sideSelected, setSideSelected] = useState("home");
+  const [playerSelected, setPlayerSelected] = useState("");
+  const [assistantSelected, setAssistantSelected] = useState("");
+  const [subInSelected, setSubInSelected] = useState("");
+  const [subOffSelected, setSubOffSelected] = useState("");
   const [matchDetail, setMatchDetail] = useState<Match>();
+
   useEffect(() => {
     (async () => {
       const res = await matchServices.getMatchDetailsById(params.id);
-      console.log("113", res);
-      const res1 = await teamServices.getPlayersByTeamId(res.home.id);
-      const res2 = await teamServices.getPlayersByTeamId(res.away.id);
-      console.log("117", res1);
-      console.log("118", res2);
+
+      // const res1 = await teamServices.getPlayersByTeamId(res.home.id);
+      // const res2 = await teamServices.getPlayersByTeamId(res.away.id);
+      console.log("130", res);
+      const res1 = await playerServices.getPlayersByTeamId(res.home.id);
+      const res2 = await playerServices.getPlayersByTeamId(res.away.id);
+      console.log(res.home.id, res.away.id);
+
       setMatchDetail(res);
       setHomePlayers(res1);
       setAwayPlayers(res2);
+      const init =
+        sideSelected === "home" ? homePlayers[0].id : awayPlayers[0].id;
+      setAssistantSelected(init);
+      setPlayerSelected(init);
+      setSubInSelected(init);
+      setSubOffSelected(init);
     })();
   }, []);
+
+  const getPlayerById = (id: string): Player | undefined => {
+    let player = homePlayers?.find((p: any) => p.id === id);
+    console.log(player);
+    if (!player) player = awayPlayers?.find((p: any) => p.id === id);
+    return player;
+  };
+
+  const [show, setShow] = React.useState(false);
+  const [positions, setPositions] = React.useState({ x: 0, y: 0 });
 
   const createMatchEvent = async (e: any) => {
     e.preventDefault();
     const type = typeSelected;
-    const cardValue = cardType;
-    const sideValue = side;
+    const side = sideSelected;
+    console.log(assistantSelected);
+    const assistant = getPlayerById(assistantSelected);
     const homeResult = e.target.homeresult.value;
     const awayResult = e.target.awayresult.value;
-    const name = e.target.name.value;
-    const assistant = e.target.assistant.value;
+    let player = getPlayerById(playerSelected);
     const mins = e.target.mins.value;
-    const subIn = e.target.subin.value;
-    const subOff = e.target.suboff.value;
-    const yellowCard = e.target.yellow.value;
-    const redCard = e.target.red.value;
-    let processObj = { type: type, side: sideValue, mins: mins, player: [] };
-    // type === "goal" ? processObj.player.push({name: name,image: "", playernumber: ""})  : type ==="card" ? :
+    const card = cardType;
+    const subIn = getPlayerById(subInSelected);
+    const subOff = getPlayerById(subOffSelected);
 
-    //   const res = await matchServices.patchMatchDetailsById(
-    //     params.id,
-    //     { ...e, process: e.process.push()}
-
-    //   );
+    console.log(assistant);
+    // let processObj = {
+    //   type: type,
+    //   side: side,
+    //   mins: mins,
+    //   player: new Array<Player | undefined>(),
+    // };
+    // if (type === "goal") {
+    //   processObj.player.push(player, assistant);
+    // } else if (type === "sub") {
+    //   processObj.player.push(subIn, subOff);
+    // } else {
+    //   if (card === "red") {
+    //     if (player) {
+    //       player.card.red = (parseInt(player.card.red) + 1).toString();
+    //     }
+    //     processObj.player.push(player);
+    //   } else {
+    //     if (player) {
+    //       player.card.yellow = (parseInt(player.card.yellow) + 1).toString();
+    //     }
+    //     processObj.player.push(player);
+    //   }
+    // }
   };
 
   return (
@@ -258,6 +299,19 @@ export const MatchDetailPage = () => {
                       >
                         Edit
                       </li>
+                      {/* <li
+                        id="update"
+                        onClick={(e: any) =>
+                          e.currentTarget.id === "update"
+                            ? setClickedId("update")
+                            : ""
+                        }
+                        className={
+                          clickedId === "update" ? cx("__updateActive") : ""
+                        }
+                      >
+                        Update
+                      </li> */}
                     </ul>
                   </div>
                 </div>
@@ -267,8 +321,8 @@ export const MatchDetailPage = () => {
                     clickedId === "edit" ? cx("__active") : cx("__inactive")
                   }
                 >
-                  <Modal>
-                    <form>
+                  <ModalBlock>
+                    <form onSubmit={createMatchEvent}>
                       <section className="container mx-auto text-left">
                         <div className="max-w-[70%] text-7xl font-bold uppercase">
                           match detail
@@ -301,9 +355,9 @@ export const MatchDetailPage = () => {
                             >
                               <select
                                 className={`${cx("__modal__title--select")}`}
-                                value={side}
+                                value={sideSelected}
                                 onChange={(e: any) => {
-                                  setSide(e.target.value);
+                                  setSideSelected(e.target.value);
                                 }}
                               >
                                 <option value="home">Home</option>
@@ -346,7 +400,7 @@ export const MatchDetailPage = () => {
                                     <div className="inline">*</div>
                                   </label>
 
-                                  {side === "home" ? (
+                                  {sideSelected === "home" ? (
                                     <>
                                       <div
                                         className={`relative block ${cx(
@@ -354,17 +408,19 @@ export const MatchDetailPage = () => {
                                         )}`}
                                       >
                                         <select
+                                          value={playerSelected}
+                                          onChange={(e: any) => {
+                                            setPlayerSelected(e.target.value);
+                                          }}
                                           className={`${cx("__options")}`}
                                         >
-                                          {homePlayers?.players?.map(
-                                            (x: any) => {
-                                              return (
-                                                <option value={x.name}>
-                                                  {x.name}
-                                                </option>
-                                              );
-                                            }
-                                          )}
+                                          {homePlayers?.map((x: any) => {
+                                            return (
+                                              <option value={x.id}>
+                                                {x.name}
+                                              </option>
+                                            );
+                                          })}
                                         </select>
                                       </div>
                                     </>
@@ -376,17 +432,19 @@ export const MatchDetailPage = () => {
                                         )}`}
                                       >
                                         <select
+                                          value={playerSelected}
+                                          onChange={(e: any) => {
+                                            setPlayerSelected(e.target.value);
+                                          }}
                                           className={`${cx("__options")}`}
                                         >
-                                          {awayPlayers?.players?.map(
-                                            (x: any) => {
-                                              return (
-                                                <option value={x.name}>
-                                                  {x.name}
-                                                </option>
-                                              );
-                                            }
-                                          )}
+                                          {awayPlayers?.map((x: any) => {
+                                            return (
+                                              <option value={x.id}>
+                                                {x.name}
+                                              </option>
+                                            );
+                                          })}
                                         </select>
                                       </div>
                                     </>
@@ -397,7 +455,7 @@ export const MatchDetailPage = () => {
                                     Assistant&nbsp;
                                     <div className="inline">*</div>
                                   </label>
-                                  {side === "home" ? (
+                                  {sideSelected === "home" ? (
                                     <>
                                       <div
                                         className={`relative block ${cx(
@@ -405,17 +463,21 @@ export const MatchDetailPage = () => {
                                         )}`}
                                       >
                                         <select
+                                          value={assistantSelected}
+                                          onChange={(e: any) => {
+                                            setAssistantSelected(
+                                              e.target.value
+                                            );
+                                          }}
                                           className={`${cx("__options")}`}
                                         >
-                                          {homePlayers?.players?.map(
-                                            (x: any) => {
-                                              return (
-                                                <option value={x.name}>
-                                                  {x.name}
-                                                </option>
-                                              );
-                                            }
-                                          )}
+                                          {homePlayers?.map((x: any) => {
+                                            return (
+                                              <option value={x.id}>
+                                                {x.name}
+                                              </option>
+                                            );
+                                          })}
                                         </select>
                                       </div>
                                     </>
@@ -427,17 +489,21 @@ export const MatchDetailPage = () => {
                                         )}`}
                                       >
                                         <select
+                                          value={assistantSelected}
+                                          onChange={(e: any) => {
+                                            setAssistantSelected(
+                                              e.target.value
+                                            );
+                                          }}
                                           className={`${cx("__options")}`}
                                         >
-                                          {awayPlayers?.players?.map(
-                                            (z: any) => {
-                                              return (
-                                                <option value={z.name}>
-                                                  {z.name}
-                                                </option>
-                                              );
-                                            }
-                                          )}
+                                          {awayPlayers?.map((z: any) => {
+                                            return (
+                                              <option value={z.id}>
+                                                {z.name}
+                                              </option>
+                                            );
+                                          })}
                                         </select>
                                       </div>
                                     </>
@@ -467,9 +533,9 @@ export const MatchDetailPage = () => {
                             >
                               <select
                                 className={`${cx("__modal__title--select")}`}
-                                value={side}
+                                value={sideSelected}
                                 onChange={(e: any) => {
-                                  setSide(e.target.value);
+                                  setSideSelected(e.target.value);
                                 }}
                               >
                                 <option value="home">Home</option>
@@ -480,6 +546,7 @@ export const MatchDetailPage = () => {
                               Type of Card&nbsp;
                               <div className="inline">*</div>
                             </label>
+
                             <div>
                               <div
                                 className={`relative block ${cx("__dropdown")}`}
@@ -506,10 +573,55 @@ export const MatchDetailPage = () => {
                                     Name&nbsp;
                                     <div className="inline">*</div>
                                   </label>
-                                  <input
-                                    id="name"
-                                    className={`${cx("__modal__input--goal")}`}
-                                  ></input>
+                                  {sideSelected === "home" ? (
+                                    <>
+                                      <div
+                                        className={`relative block ${cx(
+                                          "__optionsNameCard"
+                                        )}`}
+                                      >
+                                        <select
+                                          value={playerSelected}
+                                          onChange={(e: any) => {
+                                            setPlayerSelected(e.target.value);
+                                          }}
+                                          className={`${cx("__options")}`}
+                                        >
+                                          {homePlayers?.map((x: any) => {
+                                            return (
+                                              <option value={x.id}>
+                                                {x.name}
+                                              </option>
+                                            );
+                                          })}
+                                        </select>
+                                      </div>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <div
+                                        className={`relative block ${cx(
+                                          "__optionsNameCard"
+                                        )}`}
+                                      >
+                                        <select
+                                          value={playerSelected}
+                                          onChange={(e: any) => {
+                                            setPlayerSelected(e.target.value);
+                                          }}
+                                          className={`${cx("__options")}`}
+                                        >
+                                          {awayPlayers?.map((x: any) => {
+                                            return (
+                                              <option value={x.id}>
+                                                {x.name}
+                                              </option>
+                                            );
+                                          })}
+                                        </select>
+                                      </div>
+                                    </>
+                                  )}
                                 </div>
                                 <div>
                                   <label className={`${cx("__modal__title")}`}>
@@ -536,9 +648,9 @@ export const MatchDetailPage = () => {
                               >
                                 <select
                                   className={`${cx("__modal__title--select")}`}
-                                  value={side}
+                                  value={sideSelected}
                                   onChange={(e: any) => {
-                                    setSide(e.target.value);
+                                    setSideSelected(e.target.value);
                                   }}
                                 >
                                   <option value="home">Home</option>
@@ -556,20 +668,110 @@ export const MatchDetailPage = () => {
                                     Substituition In&nbsp;
                                     <div className="inline">*</div>
                                   </label>
-                                  <input
-                                    id="subin"
-                                    className={`${cx("__modal__input--goal")}`}
-                                  ></input>
+                                  {sideSelected === "home" ? (
+                                    <>
+                                      <div
+                                        className={`relative block ${cx(
+                                          "__optionsDropdown"
+                                        )}`}
+                                      >
+                                        <select
+                                          value={subInSelected}
+                                          onChange={(e: any) => {
+                                            setSubInSelected(e.target.value);
+                                          }}
+                                          className={`${cx("__options")}`}
+                                        >
+                                          {homePlayers?.map((x: any) => {
+                                            return (
+                                              <option value={x.id}>
+                                                {x.name}
+                                              </option>
+                                            );
+                                          })}
+                                        </select>
+                                      </div>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <div
+                                        className={`relative block ${cx(
+                                          "__optionsDropdown"
+                                        )}`}
+                                      >
+                                        <select
+                                          value={subInSelected}
+                                          onChange={(e: any) => {
+                                            setSubInSelected(e.target.value);
+                                          }}
+                                          className={`${cx("__options")}`}
+                                        >
+                                          {awayPlayers?.map((x: any) => {
+                                            return (
+                                              <option value={x.id}>
+                                                {x.name}
+                                              </option>
+                                            );
+                                          })}
+                                        </select>
+                                      </div>
+                                    </>
+                                  )}
                                 </div>
                                 <div>
                                   <label className={`${cx("__modal__title")}`}>
                                     Substituition Off&nbsp;
                                     <div className="inline">*</div>
                                   </label>
-                                  <input
-                                    id="suboff"
-                                    className={`${cx("__modal__input--goal")}`}
-                                  ></input>
+                                  {sideSelected === "home" ? (
+                                    <>
+                                      <div
+                                        className={`relative block ${cx(
+                                          "__optionsDropdown"
+                                        )}`}
+                                      >
+                                        <select
+                                          value={subOffSelected}
+                                          onChange={(e: any) => {
+                                            setSubOffSelected(e.target.value);
+                                          }}
+                                          className={`${cx("__options")}`}
+                                        >
+                                          {homePlayers?.map((x: any) => {
+                                            return (
+                                              <option value={x.id}>
+                                                {x.name}
+                                              </option>
+                                            );
+                                          })}
+                                        </select>
+                                      </div>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <div
+                                        className={`relative block ${cx(
+                                          "__optionsDropdown"
+                                        )}`}
+                                      >
+                                        <select
+                                          value={subOffSelected}
+                                          onChange={(e: any) => {
+                                            setSubOffSelected(e.target.value);
+                                          }}
+                                          className={`${cx("__options")}`}
+                                        >
+                                          {awayPlayers?.map((x: any) => {
+                                            return (
+                                              <option value={x.id}>
+                                                {x.name}
+                                              </option>
+                                            );
+                                          })}
+                                        </select>
+                                      </div>
+                                    </>
+                                  )}
                                 </div>
                                 <div>
                                   <label className={`${cx("__modal__title")}`}>
@@ -593,30 +795,33 @@ export const MatchDetailPage = () => {
                                   "__modal__action__wrapper--adjust"
                                 )}
                               >
-                                <li
-                                  id="save"
-                                  onClick={(e: any) =>
-                                    e.currentTarget.id === "save"
-                                      ? setClickedId("save")
-                                      : ""
-                                  }
-                                  className={
-                                    clickedId === "save"
-                                      ? cx("__editActive")
-                                      : ""
-                                  }
-                                >
-                                  Save
+                                <li>
+                                  <button
+                                    id="save"
+                                    type="submit"
+                                    onClick={(e: any) =>
+                                      e.currentTarget.id === "save"
+                                        ? setClickedId("save")
+                                        : ""
+                                    }
+                                    className={
+                                      clickedId === "save"
+                                        ? cx("__editActive")
+                                        : ""
+                                    }
+                                  >
+                                    Save
+                                  </button>
                                 </li>
                                 <li
-                                  id="save"
+                                  id="close"
                                   onClick={(e: any) =>
-                                    e.currentTarget.id === "save"
-                                      ? setClickedId("save")
+                                    e.currentTarget.id === "close"
+                                      ? setClickedId("close")
                                       : ""
                                   }
                                   className={
-                                    clickedId === "save"
+                                    clickedId === "close"
                                       ? cx("__editActive")
                                       : ""
                                   }
@@ -629,7 +834,7 @@ export const MatchDetailPage = () => {
                         </div>
                       </section>
                     </form>
-                  </Modal>
+                  </ModalBlock>
                 </div>
 
                 {/* scorebox */}
@@ -726,12 +931,14 @@ export const MatchDetailPage = () => {
                           <span className={cx("__timeLine__badge")}>
                             <span className={cx("__timeLine__badge__block")}>
                               <img
-                                src="https://logos-world.net/wp-content/uploads/2020/05/Miami-Heat-Logo-2000-Present.png"
+                                src={
+                                  matchDetail ? matchDetail.home.teamlogo : ""
+                                }
                                 className={cx("__timeLine__badge--adjust")}
                               ></img>
                             </span>
                           </span>
-                          MIA
+                          {matchDetail ? matchDetail.home.teamname : ""}
                         </a>
                         <div className={cx("__timeLine__crossbar")}>
                           <div className={cx("__timeLine__crossbar--adjust")}>
@@ -768,12 +975,14 @@ export const MatchDetailPage = () => {
                           <span className={cx("__timeLine__badge")}>
                             <span className={cx("__timeLine__badge__block")}>
                               <img
-                                src="https://logos-world.net/wp-content/uploads/2020/05/Miami-Heat-Logo-2000-Present.png"
+                                src={
+                                  matchDetail ? matchDetail.away.teamlogo : ""
+                                }
                                 className={cx("__timeLine__badge--adjust")}
                               ></img>
                             </span>
                           </span>
-                          MIA
+                          {matchDetail ? matchDetail.away.teamname : ""}
                         </a>
                       </div>
                     </div>

@@ -6,6 +6,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 2rem;
+  position: relative;
 
   &__text {
     font-size: 1rem;

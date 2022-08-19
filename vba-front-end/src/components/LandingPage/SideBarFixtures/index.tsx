@@ -39,12 +39,13 @@ export const SidebarFixture = () => {
             <div className={cx("__matchList")}>
               <time>{dateFormat(x.createdAt)}</time>
               <div className={cx("__matchList--adjust")}>
-                {x.matches.rounds?.map((y: any) => {
+                {x.matches.map((y: any) => {
                   return (
                     <UpCommingMatchBar
-                      homeName={y.home.teamname}
+                      id={y.id}
+                      homeName={y.home.shortname ? y.home.shortname : ""}
                       homeBadge={y.home.teamlogo}
-                      awayName={y.away.teamname}
+                      awayName={y.away.shortname ? y.away.shortname : ""}
                       awayBadge={y.away.teamlogo}
                       time={timeFormat(y.matchDay).toString()}
                     ></UpCommingMatchBar>

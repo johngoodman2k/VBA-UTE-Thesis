@@ -24,7 +24,7 @@ export const FixturesPage = () => {
   useEffect(() => {
     (async () => {
       const res = await VbaServices.getTournamentById("2");
-      console.log("27", res);
+      // console.log("27", res);
       setTournament(res);
     })();
   }, []);

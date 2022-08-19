@@ -22,3 +22,10 @@ export interface TeamServicesRoot {
     globalHost?: string
   ): Promise<Team>;
 }
+
+export interface PlayerServicesRoot {
+  getPlayersByTeamId(
+    id: string | undefined,
+    globalHost?: string
+  ): Promise<Player[]>;
+}

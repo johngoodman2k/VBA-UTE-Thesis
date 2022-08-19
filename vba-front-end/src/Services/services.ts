@@ -1,8 +1,14 @@
 import axios from "axios";
 import { HttpRequest } from "axios-core";
-import { MatchServices, TeamServices, TournamentServices } from ".";
+import {
+  MatchServices,
+  PlayerServices,
+  TeamServices,
+  TournamentServices,
+} from ".";
 import {
   MatchServicesRoot,
+  PlayerServicesRoot,
   TeamServicesRoot,
   TournamentServicesRoot,
 } from "./servicesroot";
@@ -12,6 +18,7 @@ class VbaContext {
   public tournamentServices?: TournamentServicesRoot;
   public matchServices?: MatchServicesRoot;
   public teamServices?: TeamServicesRoot;
+  public playerServices?: PlayerServicesRoot;
 
   getTournamentServices(): TournamentServicesRoot {
     if (!this.tournamentServices) {
@@ -25,7 +32,7 @@ class VbaContext {
   getMatchServices(): MatchServicesRoot {
     if (!this.matchServices) {
       this.matchServices = new MatchServices(
-        "http://localhost:8080/matchs",
+        "http://localhost:8080/matches",
         httpRequest
       );
     }
@@ -40,6 +47,16 @@ class VbaContext {
       );
     }
     return this.teamServices;
+  }
+
+  getPlayerServices(): PlayerServicesRoot {
+    if (!this.playerServices) {
+      this.playerServices = new PlayerServices(
+        "http://localhost:8080/players",
+        httpRequest
+      );
+    }
+    return this.playerServices;
   }
 }
 export const vbaContext = new VbaContext();

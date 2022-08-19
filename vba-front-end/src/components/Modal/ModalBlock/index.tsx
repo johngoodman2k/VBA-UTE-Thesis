@@ -8,7 +8,7 @@ type ModalProps = {
   children: React.ReactNode;
 };
 
-export const Modal = (props: ModalProps) => {
+export const ModalBlock = (props: ModalProps) => {
   return (
     <div className={`${cx("wrapper")}`}>
       <div className={`${cx("content")} container`}>{props.children}</div>
