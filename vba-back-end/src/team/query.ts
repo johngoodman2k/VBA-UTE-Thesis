@@ -1,5 +1,9 @@
 import { Statement } from "query-core";
 import { TeamFilter } from "./team";
+
+export const getPlayerById = "select * from players where  id = $1";
+export const getTeamById = "select * from teams where id = $1";
+
 // export function buildQuery(s: TeamFilter): Statement {
 //   let query = `select * from teams`;
 //   const where = [];
