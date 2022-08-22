@@ -30,7 +30,7 @@ export class TeamController extends Controller<Team, string, TeamFilter> {
     const newPlayers = player.map((_item) => ({
       ..._item,
       id: nanoid(),
-      createAt: new Date(Date.now()),
+      createdAt: new Date(Date.now()),
     }));
     console.log(newPlayers);
 

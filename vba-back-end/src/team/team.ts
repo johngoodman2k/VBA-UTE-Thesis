@@ -82,7 +82,7 @@ export const teamModel: Attributes = {
   },
   shortname: { type: "string" },
   players: { type: "array" },
-  createdAt: { type: "datetime" },
+  createdAt: { type: "datetime", default: new Date(Date.now()) },
 };
 
 export interface TeamFilter extends Filter {
