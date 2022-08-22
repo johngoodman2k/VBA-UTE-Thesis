@@ -11,6 +11,8 @@ export class SqlPlayerRepository
     super(db, "players", playerModel);
   }
   getPlayersByTeamId(teamId: Team): Promise<Player[]> {
-    return this.query<Player>(getPlayersByTeamId, [teamId]);
+    return this.query<Player>("select * from players where $1 = ANY(teams)", [
+      teamId,
+    ]);
   }
 }

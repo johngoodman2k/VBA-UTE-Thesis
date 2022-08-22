@@ -23,6 +23,7 @@ export interface Player {
   image: string;
   shirtNumber: string;
   createdAt: Date;
+  // teams: Team[];
   card: Card;
 }
 
@@ -43,16 +44,21 @@ export interface Tournament {
 }
 
 export interface TeamRepository extends Repository<Team, string> {
-  getTeamByTournamentId(tournamentId: string): Promise<Team[]>;
+  // getTeamByTournamentId(tournamentId: string): Promise<Team[]>;
+  getTeamById(teamId: string): Promise<Team[]>;
+  updateTeam(team: Team, ctx?: any): Promise<number>;
 }
 
 export interface PlayerRepository extends Repository<Player, string> {
-  addPlayer(player: Player, ctx?: any): Promise<number>;
+  getPlayerById(player: string, ctx?: any): Promise<Player[]>;
+  addPlayer(players: Player[], ctx?: any): Promise<number>;
 }
-
 export interface TeamService extends Service<Team, string, TeamFilter> {
-  getTeamByTournamentId(tournamentId: string): Promise<Team[]>;
-  addPlayer(player: Player, ctx?: any): Promise<number>;
+  // getTeamByTournamentId(tournamentId: string): Promise<Team[]>;
+  getPlayerById(player: string, ctx?: any): Promise<Player[]>;
+  getTeamById(teamId: string): Promise<Team[]>;
+  updateTeam(team: Team, ctx?: any): Promise<number>;
+  addPlayer(players: Player[], ctx?: any): Promise<number>;
 }
 
 export const teamModel: Attributes = {
@@ -76,7 +82,7 @@ export const teamModel: Attributes = {
   },
   shortname: { type: "string" },
   players: { type: "array" },
-  createdAt: { type: "datetime" },
+  createdAt: { type: "datetime", default: new Date(Date.now()) },
 };
 
 export interface TeamFilter extends Filter {

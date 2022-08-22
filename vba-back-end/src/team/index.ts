@@ -26,11 +26,20 @@ export class TeamManager
   ) {
     super(search, teamrepository);
   }
-  getTeamByTournamentId(tournamentId: string): Promise<Team[]> {
-    return this.teamrepository.getTeamByTournamentId(tournamentId);
+  // getTeamByTournamentId(tournamentId: string): Promise<Team[]> {
+  //   return this.teamrepository.getTeamByTournamentId(tournamentId);
+  // }
+  getPlayerById(player: string, ctx?: any): Promise<Player[]> {
+    return this.playerrepository.getPlayerById(player, ctx);
   }
-  addPlayer(player: Player, ctx?: any): Promise<number> {
-    return this.playerrepository.addPlayer(player, ctx);
+  updateTeam(team: Team, ctx?: any): Promise<number> {
+    return this.teamrepository.updateTeam(team, ctx);
+  }
+  getTeamById(teamId: string): Promise<Team[]> {
+    return this.teamrepository.getTeamById(teamId);
+  }
+  addPlayer(players: Player[], ctx?: any): Promise<number> {
+    return this.playerrepository.addPlayer(players, ctx);
   }
 }
 export function useTeamService(db: DB, mapper?: TemplateMap): TeamService {

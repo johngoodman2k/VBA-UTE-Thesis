@@ -34,7 +34,7 @@ export function routes(app: Application, ctx: ApplicationContext): void {
   app.put("/players/:id", ctx.player.update);
   app.patch("/players/:id", ctx.player.patch);
   app.delete("/players/:id", ctx.player.delete);
-  app.get("/players/getplayersbyteamid/:id", ctx.player.getPlayersByTeamId);
+  app.get("/players/getplayersbyteamid/:teamId", ctx.player.getPlayersByTeamId);
 
   app.post("/matches/search", ctx.match.search);
   app.get("/matches/search", ctx.match.search);
@@ -52,5 +52,8 @@ export function routes(app: Application, ctx: ApplicationContext): void {
   app.put("/teams/:id", ctx.team.update);
   app.patch("/teams/:id", ctx.team.patch);
   app.delete("/teams/:id", ctx.team.delete);
-  app.get("/teams/:tournament", ctx.team.getTeamByTournamentId);
+  app.post("/teams/addplayertoteam");
+  app.post("/teams/addplayertoteam/:teamId", ctx.team.addPlayerToTeam);
+
+  // app.get("/teams/:tournament", ctx.team.getTeamByTournamentId);
 }
