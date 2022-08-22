@@ -23,6 +23,7 @@ interface Process {
   type: string;
   mins: string;
   player: Player[];
+  cardcolor: string;
   side: string;
 }
 interface Player {

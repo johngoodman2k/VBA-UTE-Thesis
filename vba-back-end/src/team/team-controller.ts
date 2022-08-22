@@ -27,9 +27,12 @@ export class TeamController extends Controller<Team, string, TeamFilter> {
       return res.status(400).json({ err: "Player is empty" });
     }
 
+    const cardDefault = { red: "0", yellow: "0" };
+
     const newPlayers = player.map((_item) => ({
       ..._item,
       id: nanoid(),
+      card: cardDefault,
       createdAt: new Date(Date.now()),
     }));
     console.log(newPlayers);

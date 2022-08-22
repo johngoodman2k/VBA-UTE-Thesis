@@ -38,7 +38,7 @@ create table matches (
     referee  character varying(40),
     spectators character varying(40),
     assistance jsonb,
-    process jsonb,
+    process jsonb[],
     endmatch boolean default false,
     constraint matchs_pkey primary key (id)
 ); 
