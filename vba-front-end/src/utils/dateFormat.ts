@@ -4,5 +4,5 @@ export const dateFormat = (date: Date) => {
 };
 
 export const timeFormat = (date: Date) => {
-  return format(new Date(date), " HH:mm");
+  return format(new Date(date), " HH:mm:ss");
 };

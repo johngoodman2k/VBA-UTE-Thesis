@@ -10,6 +10,7 @@ import { MatchEvent } from "../../components/Match/MatchEvent";
 import {
   MatchEventInterface,
   Player,
+  Process,
   Team,
   Tournament,
 } from "../../Services/models";
@@ -111,41 +112,45 @@ export const MatchDetailPage = () => {
   const [cardType, setCardType] = useState("yellow");
   const [homePlayers, setHomePlayers] = useState<Player[]>([]);
   const [awayPlayers, setAwayPlayers] = useState<Player[]>([]);
+
   const [typeSelected, setTypeSelected] = useState("goal");
   const [sideSelected, setSideSelected] = useState("home");
+
   const [playerSelected, setPlayerSelected] = useState("");
   const [assistantSelected, setAssistantSelected] = useState("");
   const [subInSelected, setSubInSelected] = useState("");
   const [subOffSelected, setSubOffSelected] = useState("");
+  const [reload, setReload] = useState(false);
+
   const [matchDetail, setMatchDetail] = useState<Match>();
 
   useEffect(() => {
     (async () => {
       const res = await matchServices.getMatchDetailsById(params.id);
-
-      // const res1 = await teamServices.getPlayersByTeamId(res.home.id);
-      // const res2 = await teamServices.getPlayersByTeamId(res.away.id);
-      console.log("130", res);
       const res1 = await playerServices.getPlayersByTeamId(res.home.id);
       const res2 = await playerServices.getPlayersByTeamId(res.away.id);
-      console.log(res.home.id, res.away.id);
 
       setMatchDetail(res);
       setHomePlayers(res1);
       setAwayPlayers(res2);
       const init =
-        sideSelected === "home" ? homePlayers[0].id : awayPlayers[0].id;
+        sideSelected === "home" && res1.length !== 0
+          ? res1[0].id
+          : sideSelected === "away" && res2.length !== 0
+          ? res2[0].id
+          : "";
       setAssistantSelected(init);
       setPlayerSelected(init);
       setSubInSelected(init);
       setSubOffSelected(init);
+      console.log("129", res);
     })();
-  }, []);
+  }, [params.id, sideSelected, reload]);
 
   const getPlayerById = (id: string): Player | undefined => {
-    let player = homePlayers?.find((p: any) => p.id === id);
+    let player = homePlayers.find((p: any) => p.id === id);
     console.log(player);
-    if (!player) player = awayPlayers?.find((p: any) => p.id === id);
+    if (!player) player = awayPlayers.find((p: any) => p.id === id);
     return player;
   };
 
@@ -157,39 +162,77 @@ export const MatchDetailPage = () => {
     const type = typeSelected;
     const side = sideSelected;
     console.log(assistantSelected);
-    const assistant = getPlayerById(assistantSelected);
-    const homeResult = e.target.homeresult.value;
-    const awayResult = e.target.awayresult.value;
+
     let player = getPlayerById(playerSelected);
+    let homeResult = "";
+    let awayResult = "";
     const mins = e.target.mins.value;
-    const card = cardType;
+    let card = "";
     const subIn = getPlayerById(subInSelected);
     const subOff = getPlayerById(subOffSelected);
 
-    console.log(assistant);
-    // let processObj = {
-    //   type: type,
-    //   side: side,
-    //   mins: mins,
-    //   player: new Array<Player | undefined>(),
-    // };
-    // if (type === "goal") {
-    //   processObj.player.push(player, assistant);
-    // } else if (type === "sub") {
-    //   processObj.player.push(subIn, subOff);
-    // } else {
-    //   if (card === "red") {
-    //     if (player) {
-    //       player.card.red = (parseInt(player.card.red) + 1).toString();
-    //     }
-    //     processObj.player.push(player);
-    //   } else {
-    //     if (player) {
-    //       player.card.yellow = (parseInt(player.card.yellow) + 1).toString();
-    //     }
-    //     processObj.player.push(player);
-    //   }
-    // }
+    let processObj = {
+      type: type,
+      side: side,
+      mins: mins,
+      player: new Array<Player>(),
+    };
+    if (player) {
+      if (processObj.type === "goal") {
+        const assistant = getPlayerById(assistantSelected);
+        homeResult = e.target.homeresult.value;
+        awayResult = e.target.awayresult.value;
+        if (assistant) processObj.player.push(player, assistant);
+      } else if (processObj.type === "sub") {
+        if (subIn && subOff) processObj.player.push(subIn, subOff);
+      } else {
+        card = cardType;
+        if (card === "red") {
+          player.card.red = (parseInt(player?.card.red) + 1).toString();
+          processObj.player.push(player);
+        } else {
+          player.card.yellow = (parseInt(player?.card.yellow) + 1).toString();
+          processObj.player.push(player);
+        }
+      }
+    }
+
+    let newProcess = new Array<Process>();
+    if (matchDetail?.process) {
+      matchDetail?.process.push(processObj);
+      newProcess = [...newProcess, ...matchDetail?.process];
+    } else {
+      newProcess.push(processObj);
+    }
+
+    const getMatchProcess = (
+      type: string,
+      process: Process[],
+      homeresult: string,
+      awayresult: string
+    ) => {
+      const result = { process: process };
+      if (type === "goal") {
+        return { ...result, homeResult: homeresult, awayResult: awayresult };
+      } else {
+        return result;
+      }
+    };
+
+    const matchProcess = getMatchProcess(
+      type,
+      newProcess,
+      homeResult,
+      awayResult
+    );
+
+    const res3 = await matchServices.patchMatchDetailsById(
+      params.id,
+      matchProcess
+    );
+
+    setReload(!reload);
+    console.log("203", res3);
   };
 
   return (
@@ -844,85 +887,111 @@ export const MatchDetailPage = () => {
                       <MatchResultDetailBar
                         homeBadge={matchDetail ? matchDetail.home.teamlogo : ""}
                         homeName={matchDetail ? matchDetail.home.teamname : ""}
-                        homeResult={
-                          matchDetail ? matchDetail.home.homeResult : ""
-                        }
+                        homeResult={matchDetail ? matchDetail.homeResult : ""}
                         awayBadge={matchDetail ? matchDetail.away.teamlogo : ""}
                         awayName={matchDetail ? matchDetail.away.teamname : ""}
-                        awayResult={
-                          matchDetail ? matchDetail.away.awayResult : ""
-                        }
+                        awayResult={matchDetail ? matchDetail.awayResult : ""}
                       ></MatchResultDetailBar>
 
                       <div className={cx("__matchStats")}>
                         <div className={cx("__matchStats__halfTime")}>
-                          <span>Half Time</span>1 - 0
+                          <span>Half Time</span>
+                          {matchDetail ? matchDetail.homeResult : ""} -{" "}
+                          {matchDetail ? matchDetail.awayResult : ""}
                         </div>
                       </div>
                       <div className={cx("__matchStats__kickOff")}>
                         KickOff:
-                        <strong> time</strong>
+                        <strong>
+                          {matchDetail
+                            ? dateFormat(matchDetail.matchDay).toString()
+                            : ""}
+                        </strong>
                       </div>
                       <div className={cx("__matchEvents")}>
                         <div className={cx("__matchEvents__home")}>
-                          {test.map((x: any) => {
-                            return x.side === "home" ? (
-                              <MatchEvent
-                                playerName={x.playerName}
-                                mins={x.mins}
-                                side={x.side}
-                                type={x.type}
-                              ></MatchEvent>
-                            ) : (
-                              <></>
-                            );
-                          })}
+                          {matchDetail
+                            ? matchDetail.process?.map((x: any) => {
+                                return x.side === "home" ? (
+                                  <MatchEvent
+                                    playerName={
+                                      x.player ? x.player[0].name : ""
+                                    }
+                                    side={x.side}
+                                    type={x.type}
+                                    mins={x.mins}
+                                  ></MatchEvent>
+                                ) : (
+                                  <></>
+                                );
+                              })
+                            : ""}
                         </div>
 
                         <div className={cx("__matchEvents__away")}>
-                          {test.map((x: any) => {
-                            return x.side === "away" ? (
-                              <MatchEvent
-                                playerName={x.playerName}
-                                mins={x.mins}
-                                side={x.side}
-                                type={x.type}
-                              ></MatchEvent>
-                            ) : (
-                              <></>
-                            );
-                          })}
+                          {matchDetail
+                            ? matchDetail.process?.map((x: any) => {
+                                return x.side === "away" ? (
+                                  <MatchEvent
+                                    playerName={
+                                      x.player.length !== 0
+                                        ? x.player[0].name
+                                        : ""
+                                    }
+                                    side={x.side}
+                                    type={x.type}
+                                    mins={x.mins}
+                                  ></MatchEvent>
+                                ) : (
+                                  <></>
+                                );
+                              })
+                            : ""}
                         </div>
                       </div>
 
                       <div className={cx("__assists")}>
                         <div className={cx("__assists__title")}>Assists</div>
                         <div className={cx("__assistsHome")}>
-                          {test.map((x: any) => {
-                            return x.assistance != null && x.side === "home" ? (
-                              <MatchEventAssistant
-                                assistance={x.assistance}
-                                side={x.side}
-                                mins={x.mins}
-                              ></MatchEventAssistant>
-                            ) : (
-                              <></>
-                            );
-                          })}
+                          {matchDetail
+                            ? matchDetail.process?.map((x: any) => {
+                                return x.side === "home" &&
+                                  x.type === "goal" ? (
+                                  <MatchEventAssistant
+                                    assistance={
+                                      x.player.length !== 0
+                                        ? x.player[1].name
+                                        : ""
+                                    }
+                                    side={x.side}
+                                    mins={x.mins}
+                                  ></MatchEventAssistant>
+                                ) : (
+                                  <></>
+                                );
+                              })
+                            : ""}
                         </div>
 
                         <div className={cx("__assistsAway")}>
-                          {test.map((x: any) => {
-                            return x.assistance != null && x.side === "away" ? (
-                              <MatchEventAssistant
-                                assistance={x.assistance}
-                                side={x.side}
-                                mins={x.mins}
-                              ></MatchEventAssistant>
-                            ) : (
-                              <></>
-                            );
-                          })}
+                          {matchDetail
+                            ? matchDetail.process?.map((x: any) => {
+                                return x.side === "away" &&
+                                  x.type === "goal" ? (
+                                  <MatchEventAssistant
+                                    assistance={
+                                      x.player.length !== 0
+                                        ? x.player[1].name
+                                        : ""
+                                    }
+                                    side={x.side}
+                                    mins={x.mins}
+                                  ></MatchEventAssistant>
+                                ) : (
+                                  <></>
+                                );
+                              })
+                            : ""}
                         </div>
                       </div>
 
@@ -944,31 +1013,33 @@ export const MatchDetailPage = () => {
                           <div className={cx("__timeLine__crossbar--adjust")}>
                             HT
                           </div>
-                          {test.map((x: any) => {
-                            return (
-                              <MatchEventTimeLine
-                                type={x.type}
-                                mins={x.mins}
-                                homeBadge={x.homeBadge}
-                                homeName={x.homeName}
-                                homeResult={x.homeResult}
-                                awayBadge={x.awayBadge}
-                                awayName={x.awayName}
-                                awayResult={x.awayResult}
-                                playerName={x.playerName}
-                                playerImg={x.playerImg}
-                                playerNumber={x.playerNumber}
-                                assistance={x.assistance}
-                                subOn={x.subOn}
-                                subOnImg={x.subOnImg}
-                                subOnNumber={x.subOnNumber}
-                                subOff={x.subOff}
-                                subOffImg={x.subOffImg}
-                                subOffNumber={x.subOffNumber}
-                                side={x.side}
-                              ></MatchEventTimeLine>
-                            );
-                          })}
+                          {matchDetail
+                            ? matchDetail.process.map((x: any) => {
+                                return (
+                                  <MatchEventTimeLine
+                                    type={x.type}
+                                    mins={x.mins}
+                                    homeBadge={matchDetail.home.teamlogo}
+                                    homeName={matchDetail.home.teamname}
+                                    homeResult={matchDetail.homeResult}
+                                    awayBadge={matchDetail.away.teamlogo}
+                                    awayName={matchDetail.away.teamname}
+                                    awayResult={matchDetail.awayResult}
+                                    playerName={x.player[0].name}
+                                    playerImg={x.player[0].image}
+                                    playerNumber={x.player[0].shirtnumber}
+                                    assistance={x.player[1].name}
+                                    subOn={x.player[0].name}
+                                    subOnImg={x.player[0].image}
+                                    subOnNumber={x.player[0].shirtnumber}
+                                    subOff={x.player[1].name}
+                                    subOffImg={x.player[1].image}
+                                    subOffNumber={x.player[1].shirtnumber}
+                                    side={x.side}
+                                  ></MatchEventTimeLine>
+                                );
+                              })
+                            : ""}
                         </div>
 
                         <a className={cx("__timeLine__team")}>

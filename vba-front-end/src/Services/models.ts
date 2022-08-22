@@ -107,7 +107,13 @@ export interface Match {
   referee?: string;
   spectators?: string;
   assistance?: Player;
-  process?: Process[];
+  process: Process[];
+}
+
+export interface MatchProcess {
+  homeResult?: string;
+  awayResult?: string;
+  process: Process[] | undefined;
 }
 
 export interface Process {

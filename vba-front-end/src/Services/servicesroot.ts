@@ -1,4 +1,11 @@
-import { Match, Player, Process, Team, Tournament } from "./models";
+import {
+  Match,
+  MatchProcess,
+  Player,
+  Process,
+  Team,
+  Tournament,
+} from "./models";
 
 export interface TournamentServicesRoot {
   getTournamentById(id: string, globalHost?: string): Promise<Tournament>;
@@ -11,7 +18,7 @@ export interface MatchServicesRoot {
   ): Promise<Match>;
   patchMatchDetailsById(
     id: string | undefined,
-    obj: Match | Process | Date,
+    obj: Match | Process | Date | MatchProcess,
     globalHost?: string
   ): Promise<Match>;
 }
