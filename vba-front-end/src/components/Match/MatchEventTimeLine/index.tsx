@@ -11,14 +11,14 @@ import { ReactComponent as SubOff } from "../../../assets/images/suboff-com.svg"
 import { ReactComponent as SubOn } from "../../../assets/images/subon-com.svg";
 
 type TournamentEventProps = {
-  type: "Score" | "Substitution" | "Red Card" | "Yellow Card";
+  type: string;
   mins: number;
   homeBadge: string;
   homeName: string;
-  homeResult: number;
+  homeResult: string;
   awayBadge: string;
   awayName: string;
-  awayResult: number;
+  awayResult: string;
   playerName?: string;
   playerImg?: string;
   playerNumber?: number;
@@ -29,7 +29,7 @@ type TournamentEventProps = {
   subOff?: string;
   subOffImg?: string;
   subOffNumber?: number;
-  side: "home" | "away";
+  side: string;
 };
 
 const cx = classNames.bind(styles);
@@ -45,11 +45,11 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
   const headerIcon = cx("tournamentEvent__inforContainer__icon--adjust");
 
   const checkIcon: any = (value: string, type: string) => {
-    type === "Substitution" ? (
+    type === "sub" ? (
       <SubstitutionLogo className={value}></SubstitutionLogo>
-    ) : type === "Score" ? (
+    ) : type === "goal" ? (
       <SoccerLogo className={value}></SoccerLogo>
-    ) : type === "Red Card" ? (
+    ) : type === "card" ? (
       <RedCardLogo className={value}></RedCardLogo>
     ) : (
       <YellowCardLogo className={value}></YellowCardLogo>
@@ -61,11 +61,11 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
       style={{ left: `${props.mins}%` }}
     >
       <span>
-        {props.type === "Substitution" ? (
+        {props.type === "sub" ? (
           <SubstitutionLogo className={iconClasses}></SubstitutionLogo>
-        ) : props.type === "Score" ? (
+        ) : props.type === "goal" ? (
           <SoccerLogo className={iconClasses}></SoccerLogo>
-        ) : props.type === "Red Card" ? (
+        ) : props.type === "card" ? (
           <RedCardLogo className={iconClasses}></RedCardLogo>
         ) : (
           <YellowCardLogo className={iconClasses}></YellowCardLogo>
@@ -78,11 +78,11 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
         <div className={cx("__wrapper")}>
           <div className={`${cx("tournamentEvent__inforContainer__header")}`}>
             <div className={cx("tournamentEvent__inforContainer__icon")}>
-              {props.type === "Substitution" ? (
+              {props.type === "sub" ? (
                 <SubstitutionLogo className={headerIcon}></SubstitutionLogo>
-              ) : props.type === "Score" ? (
+              ) : props.type === "goal" ? (
                 <SoccerLogo className={headerIcon}></SoccerLogo>
-              ) : props.type === "Red Card" ? (
+              ) : props.type === "card" ? (
                 <RedCardLogo className={headerIcon}></RedCardLogo>
               ) : (
                 <YellowCardLogo className={headerIcon}></YellowCardLogo>
@@ -92,7 +92,7 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
             <time className={cx("tournamentEvent__inforContainer__time")}>
               {props.mins}
             </time>
-            {props.type}
+            <span className="uppercase"> {props.type}</span>
             <div className={cx("tournamentEvent__inforContainer__teamScore")}>
               <a className={cx("tournamentEvent__inforContainer__team")}>
                 <span
@@ -161,7 +161,7 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
             </div>
           </div>
 
-          {props.type === "Score" ? (
+          {props.type === "goal" ? (
             <div className={cx("tournamentEvent__inforContent")}>
               <img
                 src={props.playerImg}
@@ -189,7 +189,7 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
                 </div>
               </div>
             </div>
-          ) : props.type === "Substitution" ? (
+          ) : props.type === "sub" ? (
             <>
               {" "}
               <div
@@ -273,7 +273,7 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
                 </div>
               </div>
             </>
-          ) : props.type === "Red Card" ? (
+          ) : props.type === "card" ? (
             <>
               <div className={cx("tournamentEvent__inforContent")}>
                 <img

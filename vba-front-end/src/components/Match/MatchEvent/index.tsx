@@ -7,10 +7,10 @@ import { ReactComponent as RedCardLogo } from "../../../assets/images/redcard-co
 import { ReactComponent as YellowCardLogo } from "../../../assets/images/yellowcard-com.svg";
 
 type MatchEventProps = {
-  type: "Score" | "Red Card" | "Yellow Card" | "Substitution";
-  side: "home" | "away";
+  type: string;
+  side?: "home" | "away";
   playerName: string;
-  mins: number;
+  mins?: number;
 };
 
 const cx = classNames.bind(styles);
@@ -27,16 +27,16 @@ export const MatchEvent = (props: MatchEventProps) => {
 
   return (
     <>
-      {props.type !== "Substitution" ? (
+      {props.type !== "sub" ? (
         <div className={checkMatchEventBlock}>
           <a>{props.playerName} </a>
           {props.mins}'
           <div className={checkMatchEventIcon}>
-            {props.type === "Score" ? (
+            {props.type === "goal" ? (
               <SoccerLogo
                 className={cx("matchEvent__block__icon--adjust")}
               ></SoccerLogo>
-            ) : props.type === "Red Card" ? (
+            ) : props.type === "card" ? (
               <RedCardLogo
                 className={cx("matchEvent__block__icon--adjust")}
               ></RedCardLogo>

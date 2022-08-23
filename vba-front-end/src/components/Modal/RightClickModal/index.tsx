@@ -9,10 +9,13 @@ type RightClickModalProps = {
 const cx = classNames.bind(styles);
 
 export const RightClickModal = (props: RightClickModalProps) => {
+  console.log(props);
   return (
     <div
       style={{
-        transform: `translate(${props.x - 460}px, ${props.y}px)`,
+        position: "fixed",
+        top: `${props.y}px`,
+        left: `${props.x}px`,
       }}
       className={`${cx("__wrapper")}`}
     >

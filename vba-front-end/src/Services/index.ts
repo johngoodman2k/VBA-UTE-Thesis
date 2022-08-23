@@ -1,5 +1,12 @@
 import { HttpRequest } from "axios-core";
-import { Match, Tournament, Process, Team, Player } from "./models";
+import {
+  Match,
+  Tournament,
+  Process,
+  Team,
+  Player,
+  MatchProcess,
+} from "./models";
 import {
   MatchServicesRoot,
   PlayerServicesRoot,
@@ -33,7 +40,7 @@ export class MatchServices implements MatchServicesRoot {
   }
   patchMatchDetailsById(
     id: string | undefined,
-    obj: Match | Process | Date,
+    obj: Match | Process | Date | MatchProcess,
     globalHost?: string
   ): Promise<Match> {
     const url = `${this.url}/${id}`;

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
 import { ReactComponent as RefereeLogo } from "../../../assets/images/referee-com.svg";
 import { ReactComponent as StadiumLogo } from "../../../assets/images/stadium-com.svg";
@@ -43,6 +44,7 @@ export const MatchInfoBar = (props: MatchInfoBarProps) => {
     <>
       <div className={cx("__matchBar")}>
         <div
+          onContextMenu={handleContextMenu}
           className={cx("__matchBar__text", "__matchBar__position")}
           style={{}}
         >
@@ -74,6 +76,7 @@ export const MatchInfoBar = (props: MatchInfoBarProps) => {
         </div>
       </div>
       <div></div>
+
       {show === true ? (
         <RightClickModal x={positions.x} y={positions.y}></RightClickModal>
       ) : (

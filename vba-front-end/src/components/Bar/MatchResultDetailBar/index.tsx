@@ -21,7 +21,7 @@ export const MatchResultDetailBar = (props: MatchResultDetailBarProps) => {
     console.log("context menu clicked");
     e.preventDefault();
     setShow(true);
-    setPositions({ x: e.pageX, y: e.pageY });
+    setPositions({ x: e.clientX, y: e.clientY });
     // context.current.style.transform = `translate(${positions.x}, ${positions.y})`;
     console.log(positions.x, positions.y);
   };
