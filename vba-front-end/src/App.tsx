@@ -10,6 +10,7 @@ import { FixturesPage } from "./pages/FixturesPage";
 import { LandingPageScroll } from "./pages/LandingPageScroll";
 import { MatchDetailPage } from "./pages/MatchDetailPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ModalAddPlayerToTeam from "./components/Modal/ModalAddPlayerToTeam";
 
 // import { News } from "./components/News/NewsBlock";
 
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="fixtures/match/:id" element={<MatchDetailPage />} />
         <Route path="/fixtures" element={<FixturesPage />} />
+        <Route path="/" element={<ModalAddPlayerToTeam />} />
       </Routes>
     </BrowserRouter>
   );

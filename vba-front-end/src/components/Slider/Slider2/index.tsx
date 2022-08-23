@@ -145,12 +145,14 @@ export const Slider2 = () => {
                 handleMouseOverImg(index);
               }}
             >
+              {/* <a href="/" className="w-full h-full text-center"> */}
               <div
                 data-number={index + 1 < 10 ? "0" + (index + 1) : index + 1}
                 className={`${cx("Slider__Swiper__SwiperItem--titleItem")}`}
               >
                 {data.name}
               </div>
+              {/* </a> */}
             </SwiperSlide>
           ))}
         </Swiper>
