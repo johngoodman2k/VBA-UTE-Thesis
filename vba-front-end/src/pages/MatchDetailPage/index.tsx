@@ -177,6 +177,7 @@ export const MatchDetailPage = () => {
       mins: mins,
       player: new Array<Player>(),
     };
+
     if (player) {
       if (processObj.type === "goal") {
         const assistant = getPlayerById(assistantSelected);
@@ -204,6 +205,8 @@ export const MatchDetailPage = () => {
     } else {
       newProcess.push(processObj);
     }
+
+    // matchdetails. process [1,2,3,4]
 
     const getMatchProcess = (
       type: string,
