@@ -11,6 +11,7 @@ import { LandingPageScroll } from "./pages/LandingPageScroll";
 import { MatchDetailPage } from "./pages/MatchDetailPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ModalAddPlayerToTeam from "./components/Modal/ModalAddPlayerToTeam";
+import Calendar from "./components/Calendar";
 
 // import { News } from "./components/News/NewsBlock";
 
@@ -22,6 +23,10 @@ function App() {
         <Route path="/fixtures" element={<FixturesPage />} />
         <Route path="/" element={<ModalAddPlayerToTeam />} />
         <Route path="/home" element={<LandingPageScroll />} />
+        <Route
+          path="/Calendar"
+          element={<Calendar data={new Date(Date.now())} />}
+        />
       </Routes>
     </BrowserRouter>
   );
