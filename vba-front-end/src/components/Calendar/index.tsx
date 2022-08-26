@@ -27,7 +27,7 @@ const Calendar = ({ data, action }: CalendarProps) => {
   const [calendar, setCalendar] = useState<any>([]);
   const [value, setValue] = useState(moment(data));
   const [valueSave, setValueSave] = useState(moment(data));
-  const [buttonRadio, setButtonRadio] = useState<String>("theongay");
+  const [buttonRadio, setButtonRadio] = useState<string>("theongay");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setButtonRadio(event.target.value);
@@ -88,6 +88,26 @@ const Calendar = ({ data, action }: CalendarProps) => {
             label="Theo tuần"
           />
         </RadioGroup> */}
+        <div className="Calendar__wrap__radioButton">
+          <div>
+            <input
+              type="radio"
+              name="calendar"
+              value="theongay"
+              onChange={handleChange}
+            />
+            <label htmlFor="calendar">Theo ngày</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              name="calendar"
+              value="theotuan"
+              onChange={handleChange}
+            />
+            <label htmlFor="calendar">Theo tuần</label>
+          </div>
+        </div>
 
         <div className={cx("Calendar__wrap")}>
           <div className={cx("Calendar__header")}>
@@ -106,7 +126,7 @@ const Calendar = ({ data, action }: CalendarProps) => {
               key={index.toString()}
               className={cx(
                 "Calendar__week",
-                ` Calendar__week__${weekStyle(valueSave, week, buttonRadio)}`
+                `Calendar__week__${weekStyle(valueSave, week, buttonRadio)}`
               )}
             >
               {week.map((day: any, index: number) => (
@@ -120,7 +140,7 @@ const Calendar = ({ data, action }: CalendarProps) => {
                         day,
                         buttonRadio
                       )}`,
-                      ` Calendar__week__${dayOfWeekStyle(
+                      `Calendar__week__${dayOfWeekStyle(
                         valueSave,
                         day,
                         buttonRadio
