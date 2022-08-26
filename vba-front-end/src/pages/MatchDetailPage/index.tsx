@@ -24,88 +24,24 @@ import { dateFormat } from "../../utils/dateFormat";
 import { useParams } from "react-router-dom";
 import { convertCompilerOptionsFromJson } from "typescript";
 import { RightClickModal } from "../../components/Modal/RightClickModal";
+import { EditorSelect } from "../../components/Utils/EditorSelect";
 
 const cx = classNames.bind(styles);
 
-const test: MatchEventInterface[] = [
-  {
-    type: "Score",
-    mins: 35,
-    homeBadge:
-      "https://logos-world.net/wp-content/uploads/2020/05/Miami-Heat-Logo-2000-Present.png ",
-    homeName: "MIA",
-    homeResult: 1,
-    awayBadge:
-      "https://1000logos.net/wp-content/uploads/2016/10/Boston-Celtics-Logo-500x313.png",
-    awayName: "BOS",
-    awayResult: 0,
-    playerName: "Jimmy Butler",
-    playerImg: "https://cdn.nba.com/headshots/nba/latest/1040x760/202710.png",
-    playerNumber: 22,
-    assistance: "Kevin Durant",
-    side: "home",
-  },
-  {
-    type: "Score",
-    mins: 24,
-    homeBadge:
-      "https://logos-world.net/wp-content/uploads/2020/05/Miami-Heat-Logo-2000-Present.png ",
-    homeName: "MIA",
-    homeResult: 1,
-    awayBadge:
-      "https://1000logos.net/wp-content/uploads/2016/10/Boston-Celtics-Logo-500x313.png",
-    awayName: "BOS",
-    awayResult: 0,
-    playerName: "Jimmy Butler",
-    playerImg: "https://cdn.nba.com/headshots/nba/latest/1040x760/202710.png",
-    playerNumber: 22,
-    assistance: "Kevin Durant",
-    side: "home",
-  },
-
-  {
-    type: "Score",
-    mins: 60,
-    homeBadge:
-      "https://logos-world.net/wp-content/uploads/2020/05/Miami-Heat-Logo-2000-Present.png ",
-    homeName: "MIA",
-    homeResult: 1,
-    awayBadge:
-      "https://1000logos.net/wp-content/uploads/2016/10/Boston-Celtics-Logo-500x313.png",
-    awayName: "BOS",
-    awayResult: 1,
-    playerName: "Lê Hiếu Thành",
-    playerImg:
-      "https://sport5.mediacdn.vn/2019/11/26/photo-1574780315715-1574780315724959665461.jpeg",
-    playerNumber: 0,
-    assistance: "Jaylen Brown",
-    side: "away",
-  },
-  {
-    type: "Substitution",
-    mins: 40,
-    homeBadge:
-      "https://logos-world.net/wp-content/uploads/2020/05/Miami-Heat-Logo-2000-Present.png ",
-    homeName: "MIA",
-    homeResult: 1,
-    awayBadge:
-      "https://1000logos.net/wp-content/uploads/2016/10/Boston-Celtics-Logo-500x313.png",
-    awayName: "BOS",
-    awayResult: 0,
-    subOn: "Kyrie Irving",
-    subOnNumber: 11,
-    subOnImg: "https://cdn.nba.com/headshots/nba/latest/1040x760/202681.png",
-    subOff: "Kevin Durant",
-    subOffNumber: 7,
-    subOffImg: "https://c.neh.tw/thumb/f/720/comdlpng6955114.jpg",
-
-    side: "away",
-  },
-];
 const matchServices = vbaContext.getMatchServices();
 const teamServices = vbaContext.getTeamServices();
 const playerServices = vbaContext.getPlayerServices();
 export const MatchDetailPage = () => {
+  const typeOptions = [
+    { name: "Goal", value: "goal" },
+    { name: "Card", value: "card" },
+    { name: "Sub", value: "sub" },
+  ];
+
+  const sideOptions = [
+    { name: "Home", value: "home" },
+    { name: "Away", value: "away" },
+  ];
   const params = useParams();
   const [clickedId, setClickedId] = useState("");
   // const [clickedType, setClickedType] = useState("");
@@ -206,8 +142,6 @@ export const MatchDetailPage = () => {
       newProcess.push(processObj);
     }
 
-    // matchdetails. process [1,2,3,4]
-
     const getMatchProcess = (
       type: string,
       process: Process[],
@@ -229,13 +163,13 @@ export const MatchDetailPage = () => {
       awayResult
     );
 
+    console.log("230", matchProcess);
     const res3 = await matchServices.patchMatchDetailsById(
       params.id,
       matchProcess
     );
 
     setReload(!reload);
-    console.log("203", res3);
   };
 
   return (
@@ -373,26 +307,17 @@ export const MatchDetailPage = () => {
                         <div className="max-w-[70%] text-7xl font-bold uppercase">
                           match detail
                         </div>
-                        <label className={`${cx("__modal__title")}`}>
-                          Type&nbsp;
-                          <div className="inline">*</div>
-                        </label>
-                        <div className={`relative block ${cx("__dropdown")}`}>
-                          <select
-                            className={`${cx("__modal__title--select")}`}
-                            value={typeSelected}
-                            onChange={(e: any) => {
-                              setTypeSelected(e.target.value);
-                            }}
-                          >
-                            <option value="goal">Goal</option>
-                            <option value="card">Card</option>
-                            <option value="sub">Sub</option>
-                          </select>
-                        </div>
+                        <EditorSelect
+                          title="Type"
+                          value={typeSelected}
+                          onChange={(e: any) => {
+                            setTypeSelected(e.target.value);
+                          }}
+                          options={typeOptions}
+                        ></EditorSelect>
                         {typeSelected === "goal" ? (
                           <div>
-                            <label className={`${cx("__modal__title")}`}>
+                            {/* <label className={`${cx("__modal__title")}`}>
                               Side&nbsp;
                               <div className="inline">*</div>
                             </label>
@@ -409,7 +334,15 @@ export const MatchDetailPage = () => {
                                 <option value="home">Home</option>
                                 <option value="away">Away</option>
                               </select>
-                            </div>
+                            </div> */}
+                            <EditorSelect
+                              title="Side"
+                              value={sideSelected}
+                              onChange={(e: any) => {
+                                setSideSelected(e.target.value);
+                              }}
+                              options={sideOptions}
+                            ></EditorSelect>
 
                             <label className={`${cx("__modal__title")}`}>
                               Result&nbsp;
@@ -1017,7 +950,7 @@ export const MatchDetailPage = () => {
                             HT
                           </div>
                           {matchDetail
-                            ? matchDetail.process.map((x: any) => {
+                            ? matchDetail.process?.map((x: any) => {
                                 return (
                                   <MatchEventTimeLine
                                     type={x.type}
@@ -1031,13 +964,13 @@ export const MatchDetailPage = () => {
                                     playerName={x.player[0].name}
                                     playerImg={x.player[0].image}
                                     playerNumber={x.player[0].shirtnumber}
-                                    assistance={x.player[1].name}
+                                    assistance={x.player[1]?.name}
                                     subOn={x.player[0].name}
                                     subOnImg={x.player[0].image}
                                     subOnNumber={x.player[0].shirtnumber}
-                                    subOff={x.player[1].name}
-                                    subOffImg={x.player[1].image}
-                                    subOffNumber={x.player[1].shirtnumber}
+                                    subOff={x.player[1]?.name}
+                                    subOffImg={x.player[1]?.image}
+                                    subOffNumber={x.player[1]?.shirtnumber}
                                     side={x.side}
                                   ></MatchEventTimeLine>
                                 );

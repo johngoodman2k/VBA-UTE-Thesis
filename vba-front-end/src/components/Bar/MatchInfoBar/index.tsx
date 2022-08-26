@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
 import { ReactComponent as RefereeLogo } from "../../../assets/images/referee-com.svg";
 import { ReactComponent as StadiumLogo } from "../../../assets/images/stadium-com.svg";
@@ -7,6 +6,7 @@ import { ReactComponent as EyesLogo } from "../../../assets/images/eyes-com.svg"
 import styles from "./matchInfoBar.module.scss";
 import classNames from "classnames/bind";
 import { RightClickModal } from "../../Modal/RightClickModal";
+import { EditMatchInfoModal } from "../../Modal/EditMatchInfoModal";
 
 type MatchInfoBarProps = {
   date: string | undefined;
@@ -25,7 +25,7 @@ export const MatchInfoBar = (props: MatchInfoBarProps) => {
   const context = useRef<any>();
   const [show, setShow] = React.useState(false);
   const [positions, setPositions] = React.useState({ x: 0, y: 0 });
-
+  const [updateModal, setUpdateModal] = React.useState(false);
   const handleContextMenu = (e: any) => {
     console.log("context menu clicked");
     e.preventDefault();
@@ -78,7 +78,23 @@ export const MatchInfoBar = (props: MatchInfoBarProps) => {
       <div></div>
 
       {show === true ? (
-        <RightClickModal x={positions.x} y={positions.y}></RightClickModal>
+        <RightClickModal
+          onClick={() => {
+            setUpdateModal(true);
+          }}
+          x={positions.x}
+          y={positions.y}
+        ></RightClickModal>
+      ) : (
+        ""
+      )}
+
+      {updateModal === true ? (
+        <EditMatchInfoModal
+          close={() => {
+            setUpdateModal(false);
+          }}
+        ></EditMatchInfoModal>
       ) : (
         ""
       )}

@@ -21,6 +21,7 @@ function App() {
         <Route path="fixtures/match/:id" element={<MatchDetailPage />} />
         <Route path="/fixtures" element={<FixturesPage />} />
         <Route path="/" element={<ModalAddPlayerToTeam />} />
+        <Route path="/home" element={<LandingPageScroll />} />
       </Routes>
     </BrowserRouter>
   );

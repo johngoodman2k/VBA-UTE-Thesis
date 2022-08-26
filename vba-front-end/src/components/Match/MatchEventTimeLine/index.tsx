@@ -44,21 +44,27 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
 
   const headerIcon = cx("tournamentEvent__inforContainer__icon--adjust");
 
-  const checkIcon: any = (value: string, type: string) => {
-    type === "sub" ? (
-      <SubstitutionLogo className={value}></SubstitutionLogo>
-    ) : type === "goal" ? (
-      <SoccerLogo className={value}></SoccerLogo>
-    ) : type === "card" ? (
-      <RedCardLogo className={value}></RedCardLogo>
-    ) : (
-      <YellowCardLogo className={value}></YellowCardLogo>
-    );
-  };
+  // const checkIcon: any = (value: string, type: string) => {
+  //   type === "sub" ? (
+  //     <SubstitutionLogo className={value}></SubstitutionLogo>
+  //   ) : type === "goal" ? (
+  //     <SoccerLogo className={value}></SoccerLogo>
+  //   ) : type === "card" ? (
+  //     <RedCardLogo className={value}></RedCardLogo>
+  //   ) : (
+  //     <YellowCardLogo className={value}></YellowCardLogo>
+  //   );
+  // };
   return (
     <div
       className={cx("tournamentEvent__block")}
-      style={{ left: `${props.mins}%` }}
+      style={
+        props.type === "card" && props.side === "home"
+          ? { left: `${props.mins}%`, marginTop: "-4rem" }
+          : props.type === "card" && props.side === "away"
+          ? { left: `${props.mins}%`, marginTop: "4rem" }
+          : { left: `${props.mins}%` }
+      }
     >
       <span>
         {props.type === "sub" ? (
@@ -71,6 +77,7 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
           <YellowCardLogo className={iconClasses}></YellowCardLogo>
         )}
       </span>
+
       {props.mins}
       <span></span>
 
@@ -317,132 +324,5 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
         </div>
       </div>
     </div>
-
-    /* <div className={cx("tournamentEvent__block")} style={{ left: `35%` }}>
-        <span>
-          <SoccerLogo
-            className={cx(
-              "tournamentEvent__icon",
-              "tournamentEvent__icon--adjust",
-              "tournamentEvent__away"
-            )}
-          ></SoccerLogo>
-        </span>
-        27
-        <span></span>
-        <div className={cx("tournamentEvent__inforContainer")}>
-          <div>
-            <header className={cx("tournamentEvent__inforContainer__header")}>
-              <SoccerLogo
-                className={cx(
-                  "tournamentEvent__inforContainer__icon",
-                  "tournamentEvent__inforContainer__icon--adjust"
-                )}
-              ></SoccerLogo>
-              <time className={cx("tournamentEvent__inforContainer__time")}>
-                '27'
-              </time>
-              Goal
-              <div className={cx("tournamentEvent__inforContainer__teamScore")}>
-                <a className={cx("tournamentEvent__inforContainer__team")}>
-                  <span
-                    className={clsx(
-                      cx(
-                        "tournamentEvent__inforContainer__teamBadge",
-                        "tournamentEvent__inforContainer__homeTeamBadge"
-                      )
-                    )}
-                  >
-                    <span
-                      className={cx(
-                        "tournamentEvent__inforContainer__teamBadge__icon"
-                      )}
-                    >
-                      <img
-                        src="https://logos-world.net/wp-content/uploads/2020/05/Miami-Heat-Logo-2000-Present.png"
-                        className={cx(
-                          "tournamentEvent__inforContainer__teamBadge__icon--adjust"
-                        )}
-                      ></img>
-                    </span>
-                  </span>
-                  <span
-                    className={cx(
-                      "tournamentEvent__inforContainer__homeTeamName"
-                    )}
-                  >
-                    MIA
-                  </span>
-                </a>
-                <span className={cx("tournamentEvent__inforContainer__team")}>
-                  1
-                </span>
-                {"-"}
-                <span className={cx("tournamentEvent__inforContainer__team")}>
-                  0
-                </span>
-
-                <a className={cx("tournamentEvent__inforContainer__team")}>
-                  <span
-                    className={cx(
-                      "tournamentEvent__inforContainer__awayTeamName"
-                    )}
-                  >
-                    BOS
-                  </span>
-                  <span
-                    className={clsx(
-                      cx(
-                        "tournamentEvent__inforContainer__teamBadge",
-                        "tournamentEvent__inforContainer__awayTeamBadge"
-                      )
-                    )}
-                  >
-                    <span
-                      className={cx(
-                        "tournamentEvent__inforContainer__teamBadge__icon"
-                      )}
-                    >
-                      <img
-                        src="https://1000logos.net/wp-content/uploads/2016/10/Boston-Celtics-Logo-500x313.png"
-                        className={cx(
-                          "tournamentEvent__inforContainer__teamBadge__icon--adjust"
-                        )}
-                      ></img>
-                    </span>
-                  </span>
-                </a>
-              </div>
-            </header>
-            <div className={cx("tournamentEvent__inforContent")}>
-              <img
-                src="https://cdn.nba.com/headshots/nba/latest/1040x760/202710.png"
-                className={cx("tournamentEvent__inforContent__scorerImage")}
-              ></img>
-              <div className={cx("tournamentEvent__inforContent__scorerInfor")}>
-                <a
-                  className={cx(
-                    "tournamentEvent__inforContent__scorerInfor__name"
-                  )}
-                >
-                  22 {"."} Jimmy Butler
-                </a>
-                <div
-                  className={cx("tournamentEvent__inforContent__assistInfor")}
-                >
-                  {"Ast. "}
-                  <a
-                    className={cx(
-                      "tournamentEvent__inforContent__assistInfor--name"
-                    )}
-                  >
-                    {"Kevin Durant"}
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */
   );
 };

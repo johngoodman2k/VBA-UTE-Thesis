@@ -5,6 +5,7 @@ const text = [{ name: "Update" }, { name: "Delete" }, { name: "Comment" }];
 type RightClickModalProps = {
   x: any;
   y: any;
+  onClick?: () => void;
 };
 const cx = classNames.bind(styles);
 
@@ -24,7 +25,7 @@ export const RightClickModal = (props: RightClickModalProps) => {
           {text.map((x: any) => {
             return (
               <li className={`${cx("__list")}`}>
-                <button className={`${cx("__button")}`}>
+                <button onClick={props.onClick} className={`${cx("__button")}`}>
                   <span className={`${cx("__text")}`}>{x.name}</span>
                 </button>
               </li>

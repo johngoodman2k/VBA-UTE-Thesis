@@ -28,7 +28,7 @@ export const SidebarFixture = () => {
               <div className={cx("__logoWrapper")}>
                 <img
                   className={cx("__logoWrapper--adjust")}
-                  src="https://www.tma.vn/Themes/TMAVN.Theme/Images/TMA-logo2.png"
+                  src="https://logos-world.net/wp-content/uploads/2020/11/National-Basketball-Association-Logo-1969-2017.png"
                   alt=""
                 />
               </div>
