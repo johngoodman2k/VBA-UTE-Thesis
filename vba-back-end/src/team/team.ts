@@ -23,7 +23,7 @@ export interface Player {
   image: string;
   shirtNumber: string;
   createdAt: Date;
-  // teams: Team[];
+  teams: Team[];
   card: Card;
 }
 

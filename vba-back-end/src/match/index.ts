@@ -7,11 +7,14 @@ import {
   matchModel,
   MatchRepository,
   MatchService,
+  Process,
+  ProcessRepository,
 } from "./match";
 import { MatchController } from "./match-controller";
 export * from "./match";
 export { MatchController };
 import { SqlMatchRepository } from "./sql-match-repository";
+import { SqlProcessRepository } from "./sql-process-repository";
 
 export class MatchManager
   extends Manager<Match, string, MatchFilter>
@@ -19,12 +22,28 @@ export class MatchManager
 {
   constructor(
     search: Search<Match, MatchFilter>,
-    protected matchRepository: MatchRepository
+    protected matchRepository: MatchRepository,
+    protected processRepository: ProcessRepository
   ) {
     super(search, matchRepository);
   }
   getMatches(tournamentId: string, round: string): Promise<Match[]> {
     return this.matchRepository.getMatches(tournamentId, round);
+  }
+  updateMatch(match: Match,ctx?:any): Promise<number>{
+    return this.matchRepository.updateMatch(match, ctx);
+  }
+  addProcess(process: Process[],ctx?: any): Promise<number>{
+    return this.processRepository.addProcess(process, ctx);
+  }
+  getMatchById(matchId: string):Promise<Match[]>{
+    return this.matchRepository.getMatchById(matchId);
+  }
+  getProcessById(processId: string): Promise<Process[]>{
+    return this.processRepository.getProcessById(processId);
+  }
+  updateProcess(process: Process,ctx?:any): Promise<number>{
+    return this.processRepository.updateProcess(process, ctx);
   }
 }
 export function useMatchService(db: DB): MatchService {
@@ -34,8 +53,11 @@ export function useMatchService(db: DB): MatchService {
     matchModel,
     postgres
   );
-  const repository = new SqlMatchRepository(db);
-  return new MatchManager(builder.search, repository);
+  const matchRepository = new SqlMatchRepository(db);
+  const processRepository = new SqlProcessRepository(db);
+
+  
+  return new MatchManager(builder.search, matchRepository,processRepository);
 }
 export function useMatchController(log: Log, db: DB): MatchController {
   return new MatchController(log, useMatchService(db));

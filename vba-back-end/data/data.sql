@@ -131,3 +131,17 @@ insert into players (id, name, dateOfBirth, image, shirtNumber, teams, card) val
 insert into players (id, name, dateOfBirth, image, shirtNumber, teams, card) values ('2', 'Jefferey Stubbs', '2000-10-10', 'https://kenh14cdn.com/thumb_w/660/203336854389633024/2022/6/16/694686633659241176280292943390252027793047n-1655364408144465259158.jpg', '15',array['{"id":"1"}']::jsonb[] ,'{"red":"0","yellow":"0"}'::jsonb);
 insert into players (id, name, dateOfBirth, image, shirtNumber, teams, card) values ('3', 'Đinh Thanh Tâm', '2000-10-10', 'https://znews-photo.zingcdn.me/w660/Uploaded/qxjrcqjwq/2022_07_31/Tam_Dinh_an_mung_3_diem.jpg', '23',array['{"id":"1"}']::jsonb[] ,'{"red":"0","yellow":"0"}'::jsonb);
 
+
+create table process
+(
+    id character varying(40),
+    type character varying(40),
+    mins character varying(40),
+    quater character varying(40),
+    player jsonb[],
+    cardcolor character varying(40),
+    side  character varying(40),
+    match character varying(40),
+    createdAt  timestamp with time zone default now(),
+    constraint process_pkey primary key (id)
+);

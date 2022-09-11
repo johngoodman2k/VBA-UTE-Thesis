@@ -10,11 +10,15 @@ export class SqlMatchRepository
   }
   getMatches(tournamentId: string, round: string): Promise<Match[]> {
     return this.query<Match>(
-      `select * from match where tournamentId = ${this.param(
-        1
-      )} and round = ${this.param(2)}`,
+      "select * from match where tournamentId = $1 and round = $2",
       [tournamentId, round],
       this.map
     );
+  }
+  updateMatch(match: Match,ctx?:any): Promise<number>{
+    return this.update(match,ctx)
+  }
+  getMatchById(matchId: string):Promise<Match[]>{
+    return this.query<Match>("select * from matches where id = $1", [matchId],this.map)
   }
 }

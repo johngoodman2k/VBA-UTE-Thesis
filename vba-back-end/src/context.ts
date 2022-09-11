@@ -14,6 +14,7 @@ import {
   import { MatchController, useMatchController} from "./match/index"
   import { PlayerController, usePlayerController} from "./player/index"
   import { TeamController, useTeamController} from "./team/index"
+import { ProcessController, useProcessController } from "./process/index";
 
   resources.createValidator = createValidator;
   
@@ -25,6 +26,7 @@ import {
     match: MatchController;
     player: PlayerController;
     team: TeamController;
+    process: ProcessController;
   }
   export function useContext(
     db: DB,
@@ -40,6 +42,7 @@ import {
     const match = useMatchController(logger.error,db)
     const player = usePlayerController(logger.error,db)
     const team = useTeamController(logger.error,db)
+    const process = useProcessController(logger.error,db)
 
     return {
       health,
@@ -48,7 +51,8 @@ import {
       tournament,
       match,
       player,
-      team
+      team,
+      process
     };
   }
   
