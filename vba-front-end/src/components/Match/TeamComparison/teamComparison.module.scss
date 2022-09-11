@@ -1,0 +1,115 @@
+@import '/src/styles/Variables.scss';
+
+.__container {
+	margin: 0;
+	padding-top: 2rem;
+	background-color: $primary-color;
+	transition: all 0.2s linear;
+}
+
+.__active {
+	display: block;
+}
+
+.__tab {
+	clear: both;
+}
+
+.__wrapper {
+	max-width: 1376px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	transition: all 0.2s linear;
+}
+
+.__statsSection {
+	padding: 3rem 4rem;
+	border-bottom: 3px solid $third-color;
+	text-align: center;
+	transition: all 0.2s linear;
+}
+
+.__header {
+	font-size: 1.7rem;
+	position: relative;
+	margin-bottom: 2rem;
+	clear: both;
+	color: $third-color;
+}
+
+.__statsTable {
+	width: 100%;
+	table-layout: fixed;
+	& thead {
+		border-bottom: 2px solid $third-color;
+	}
+	& tr {
+		// border-bottom: 1px solid $third-color;
+		font-weight: 400;
+	}
+}
+
+.__statsTeamBlock {
+	& th:first-child {
+		text-align: right;
+	}
+	& th:last-child {
+		text-align: left;
+	}
+	& th {
+		padding-top: 0;
+		padding-bottom: 1rem;
+		line-height: 2.5rem;
+	}
+}
+.__statsTeamText {
+	color: $third-color !important;
+	font-size: 1.4rem;
+	font-weight: 600;
+	text-decoration: none;
+	vertical-align: middle;
+}
+.__statsTeamBadge__block {
+	display: inline-block;
+
+	&--adjust {
+		width: 2.5rem;
+		height: 2.5rem;
+	}
+}
+
+.__home {
+	float: right;
+	margin-left: 1rem;
+}
+
+.__away {
+	float: left;
+	margin-right: 1rem;
+}
+
+.__statsTeamContent {
+	& td {
+		padding-top: 0.5rem;
+		padding-bottom: 0.5rem;
+		color: $third-color;
+		& p {
+			// line-height: 1.2;
+			// font-size: 1rem;
+		}
+	}
+
+	& td:first-child {
+		text-align: right;
+	}
+	& td:last-child {
+		text-align: left;
+	}
+}
+
+.betterNow {
+	color: white;
+	font-weight: 600;
+}
