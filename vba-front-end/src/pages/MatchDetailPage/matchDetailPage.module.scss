@@ -1,241 +1,241 @@
-@import "/src/styles/Variables.scss";
+@import '/src/styles/Variables.scss';
 .__contentWrapper {
-  background-image: url(https://teamnigma.com/wp-content/uploads/2020/07/Nigma-Pattern-Smaller.png);
-  background-repeat: repeat;
-  background-position: 0 0;
+	background-image: url(https://teamnigma.com/wp-content/uploads/2020/07/Nigma-Pattern-Smaller.png);
+	background-repeat: repeat;
+	background-position: 0 0;
 
-  height: 100vh;
-  vertical-align: center;
-  text-align: center;
-  display: block;
+	height: 100vh;
+	vertical-align: center;
+	text-align: center;
+	display: block;
 }
 .__nav {
-  padding-top: 3rem;
-  position: relative;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
-    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+	padding-top: 3rem;
+	position: relative;
+	box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+		rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
 .__centralContent {
-  position: relative;
-  clear: both;
-  &__theme {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-  // &__themeTeams {
-  //   width: 100%;
-  //   height: 100%;
-  // }
-  &__homeTheme {
-    display: inline-block;
-    width: 50%;
-    margin-left: -50%;
-  }
-  &__awayTheme {
-    display: inline-block;
-    width: 50%;
-    margin-left: 50%;
-  }
-  &__teamLogoBlock {
-    position: relative;
-    min-width: 100%;
-    &--adjust {
-      position: relative;
-      min-width: 100%;
-    }
-  }
-  &__themeShadow {
-    width: 100%;
-    height: 100%;
-    // background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.9));
-  }
-  &__box {
-    text-align: center;
-    position: relative;
-    color: $third-color;
-    padding-top: 1rem;
-    background-color: $primary-color;
-    overflow: hidden;
-    &__background {
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
-      z-index: 0;
-      max-height: 100%;
-    }
-    &__image {
-      width: 100%;
-      position: relative;
-      margin-top: -14%;
-    }
-  }
+	position: relative;
+	clear: both;
+	&__theme {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+	// &__themeTeams {
+	//   width: 100%;
+	//   height: 100%;
+	// }
+	&__homeTheme {
+		display: inline-block;
+		width: 50%;
+		margin-left: -50%;
+	}
+	&__awayTheme {
+		display: inline-block;
+		width: 50%;
+		margin-left: 50%;
+	}
+	&__teamLogoBlock {
+		position: relative;
+		min-width: 100%;
+		&--adjust {
+			position: relative;
+			min-width: 100%;
+		}
+	}
+	&__themeShadow {
+		width: 100%;
+		height: 100%;
+		// background-image: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.9));
+	}
+	&__box {
+		text-align: center;
+		position: relative;
+		color: $third-color;
+		padding-top: 1rem;
+		background-color: $primary-color;
+		overflow: hidden;
+		&__background {
+			position: absolute;
+			top: 0;
+			right: 0;
+			left: 0;
+			bottom: 0;
+			z-index: 0;
+			max-height: 100%;
+		}
+		&__image {
+			width: 100%;
+			position: relative;
+			margin-top: -14%;
+		}
+	}
 }
 
 .__scoreboxContainer {
-  background: rgba(20, 20, 21, 0.6);
-  position: relative;
-  z-index: 10;
-  padding-bottom: 6.4rem;
-  min-height: 18rem;
-  &--detail {
-    margin: 0 auto;
-    width: 83%;
-  }
+	background: rgba(20, 20, 21, 0.6);
+	position: relative;
+	z-index: 10;
+	padding-bottom: 6.4rem;
+	min-height: 18rem;
+	&--detail {
+		margin: 0 auto;
+		width: 83%;
+	}
 }
 
 .__teamsContainer {
 }
 
 .__container {
-  max-width: 1376px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+	max-width: 1376px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 1rem;
+	padding-right: 1rem;
 }
 .__bar {
-  background: rgba(20, 20, 21, 0.6);
-  font-size: 1.2rem;
-  min-height: 2rem;
-  line-height: 1rem;
-  border-radius: 2px;
-  margin-bottom: 17rem;
-  z-index: 11;
-  position: relative;
+	background: rgba(20, 20, 21, 0.6);
+	font-size: 1.2rem;
+	min-height: 2rem;
+	line-height: 1rem;
+	border-radius: 2px;
+	margin-bottom: 17rem;
+	z-index: 11;
+	position: relative;
 }
 
 .__matchStats {
-  width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  display: inline-block;
-  height: 2rem;
-  &__halfTime {
-    line-height: 3rem;
-    font-size: 1rem;
-    display: inline;
-    & span {
-      margin-right: 0.4rem;
-    }
-  }
-  &__kickOff {
-    font-size: 1rem;
-    text-align: center;
-    margin-bottom: -2.2rem;
-    line-height: 2rem;
-  }
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+	display: inline-block;
+	height: 2rem;
+	&__halfTime {
+		line-height: 3rem;
+		font-size: 1rem;
+		display: inline;
+		& span {
+			margin-right: 0.4rem;
+		}
+	}
+	&__kickOff {
+		font-size: 1rem;
+		text-align: center;
+		margin-bottom: -2.2rem;
+		line-height: 2rem;
+	}
 }
 .__matchEvents {
-  clear: both;
-  position: relative;
-  display: table;
-  width: 100%;
-  &__home {
-    float: left;
-    width: 50%;
-    text-align: right;
-    padding-right: 6rem;
-    font-size: 1rem;
-  }
-  &__away {
-    float: right;
-    width: 50%;
-    text-align: left;
-    padding-left: 6rem;
-    font-size: 1rem;
-  }
+	clear: both;
+	position: relative;
+	display: table;
+	width: 100%;
+	&__home {
+		float: left;
+		width: 50%;
+		text-align: right;
+		padding-right: 6rem;
+		font-size: 1rem;
+	}
+	&__away {
+		float: right;
+		width: 50%;
+		text-align: left;
+		padding-left: 6rem;
+		font-size: 1rem;
+	}
 }
 
 .__assists {
-  color: hsla(0, 0%, 100%, 0.6);
-  position: relative;
-  font-size: 1rem;
-  display: table;
-  width: 100%;
-  margin-top: 2rem;
-  &__title {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    z-index: -1;
-    line-height: 2.5rem;
-  }
+	color: hsla(0, 0%, 100%, 0.6);
+	position: relative;
+	font-size: 1rem;
+	display: table;
+	width: 100%;
+	margin-top: 2rem;
+	&__title {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 100%;
+		z-index: -1;
+		line-height: 2.5rem;
+	}
 }
 .__assists::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 1rem;
-  top: 2.5rem;
-  border-left: 1px dotted hsla(0, 0%, 100%, 0.6);
+	content: '';
+	position: absolute;
+	left: 50%;
+	bottom: 1rem;
+	top: 2.5rem;
+	border-left: 1px dotted hsla(0, 0%, 100%, 0.6);
 }
 
 .__timeLine {
-  width: 100%;
-  max-width: 96rem;
-  margin: 2rem 0 0 3rem;
-  font-weight: 600;
-  text-align: left;
-  font-size: 1.2rem;
-  &__team {
-    display: inline-block;
-    color: #fff;
-    height: auto;
-  }
-  &__badge {
-    background: $primary-color;
-    padding: 0.7rem;
-    margin-right: 0.6rem;
-    &__block {
-      display: inline-block;
-      vertical-align: middle;
-      position: relative;
-      top: -2px;
-    }
-    &--adjust {
-      width: 2rem;
-      height: 2rem;
-      object-fit: cover;
-      vertical-align: middle;
-    }
-  }
-  &__crossbar {
-    position: relative;
-    height: 1px;
-    background: hsla(0, 0%, 100%, 0.2);
-    // margin-left: 5rem;
-    // margin-right: 5rem;
-    // margin-top: 0.5rem;
-    // margin-bottom: 0.5rem;
-    margin: 0.5rem 5rem 0.5rem 10rem;
-    &--adjust {
-      position: absolute;
-      top: 50%;
-      line-height: 3rem;
-      margin-top: -1.5rem;
-      width: 2rem;
-      margin-left: -1rem;
-      font-size: 0.8rem;
-      text-align: center;
-      left: 48%;
-      color: #e90052;
-    }
-  }
+	width: 100%;
+	max-width: 96rem;
+	margin: 2rem 0 0 3rem;
+	font-weight: 600;
+	text-align: left;
+	font-size: 1.2rem;
+	&__team {
+		display: inline-block;
+		color: #fff;
+		height: auto;
+	}
+	&__badge {
+		background: $primary-color;
+		padding: 0.7rem;
+		margin-right: 0.6rem;
+		&__block {
+			display: inline-block;
+			vertical-align: middle;
+			position: relative;
+			top: -2px;
+		}
+		&--adjust {
+			width: 2rem;
+			height: 2rem;
+			object-fit: cover;
+			vertical-align: middle;
+		}
+	}
+	&__crossbar {
+		position: relative;
+		height: 1px;
+		background: hsla(0, 0%, 100%, 0.2);
+		// margin-left: 5rem;
+		// margin-right: 5rem;
+		// margin-top: 0.5rem;
+		// margin-bottom: 0.5rem;
+		margin: 0.5rem 5rem 0.5rem 10rem;
+		&--adjust {
+			position: absolute;
+			top: 50%;
+			line-height: 3rem;
+			margin-top: -1.5rem;
+			width: 2rem;
+			margin-left: -1rem;
+			font-size: 0.8rem;
+			text-align: center;
+			left: 48%;
+			color: #e90052;
+		}
+	}
 }
 
 .__matchEvents::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  top: 3rem;
-  border-left: 1px dotted hsla(0, 0%, 100%, 0.6);
+	content: '';
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	top: 3rem;
+	border-left: 1px dotted hsla(0, 0%, 100%, 0.6);
 }
 
 // .tournament_match-matchEvents::after {
@@ -245,80 +245,80 @@
 // }
 
 .__assistsHome {
-  padding-right: 7rem;
-  text-align: right;
-  float: left;
-  width: 50%;
+	padding-right: 7rem;
+	text-align: right;
+	float: left;
+	width: 50%;
 }
 .__assistsAway {
-  padding-left: 7rem;
-  text-align: left;
-  float: right;
-  width: 50%;
+	padding-left: 7rem;
+	text-align: left;
+	float: right;
+	width: 50%;
 }
 .__editActive {
-  background-color: $primary-color !important;
+	background-color: $primary-color !important;
 }
 
 .__updateActive {
-  background-color: $primary-color !important;
+	background-color: $primary-color !important;
 }
 
 .__editBlock {
-  position: relative;
-  z-index: 10;
-  &__wrapper {
-    padding: 0rem 5.5rem;
-    margin-bottom: 1rem;
-    text-align: right;
-    &--adjust > li {
-      width: 15%;
-      display: inline-block;
-      text-align: center;
-      background-color: $second-color;
-      position: relative;
-      padding: 1rem 3rem;
-      color: $third-color;
-      font-size: 1rem;
-      text-decoration: none;
-      transition: all 0.2s;
-      cursor: pointer;
-      border-radius: 3px;
-      font-weight: 400;
-      margin: 0 1rem;
-    }
-  }
+	position: relative;
+	z-index: 10;
+	&__wrapper {
+		padding: 0rem 5.5rem;
+		margin-bottom: 1rem;
+		text-align: right;
+		&--adjust > li {
+			width: 15%;
+			display: inline-block;
+			text-align: center;
+			background-color: $second-color;
+			position: relative;
+			padding: 1rem 3rem;
+			color: $third-color;
+			font-size: 1rem;
+			text-decoration: none;
+			transition: all 0.2s;
+			cursor: pointer;
+			border-radius: 3px;
+			font-weight: 400;
+			margin: 0 1rem;
+		}
+	}
 }
 
 .__optionsBlock {
-  margin-top: -4.5rem;
-  position: relative;
-  z-index: 10;
-  &__wrapper {
-    padding: 0rem 4rem;
-    margin-bottom: 2rem;
-    text-align: center;
+	margin-top: -4.5rem;
+	position: relative;
+	z-index: 10;
+	&__wrapper {
+		padding: 0rem 4rem;
+		margin-bottom: 2rem;
+		text-align: center;
 
-    &--adjust > li {
-      width: 42.5%;
-      display: inline-block;
-      text-align: center;
-      background-color: $second-color;
-      position: relative;
-      padding: 1rem 3rem;
-      color: $third-color;
-      font-size: 1rem;
-      text-decoration: none;
-      transition: all 0.2s;
-      cursor: pointer;
-      border-radius: 3px;
-      font-weight: 400;
-    }
-  }
+		&--adjust > li {
+			width: 30%;
+			display: inline-block;
+			text-align: center;
+			background-color: $second-color;
+			position: relative;
+			padding: 1rem 3rem;
+			color: $third-color;
+			font-size: 1rem;
+			text-decoration: none;
+			transition: all 0.2s;
+			cursor: pointer;
+			border-radius: 3px;
+			font-weight: 400;
+		}
+	}
 }
 
 .__optionsBlock__wrapper--adjust li:not(:last-child) {
-  margin-right: 0.5rem;
+	margin-right: 0.5rem;
 }
 
 // .__optionsBlock__wrapper--adjust li:hover {
@@ -333,158 +333,165 @@
 // }
 
 .__optionsActive {
-  background-color: $primary-color !important;
+	background-color: $primary-color !important;
 }
 
 .__detailsWrapper {
-  clear: both;
+	clear: both;
 }
 
 .__inactive {
-  display: none;
+	display: none;
 }
 .__active {
-  display: block;
+	display: block;
 }
 
 .__modal {
-  &__title {
-    display: block;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 20px;
-    margin-top: 20px;
-    margin-bottom: 12px;
-    &--select {
-      color: black;
-      display: block;
-      width: 100%;
-      font-size: 15px;
-      outline: none;
-      line-height: 18px;
-      height: 52px;
-      box-sizing: border-box;
-      transition: all 0.1s ease, height 0s;
-      -webkit-appearance: none;
-      background-color: #fff;
-      border-color: rgba(153, 153, 153, 0.4) !important;
-      padding: 16px !important;
-      border-radius: 2px !important;
-    }
-  }
-  &__input {
-    text-align: center;
-    border-color: rgba(153, 153, 153, 0.4) !important;
-    padding: 4px !important;
-    border-radius: 2px !important;
-    margin: 0 1rem 1rem 1rem;
-    &--goal {
-      border-color: rgba(153, 153, 153, 0.4) !important;
-      padding: 4px !important;
-      border-radius: 2px !important;
-      margin-bottom: 2rem;
-    }
-  }
-  &__main {
-    border: 1px solid #fff;
-    border-color: rgba(153, 153, 153, 0.4) !important;
-    box-sizing: border-box;
-    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
-      rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
-      rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
-  }
-  &__action {
-    position: relative;
-    z-index: 10;
-    &__wrapper {
-      padding: 0rem;
-      margin-bottom: 1rem;
-      text-align: right;
-      &--adjust > li {
-        margin: 1rem 0 0 1rem;
-        width: 20%;
-        display: inline-block;
-        text-align: center;
-        background-color: $second-color;
-        position: relative;
-        padding: 1rem 3rem;
-        color: $third-color;
-        font-size: 1rem;
-        text-decoration: none;
-        transition: all 0.2s;
-        cursor: pointer;
-        border-radius: 3px;
-        font-weight: 400;
-      }
-    }
-  }
+	&__title {
+		display: block;
+		font-size: 16px;
+		font-weight: 600;
+		line-height: 20px;
+		margin-top: 20px;
+		margin-bottom: 12px;
+		&--select {
+			color: black;
+			display: block;
+			width: 100%;
+			font-size: 15px;
+			outline: none;
+			line-height: 18px;
+			height: 52px;
+			box-sizing: border-box;
+			transition: all 0.1s ease, height 0s;
+			-webkit-appearance: none;
+			background-color: #fff;
+			border-color: rgba(153, 153, 153, 0.4) !important;
+			padding: 16px !important;
+			border-radius: 2px !important;
+		}
+	}
+	&__input {
+		text-align: center;
+		border-color: rgba(153, 153, 153, 0.4) !important;
+		padding: 4px !important;
+		border-radius: 2px !important;
+		margin: 0 1rem 1rem 1rem;
+		&--goal {
+			border-color: rgba(153, 153, 153, 0.4) !important;
+			padding: 4px !important;
+			border-radius: 2px !important;
+			margin-bottom: 2rem;
+		}
+		&--des {
+			border-color: rgba(153, 153, 153, 0.4) !important;
+			padding: 4px !important;
+			border-radius: 2px !important;
+			margin-bottom: 2rem;
+			width: 100%;
+		}
+	}
+	&__main {
+		border: 1px solid #fff;
+		border-color: rgba(153, 153, 153, 0.4) !important;
+		box-sizing: border-box;
+		box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+			rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+			rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+	}
+	&__action {
+		position: relative;
+		z-index: 10;
+		&__wrapper {
+			padding: 0rem;
+			margin-bottom: 1rem;
+			text-align: right;
+			&--adjust > li {
+				margin: 1rem 0 0 1rem;
+				width: 20%;
+				display: inline-block;
+				text-align: center;
+				background-color: $second-color;
+				position: relative;
+				padding: 1rem 3rem;
+				color: $third-color;
+				font-size: 1rem;
+				text-decoration: none;
+				transition: all 0.2s;
+				cursor: pointer;
+				border-radius: 3px;
+				font-weight: 400;
+			}
+		}
+	}
 }
 
 .__dropdown {
-  &::after {
-    content: "";
-    height: 0;
-    width: 0;
-    border-style: solid;
-    border-color: black transparent transparent transparent;
+	&::after {
+		content: '';
+		height: 0;
+		width: 0;
+		border-style: solid;
+		border-color: black transparent transparent transparent;
 
-    border-width: 5px;
-    position: absolute;
-    right: 11.5px;
-    top: 50%;
-    margin-top: -2.5px;
-    pointer-events: none;
-  }
+		border-width: 5px;
+		position: absolute;
+		right: 11.5px;
+		top: 50%;
+		margin-top: -2.5px;
+		pointer-events: none;
+	}
 }
 
 .__options {
-  color: black;
-  display: block;
-  width: 65%;
-  font-size: 15px;
-  margin: 0 auto;
-  outline: none;
-  line-height: 18px;
-  height: 30px;
-  box-sizing: border-box;
-  transition: all 0.1s ease, height 0s;
-  -webkit-appearance: none;
-  background-color: #fff;
-  border-color: rgba(153, 153, 153, 0.4) !important;
-  text-align: center;
-  border-radius: 2px !important;
+	color: black;
+	display: block;
+	width: 65%;
+	font-size: 15px;
+	margin: 0 auto;
+	outline: none;
+	line-height: 18px;
+	height: 30px;
+	box-sizing: border-box;
+	transition: all 0.1s ease, height 0s;
+	-webkit-appearance: none;
+	background-color: #fff;
+	border-color: rgba(153, 153, 153, 0.4) !important;
+	text-align: center;
+	border-radius: 2px !important;
 }
 
 .__optionsDropdown {
-  &::after {
-    content: "";
-    height: 0;
-    width: 0;
-    border-style: solid;
-    border-color: black transparent transparent transparent;
+	&::after {
+		content: '';
+		height: 0;
+		width: 0;
+		border-style: solid;
+		border-color: black transparent transparent transparent;
 
-    border-width: 5px;
-    position: absolute;
-    right: 63px;
-    top: 50%;
-    margin-top: -2.5px;
-    pointer-events: none;
-  }
+		border-width: 5px;
+		position: absolute;
+		right: 63px;
+		top: 50%;
+		margin-top: -2.5px;
+		pointer-events: none;
+	}
 }
 
 .__optionsNameCard {
-  &::after {
-    content: "";
-    height: 0;
-    width: 0;
-    border-style: solid;
-    border-color: black transparent transparent transparent;
+	&::after {
+		content: '';
+		height: 0;
+		width: 0;
+		border-style: solid;
+		border-color: black transparent transparent transparent;
 
-    border-width: 5px;
-    position: absolute;
-    right: 90px;
-    top: 50%;
-    margin-top: -2.5px;
-    pointer-events: none;
-  }
+		border-width: 5px;
+		position: absolute;
+		right: 90px;
+		top: 50%;
+		margin-top: -2.5px;
+		pointer-events: none;
+	}
 }

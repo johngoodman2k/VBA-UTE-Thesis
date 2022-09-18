@@ -30,7 +30,93 @@ export const PlayerCard = () => {
 							</div>
 						</div>
 					</div>
-					<div className={cx('__dataMiddle')}></div>
+					<div className={cx('__dataMiddle')}>
+						<table
+							className={`${cx('__dataTable')} light-secondary-border w-full `}>
+							<thead>
+								<tr>
+									<th className={`${cx('__staticTableHeader')}`}>Season</th>
+									<th className={`${cx('__staticTableHeader')}`}>Carrer</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<div className={`${cx('__statsItem')}`}>
+											<span className={`${cx('__statsItem--labelHeader')}`}>
+												Games
+											</span>
+											<span className={`${cx('__statsItem--labelInfo')}`}>
+												55
+											</span>
+										</div>
+									</td>
+									<td>
+										<div className={`${cx('__statsItem')}`}>
+											<span className={`${cx('__statsItem--labelHeader')}`}>
+												Games
+											</span>
+											<span className={`${cx('__statsItem--labelInfo')}`}>
+												55
+											</span>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div className={`${cx('__statsItem')}`}>
+											<span className={`${cx('__statsItem--labelHeader')}`}>
+												Games
+											</span>
+											<span className={`${cx('__statsItem--labelInfo')}`}>
+												55
+											</span>
+										</div>
+									</td>
+									<td>
+										<div className={`${cx('__statsItem')}`}>
+											<span className={`${cx('__statsItem--labelHeader')}`}>
+												Games
+											</span>
+											<span className={`${cx('__statsItem--labelInfo')}`}>
+												55
+											</span>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div>
+							<div className={`${cx('__dataBottom')}`}>
+								<div className={`${cx('__dataBottom--label')}`}>height</div>
+								<div className={`${cx('__dataBottom--info')}`}>6-10</div>
+							</div>
+							<div className={`${cx('__dataBottom')}`}>
+								<div className={`${cx('__dataBottom--label')}`}>height</div>
+								<div className={`${cx('__dataBottom--info')}`}>6-10</div>
+							</div>
+							<div className={`${cx('__dataBottom')}`}>
+								<div className={`${cx('__dataBottom--label')}`}>height</div>
+								<div className={`${cx('__dataBottom--info')}`}>6-10</div>
+							</div>
+							<div className={`${cx('__dataBottom')}`}>
+								<div className={`${cx('__dataBottom--label')}`}>height</div>
+								<div className={`${cx('__dataBottom--info')}`}>6-10</div>
+							</div>
+							<div className={`${cx('__dataBottom')}`}>
+								<div className={`${cx('__dataBottom--label')}`}>height</div>
+								<div className={`${cx('__dataBottom--info')}`}>6-10</div>
+							</div>
+							<div className={`${cx('__dataBottom')}`}>
+								<div className={`${cx('__dataBottom--label')}`}>height</div>
+								<div className={`${cx('__dataBottom--info')}`}>6-10</div>
+							</div>
+							<div className={`${cx('__dataBottom')}`}>
+								<div className={`${cx('__dataBottom--label')}`}>height</div>
+								<div className={`${cx('__dataBottom--info')}`}>6-10</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

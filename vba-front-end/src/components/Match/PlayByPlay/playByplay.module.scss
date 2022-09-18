@@ -1,0 +1,52 @@
+.__wrapper {
+	max-width: 1280px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 1.75rem 0;
+}
+.__block {
+	margin-bottom: 1.5rem;
+	border-radius: 0.25rem;
+	box-shadow: 0 0 10px 0 hsl(0deg 0% 82% / 50%);
+	background-color: #fff;
+	color: #000;
+}
+.__container {
+	padding: 1.25rem;
+}
+
+.__quaterBlock {
+	overflow-x: auto;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	max-width: 625px;
+	&__nav {
+		display: flex;
+		font-size: 0.875rem;
+		border-width: 1px;
+		border-radius: 0.25rem;
+	}
+	&__button {
+		width: 25%;
+		color: #fff;
+		background-color: #000;
+		display: block;
+		padding: 0.5rem 1rem;
+		text-align: center;
+		transition-property: background-color, border-color, color, fill, stroke;
+		transition-duration: 0.2s;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		border-right-width: 1px;
+		border-color: #051c2d;
+		min-width: 64px;
+		&--active {
+			color: #fff;
+			background-color: #000;
+		}
+		&--inactive {
+			color: #000;
+			background-color: white;
+		}
+	}
+}

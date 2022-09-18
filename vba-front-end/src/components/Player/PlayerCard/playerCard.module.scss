@@ -18,7 +18,7 @@
 	padding-left: 2rem;
 	padding-right: 2rem;
 }
-
+//data TOP
 .__datatTop {
 	display: flex;
 	align-items: flex-end;
@@ -26,7 +26,7 @@
 
 .__playerImage {
 	position: absolute;
-	bottom: 3.4375rem;
+	bottom: 8rem;
 	left: 12%;
 	max-width: none;
 	right: 0;
@@ -59,9 +59,6 @@
 	border-color: #fff;
 	margin-bottom: 0.9375rem;
 }
-.__dataMiddle {
-}
-
 .__playerNumAndPos {
 	font-size: 1rem;
 	display: flex;
@@ -80,4 +77,93 @@
 	font-size: 1.5rem;
 	font-weight: 700;
 	text-align: left;
+}
+
+//data Middle
+.__dataMiddle {
+	max-width: 9.063rem;
+	padding-bottom: 3rem;
+	position: relative;
+	width: 60%;
+}
+
+.__staticTableHeader {
+	border-right-color: black !important;
+	border-color: #ffffff;
+	color: #222;
+	border-left-width: 1px;
+	border-right-width: 1px;
+	width: 50%;
+	font-size: 0.6875rem;
+	font-weight: 700;
+	padding-bottom: 0.5rem;
+	padding-top: 0.5rem;
+	text-transform: uppercase;
+	background-color: rgba(255, 255, 255, var(--bg-opacity));
+	background-color: #ffffff;
+}
+
+.__statsItem {
+	border-bottom-width: 0;
+	color: #fff;
+	padding-bottom: 0.25rem;
+	padding-top: 0.25rem;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	&--labelHeader {
+		font-size: 0.6875rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: #fff;
+	}
+	&--labelInfo {
+		font-size: 1.25rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		color: #fff;
+	}
+}
+
+.__dataTable tbody td {
+	border-width: 1px;
+	text-align: center;
+}
+
+.__dataBottom {
+	border-bottom-width: 1px;
+	display: flex;
+	font-size: 0.6875rem;
+	justify-content: space-between;
+	padding-bottom: 0.625rem;
+	padding-top: 0.625rem;
+	&--label {
+		font-weight: 700;
+		margin-right: 1.25rem;
+		text-align: left;
+		text-transform: uppercase;
+		white-space: nowrap;
+		width: 50%;
+	}
+	&--info {
+		text-align: right;
+	}
+}
+
+.__dataLink {
+	border-color: #fff;
+	color: #222;
+	background-color: #fff;
+	border-bottom-left-radius: 0.375rem;
+	border-bottom-right-radius: 0.375rem;
+	border-top-width: 4px;
+	bottom: 0;
+	justify-content: space-between;
+	padding: 1rem 1.5rem;
+	position: absolute;
+	width: 100%;
+	display: flex;
+	font-size: 0.875rem;
+	font-weight: 700;
+	height: 4rem;
 }
