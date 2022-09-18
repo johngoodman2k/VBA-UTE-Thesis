@@ -10,8 +10,10 @@ export interface Process {
   player: Player[];
   cardcolor: string;
   side: string;
-  match:string;
-  createdAt:Date;
+  match: string;
+  option: string;
+  description: string;
+  createdAt: Date;
 }
 interface Player {
   name: string;
@@ -23,7 +25,8 @@ export interface ProcessRepository extends Repository<Process, string> {
   getMatches(tournamentId: string, round: string): Promise<Process[]>;
 }
 
-export interface ProcessService extends Service<Process, string, ProcessFilter> {
+export interface ProcessService
+  extends Service<Process, string, ProcessFilter> {
   getMatches(tournamentId: string, round: string): Promise<Process[]>;
 }
 
@@ -34,21 +37,25 @@ export const processModel: Attributes = {
   },
   type: {},
   mins: {},
-  player: {type: "array"},
+  player: { type: "array" },
   cardcolor: {},
   side: {},
   match: {},
-  createdAt:{type: "datetime"},
+  option: {},
+  description: {},
+  createdAt: { type: "datetime" },
 };
 
 export interface ProcessFilter extends Filter {
   id: string;
   type: string;
   mins: string;
-  quater:string;
+  quater: string;
   player: Player[];
   cardcolor: string;
   side: string;
   match: string;
+  option: string;
+  description: string;
   createdAt: Date;
 }

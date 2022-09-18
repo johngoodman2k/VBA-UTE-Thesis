@@ -12,6 +12,8 @@ import { MatchDetailPage } from "./pages/MatchDetailPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ModalAddPlayerToTeam from "./components/Modal/ModalAddPlayerToTeam";
 import Calendar from "./components/Calendar";
+import PlayerInformation from "./components/Player/PlayerInformation";
+import PlayerCard1 from "./components/Player/PlayerCard1";
 
 // import { News } from "./components/News/NewsBlock";
 
@@ -23,8 +25,10 @@ function App() {
         <Route path="/fixtures" element={<FixturesPage />} />
         <Route path="/" element={<ModalAddPlayerToTeam />} />
         <Route path="/home" element={<LandingPageScroll />} />
+        <Route path="/player" element={<PlayerInformation />} />
+        <Route path="/playercard" element={<PlayerCard1 />} />
         <Route
-          path="/Calendar"
+          path="/calendar"
           element={<Calendar data={new Date(Date.now())} />}
         />
       </Routes>

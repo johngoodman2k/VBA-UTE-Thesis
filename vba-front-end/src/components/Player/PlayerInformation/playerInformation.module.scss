@@ -1,0 +1,300 @@
+.PlayerInformation {
+  display: flex;
+  flex-direction: column;
+  background-color: #0268d6;
+  width: auto;
+  height: 600px;
+  &__Information {
+    position: relative;
+    background-color: #0268d6;
+    width: 100%;
+    height: 70%;
+
+    &__TeamLogo {
+      display: block;
+      position: absolute;
+      width: 50%;
+      height: 150%;
+      background-color: transparent;
+      transform: translateY(-35%);
+      opacity: 0.05;
+      z-index: 1;
+      &__LogoBlock {
+        display: block;
+        position: relative;
+        min-width: 100%;
+        height: 100%;
+        &__Logo {
+          display: block;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    &__InformationBlock {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      padding: auto;
+      &__ImageBlock {
+        width: 500px;
+        height: 100%;
+        // padding-left: auto;
+        &__ImageWarp {
+          display: block;
+          width: 100%;
+          height: 100%;
+          background-color: transparent;
+          position: relative;
+          // margin: 0 0;
+          max-width: 100%;
+
+          &__TeamLogo {
+            display: block;
+            position: absolute;
+            width: auto;
+            height: 40%;
+            background-color: transparent;
+            top: 0;
+            left: 0;
+            z-index: 3;
+          }
+          &__Image {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: auto;
+            height: 65%;
+            z-index: 2;
+          }
+        }
+
+        // &__ImageWarp {
+        //   display: block;
+        //   width: 100%;
+        //   height: 100%;
+        //   background-color: transparent;
+        //   position: relative;
+        //   &__Image {
+        //     position: absolute;
+        //     right: 0;
+        //     bottom: 0;
+        //     width: 75%;
+        //     height: auto;
+        //     z-index: 2;
+        //   }
+        // }
+      }
+      &__ContentBlock {
+        // width: calc(7 / 14 * 100%);
+        width: 815px;
+        height: 100%;
+
+        &__Content {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+          height: 100%;
+          // margin-right: auto;
+          background-color: transparent;
+          // border: 1px solid #000;
+          &__TextName {
+            font-size: 60px;
+            font-weight: 700;
+            line-height: 1.25;
+          }
+        }
+      }
+    }
+  }
+  &__PlayerSumaryWrap {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    background-color: #1d428a;
+    width: 100%;
+    height: 30%;
+    // border-width: 1px;
+
+    // border-color:;
+    &__PlayerSumary {
+      width: 100%;
+      height: 100%;
+      // border-color: transparent #4c9aff transparent #4c9aff;
+      // border-width: 1px;
+
+      // background-color: #4c9aff;
+      &__Detailt {
+        width: calc(6 / 14 * 100%);
+        height: 100%;
+        background-color: #1d428a;
+        // border-left: 1px none #4c9aff;
+        // border-width: 1px;
+        border-right: 1px solid #4c9aff !important;
+        &__Text {
+          font-weight: 400;
+          font-size: 0.75rem;
+          line-height: 1.25;
+        }
+        &__Number {
+          font-weight: 400;
+          font-size: 1rem;
+          line-height: 1.25;
+        }
+      }
+      &__Game {
+        width: calc(6 / 14 * 100%);
+        height: 100%;
+        background-color: #1d428a;
+        &__Text {
+          font-weight: 400;
+          font-size: 1rem;
+          line-height: 1.25;
+        }
+        &__Number {
+          font-weight: 700;
+          font-size: 1.75rem;
+          line-height: 1.25;
+        }
+      }
+    }
+  }
+}
+a {
+  text-decoration: inherit;
+  color: inherit;
+  background-color: transparent;
+}
+
+@media screen and (max-width: 6144px) {
+  .PlayerInformation__PlayerSumaryWrap__PlayerSumary {
+    max-width: 25%;
+  }
+}
+
+@media screen and (max-width: 4608px) {
+  .PlayerInformation__PlayerSumaryWrap__PlayerSumary {
+    max-width: 33%;
+  }
+}
+
+@media screen and (max-width: 3072px) {
+  .PlayerInformation__PlayerSumaryWrap__PlayerSumary {
+    max-width: 50%;
+  }
+}
+
+@media screen and (max-width: 2304px) {
+  .PlayerInformation__PlayerSumaryWrap__PlayerSumary {
+    max-width: 67%;
+  }
+}
+@media screen and (max-width: 2048px) {
+  .PlayerInformation__PlayerSumaryWrap__PlayerSumary {
+    max-width: 75%;
+  }
+}
+
+@media screen and (max-width: 1920px) {
+  .PlayerInformation__PlayerSumaryWrap__PlayerSumary {
+    max-width: 80%;
+  }
+}
+@media screen and (max-width: 1708px) {
+  .PlayerInformation__PlayerSumaryWrap__PlayerSumary {
+    max-width: 90%;
+  }
+  //  {
+  //   width: calc(7 / 14 * 85%);
+  // }
+}
+
+@media screen and (max-width: 1536px) {
+  .PlayerInformation__Information__InformationBlock__ImageBlock {
+    width: calc(100% * 500) px;
+  }
+  .PlayerInformation__PlayerSumaryWrap__PlayerSumary,
+  .PlayerInformation__Information__InformationBlock__ContentBlock__Content {
+    max-width: 100%;
+  }
+}
+@media screen and (max-width: 1280px) {
+  .PlayerInformation__Information__InformationBlock__ImageBlock {
+    width: calc(125% * 500) px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .PlayerInformation__Information__InformationBlock__ImageBlock {
+    width: calc(150% * 500) px;
+  }
+}
+@media screen and (max-width: 878px) {
+  .PlayerInformation__Information__InformationBlock__ImageBlock {
+    width: calc(100% * 500) px;
+  }
+  .PlayerInformation__Information__InformationBlock__ImageBlock__ImageWarp__Image {
+    height: 60%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .PlayerInformation__Information__InformationBlock__ImageBlock {
+    width: calc(175% * 500) px;
+  }
+  .PlayerInformation__Information__InformationBlock__ImageBlock__ImageWarp__Image {
+    height: 50%;
+  }
+}
+@media screen and (max-width: 640px) {
+  .PlayerInformation__Information__InformationBlock__ImageBlock {
+    width: calc(200% * 500) px;
+  }
+}
+@media screen and (max-width: 615px) {
+  .PlayerInformation__Information__InformationBlock__ImageBlock {
+    width: calc(250% * 500) px;
+  }
+  .PlayerInformation__Information__InformationBlock__ImageBlock__ImageWarp__Image {
+    height: 40%;
+  }
+}
+@media screen and (max-width: 512px) {
+  .PlayerInformation__Information__InformationBlock__ImageBlock {
+    width: calc(300% * 500) px;
+  }
+  .PlayerInformation__Information__InformationBlock__ImageBlock__ImageWarp__Image {
+    height: 35%;
+  }
+}
+
+@media screen and (max-width: 384px) {
+  .PlayerInformation__Information__InformationBlock__ImageBlock__ImageWarp__Image {
+    height: 25%;
+  }
+  .PlayerInformation__Information__InformationBlock__ImageBlock {
+    width: calc(400% * 500) px;
+  }
+}
+@media screen and (max-width: 308px) {
+  .PlayerInformation__Information__InformationBlock__ImageBlock__ImageWarp__Image {
+    height: 20%;
+  }
+  .PlayerInformation__Information__InformationBlock__ImageBlock {
+    width: calc(500% * 500) px;
+  }
+}
+
+.TopWarp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}

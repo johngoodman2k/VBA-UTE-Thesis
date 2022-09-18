@@ -142,6 +142,8 @@ create table process
     cardcolor character varying(40),
     side  character varying(40),
     match character varying(40),
+    option character varying(40),
+	description character varying(120),
     createdAt  timestamp with time zone default now(),
     constraint process_pkey primary key (id)
 );

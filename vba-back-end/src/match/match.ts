@@ -28,7 +28,9 @@ export interface Process {
   cardcolor: string;
   side: string;
   match: string;
-  createdAt:Date;
+  option: string;
+  description: string;
+  createdAt: Date;
 }
 interface Player {
   name: string;
@@ -38,23 +40,22 @@ interface Player {
 
 export interface MatchRepository extends Repository<Match, string> {
   getMatches(tournamentId: string, round: string): Promise<Match[]>;
-  updateMatch(match: Match,ctx?:any): Promise<number>;
-  getMatchById(matchId: string):Promise<Match[]>;
-
+  updateMatch(match: Match, ctx?: any): Promise<number>;
+  getMatchById(matchId: string): Promise<Match[]>;
 }
 export interface ProcessRepository extends Repository<Process, string> {
-  addProcess(process: Process[],ctx?: any): Promise<number>;
+  addProcess(process: Process[], ctx?: any): Promise<number>;
   getProcessById(processId: string): Promise<Process[]>;
-  updateProcess(process: Process,ctx?:any): Promise<number>;
+  updateProcess(process: Process, ctx?: any): Promise<number>;
 }
 
 export interface MatchService extends Service<Match, string, MatchFilter> {
   getMatches(tournamentId: string, round: string): Promise<Match[]>;
-  updateMatch(match: Match,ctx?:any): Promise<number>;
-  addProcess(process: Process[],ctx?: any): Promise<number>;
-  getMatchById(matchId: string):Promise<Match[]>;
+  updateMatch(match: Match, ctx?: any): Promise<number>;
+  addProcess(process: Process[], ctx?: any): Promise<number>;
+  getMatchById(matchId: string): Promise<Match[]>;
   getProcessById(processId: string): Promise<Process[]>;
-  updateProcess(process: Process,ctx?:any): Promise<number>;
+  updateProcess(process: Process, ctx?: any): Promise<number>;
 }
 
 export const matchModel: Attributes = {
@@ -81,7 +82,7 @@ export const matchModel: Attributes = {
   },
   matchDay: {},
   assistance: {},
-  process: {type: "array"},
+  process: { type: "array" },
   endmatch: {},
 };
 
