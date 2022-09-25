@@ -1,30 +1,33 @@
 import React, { ReactElement } from 'react';
 import styles from './playByplayEvent.module.scss';
 import classNames from 'classnames/bind';
+import { Process } from '../../../../../Services/models';
 const cx = classNames.bind(styles);
 
 type PlayByPlayEventProps = {
-	side: string;
 	onContextMenu: (e: any) => void;
+	process: Process;
 };
 
 export const PlayByPlayEvent = (props: PlayByPlayEventProps) => {
+	const playerSideCheck = {};
 	const sideCheck =
-		props.side === 'home'
+		props.process.side === 'home'
 			? ' items-center flex  justify-start'
 			: ' items-center flex justify-end';
 
 	const timeCheck =
-		props.side === 'home' ? ' md:order-last' : ' md:order-first';
+		props.process.side === 'home' ? ' md:order-last' : ' md:order-first';
 
-	const itemCheck = props.side === 'home' ? '  justify-end' : ' justify-start';
+	const itemCheck =
+		props.process.side === 'home' ? '  justify-end' : ' justify-start';
 
 	return (
 		<div
 			onContextMenu={props.onContextMenu}
 			className={`${cx('__pbpEvent', sideCheck)} `}>
 			<p className={cx('__pbpEvent__time', timeCheck)}>
-				<span className='block'>12:00</span>
+				<span className='block'>{props.process.mins}</span>
 			</p>
 			<div
 				className={`${
@@ -37,13 +40,13 @@ export const PlayByPlayEvent = (props: PlayByPlayEventProps) => {
 								className={`${cx(
 									'__pbpEvent__info__img--adjust'
 								)}h-full w-full block object-cover `}
-								src='https://cdn.nba.com/headshots/nba/latest/260x190/203507.png'
+								src={props.process.player[0]?.image}
 								alt=''
 							/>
 						</span>
 					</span>
 					<span className='px-1 capitalize leading-tight md:text-sm'>
-						Giannis Atetokoumpo
+						{props.process.player[0]?.name}
 					</span>
 				</a>
 			</div>

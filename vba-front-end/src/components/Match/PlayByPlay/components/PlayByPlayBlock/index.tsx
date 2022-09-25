@@ -5,10 +5,16 @@ import { PlayByPlayEvent } from '../PlayByPlayEvent';
 import { RightClickModal } from '../../../../Modal/RightClickModal';
 import { EditMatchInfoModal } from '../../../../Modal/EditMatchInfoModal';
 import { RightClickModalAdjust } from '../../../../Modal/RightClickModalAdjust';
+import { ControlModal } from '../../../../Modal/ControlModal';
+import { Process } from '../../../../../Services/models';
 const cx = classNames.bind(styles);
 
 type PlayByPlayBlockProps = {
 	side?: string;
+	matchId?: string | undefined;
+	process: Process;
+	handleOpenUpdateModal: () => void;
+	getProcess: (process: Process | undefined) => void;
 };
 
 type Position = {
@@ -19,7 +25,7 @@ export const PlayByPlayBlock = (props: PlayByPlayBlockProps) => {
 	const context = useRef<any>();
 	const [show, setShow] = React.useState(false);
 	const [positions, setPositions] = React.useState({ x: 0, y: 0 });
-	const [updateModal, setUpdateModal] = React.useState(false);
+
 	const handleContextMenu = (e: any) => {
 		console.log('context menu clicked');
 		e.preventDefault();
@@ -45,12 +51,13 @@ export const PlayByPlayBlock = (props: PlayByPlayBlockProps) => {
 			</h2>
 			<article className={sideCheck}>
 				<PlayByPlayEvent
-					onContextMenu={handleContextMenu}
-					side='home'></PlayByPlayEvent>
+					process={props.process}
+					onContextMenu={handleContextMenu}></PlayByPlayEvent>
 				{show === true ? (
 					<RightClickModalAdjust
 						onClick={() => {
-							setUpdateModal(true);
+							props.getProcess(props.process);
+							props.handleOpenUpdateModal();
 						}}
 						x={positions.x}
 						y={positions.y}></RightClickModalAdjust>
@@ -58,14 +65,15 @@ export const PlayByPlayBlock = (props: PlayByPlayBlockProps) => {
 					''
 				)}
 
-				{updateModal === true ? (
-					<EditMatchInfoModal
-						close={() => {
-							setUpdateModal(false);
-						}}></EditMatchInfoModal>
-				) : (
-					''
-				)}
+				{/* {updateModal === true
+					? // <ControlModal
+					  // modalType='update'
+					  // handleCloseModal={handleCloseModal}
+					  // matchId={params.id}
+					  // homeId={matchDetail?.home.id}
+					  // awayId={matchDetail?.away.id}></ControlModal>
+					  ''
+					: ''} */}
 			</article>
 		</div>
 	);

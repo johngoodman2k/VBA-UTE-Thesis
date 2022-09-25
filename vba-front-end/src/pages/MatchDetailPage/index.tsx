@@ -30,7 +30,8 @@ import { SummarizeBox } from '../../components/Match/SummarizeBox';
 import { TeamComparison } from '../../components/Match/TeamComparison';
 import { LineUp } from '../../components/Match/LineUp';
 import { PlayByPlay } from '../../components/Match/PlayByPlay';
-import { OffenseUpdateModal } from '../../components/Modal/OffenseUpdateModal';
+import { ControlModal } from '../../components/Modal/ControlModal';
+import { hasPointerEvents } from '@testing-library/user-event/dist/utils';
 
 const cx = classNames.bind(styles);
 
@@ -75,6 +76,7 @@ export const MatchDetailPage = () => {
 	const params = useParams();
 	const [clickedId, setClickedId] = useState('');
 	// const [clickedType, setClickedType] = useState("");
+	console.log('78', clickedId);
 	const [cardType, setCardType] = useState('yellow');
 	const [defenseType, setDefenseType] = useState('rebound');
 	const [offenseType, setOffenseType] = useState('2PT');
@@ -93,6 +95,10 @@ export const MatchDetailPage = () => {
 	const [reload, setReload] = useState(false);
 
 	const [matchDetail, setMatchDetail] = useState<Match>();
+
+	const handleCloseModal = () => {
+		setClickedId('close');
+	};
 
 	useEffect(() => {
 		(async () => {
@@ -125,47 +131,49 @@ export const MatchDetailPage = () => {
 	const [show, setShow] = React.useState(false);
 	const [positions, setPositions] = React.useState({ x: 0, y: 0 });
 
-	const createMatchEvent = async (e: any) => {
-		e.preventDefault();
-		const type = typeSelected;
-		const side = sideSelected;
-		const offense = offenseType;
-		const defense = defenseType;
-		const quater = quaterSelected;
-		const des = e.target.des.value;
-		const assistant = getPlayerById(assistantSelected);
-		const player = getPlayerById(playerSelected);
-		let homeResult = '';
-		let awayResult = '';
-		const mins = e.target.mins.value;
-		// let card = '';
-		const subIn = getPlayerById(subInSelected);
-		const subOff = getPlayerById(subOffSelected);
+	// const createMatchEvent = async (e: any) => {
+	// 	e.preventDefault();
+	// 	const type = typeSelected;
+	// 	const side = sideSelected;
+	// 	const offense = offenseType;
+	// 	const defense = defenseType;
+	// 	const quater = quaterSelected;
+	// 	const des = e.target.des.value;
+	// 	const assistant = getPlayerById(assistantSelected);
+	// 	const player = getPlayerById(playerSelected);
+	// 	let homeResult = '';
+	// 	let awayResult = '';
+	// 	const mins = e.target.mins.value;
+	// 	// const description = e.target.des
+	// 	// let card = '';
+	// 	const subIn = getPlayerById(subInSelected);
+	// 	const subOff = getPlayerById(subOffSelected);
 
-		const checkType =
-			type === 'offensive' ? offense : type === 'defensive' ? defense : null;
+	// 	const checkType =
+	// 		type === 'offensive' ? offense : type === 'defensive' ? defense : null;
 
-		const checkPlayer =
-			type === 'sub'
-				? [subIn, subOff]
-				: type === 'offensive'
-				? [player, assistant]
-				: [player];
+	// 	const checkPlayer =
+	// 		type === 'sub'
+	// 			? [subIn, subOff]
+	// 			: type === 'offensive'
+	// 			? [player, assistant]
+	// 			: [player];
 
-		const process = {
-			type: type,
-			side: side,
-			option: checkType,
-			quater: quater,
-			des: des,
-			mins: mins,
-			player: checkPlayer
-		};
-		const res3 = await matchServices.addProcessToMatch(params.id, [process]);
-		console.log('168', res3);
+	// 	const process = {
+	// 		type: type,
+	// 		side: side,
+	// 		option: checkType,
+	// 		quater: quater,
+	// 		des: des,
+	// 		mins: mins,
+	// 		player: checkPlayer,
+	// 		description:
+	// 	};
+	// 	const res3 = await matchServices.addProcessToMatch(params.id, [process]);
+	// 	console.log('168', res3);
 
-		setReload(!reload);
-	};
+	// 	setReload(!reload);
+	// };
 
 	return (
 		<>
@@ -291,273 +299,12 @@ export const MatchDetailPage = () => {
 									className={
 										clickedId === 'edit' ? cx('__active') : cx('__inactive')
 									}>
-									{/* <ModalBlock>
-										<form onSubmit={createMatchEvent}>
-											<section className='container mx-auto text-left'>
-												<div className='max-w-[70%] text-7xl font-bold uppercase'>
-													match detail
-												</div>
-												<EditorSelect
-													title='Type'
-													value={typeSelected}
-													onChange={(e: any) => {
-														setTypeSelected(e.target.value);
-													}}
-													options={typeOptions}></EditorSelect>
-												{typeSelected === 'offensive' ? (
-													<div>
-														<EditorSelect
-															title='Side'
-															value={sideSelected}
-															onChange={(e: any) => {
-																setSideSelected(e.target.value);
-															}}
-															options={sideOptions}></EditorSelect>
-
-														<div>
-															<EditorSelect
-																title='Offense options'
-																value={offenseType}
-																onChange={(e: any) => {
-																	setOffenseType(e.target.value);
-																}}
-																options={scoreOptions}></EditorSelect>
-
-															<EditorSelect
-																title='Quater'
-																value={quaterSelected}
-																onChange={(e: any) => {
-																	setQuaterSelected(e.target.value);
-																}}
-																options={quaterOptions}></EditorSelect>
-
-															<div>
-																<label className={`${cx('__modal__title')}`}>
-																	Description&nbsp;
-																	<div className='inline'>*</div>
-																</label>
-																<input
-																	name='des'
-																	className={`${cx(
-																		'__modal__input--des'
-																	)}`}></input>
-															</div>
-
-															<div
-																className={`grid grid-cols-3   text-center ${cx(
-																	'__modal__main'
-																)}`}>
-																<PlayerSelect
-																	title='Scorer'
-																	sideSelected={sideSelected}
-																	value={playerSelected}
-																	onChange={(e: any) => {
-																		setPlayerSelected(e.target.value);
-																	}}
-																	homePlayers={homePlayers}
-																	awayPlayers={awayPlayers}></PlayerSelect>
-
-																<PlayerSelect
-																	title='Assistant'
-																	sideSelected={sideSelected}
-																	value={assistantSelected}
-																	onChange={(e: any) => {
-																		setAssistantSelected(e.target.value);
-																	}}
-																	homePlayers={homePlayers}
-																	awayPlayers={awayPlayers}></PlayerSelect>
-
-																<div>
-																	<label className={`${cx('__modal__title')}`}>
-																		Mins&nbsp;
-																		<div className='inline'>*</div>
-																	</label>
-																	<input
-																		id='mins'
-																		className={`${cx(
-																			'__modal__input--goal'
-																		)}`}></input>
-																</div>
-															</div>
-														</div>
-													</div>
-												) : typeSelected === 'defensive' ? (
-													<div>
-														<EditorSelect
-															title='Side'
-															value={sideSelected}
-															onChange={(e: any) => {
-																setSideSelected(e.target.value);
-															}}
-															options={sideOptions}></EditorSelect>
-
-														<div>
-															<EditorSelect
-																title='Defense options'
-																value={defenseType}
-																onChange={(e: any) => {
-																	setDefenseType(e.target.value);
-																}}
-																options={defenseOptions}></EditorSelect>
-
-															<EditorSelect
-																title='Quater'
-																value={quaterSelected}
-																onChange={(e: any) => {
-																	setQuaterSelected(e.target.value);
-																}}
-																options={quaterOptions}></EditorSelect>
-
-															<div>
-																<label className={`${cx('__modal__title')}`}>
-																	Description&nbsp;
-																	<div className='inline'>*</div>
-																</label>
-																<input
-																	name='des'
-																	className={`${cx(
-																		'__modal__input--des'
-																	)}`}></input>
-															</div>
-
-															<div
-																className={`grid grid-cols-2   text-center ${cx(
-																	'__modal__main'
-																)}`}>
-																<div>
-																	<PlayerSelect
-																		title='Name'
-																		sideSelected={sideSelected}
-																		value={playerSelected}
-																		onChange={(e: any) => {
-																			setPlayerSelected(e.target.value);
-																		}}
-																		homePlayers={homePlayers}
-																		awayPlayers={awayPlayers}></PlayerSelect>
-																</div>
-																<div>
-																	<label className={`${cx('__modal__title')}`}>
-																		Mins&nbsp;
-																		<div className='inline'>*</div>
-																	</label>
-																	<input
-																		id='mins'
-																		className={`${cx(
-																			'__modal__input--goal'
-																		)}`}></input>
-																</div>
-															</div>
-														</div>
-													</div>
-												) : (
-													<div>
-														<div>
-															<EditorSelect
-																title='Side'
-																value={sideSelected}
-																onChange={(e: any) => {
-																	setSideSelected(e.target.value);
-																}}
-																options={sideOptions}></EditorSelect>
-
-															<EditorSelect
-																title='Quater'
-																value={quaterSelected}
-																onChange={(e: any) => {
-																	setQuaterSelected(e.target.value);
-																}}
-																options={quaterOptions}></EditorSelect>
-
-															<div
-																className={`grid grid-cols-3   text-center ${cx(
-																	'__modal__main'
-																)}`}>
-																<PlayerSelect
-																	title='Substituition In'
-																	sideSelected={sideSelected}
-																	value={subInSelected}
-																	onChange={(e: any) => {
-																		setSubInSelected(e.target.value);
-																	}}
-																	homePlayers={homePlayers}
-																	awayPlayers={awayPlayers}></PlayerSelect>
-																<div>
-																	<PlayerSelect
-																		title='Substituition Off'
-																		sideSelected={sideSelected}
-																		value={subOffSelected}
-																		onChange={(e: any) => {
-																			setSubOffSelected(e.target.value);
-																		}}
-																		homePlayers={homePlayers}
-																		awayPlayers={awayPlayers}></PlayerSelect>
-																</div>
-
-																<div>
-																	<label className={`${cx('__modal__title')}`}>
-																		Mins&nbsp;
-																		<div className='inline'>*</div>
-																	</label>
-																	<input
-																		id='mins'
-																		className={`${cx(
-																			'__modal__input--goal'
-																		)}`}></input>
-																</div>
-															</div>
-														</div>
-													</div>
-												)}
-												<div>
-													<div className={cx('__modal__action')}>
-														<div className={cx('__modal__action__wrapper')}>
-															<ul
-																className={cx(
-																	'__modal__action__wrapper--adjust'
-																)}>
-																<li>
-																	<button
-																		id='save'
-																		type='submit'
-																		onClick={(e: any) =>
-																			e.currentTarget.id === 'save'
-																				? setClickedId('save')
-																				: ''
-																		}
-																		className={
-																			clickedId === 'save'
-																				? cx('__editActive')
-																				: ''
-																		}>
-																		Save
-																	</button>
-																</li>
-																<li
-																	id='close'
-																	onClick={(e: any) =>
-																		e.currentTarget.id === 'close'
-																			? setClickedId('close')
-																			: ''
-																	}
-																	className={
-																		clickedId === 'close'
-																			? cx('__editActive')
-																			: ''
-																	}>
-																	Close
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</section>
-										</form>
-									</ModalBlock> */}
-									<OffenseUpdateModal
+									<ControlModal
 										modalType='edit'
+										handleCloseModal={handleCloseModal}
 										matchId={params.id}
-										homeId={matchDetail?.home.id}
-										awayId={matchDetail?.away.id}></OffenseUpdateModal>
+										homePlayers={homePlayers}
+										awayPlayers={awayPlayers}></ControlModal>
 								</div>
 
 								{/* scorebox */}
@@ -802,7 +549,11 @@ export const MatchDetailPage = () => {
 											? cx('__active')
 											: cx('__inactive')
 									}>
-									<PlayByPlay process={matchDetail?.process}></PlayByPlay>
+									<PlayByPlay
+										matchId={matchDetail?.id}
+										process={matchDetail?.process}
+										homePlayers={homePlayers}
+										awayPlayers={awayPlayers}></PlayByPlay>
 								</div>
 							</div>
 						</div>

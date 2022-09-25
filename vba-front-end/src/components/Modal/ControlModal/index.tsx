@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from 'react';
-import { Player } from '../../../Services/models';
+import { Player, Process } from '../../../Services/models';
 import { vbaContext } from '../../../Services/services';
 import { EditorSelect } from '../../Utils/EditorSelect';
 import { ModalBlock } from '../ModalBlock';
-import styles from './offenseUpdateModal.module.scss';
+import styles from './controlModal.module.scss';
 import classNames from 'classnames/bind';
 import { PlayerSelect } from '../../Utils/PlayerSelect';
+import { id } from 'date-fns/locale';
+import process from 'process';
 const cx = classNames.bind(styles);
 
 type OffenseUpdateModalProps = {
 	matchId: string | undefined;
 	modalType?: 'edit' | 'update';
-	homeId: string | undefined;
-	awayId: string | undefined;
-	process?: ProcessProps;
+	homePlayers: Player[];
+	awayPlayers: Player[];
+	process?: Process;
+
+	handleCloseModal?: () => void;
 };
-type ProcessProps = {
-	option: string;
-	quater: string;
-	player: Player[];
-	type: string;
-	side: string;
-	description: string;
-	mins: string;
-};
+// type ProcessProps = {
+// 	id?: string;
+// 	option: string;
+// 	quater: string;
+// 	player: Player[];
+// 	type: string;
+// 	side: string;
+// 	description: string;
+// 	mins: string;
+// };
 
 const typeOptions = [
 	{ name: 'Offensive', value: 'offensive' },
@@ -57,22 +62,19 @@ const quaterOptions = [
 const teamServices = vbaContext.getTeamServices();
 const matchServices = vbaContext.getMatchServices();
 const playerServices = vbaContext.getPlayerServices();
-export const OffenseUpdateModal = ({
+export const ControlModal = ({
 	matchId,
 	modalType = 'edit',
-	homeId,
-	awayId,
-	process
+	homePlayers,
+	awayPlayers,
+	process,
+	handleCloseModal
 }: OffenseUpdateModalProps) => {
 	const [clickedId, setClickedId] = useState('');
 
 	const [defenseType, setDefenseType] = useState('rebound');
 	const [offenseType, setOffenseType] = useState('2PT');
 	const [quaterSelected, setQuaterSelected] = useState('q1');
-
-	const [homePlayers, setHomePlayers] = useState<Player[]>([]);
-	const [awayPlayers, setAwayPlayers] = useState<Player[]>([]);
-
 	const [typeSelected, setTypeSelected] = useState('offensive');
 	const [sideSelected, setSideSelected] = useState('home');
 
@@ -81,89 +83,148 @@ export const OffenseUpdateModal = ({
 	const [subInSelected, setSubInSelected] = useState('');
 	const [subOffSelected, setSubOffSelected] = useState('');
 
-	useEffect(() => {
-		(async () => {
-			const res1 = await playerServices.getPlayersByTeamId(homeId);
-			const res2 = await playerServices.getPlayersByTeamId(awayId);
-
-			setHomePlayers(res1);
-			setAwayPlayers(res2);
-
-			if (modalType === 'update') {
-				if (process) {
-					if (process.type === 'offensive') {
-						setOffenseType(process.option);
-						setPlayerSelected(process.player[0].id);
-						setAssistantSelected(process.player[1].id);
-					} else if (process.type === 'defensive') {
-						setDefenseType(process.option);
-						setPlayerSelected(process.player[0].id);
-					} else if (process.type === 'sub') {
-						setSubInSelected(process.player[0].id);
-						setSubOffSelected(process.player[1].id);
-					}
-					setSideSelected(process.side);
-					setQuaterSelected(process.quater);
-				}
-			}
-		})();
-	}, []);
-
 	const getPlayerById = (id: string): Player | undefined => {
 		let player = homePlayers.find((p: any) => p.id === id);
 		if (!player) player = awayPlayers.find((p: any) => p.id === id);
 		return player;
 	};
 
+	const getPlayerBySide = (side: string) => {
+		if (side === 'home') return homePlayers[0].id;
+		else {
+			return awayPlayers[0].id;
+		}
+	};
+
 	const onEdit = async (e: any) => {
 		e.preventDefault();
 		const type = typeSelected;
 		const side = sideSelected;
+
 		const offense = offenseType;
 		const defense = defenseType;
 		const quater = quaterSelected;
-		const des = e.target.des.value;
-		const assistant = getPlayerById(assistantSelected);
-		const player = getPlayerById(playerSelected);
-		let homeResult = '';
-		let awayResult = '';
+		const des = typeSelected !== 'sub' ? e.target.des.value : '';
+		const assistant =
+			assistantSelected !== ''
+				? getPlayerById(assistantSelected)
+				: getPlayerById(getPlayerBySide(side));
+		console.log('128', playerSelected);
+		const player =
+			playerSelected !== ''
+				? getPlayerById(playerSelected)
+				: getPlayerById(getPlayerBySide(side));
+
 		const mins = e.target.mins.value;
-		// let card = '';
-		const subIn = getPlayerById(subInSelected);
-		const subOff = getPlayerById(subOffSelected);
+		const subIn =
+			subInSelected !== ''
+				? getPlayerById(subInSelected)
+				: getPlayerById(getPlayerBySide(side));
+		const subOff =
+			subOffSelected !== ''
+				? getPlayerById(subOffSelected)
+				: getPlayerById(getPlayerBySide(side));
 
 		const checkType =
-			type === 'offensive' ? offense : type === 'defensive' ? defense : null;
+			type === 'offensive' ? offense : type === 'defensive' ? defense : 'sub';
+
+		console.log('129', player);
 
 		const checkPlayer =
-			type === 'sub'
+			subIn && subOff
 				? [subIn, subOff]
-				: type === 'offensive'
+				: player && assistant
 				? [player, assistant]
-				: [player];
+				: player
+				? [player]
+				: undefined;
+		console.log('137', checkPlayer);
 
 		const process = {
 			type: type,
 			side: side,
 			option: checkType,
 			quater: quater,
-			des: des,
+			description: des,
 			mins: mins,
-			player: checkPlayer
+			player: checkPlayer ? checkPlayer : new Array<Player>()
 		};
+
+		console.log('148', process);
 		const res3 = await matchServices.addProcessToMatch(matchId, [process]);
-		console.log('168', res3);
 
 		// setReload(!reload);
 	};
+	useEffect(() => {
+		(async () => {
+			if (modalType === 'update' && process) {
+				if (process.type === 'offensive') {
+					setTypeSelected(process.type);
+					setOffenseType(process.option);
+					setPlayerSelected(process.player[0].id);
+					setAssistantSelected(process.player[1].id);
+				} else if (process.type === 'defensive') {
+					setTypeSelected(process.type);
+					setDefenseType(process.option);
+					setPlayerSelected(process.player[0].id);
+				} else if (process.type === 'sub') {
+					setTypeSelected(process.type);
 
-	const onUpdate = () => {};
+					setSubInSelected(process.player[0].id);
+					setSubOffSelected(process.player[1].id);
+				}
+				setSideSelected(process.side);
+				setQuaterSelected(process.quater);
+			}
+		})();
+	}, [process]);
+
+	const onUpdate = async (e: any) => {
+		e.preventDefault();
+		const type = typeSelected;
+		const side = sideSelected;
+		const offense = offenseType;
+		const defense = defenseType;
+		const quater = quaterSelected;
+		const des = typeSelected !== 'sub' ? e.target.des.value : '';
+		const assistant = getPlayerById(assistantSelected);
+		const player = getPlayerById(playerSelected);
+
+		const mins = e.target.mins.value;
+		const subIn = getPlayerById(subInSelected);
+		const subOff = getPlayerById(subOffSelected);
+
+		const checkType =
+			type === 'offensive' ? offense : type === 'defensive' ? defense : 'sub';
+
+		const checkPlayer =
+			type === 'sub' && subIn && subOff
+				? [subIn, subOff]
+				: type === 'offensive' && player && assistant
+				? [player, assistant]
+				: player
+				? [player]
+				: undefined;
+
+		const updatedProcess = {
+			id: process?.id,
+			type: type,
+			side: side,
+			option: checkType,
+			quater: quater,
+			description: des,
+			mins: mins,
+			player: checkPlayer ? checkPlayer : new Array<Player>()
+		};
+
+		const res4 = await matchServices.updateProcess(matchId, updatedProcess);
+	};
 
 	return (
 		<>
 			<ModalBlock>
 				<form onSubmit={modalType === 'update' ? onUpdate : onEdit}>
-					<section className='container mx-auto text-left'>
+					<section className='container mx-auto text-left '>
 						<div className='max-w-[70%] text-7xl font-bold uppercase'>
 							match detail
 						</div>
@@ -208,6 +269,7 @@ export const OffenseUpdateModal = ({
 										</label>
 										<input
 											name='des'
+											defaultValue={process?.description}
 											className={`${cx('__modal__input--des')}`}></input>
 									</div>
 
@@ -242,6 +304,7 @@ export const OffenseUpdateModal = ({
 											</label>
 											<input
 												id='mins'
+												defaultValue={process?.mins}
 												className={`${cx('__modal__input--goal')}`}></input>
 										</div>
 									</div>
@@ -281,6 +344,7 @@ export const OffenseUpdateModal = ({
 										</label>
 										<input
 											name='des'
+											defaultValue={process?.description}
 											className={`${cx('__modal__input--des')}`}></input>
 									</div>
 
@@ -306,6 +370,7 @@ export const OffenseUpdateModal = ({
 											</label>
 											<input
 												id='mins'
+												defaultValue={process?.mins}
 												className={`${cx('__modal__input--goal')}`}></input>
 										</div>
 									</div>
@@ -362,6 +427,7 @@ export const OffenseUpdateModal = ({
 											</label>
 											<input
 												id='mins'
+												defaultValue={process?.mins}
 												className={`${cx('__modal__input--goal')}`}></input>
 										</div>
 									</div>
@@ -376,11 +442,7 @@ export const OffenseUpdateModal = ({
 											<button
 												id='save'
 												type='submit'
-												onClick={(e: any) =>
-													e.currentTarget.id === 'save'
-														? setClickedId('save')
-														: ''
-												}
+												onClick={handleCloseModal}
 												className={
 													clickedId === 'save' ? cx('__editActive') : ''
 												}>
@@ -389,11 +451,7 @@ export const OffenseUpdateModal = ({
 										</li>
 										<li
 											id='close'
-											onClick={(e: any) =>
-												e.currentTarget.id === 'close'
-													? setClickedId('close')
-													: ''
-											}
+											onClick={handleCloseModal}
 											className={
 												clickedId === 'close' ? cx('__editActive') : ''
 											}>

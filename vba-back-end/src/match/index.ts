@@ -30,19 +30,19 @@ export class MatchManager
   getMatches(tournamentId: string, round: string): Promise<Match[]> {
     return this.matchRepository.getMatches(tournamentId, round);
   }
-  updateMatch(match: Match,ctx?:any): Promise<number>{
-    return this.matchRepository.updateMatch(match, ctx);
+  updateMatch(id: string, process: Process[], ctx?: any): Promise<Match[]> {
+    return this.matchRepository.updateMatch(id, process, ctx);
   }
-  addProcess(process: Process[],ctx?: any): Promise<number>{
+  addProcess(process: Process[], ctx?: any): Promise<number> {
     return this.processRepository.addProcess(process, ctx);
   }
-  getMatchById(matchId: string):Promise<Match[]>{
+  getMatchById(matchId: string): Promise<Match[]> {
     return this.matchRepository.getMatchById(matchId);
   }
-  getProcessById(processId: string): Promise<Process[]>{
+  getProcessById(processId: string): Promise<Process[]> {
     return this.processRepository.getProcessById(processId);
   }
-  updateProcess(process: Process,ctx?:any): Promise<number>{
+  updateProcess(process: Process, ctx?: any): Promise<number> {
     return this.processRepository.updateProcess(process, ctx);
   }
 }
@@ -56,8 +56,7 @@ export function useMatchService(db: DB): MatchService {
   const matchRepository = new SqlMatchRepository(db);
   const processRepository = new SqlProcessRepository(db);
 
-  
-  return new MatchManager(builder.search, matchRepository,processRepository);
+  return new MatchManager(builder.search, matchRepository, processRepository);
 }
 export function useMatchController(log: Log, db: DB): MatchController {
   return new MatchController(log, useMatchService(db));

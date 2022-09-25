@@ -120,9 +120,11 @@ export interface Process {
 	id?: string;
 	type: string;
 	mins: string;
-	quater?: string;
-	player: (Player | undefined)[];
+	quater: string;
+	player: Player[];
 	side: string;
+	option: string;
+	description: string;
 }
 
 export interface Player {

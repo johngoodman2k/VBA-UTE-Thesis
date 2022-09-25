@@ -26,6 +26,11 @@ export interface MatchServicesRoot {
 		process: Process[],
 		globalHost?: string
 	): Promise<Process>;
+	updateProcess(
+		id: string | undefined,
+		process: Process,
+		globalHost?: string
+	): Promise<Process>;
 }
 
 export interface TeamServicesRoot {

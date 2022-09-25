@@ -1,0 +1,27 @@
+.__block {
+	overflow-y: hidden;
+	position: relative;
+	display: inline-block;
+	max-height: 90px;
+}
+.__contentBlock {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	padding: 0.5rem;
+	justify-content: space-between;
+	border-right: 1px solid #f6f6f6;
+	width: 145px;
+	&__teamName {
+		align-items: center;
+		margin-left: 0.5rem;
+		letter-spacing: 0.025rem;
+		display: flex;
+		flex: 1 1;
+	}
+}
+.__title {
+	display: flex;
+	justify-content: space-between;
+	text-align: center;
+}

@@ -1,0 +1,135 @@
+.__container {
+	display: flex;
+	max-width: 1440px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	color: white;
+	align-items: center;
+	justify-content: center;
+}
+
+.__background {
+	position: absolute;
+	left: 0;
+	transform: translateY(-35%);
+	z-index: 1;
+	&__block {
+		position: relative;
+		min-width: 100%;
+		&--adjust {
+			height: 500px;
+			width: 500px;
+			opacity: 0.05;
+		}
+	}
+}
+
+.__teamLogoBlock {
+	height: 115px;
+	width: 115px;
+	padding: 42px 30px;
+	box-sizing: content-box;
+	&__container {
+		position: relative;
+		min-width: 100%;
+	}
+	&__image {
+		width: 115px;
+		height: 115px;
+	}
+}
+
+.__teamInfo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 10;
+	padding: 0.5rem;
+	flex: 1 1;
+	&__middle {
+		flex: 1 1;
+		&__name {
+			font-size: 2.25rem;
+			font-weight: 500;
+			position: relative;
+			line-height: 1.14;
+			text-transform: uppercase;
+		}
+		&__record {
+			font-weight: 500;
+			font-size: 1rem;
+			line-height: 1.25;
+			margin: 0.5rem 0;
+		}
+	}
+}
+.__infoButton {
+	padding: 0.5rem 2.5rem;
+	text-transform: uppercase;
+	font-weight: 400;
+	font-size: 1.5rem;
+	line-height: 0.8;
+	display: flex;
+	align-items: center;
+	border: 2px solid #fff;
+	border-radius: 9999px;
+	transition: ease-in 0.1s;
+	&__text {
+		font-weight: 400;
+		font-size: 0.875rem;
+		line-height: 1.25;
+	}
+	&:hover {
+		background-color: white;
+		color: black;
+	}
+}
+
+.__rank {
+	display: flex;
+	align-items: center;
+	padding: 20px 0;
+	margin-top: 15px;
+	justify-content: center;
+	background: transparent;
+	width: auto;
+	height: 140px;
+	flex: 1 1;
+	&__block {
+		flex: 1 1;
+		text-align: center;
+	}
+	&__label {
+		font-size: 0.875rem;
+		font-weight: 700;
+	}
+	&__ordinal {
+		text-transform: uppercase;
+		font-weight: 400;
+		font-size: 1.75rem;
+		line-height: 0.8;
+	}
+	&__value {
+		font-size: 0.875rem;
+		font-weight: 700;
+	}
+}
+
+@media screen and (min-width: 1024px) {
+	.__rank__block {
+		max-width: 88px;
+	}
+	.__rank__label {
+		font-size: 1rem;
+	}
+	.__rank__ordinal {
+		text-transform: uppercase;
+		font-weight: 400;
+		font-size: 1.625rem;
+		line-height: 0.8;
+	}
+	.__rank__value {
+		font-size: 1rem;
+	}
+}

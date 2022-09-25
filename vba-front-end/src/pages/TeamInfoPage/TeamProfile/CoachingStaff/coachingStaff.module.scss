@@ -1,0 +1,51 @@
+.__container {
+	width: 100%;
+	padding: 1rem;
+}
+.__block {
+	height: 100%;
+	color: #000;
+	background-color: #fff;
+	position: relative;
+}
+.__contentBlock {
+	padding: 1rem;
+}
+.__titleBlock {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	padding-bottom: 0.75rem;
+	margin-bottom: 0.75rem;
+	border-bottom: 1px solid #ebe9e7;
+}
+.__heading {
+	font-size: 0.875rem;
+	line-height: 1.25;
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+	width: 50%;
+	font-weight: 700;
+	padding-right: 0.5rem;
+}
+.__list {
+	font-weight: 400;
+	font-size: 0.875rem;
+	line-height: 1.25;
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+	width: 50%;
+}
+
+@media screen and (min-width: 768px) {
+	.__container {
+		width: 33.33%;
+	}
+	.__block {
+		margin-bottom: 1.5rem;
+		border-radius: 0.25rem;
+	}
+	.__contentBlock {
+		padding: 1.25rem;
+	}
+}

@@ -31,6 +31,7 @@ export class MatchServices implements MatchServicesRoot {
 		this.getMatchDetailsById = this.getMatchDetailsById.bind(this);
 		this.patchMatchDetailsById = this.patchMatchDetailsById.bind(this);
 		this.addProcessToMatch = this.addProcessToMatch.bind(this);
+		this.updateProcess = this.updateProcess.bind(this);
 	}
 
 	getMatchDetailsById(
@@ -55,6 +56,14 @@ export class MatchServices implements MatchServicesRoot {
 		globalHost?: string
 	): Promise<Process> {
 		const url = `${this.url}/addProcessToMatch/${id}`;
+		return this.httpRequest.post<Process>(url, process);
+	}
+	updateProcess(
+		id: string,
+		process: Process,
+		globalHost?: string
+	): Promise<Process> {
+		const url = `${this.url}/updateProcess/${id}`;
 		return this.httpRequest.post<Process>(url, process);
 	}
 }

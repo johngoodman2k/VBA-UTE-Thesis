@@ -5,17 +5,31 @@ import { PlayByPlayTeam } from './components/PlayByPlayTeam';
 import { PlayByPlayBlock } from './components/PlayByPlayBlock';
 import { vbaContext } from '../../../Services/services';
 import { id } from 'date-fns/locale';
-import { Process } from '../../../Services/models';
+import { Player, Process } from '../../../Services/models';
+import { ControlModal } from '../../Modal/ControlModal';
 const cx = classNames.bind(styles);
 
 type PlayByPlayProps = {
 	process: Process[] | undefined;
+	matchId: string | undefined;
+	homePlayers: Player[];
+	awayPlayers: Player[];
+
+	// handleCloseModal?: () => void;
 };
 
 const processServices = vbaContext.getProcessServices();
 export const PlayByPlay = (props: PlayByPlayProps) => {
 	const [clickedId, setClickedId] = useState('');
-	const [process, setProcess] = useState([]);
+	const [updateModal, setUpdateModal] = useState('');
+
+	const [process, setProcess] = useState<Process | undefined>();
+
+	console.log('27', process);
+	const getProcess = (process: Process | undefined) => {
+		setProcess(process);
+	};
+
 	console.log(props.process);
 	// useEffect(() => {
 	// 	async () => {
@@ -23,6 +37,13 @@ export const PlayByPlay = (props: PlayByPlayProps) => {
 	// 		setProcess(res);
 	// 	};
 	// });
+	// const handle
+	const handleOpenModal = () => {
+		setUpdateModal('open');
+	};
+	const handleCloseModal = () => {
+		setUpdateModal('close');
+	};
 
 	return (
 		<div className={cx('__wrapper')}>
@@ -106,10 +127,26 @@ export const PlayByPlay = (props: PlayByPlayProps) => {
 					</div>
 					<PlayByPlayTeam></PlayByPlayTeam>
 					{props.process?.map((x: any) => {
-						return <PlayByPlayBlock side={x.side}></PlayByPlayBlock>;
+						return (
+							<PlayByPlayBlock
+								handleOpenUpdateModal={handleOpenModal}
+								side={x.side}
+								process={x}
+								getProcess={getProcess}></PlayByPlayBlock>
+						);
 					})}
 				</div>
 			</section>
+			<div
+				className={updateModal === 'open' ? cx('__active') : cx('__inactive')}>
+				<ControlModal
+					handleCloseModal={handleCloseModal}
+					modalType='update'
+					matchId={props.matchId}
+					homePlayers={props.homePlayers}
+					awayPlayers={props.awayPlayers}
+					process={process}></ControlModal>
+			</div>
 		</div>
 	);
 };
