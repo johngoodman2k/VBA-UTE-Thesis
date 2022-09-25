@@ -9,6 +9,7 @@ import {
   Statistics,
   Standings,
   Team,
+  Season,
 } from "./tournament";
 import { buildToInsertBatch } from "query-core";
 import {
@@ -29,17 +30,15 @@ export class TournamentController extends Controller<
 > {
   constructor(log: Log, protected tournamentService: TournamentService) {
     super(log, tournamentService);
-    this.getGeneratedMatches = this.getGeneratedMatches.bind(this);
-    this.getAllTournament = this.getAllTournament.bind(this);
-    this.createTournament = this.createTournament.bind(this);
+    this.GetGeneratedMatches = this.GetGeneratedMatches.bind(this);
+    this.GetAllTournament = this.GetAllTournament.bind(this);
+    // this.createTournament = this.createTournament.bind(this);
     // this. = this.getTeamByTournament.bind(this);
   }
 
-  async getGeneratedMatches(req: Request, res: Response) {
+  async GetGeneratedMatches(req: Request, res: Response) {
     const { tournament } = req.params;
-
-    const roundArray = [];
-
+    //get object tournament theo id
     const tournamentResult = await this.tournamentService.getTournamentById(
       tournament
     );
@@ -47,7 +46,7 @@ export class TournamentController extends Controller<
     // console.log("a", tournamentResult);
 
     if (!tournamentResult)
-      return res.status(400).json({ err: "  Failed to get tournament" });
+      return res.status(400).json({ err: "Failed to get tournament" });
 
     if (tournamentResult.length === 0)
       return res.status(200).json(tournamentResult);
@@ -59,120 +58,42 @@ export class TournamentController extends Controller<
     if (!teams) return res.status(400).json({ err: "Failed to get teams" });
     // console.log(teams);
 
-    if (tournamentResult[0].rounds === null) {
-      let roundArray = [];
-      let matchesArray = [];
-      if (tournamentResult[0].type === "roundrobin") {
-        let indexRound = teams.length;
-        let teamLength = teams.length;
+    let roundArray = [];
+    let matchesArray = [];
+    if (tournamentResult[0].type === "roundrobin") {
+      let indexRound = teams.length;
+      let teamLength = teams.length;
 
-        if (indexRound % 2 === 0 && indexRound >= 0) {
-          indexRound = indexRound - 1;
-          teamLength = teamLength - 1;
-        }
+      if (indexRound % 2 === 0 && indexRound >= 0) {
+        indexRound = indexRound - 1;
+        teamLength = teamLength - 1;
+      }
 
-        let saveTeam = [];
-        const team = randomTeam(teams);
+      let saveTeam = [];
+      const team = randomTeam(teams);
 
-        while (indexRound > 0) {
-          const roundId = nanoid();
-          const teamGenerated = generateRound(team);
-
-          team.push(team[1]);
-          team.splice(1, 1);
-
-          saveTeam = [...saveTeam, teamGenerated];
-
-          const newTeamGenerated = splitTheTeam(teamGenerated);
-          const matches = convertTeamsGeneratedToMatches(
-            newTeamGenerated,
-            tournament,
-            roundId,
-            "roundrobin",
-            teamLength - indexRound
-          );
-
-          // // console.log(Date.now);
-          const newMatches = checkGhostTeamAndRemove(matches);
-
-          // console.log(newMatches);
-          matchesArray.push(...newMatches);
-
-          roundArray = [
-            ...roundArray,
-            {
-              id: roundId,
-              matches: newMatches,
-              roundname: (teamLength - indexRound + 1).toString(),
-              tournamentId: tournament,
-              createdAt: new Date(Date.now()),
-            },
-          ];
-
-          indexRound--;
-        }
-
-        if (tournamentResult[0].competitor === "double") {
-          let indexReverse = teams.length;
-          let teamLength = teams.length;
-          if (indexReverse % 2 === 0 && indexReverse >= 0) {
-            indexReverse = indexReverse - 1;
-            teamLength = teamLength - 1;
-          }
-
-          while (indexReverse > 0) {
-            saveTeam.forEach((element) => {
-              const roundId = nanoid();
-              const teamReversed = element.reverse();
-
-              const newTeamGenerated = splitTheTeam(teamReversed);
-
-              const matches = convertTeamsGeneratedToMatches(
-                newTeamGenerated,
-                tournament,
-                roundId,
-                "roundrobin",
-                teamLength * 2 - indexReverse
-              );
-              // // console.log(Date.now);
-              const newMatches = checkGhostTeamAndRemove(matches);
-
-              // console.log(newMatches);
-              matchesArray.push(...newMatches);
-
-              roundArray = [
-                ...roundArray,
-                {
-                  id: roundId,
-                  matches: newMatches,
-                  roundname: (teamLength * 2 - indexReverse + 1).toString(),
-                  tournamentId: tournament,
-                  createdAt: new Date(Date.now()),
-                },
-              ];
-
-              indexReverse--;
-            });
-          }
-        }
-      } else {
-        const newTeam = randomTeam(teams);
-        const newTeamGenerated = splitTheTeam(newTeam);
+      while (indexRound > 0) {
         const roundId = nanoid();
+        const teamGenerated = generateRound(team);
 
-        // return res.status(200).json(newTeamGenerated);
+        team.push(team[1]);
+        team.splice(1, 1);
 
+        saveTeam = [...saveTeam, teamGenerated];
+
+        const newTeamGenerated = splitTheTeam(teamGenerated);
         const matches = convertTeamsGeneratedToMatches(
           newTeamGenerated,
           tournament,
           roundId,
-          "elimination",
-          1
+          "roundrobin",
+          teamLength - indexRound
         );
 
-        const teamPlayWithGhostTeam = getTeamPlayWithGhostTeam(matches);
+        // // console.log(Date.now);
         const newMatches = checkGhostTeamAndRemove(matches);
 
+        // console.log(newMatches);
         matchesArray.push(...newMatches);
 
         roundArray = [
@@ -180,107 +101,209 @@ export class TournamentController extends Controller<
           {
             id: roundId,
             matches: newMatches,
-            roundname: `1/${newTeam.length}`,
+            roundname: (teamLength - indexRound + 1).toString(),
             tournamentId: tournament,
             createdAt: new Date(Date.now()),
           },
         ];
 
-        let round = 2;
-        let remainingTeams = newTeam.length / 2;
-        const flag = remainingTeams;
-        let newTeam1 = [];
-
-        while (remainingTeams >= 1) {
-          const roundId1 = nanoid();
-
-          for (let i = 0; i < remainingTeams - 1; i++) {
-            newTeam1.push({
-              teamname: "W" + "#" + (i + 1) + " " + "1/" + remainingTeams * 2,
-            });
-          }
-          if (remainingTeams === flag && teamPlayWithGhostTeam) {
-            newTeam1.push(teamPlayWithGhostTeam);
-          } else {
-            const lastTeam = {
-              teamname:
-                "W" + "#" + remainingTeams + " " + "1/" + remainingTeams * 2,
-            };
-            newTeam1.push(lastTeam);
-
-            // newTeam1.push(teamPlayWithGhostTeam);
-          }
-
-          if (remainingTeams === 1) {
-            const bronzeMatchTeam1 = {
-              teamname: "L" + "#" + 1 + " " + "1/" + remainingTeams * 2,
-            };
-            const bronzeMatchTeam2 = {
-              teamname: "L" + "#" + 2 + " " + "1/" + remainingTeams * 2,
-            };
-            newTeam1.push(bronzeMatchTeam1, bronzeMatchTeam2);
-          }
-
-          const teamSplited = splitTheTeam(newTeam1);
-
-          const matches = convertTeamsGeneratedToMatches(
-            teamSplited,
-            tournament,
-            roundId1,
-            "elimination",
-            round
-          );
-
-          matchesArray.push(...matches);
-
-          roundArray = [
-            ...roundArray,
-            {
-              id: roundId1,
-              matches: matches,
-              roundname: `1/${remainingTeams}`,
-              tournamentId: tournament,
-              createdAt: new Date(Date.now()),
-            },
-          ];
-          remainingTeams = remainingTeams / 2;
-          round++;
-        }
+        indexRound--;
       }
 
-      // return res.status(200).json(roundArray);
+      if (tournamentResult[0].competitor === "double") {
+        let indexReverse = teams.length;
+        let teamLength = teams.length;
+        if (indexReverse % 2 === 0 && indexReverse >= 0) {
+          indexReverse = indexReverse - 1;
+          teamLength = teamLength - 1;
+        }
 
-      // console.log("OK!");
-      const createMatches = await this.tournamentService.buildToInsertMatches(
-        matchesArray
-      );
+        while (indexReverse > 0) {
+          saveTeam.forEach((element) => {
+            const roundId = nanoid();
+            const teamReversed = element.reverse();
 
-      if (!createMatches || createMatches === 0)
-        return res.status(400).json({ err: "Save matches failed" });
+            const newTeamGenerated = splitTheTeam(teamReversed);
 
-      const createRound = await this.tournamentService.buildToInsertRound(
-        roundArray
-      );
+            const matches = convertTeamsGeneratedToMatches(
+              newTeamGenerated,
+              tournament,
+              roundId,
+              "roundrobin",
+              teamLength * 2 - indexReverse
+            );
+            // // console.log(Date.now);
+            const newMatches = checkGhostTeamAndRemove(matches);
 
-      if (!createRound || createRound === 0)
-        return res.status(400).json({ err: "Save rounds failed" });
+            // console.log(newMatches);
+            matchesArray.push(...newMatches);
 
-      const newTournament = await this.tournamentService.updateRoundTournament(
-        tournamentResult[0],
-        roundArray
-      );
-      if (!newTournament || newTournament === 0)
-        return res.status(400).json({ err: "Update tournament failed" });
+            roundArray = [
+              ...roundArray,
+              {
+                id: roundId,
+                matches: newMatches,
+                roundname: (teamLength * 2 - indexReverse + 1).toString(),
+                tournamentId: tournament,
+                createdAt: new Date(Date.now()),
+              },
+            ];
 
-      // console.log("OK!");
-
-      return res.status(200).json({ message: "Generate succedded" });
+            indexReverse--;
+          });
+        }
+      }
     } else {
-      res.status(400).json({
-        err: "Rounds already exist",
-        // message: roundArray,
-      });
+      const newTeam = randomTeam(teams);
+      const newTeamGenerated = splitTheTeam(newTeam);
+      const roundId = nanoid();
+
+      // return res.status(200).json(newTeamGenerated);
+
+      const matches = convertTeamsGeneratedToMatches(
+        newTeamGenerated,
+        tournament,
+        roundId,
+        "elimination",
+        1
+      );
+
+      const teamPlayWithGhostTeam = getTeamPlayWithGhostTeam(matches);
+      const newMatches = checkGhostTeamAndRemove(matches);
+
+      matchesArray.push(...newMatches);
+
+      roundArray = [
+        ...roundArray,
+        {
+          id: roundId,
+          matches: newMatches,
+          roundname: `1/${newTeam.length}`,
+          tournamentId: tournament,
+          createdAt: new Date(Date.now()),
+        },
+      ];
+
+      let round = 2;
+      let remainingTeams = newTeam.length / 2;
+      const flag = remainingTeams;
+      let newTeam1 = [];
+
+      while (remainingTeams >= 1) {
+        const roundId1 = nanoid();
+
+        for (let i = 0; i < remainingTeams - 1; i++) {
+          newTeam1.push({
+            teamname: "W" + "#" + (i + 1) + " " + "1/" + remainingTeams * 2,
+          });
+        }
+        if (remainingTeams === flag && teamPlayWithGhostTeam) {
+          newTeam1.push(teamPlayWithGhostTeam);
+        } else {
+          const lastTeam = {
+            teamname:
+              "W" + "#" + remainingTeams + " " + "1/" + remainingTeams * 2,
+          };
+          newTeam1.push(lastTeam);
+
+          // newTeam1.push(teamPlayWithGhostTeam);
+        }
+
+        if (remainingTeams === 1) {
+          const bronzeMatchTeam1 = {
+            teamname: "L" + "#" + 1 + " " + "1/" + remainingTeams * 2,
+          };
+          const bronzeMatchTeam2 = {
+            teamname: "L" + "#" + 2 + " " + "1/" + remainingTeams * 2,
+          };
+          newTeam1.push(bronzeMatchTeam1, bronzeMatchTeam2);
+        }
+
+        const teamSplited = splitTheTeam(newTeam1);
+
+        const matches = convertTeamsGeneratedToMatches(
+          teamSplited,
+          tournament,
+          roundId1,
+          "elimination",
+          round
+        );
+
+        matchesArray.push(...matches);
+
+        roundArray = [
+          ...roundArray,
+          {
+            id: roundId1,
+            matches: matches,
+            roundname: `1/${remainingTeams}`,
+            tournamentId: tournament,
+            createdAt: new Date(Date.now()),
+          },
+        ];
+        remainingTeams = remainingTeams / 2;
+        round++;
+      }
     }
+
+    // return res.status(200).json(roundArray);
+
+    // console.log("OK!");
+    const createMatches = await this.tournamentService.buildToInsertMatches(
+      matchesArray
+    );
+
+    if (!createMatches || createMatches === 0)
+      return res.status(400).json({ err: "Save matches failed" });
+
+    const createRound = await this.tournamentService.buildToInsertRound(
+      roundArray
+    );
+
+    if (!createRound || createRound === 0)
+      return res.status(400).json({ err: "Save rounds failed" });
+
+    const standingsId = nanoid();
+    const seasonId = nanoid();
+
+    const standingsObj = new StandingsClass(
+      standingsId,
+      seasonId,
+      new Date(Date.now())
+    );
+
+    await this.tournamentService.createStandings(standingsObj.getObjDefault());
+
+    const seasons = new Array<Season>();
+    const seasonObj = {
+      id: seasonId,
+      name: "Season",
+      status: "inactive",
+      standingsId: standingsId,
+      tournamentId: tournament,
+      createdAt: new Date(Date.now()),
+      rounds: roundArray,
+    };
+    if (tournamentResult[0].seasons === null) {
+      seasons.push({ ...seasonObj, name: seasonObj.name + "1" });
+    } else {
+      const seasonsLength = tournamentResult[0].seasons.length;
+      seasonObj.name = seasonObj.name + seasonsLength;
+      seasons.concat(tournamentResult[0].seasons, [seasonObj]);
+      // seasons.push({...seasonObj,name: seasonObj.name + seasonsLength})
+    }
+
+    const newTournament = await this.tournamentService.updateSeasonTournament(
+      tournamentResult[0],
+      seasons
+    );
+
+    if (!newTournament || newTournament === 0)
+      return res.status(400).json({ err: "Update tournament failed" });
+
+    const newSeaon = await this.tournamentService.createSeason(seasonObj);
+
+    return res.status(200).json({ message: "Generate succedded" });
 
     // this.tournamentService
     //   .getTournamentById(tournament)
@@ -443,7 +466,7 @@ export class TournamentController extends Controller<
     //   });
   }
 
-  async getAllTournament(req: Request, res: Response) {
+  async GetAllTournament(req: Request, res: Response) {
     const { _page, _limit } = req.query;
 
     const tournament = await this.tournamentService.getAllTournament();
@@ -460,40 +483,38 @@ export class TournamentController extends Controller<
     return res.status(200).json(tournament);
   }
 
-  async createTournament(req: Request, res: Response) {
-    const tournament = req.body;
+  // async createTournament(req: Request, res: Response) {
+  //   const tournament = req.body;
 
-    const tournamentId = nanoid();
+  //   const tournamentId = nanoid();
 
-    const standingsId = nanoid();
+  //   const tournamentCreated = await this.tournamentService.createTournament({
+  //     id: tournamentId,
+  //     standingsId: standingsId,
+  //     createdAt: new Date(Date.now()),
+  //     ...tournament,
+  //   });
 
-    const tournamentCreated = await this.tournamentService.createTournament({
-      id: tournamentId,
-      standingsId: standingsId,
-      createdAt: new Date(Date.now()),
-      ...tournament,
-    });
+  //   if (!tournamentCreated || tournamentCreated === 0)
+  //     return res.status(400).json({ err: "Failed to create tournament" });
 
-    if (!tournamentCreated || tournamentCreated === 0)
-      return res.status(400).json({ err: "Failed to create tournament" });
+  //   // const team  = await this.tournamentService.getTeamByTournament(tournament)
 
-    // const team  = await this.tournamentService.getTeamByTournament(tournament)
+  //   const standingsObj = new StandingsClass(
+  //     standingsId,
+  //     tournamentId,
+  //     new Date(Date.now())
+  //   );
 
-    const standingsObj = new StandingsClass(
-      standingsId,
-      tournamentId,
-      new Date(Date.now())
-    );
+  //   const standingsCreated = await this.tournamentService.createStandings(
+  //     standingsObj.getObjDefault()
+  //   );
 
-    const standingsCreated = await this.tournamentService.createStandings(
-      standingsObj.getObjDefault()
-    );
+  //   if (!standingsCreated || standingsCreated === 0)
+  //     return res.status(400).json({ err: "Failed to create standings" });
 
-    if (!standingsCreated || standingsCreated === 0)
-      return res.status(400).json({ err: "Failed to create standings" });
-
-    return res.status(200).json({ message: "Created successfully" });
-  }
+  //   return res.status(200).json({ message: "Created successfully" });
+  // }
   // getTeamByTournament(req: Request, res: Response) {
   //   const { tournament } = req.params;
   //   this.tournamentService.getTeamByTournament(tournament).then((team) => {})
@@ -503,14 +524,14 @@ export class TournamentController extends Controller<
 }
 class StandingsClass {
   id: string;
-  tournamentId: string;
+  seasonId: string;
   createdAt: Date;
   statistics: Statistics[];
   // objDefault = {};
 
-  constructor(id: string, tournamentId: string, createdAt: Date) {
+  constructor(id: string, seasonId: string, createdAt: Date) {
     this.id = id;
-    this.tournamentId = tournamentId;
+    this.seasonId = seasonId;
     this.createdAt = createdAt;
     this.statistics = [];
     this.getObjDefault = this.getObjDefault.bind(this);
@@ -519,7 +540,7 @@ class StandingsClass {
   getObjDefault(): Standings {
     return {
       id: this.id,
-      tournamentId: this.tournamentId,
+      seasonId: this.seasonId,
       statistics: this.statistics,
       createdAt: this.createdAt,
     };

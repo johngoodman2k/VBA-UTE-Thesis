@@ -18,7 +18,8 @@ export interface Team {
 
 export interface Player {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   dateOfBirth: Date;
   image: string;
   shirtNumber: string;

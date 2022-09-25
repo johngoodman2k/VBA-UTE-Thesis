@@ -4,6 +4,7 @@ import { getTournamentById } from "./query";
 import {
   Match,
   Round,
+  Season,
   Team,
   Tournament,
   tournamentModel,
@@ -21,12 +22,12 @@ export class SqlTournamentRepository
     return this.query<Tournament>(getTournamentById, [id]);
   }
 
-  updateRoundTournament(
+  updateSeasonTournament(
     tournament: Tournament,
-    newRound: Round[],
+    newSeason: Season[],
     ctx?: any
   ): Promise<number> {
-    const result = this.update({ ...tournament, rounds: newRound }, ctx);
+    const result = this.update({ ...tournament, seasons: newSeason }, ctx);
 
     return result;
   }

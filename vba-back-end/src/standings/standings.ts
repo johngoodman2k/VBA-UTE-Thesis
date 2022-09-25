@@ -2,7 +2,7 @@ import { Attributes, DateRange, Filter, Repository, Service } from "onecore";
 
 export interface Standings {
   id: string;
-  tournamentId: string;
+  seasonId: string;
   statistics: Statistics[];
   createdAt: Date;
 }
@@ -45,8 +45,8 @@ export const standingsModel: Attributes = {
     key: true,
     match: "equal",
   },
-  tournamentId: { required: true },
-  statistics: {},
+  seasonId: { required: true },
+  statistics: { type: "array" },
   createdAt: { type: "datetime" },
 };
 

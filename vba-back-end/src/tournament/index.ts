@@ -13,6 +13,8 @@ import {
   MatchRepository,
   Round,
   RoundRepository,
+  Season,
+  SeasonRepository,
   Standings,
   StandingsRepository,
   Team,
@@ -24,6 +26,7 @@ import {
   TournamentService,
 } from "./tournament";
 import { TournamentController } from "./tournament-controller";
+import { SqlSeasonRepository } from "./sql-season-repository";
 
 export class TournamentManager
   extends Manager<Tournament, string, TournamentFilter>
@@ -35,7 +38,8 @@ export class TournamentManager
     protected roundRepository: RoundRepository,
     protected matchRepository: MatchRepository,
     protected teamRepository: TeamRepository,
-    protected standingsRepository: StandingsRepository
+    protected standingsRepository: StandingsRepository,
+    protected seasonRepository: SeasonRepository
   ) {
     super(search, tournamentRepository);
   }
@@ -55,14 +59,14 @@ export class TournamentManager
   buildToInsertRound(rounds: Round[], ctx?: any): Promise<number> {
     return this.roundRepository.buildToInsertRound(rounds, ctx);
   }
-  updateRoundTournament(
+  updateSeasonTournament(
     tournament: Tournament,
-    newRound: Round[],
+    newSeason: Season[],
     ctx?: any
   ): Promise<number> {
-    return this.tournamentRepository.updateRoundTournament(
+    return this.tournamentRepository.updateSeasonTournament(
       tournament,
-      newRound,
+      newSeason,
       ctx
     );
   }
@@ -75,6 +79,9 @@ export class TournamentManager
 
   createStandings(standings: Standings, ctx?: any): Promise<number> {
     return this.standingsRepository.createStandings(standings, ctx);
+  }
+  createSeason(season: Season, ctx?: any): Promise<number> {
+    return this.seasonRepository.createSeason(season, ctx);
   }
 }
 export function useTournamentService(
@@ -95,6 +102,7 @@ export function useTournamentService(
   const matchRepository = new SqlMatchRepository(db);
   const teamRepository = new SqlTeamRepository(db);
   const standingsRepository = new SqlStandingsRepository(db);
+  const seasonRepository = new SqlSeasonRepository(db);
 
   return new TournamentManager(
     builder.search,
@@ -102,7 +110,8 @@ export function useTournamentService(
     roundRepository,
     matchRepository,
     teamRepository,
-    standingsRepository
+    standingsRepository,
+    seasonRepository
   );
 }
 export function useTournamentController(

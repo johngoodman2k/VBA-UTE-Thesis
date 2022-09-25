@@ -7,17 +7,15 @@ create table tournaments
     startDate  timestamp with time zone,
     endDate  timestamp with time zone,
     type character varying(40),
-    status character varying(40),
     competitor character varying(10),
-    rounds jsonb[],
-    standingId character varying(40),
+    seasons jsonb[],
     team jsonb[],
     createdAt timestamp with time zone default now(),
     constraint tournaments_pkey primary key (id)
 );
 
-insert into tournaments (id, name, description, startdate, enddate, type, competitor ,status) values ('1', 'LeagueA', 'TMA Solution lab6', '2022-8-7', '2022-8-7','elimination' ,'double' ,'cai gi do');
-insert into tournaments (id, name, description, startdate, enddate, type, competitor ,status) values ('2', 'LeagueB', 'TMA Solution lab6', '2022-8-7', '2022-8-7','roundrobin' ,'double' ,'cai gi do');
+insert into tournaments (id, name, description, startdate, enddate, type, competitor) values ('1', 'LeagueA', 'TMA Solution lab6', '2022-8-7', '2022-8-7','elimination' ,'double' );
+insert into tournaments (id, name, description, startdate, enddate, type, competitor) values ('2', 'LeagueB', 'TMA Solution lab6', '2022-8-7', '2022-8-7','roundrobin' ,'double');
 
 
 -- insert into teams (id, name, status, description,logo) values ('001','VTV Bình Điền Long An','A','bảng A','https://www.pioneeragrobiz.com/wp-content/uploads/2020/06/BFC-300x300.jpg');
@@ -105,7 +103,7 @@ create table rounds
 create table standings
 (
     id character varying(40),
-    tournamentId character varying(40),
+    seasonId character varying(40),
     statistics jsonb[],
     createdAt timestamp with time zone default now(),
     constraint standings_pkey primary key (id)
@@ -146,4 +144,17 @@ create table process
 	description character varying(120),
     createdAt  timestamp with time zone default now(),
     constraint process_pkey primary key (id)
+);
+
+create table seasons
+(
+    id character varying(40),
+    name character varying(40),
+    status character varying(40),
+    rounds jsonb[],
+    tournamentId character varying(40),
+    standingsId character varying(40),
+    createdAt timestamp with time zone default now(),
+    constraint seasons_pkey primary key (id)
+
 );

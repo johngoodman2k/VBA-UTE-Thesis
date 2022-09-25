@@ -3,7 +3,8 @@ import { Attributes, Filter, Repository, Service } from "onecore";
 
 export interface Player {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   dateOfBirth: Date;
   image: string;
   shirtNumber: string;
@@ -22,7 +23,8 @@ interface Card {
 }
 export interface PlayerFilter extends Filter {
   id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   dateOfBirth: Date;
   image: string;
   shirtNumber: string;
@@ -41,7 +43,8 @@ export const playerModel: Attributes = {
     key: true,
     match: "equal",
   },
-  name: { type: "string" },
+  firstName: { type: "string" },
+  lastName: { type: "string" },
   dateOfBirth: { type: "datetime" },
   image: { type: "string" },
   shirtNumber: { type: "string" },

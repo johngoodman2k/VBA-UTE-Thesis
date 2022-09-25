@@ -6,25 +6,25 @@ export function routes(app: Application, ctx: ApplicationContext): void {
   app.patch("/log", ctx.log.config);
   app.patch("/middleware", ctx.middleware.config);
 
-  //   app.post("/users/search", ctx.user.search);
-  //   app.get("/users/search", ctx.user.search);
-  //   app.get("/users/:id", ctx.user.load);
-  //   app.post("/users", ctx.user.create);
-  //   app.put("/users/:id", ctx.user.update);
-  //   app.patch("/users/:id", ctx.user.patch);
-  //   app.delete("/users/:id", ctx.user.delete);
+  // app.post("/users/search", ctx.user.search);
+  // app.get("/users/search", ctx.user.search);
+  // app.get("/users/:id", ctx.user.load);
+  // app.post("/users", ctx.user.create);
+  // app.put("/users/:id", ctx.user.update);
+  // app.patch("/users/:id", ctx.user.patch);
+  // app.delete("/users/:id", ctx.user.delete);
 
-  app.get("/tournaments/getall", ctx.tournament.getAllTournament);
+  app.get("/tournaments/getall", ctx.tournament.GetAllTournament);
   app.post("/tournaments/search", ctx.tournament.search);
   app.get("/tournaments/search", ctx.tournament.search);
   app.get("/tournaments/:id", ctx.tournament.load);
-  app.post("/tournaments", ctx.tournament.createTournament);
+  // app.post("/tournaments", ctx.tournament.createTournament);
   app.put("/tournaments/:id", ctx.tournament.update);
   app.patch("/tournaments/:id", ctx.tournament.patch);
   app.delete("/tournaments/:id", ctx.tournament.delete);
   app.get(
     "/tournaments/matches/:tournament",
-    ctx.tournament.getGeneratedMatches
+    ctx.tournament.GetGeneratedMatches
   );
 
   app.post("/players/search", ctx.player.search);
@@ -47,7 +47,6 @@ export function routes(app: Application, ctx: ApplicationContext): void {
   app.post("/matches/addProcessToMatch/:matchId", ctx.match.addProcessToMatch);
   app.post("/matches/updateProcess/:matchId", ctx.match.updateProcess);
 
-
   app.post("/teams/search", ctx.team.search);
   app.get("/teams/search", ctx.team.search);
   app.get("/teams/:id", ctx.team.load);
@@ -65,6 +64,14 @@ export function routes(app: Application, ctx: ApplicationContext): void {
   app.put("/process/:id", ctx.process.update);
   app.patch("/process/:id", ctx.process.patch);
   app.delete("/process/:id", ctx.process.delete);
+
+  app.post("/seasons/search", ctx.season.search);
+  app.get("/seasons/search", ctx.season.search);
+  app.get("/seasons/:id", ctx.season.load);
+  app.post("/seasons", ctx.season.create);
+  app.put("/seasons/:id", ctx.season.update);
+  app.patch("/seasons/:id", ctx.season.patch);
+  app.delete("/seasons/:id", ctx.season.delete);
 
   // app.get("/teams/:tournament", ctx.team.getTeamByTournamentId);
 }

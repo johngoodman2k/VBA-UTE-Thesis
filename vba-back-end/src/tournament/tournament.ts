@@ -1,4 +1,5 @@
 import { Attributes, DateRange, Filter, Repository, Service } from "onecore";
+import { StringLiteral } from "typescript";
 
 export interface Tournament {
   id: string;
@@ -7,13 +8,20 @@ export interface Tournament {
   startDate?: string;
   endDate?: string;
   type: string;
-  status: string;
   competitor: string;
-  rounds: Round[];
+  seasons: Season[];
   team: Team[];
-  standingId: string;
   createdAt: Date;
 }
+export interface Season {
+  id: string;
+  name: string;
+  status: string;
+  rounds: Round[];
+  standingsId: string;
+  createdAt: Date;
+}
+
 export interface Match {
   id: string;
   tournamentId: string;
@@ -42,7 +50,8 @@ export interface Team {
 
 export interface Player {
   id: string;
-  name: string;
+  lastName: string;
+  firstName: string;
   dateOfBirth: Date;
   image: string;
   shirtNumber: string;
@@ -66,7 +75,7 @@ export interface Round {
 
 export interface Standings {
   id: string;
-  tournamentId: string;
+  seasonId: string;
   statistics: Statistics[];
   createdAt: Date;
 }
@@ -97,9 +106,9 @@ export interface Statistics {
 // }
 export interface TournamentRepository extends Repository<Tournament, string> {
   getTournamentById(id: string): Promise<Tournament[]>;
-  updateRoundTournament(
+  updateSeasonTournament(
     tournament: Tournament,
-    newRound: Round[],
+    newSeason: Season[],
     ctx?: any
   ): Promise<number>;
   getAllTournament(): Promise<Tournament[]>;
@@ -120,6 +129,9 @@ export interface TeamRepository extends Repository<Team, string> {
 export interface StandingsRepository extends Repository<Standings, string> {
   createStandings(standings: Standings, ctx?: any): Promise<number>;
 }
+export interface SeasonRepository extends Repository<Season, string> {
+  createSeason(season: Season, ctx?: any): Promise<number>;
+}
 export interface TournamentService
   extends Service<Tournament, string, TournamentFilter> {
   buildToInsertMatches(matches: Match[], ctx?: any): Promise<number>;
@@ -130,9 +142,9 @@ export interface TournamentService
   getTeamByTournament(tournament: string): Promise<Team[]>;
   getTournamentById(id: string): Promise<Tournament[]>;
 
-  updateRoundTournament(
+  updateSeasonTournament(
     tournament: Tournament,
-    newRound: Round[],
+    newSeason: Season[],
     ctx?: any
   ): Promise<number>;
 
@@ -140,6 +152,8 @@ export interface TournamentService
   createTournament(tournament: Tournament, ctx?: any): Promise<number>;
 
   createStandings(standings: Standings, ctx?: any): Promise<number>;
+
+  createSeason(season: Season, ctx?: any): Promise<number>;
 
   // addTeamForTournament();
 }
@@ -158,10 +172,9 @@ export const tournamentModel: Attributes = {
   },
   endDate: {},
   type: {},
-  status: {},
   competitor: {},
-  rounds: {},
-  standingId: {},
+  seasons: { type: "array" },
+  team: { type: "array" },
   createdAt: { type: "datetime" },
 };
 
@@ -169,12 +182,11 @@ export interface TournamentFilter extends Filter {
   id: string;
   name: string;
   description: string;
-  startDate?: Date;
-  endDate?: Date;
+  startDate?: string;
+  endDate?: string;
   type: string;
-  status: string;
   competitor: string;
-  rounds: Round[];
-  standingId: string;
+  seasons: Season[];
+  team: Team[];
   createdAt: Date;
 }
