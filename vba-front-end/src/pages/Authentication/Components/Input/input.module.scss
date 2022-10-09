@@ -1,0 +1,89 @@
+@import '/src/styles/Variables.scss';
+.input-block {
+	margin: 10px 0 20px 0;
+}
+.form-input {
+	padding: 20px;
+	border: 1px solid #eee;
+	border-radius: 4px;
+	width: 100%;
+	height: 50px;
+	padding: 0 20px;
+
+	transition: 0.25s ease;
+}
+.form-input:focus {
+	border-color: $second-color;
+}
+.form-field {
+	position: relative;
+}
+.form-label {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	left: 21px;
+	user-select: none;
+	color: #999;
+	pointer-events: none;
+	font-family: $f-1;
+	transition: 0.25s ease;
+	font-size: 10px;
+}
+.form-input:not(:placeholder-shown) + .form-label,
+.form-input:focus + .form-label {
+	top: 0;
+	padding: 5px;
+	display: inline-block;
+	background-color: white;
+	border: none;
+	text-transform: capitalize;
+
+	.signin-block {
+		box-sizing: border-box;
+		width: 100%;
+		height: 100vh;
+		background-image: url('https://www.teahub.io/photos/full/4-40825_50-scary-halloween-2019-wallpapers-hd-backgrounds-halloween..jpg');
+		background-size: cover;
+		background-position-y: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.signin {
+		z-index: 0;
+		padding: 90px 75px;
+		background-color: white;
+		width: 100%;
+		max-width: 400px;
+		border-radius: 20px;
+		&-heading {
+			font-size: 30px;
+			font-family: $f-1;
+			font-weight: 700;
+			text-align: center;
+			margin-bottom: 35px;
+		}
+		&-form {
+			align-items: center;
+			&-adjust {
+				width: 100%;
+			}
+			&-button {
+				padding-top: 10px;
+				margin-top: 10px;
+				text-align: center;
+				width: 100%;
+			}
+			&-already {
+				font-family: $f-1;
+				& span {
+					margin-right: 10px;
+				}
+			}
+		}
+	}
+
+	color: $second-color;
+}

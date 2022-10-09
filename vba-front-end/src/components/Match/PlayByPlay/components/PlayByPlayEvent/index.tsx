@@ -46,7 +46,7 @@ export const PlayByPlayEvent = (props: PlayByPlayEventProps) => {
 						</span>
 					</span>
 					<span className='px-1 capitalize leading-tight md:text-sm'>
-						{props.process.player[0]?.name}
+						{props.process.player[0]?.firstName + ' ' + props.process.player[0]?.lastName}
 					</span>
 				</a>
 			</div>

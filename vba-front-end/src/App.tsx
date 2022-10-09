@@ -33,8 +33,9 @@ function App() {
           path="/calendar"
           element={<Calendar data={new Date(Date.now())} />}
         />
+          <Route path="/teaminfo" element={<TeamInfoPage></TeamInfoPage>} />
       </Routes>
-      <Route path="/teaminfo" element={<TeamInfoPage></TeamInfoPage>} />
+    
     </BrowserRouter>
   );
 }

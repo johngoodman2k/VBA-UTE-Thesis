@@ -1,0 +1,69 @@
+@import '/src/styles/Variables.scss';
+.signup-block {
+	box-sizing: border-box;
+	width: 100%;
+	height: 100vh;
+	background-image: url('https://images.hdqwalls.com/download/horror-pumpkins-halloween-4k-jf-1920x1080.jpg');
+	background-size: cover;
+	background-position-y: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.signup {
+	z-index: 0;
+	padding: 90px 75px;
+	background-color: white;
+	width: 100%;
+	max-width: 500px;
+	border-radius: 20px;
+	&-heading {
+		font-size: 50px;
+		font-family: $f-3;
+		font-weight: 700;
+		text-align: center;
+		margin-bottom: 35px;
+		color: $second-color;
+	}
+	&-form {
+		align-items: center;
+		&-adjust {
+			width: 100%;
+		}
+		&-button {
+			padding-top: 10px;
+			margin-top: 10px;
+			text-align: center;
+			width: 100%;
+		}
+		&-already {
+			font-family: $f-1;
+			position: relative;
+			& span {
+				margin-right: 10px;
+			}
+			& a {
+				position: absolute;
+				top: 30px;
+				left: 50%;
+				transform: translateX(-50%) !important;
+			}
+		}
+		&-back {
+			margin-top: 10px;
+		}
+	}
+}
+
+.adjust-1 {
+	margin: 20px;
+	font-family: $f-1;
+	position: relative;
+	& a {
+		top: 50px;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%) !important;
+	}
+}
