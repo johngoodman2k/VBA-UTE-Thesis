@@ -30,7 +30,9 @@ export const PlayerSelect = (props: PlayerSelectProps) => {
 							onChange={props.onChange}
 							className={`${cx('__options')}`}>
 							{props.homePlayers?.map((x: any) => {
-								return <option value={x.id}>{x.name}</option>;
+								return (
+									<option value={x.id}>{x.lastname + ' ' + x.firstname}</option>
+								);
 							})}
 						</select>
 					</div>
@@ -43,7 +45,9 @@ export const PlayerSelect = (props: PlayerSelectProps) => {
 							onChange={props.onChange}
 							className={`${cx('__options')}`}>
 							{props.awayPlayers?.map((x: any) => {
-								return <option value={x.id}>{x.name}</option>;
+								return (
+									<option value={x.id}>{x.lastname + ' ' + x.firstname}</option>
+								);
 							})}
 						</select>
 					</div>

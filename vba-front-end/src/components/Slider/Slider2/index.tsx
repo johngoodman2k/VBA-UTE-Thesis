@@ -1,162 +1,176 @@
-import React, { useEffect, useState, useRef } from "react";
-import styles from "./slider2.module.scss";
-import classNames from "classnames/bind";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Mousewheel } from "swiper";
+import React, { useEffect, useState, useRef } from 'react';
+import styles from './slider2.module.scss';
+import classNames from 'classnames/bind';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Mousewheel } from 'swiper';
+import videoCTC from './../../../videos/cantho.mp4';
+import videoSGH from './../../../videos/sgh.mp4';
+import videoHNB from './../../../videos/hanoi.mp4';
+import videoNTD from './../../../videos/nhatrang.mp4';
+import videoDND from './../../../videos/danang.mp4';
+import videoTLW from './../../../videos/thanglong.mp4';
 
-import "swiper/scss";
+import 'swiper/scss';
 
 const cx = classNames.bind(styles);
 
 const data = [
-  {
-    name: "CanTho Catfish",
-    img: "http://media.tinthethao.com.vn/files/news/2019/09/17/so-sanh-tong-quan-truoc-playoff-vba-2019--cantho-catfish-vs-thang-long-warriors-p1-144658.jpg",
-    des: "Lê Hiếu Thành is good",
-  },
-  {
-    name: "SaiGon Heat",
-    img: "https://news-thumb2.ymgstatic.com/YanThumbNews/2167221/202205/00de3d67-d53e-4a86-b621-7701a2186117.jpg",
-    des: "Khoa Pham is friendlys",
-  },
-  {
-    name: "NhaTrang Dolphins",
-    img: "https://cdnmedia.webthethao.vn/uploads/2020-11-12/khoa-tran-bi-cam-thi-dau-loi-ky-thuat-1.JPG",
-    des: "Khoa Pham is friendlys",
-  },
-  {
-    name: "DaNang Dragon",
-    img: "https://nguoinoitieng.tv/images/nnt/104/2/bhtt.jpg",
-    des: "Trung Kien is god",
-  },
+	{
+		name: 'CanTho Catfish',
+		video: videoCTC,
+		des: 'Lê Hiếu Thành is good'
+	},
+	{
+		name: 'SaiGon Heat',
+		video: videoSGH,
+		des: 'Khoa Pham is friendlys'
+	},
+	{
+		name: 'NhaTrang Dolphins',
+		video: videoNTD,
+		des: 'Khoa Pham is friendlys'
+	},
+	{
+		name: 'DaNang Dragon',
+		video: videoDND,
+		des: 'Trung Kien is god'
+	},
+	{
+		name: 'Hanoi Buffaloes',
+		video: videoHNB,
+		des: 'Trung Kien is god'
+	},
+	{
+		name: 'Thang Long Warriors',
+		video: videoTLW,
+		des: 'Trung Kien is god'
+	}
 ];
 
-export const Slider2 = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+type Slider2Props = {
+	ref?: (el: any) => void;
+};
+export const Slider2 = (props: Slider2Props) => {
+	const [currentIndex, setCurrentIndex] = useState(0);
 
-  // const imgRef = useRef<any>();
+	// const imgRef = useRef<any>();
 
-  const handleMouseOverImg = (index: number) => {
-    setCurrentIndex(index);
-  };
+	const handleMouseOverImg = (index: number) => {
+		setCurrentIndex(index);
+	};
 
-  return (
-    <div className={` ${cx("Slider")}`}>
-      <div className={`${cx("Slider__ImageBlock")}`}>
-        <div className={`${cx("Slider__ImageBlock__Image")}`}>
-          {data.map((item, index) => {
-            return (
-              <div className={cx("Slider__ImageBlock__Image__ImageFrame")}>
-                <a
-                  href="/"
-                  className={cx(
-                    "Slider__ImageBlock__Image__ImageFrame__ImageChild"
-                  )}
-                >
-                  <img
-                    alt="ok"
-                    className={` ${cx(
-                      "Slider__ImageBlock__Image__ImageFrame__ImageChild__default",
-                      index === currentIndex
-                        ? "Slider__ImageBlock__Image__ImageFrame__ImageChild__default--active"
-                        : ""
-                    )}`}
-                    src={item.img}
-                  ></img>
-                </a>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+	return (
+		<div ref={props.ref} className={` ${cx('Slider')}`}>
+			<div className={`${cx('Slider__ImageBlock')}`}>
+				<div className={`${cx('Slider__ImageBlock__Image')}`}>
+					{data.map((item, index) => {
+						return (
+							<div className={cx('Slider__ImageBlock__Image__ImageFrame')}>
+								<a
+									href='/'
+									className={cx(
+										'Slider__ImageBlock__Image__ImageFrame__ImageChild'
+									)}>
+									<video
+										loop
+										autoPlay
+										muted
+										className={` ${cx(
+											'Slider__ImageBlock__Image__ImageFrame__ImageChild__default',
+											index === currentIndex
+												? 'Slider__ImageBlock__Image__ImageFrame__ImageChild__default--active'
+												: ''
+										)}`}
+										src={item.video}></video>
+								</a>
+							</div>
+						);
+					})}
+				</div>
+			</div>
 
-      <div className={`${cx("Slider__DescriptionBlock")}`}>
-        <div className={cx("Slider__DescriptionBlock__Driver")}></div>
-        <div className={cx("Slider__DescriptionBlock__DescriptionFrame")}>
-          {data.map((item, index) => {
-            return (
-              <div
-                className={cx(
-                  "Slider__DescriptionBlock__DescriptionFrame__Description",
-                  index === currentIndex
-                    ? "Slider__DescriptionBlock__DescriptionFrame__Description--active"
-                    : ""
-                )}
-              >
-                {item.des}
-              </div>
-            );
-          })}
-        </div>
-      </div>
+			<div className={`${cx('Slider__DescriptionBlock')}`}>
+				<div className={cx('Slider__DescriptionBlock__Driver')}></div>
+				<div className={cx('Slider__DescriptionBlock__DescriptionFrame')}>
+					{data.map((item, index) => {
+						return (
+							<div
+								className={cx(
+									'Slider__DescriptionBlock__DescriptionFrame__Description',
+									index === currentIndex
+										? 'Slider__DescriptionBlock__DescriptionFrame__Description--active'
+										: ''
+								)}>
+								{item.des}
+							</div>
+						);
+					})}
+				</div>
+			</div>
 
-      <div className={cx("Slider__Footer")}>
-        <div className={cx("Slider__Footer__FooterWrap")}>
-          <div className={cx("Slider__Footer__FooterWrap__CurrentNumber")}>
-            {data.map((item, index) => {
-              return (
-                <div
-                  className={cx(
-                    "Slider__Footer__FooterWrap__CurrentNumber__Number",
-                    currentIndex === index
-                      ? "Slider__Footer__FooterWrap__CurrentNumber__Number--active"
-                      : ""
-                  )}
-                >
-                  {currentIndex + 1 < 10
-                    ? "0" + (currentIndex + 1)
-                    : currentIndex + 1}
-                </div>
-              );
-            })}
-          </div>
-          <div className={cx("Slider__Footer__FooterWrap__Driver")}></div>
-          <div className={cx("Slider__Footer__FooterWrap__TotalNumber")}>
-            10
-          </div>
-        </div>
-        {/* <div className={cx("Slider__Footer__DriverFrame")}>
+			<div className={cx('Slider__Footer')}>
+				<div className={cx('Slider__Footer__FooterWrap')}>
+					<div className={cx('Slider__Footer__FooterWrap__CurrentNumber')}>
+						{data.map((item, index) => {
+							return (
+								<div
+									className={cx(
+										'Slider__Footer__FooterWrap__CurrentNumber__Number',
+										currentIndex === index
+											? 'Slider__Footer__FooterWrap__CurrentNumber__Number--active'
+											: ''
+									)}>
+									{currentIndex + 1 < 10
+										? '0' + (currentIndex + 1)
+										: currentIndex + 1}
+								</div>
+							);
+						})}
+					</div>
+					<div className={cx('Slider__Footer__FooterWrap__Driver')}></div>
+					<div className={cx('Slider__Footer__FooterWrap__TotalNumber')}>
+						10
+					</div>
+				</div>
+				{/* <div className={cx("Slider__Footer__DriverFrame")}>
           
         </div> */}
-        {/* <div className={cx("Slider__Footer__TotalNumber")}>
+				{/* <div className={cx("Slider__Footer__TotalNumber")}>
           <div className={cx("Slider__Footer__TotalNumber__Number")}>10</div>
         </div> */}
-      </div>
+			</div>
 
-      <div className={`${cx("Slider__Swiper")}`}>
-        <Swiper
-          modules={[Mousewheel]}
-          spaceBetween={0}
-          slidesPerView="auto"
-          grabCursor={true}
-          // centeredSlides={true}
-          onSlideChange={(e) => console.log("48", e)}
-          onSwiper={(swiper) => console.log(swiper)}
-          //   autoplay={{ delay: 10000 }}
-          mousewheel
-          loop={true}
-          className="w-full h-full bg-transparent"
-        >
-          {data.map((data, index) => (
-            <SwiperSlide
-              style={{ transform: "translateX(2em)" }}
-              className={` ${cx("Slider__Swiper__SwiperItem")} `}
-              onMouseOver={() => {
-                handleMouseOverImg(index);
-              }}
-            >
-              {/* <a href="/" className="w-full h-full text-center"> */}
-              <div
-                data-number={index + 1 < 10 ? "0" + (index + 1) : index + 1}
-                className={`${cx("Slider__Swiper__SwiperItem--titleItem")}`}
-              >
-                {data.name}
-              </div>
-              {/* </a> */}
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-    </div>
-  );
+			<div className={`${cx('Slider__Swiper')}`}>
+				<Swiper
+					modules={[Mousewheel]}
+					spaceBetween={0}
+					slidesPerView='auto'
+					grabCursor={true}
+					// centeredSlides={true}
+					onSlideChange={e => console.log('48', e)}
+					onSwiper={swiper => console.log(swiper)}
+					//   autoplay={{ delay: 10000 }}
+					mousewheel
+					loop={true}
+					className='w-full h-full bg-transparent'>
+					{data.map((data, index) => (
+						<SwiperSlide
+							style={{ transform: 'translateX(2em)' }}
+							className={` ${cx('Slider__Swiper__SwiperItem')} `}
+							onMouseOver={() => {
+								handleMouseOverImg(index);
+							}}>
+							{/* <a href="/" className="w-full h-full text-center"> */}
+							<div
+								data-number={index + 1 < 10 ? '0' + (index + 1) : index + 1}
+								className={`${cx('Slider__Swiper__SwiperItem--titleItem')}`}>
+								{data.name}
+							</div>
+							{/* </a> */}
+						</SwiperSlide>
+					))}
+				</Swiper>
+			</div>
+		</div>
+	);
 };

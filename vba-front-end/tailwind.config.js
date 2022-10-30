@@ -6,7 +6,9 @@ module.exports = {
 				'primary-color': '#1b323a',
 				'second-color': '#699eb3',
 				'third-color': '#f9a01b',
-				'fourth-color': '#84bdcb'
+				'fourth-color': '#84bdcb',
+				HNB: '#002b5c',
+				SGH: '#98002E'
 			},
 			margin: {
 				center: '0 auto'

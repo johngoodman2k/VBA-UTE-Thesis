@@ -3,7 +3,6 @@ import { Attributes, DateRange, Filter, Repository, Service } from 'onecore';
 import { Team } from '../team/team';
 
 export interface Match {
-<<<<<<< Updated upstream
 	id: string;
 	tournamentId: string;
 	round: string;
@@ -18,22 +17,6 @@ export interface Match {
 	assistance: Player;
 	process: Process[];
 	endmatch: boolean;
-=======
-  id: string;
-  tournamentId: string;
-  round: string;
-  home: Team;
-  away: Team;
-  homeResult: string;
-  awayResult: string;
-  createdAt: Date;
-  matchDay: Date;
-  referee: string;
-  spectators: string;
-  assistance: Player;
-  process: Process[];
-  endmatch: boolean;
->>>>>>> Stashed changes
 }
 
 export interface Process {
@@ -56,15 +39,9 @@ interface Player {
 }
 
 export interface MatchRepository extends Repository<Match, string> {
-<<<<<<< Updated upstream
 	getMatches(tournamentId: string, round: string): Promise<Match[]>;
 	updateMatch(id: string, process: Process[], ctx?: any): Promise<Match[]>;
 	getMatchById(matchId: string): Promise<Match[]>;
-=======
-  getMatches(tournamentId: string, round: string): Promise<Match[]>;
-  updateMatch(id: string, process: Process[], ctx?: any): Promise<Match[]>;
-  getMatchById(matchId: string): Promise<Match[]>;
->>>>>>> Stashed changes
 }
 export interface ProcessRepository extends Repository<Process, string> {
 	addProcess(process: Process[], ctx?: any): Promise<number>;
@@ -73,7 +50,6 @@ export interface ProcessRepository extends Repository<Process, string> {
 }
 
 export interface MatchService extends Service<Match, string, MatchFilter> {
-<<<<<<< Updated upstream
 	getMatches(tournamentId: string, round: string): Promise<Match[]>;
 	updateMatch(id: string, process: Process[], ctx?: any): Promise<Match[]>;
 	addProcess(process: Process[], ctx?: any): Promise<number>;
@@ -127,59 +103,4 @@ export interface MatchFilter extends Filter {
 	assistance: string;
 	process: Process[];
 	endmatch: boolean;
-=======
-  getMatches(tournamentId: string, round: string): Promise<Match[]>;
-  updateMatch(id: string, process: Process[], ctx?: any): Promise<Match[]>;
-  addProcess(process: Process[], ctx?: any): Promise<number>;
-  getMatchById(matchId: string): Promise<Match[]>;
-  getProcessById(processId: string): Promise<Process[]>;
-  updateProcess(process: Process, ctx?: any): Promise<number>;
-}
-
-export const matchModel: Attributes = {
-  id: {
-    key: true,
-    match: "equal",
-  },
-  tournamentId: {
-    type: "string",
-  },
-  round: {
-    type: "string",
-  },
-  home: {
-    type: "string",
-  },
-  away: {
-    type: "string",
-  },
-  homeResult: {},
-  awayResult: {},
-  createdAt: {
-    type: "datetime",
-  },
-  matchDay: {},
-  referee: { type: "string" },
-  spectators: { type: "object" },
-  assistance: { type: "object" },
-  process: { type: "array" },
-  endmatch: {},
-};
-
-export interface MatchFilter extends Filter {
-  id: string;
-  tournamentId: string;
-  round: string;
-  home: Team;
-  away: Team;
-  homeResult: string;
-  awayResult: string;
-  createdAt: Date;
-  matchDay: Date;
-  referee: string;
-  spectators: string;
-  assistance: string;
-  process: Process[];
-  endmatch: boolean;
->>>>>>> Stashed changes
 }

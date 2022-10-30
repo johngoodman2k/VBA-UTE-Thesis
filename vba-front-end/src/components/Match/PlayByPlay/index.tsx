@@ -37,7 +37,7 @@ export const PlayByPlay = (props: PlayByPlayProps) => {
 	// 		setProcess(res);
 	// 	};
 	// });
-	// const handle
+
 	const handleOpenModal = () => {
 		setUpdateModal('open');
 	};

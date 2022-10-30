@@ -32,6 +32,7 @@ import { LineUp } from '../../components/Match/LineUp';
 import { PlayByPlay } from '../../components/Match/PlayByPlay';
 import { ControlModal } from '../../components/Modal/ControlModal';
 import { hasPointerEvents } from '@testing-library/user-event/dist/utils';
+import { GameLeaders } from '../TeamInfoPage/GameLeaders';
 
 const cx = classNames.bind(styles);
 
@@ -107,7 +108,9 @@ export const MatchDetailPage = () => {
 			const res2 = await playerServices.getPlayersByTeamId(res.away.id);
 
 			setMatchDetail(res);
+
 			setHomePlayers(res1);
+			console.log(110, res1);
 			setAwayPlayers(res2);
 			const init =
 				sideSelected === 'home' && res1.length !== 0
@@ -534,6 +537,7 @@ export const MatchDetailPage = () => {
 									className={
 										clickedId === 'stats' ? cx('__active') : cx('__inactive')
 									}>
+									<GameLeaders></GameLeaders>
 									<TeamComparison></TeamComparison>
 								</div>
 								<div
