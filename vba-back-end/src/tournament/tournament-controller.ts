@@ -56,7 +56,9 @@ export class TournamentController extends Controller<
     // console.log("b", teams);
 
     if (!teams) return res.status(400).json({ err: "Failed to get teams" });
-    // console.log(teams);
+    console.log(teams);
+
+    // const teams = tournamentResult[0].seasons[0].team
 
     let roundArray = [];
     let matchesArray = [];

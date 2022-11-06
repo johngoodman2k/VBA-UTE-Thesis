@@ -22,13 +22,15 @@ export const roundModel: Attributes = {
     key: true,
     match: "equal",
     // default: nanoid()
+    type: "string",
   },
-  roundname: {},
+  roundname: { type: "string" },
   tournamentId: {
+    type: "string",
     required: true,
   },
-  matches: {},
-  createdAt: {},
+  matches: { type: "array" },
+  createdAt: { type: "datetime" },
 };
 
 export interface RoundFilter extends Filter {

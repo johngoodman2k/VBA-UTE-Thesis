@@ -22,10 +22,9 @@ export interface Player {
   lastName: string;
   dateOfBirth: Date;
   image: string;
-  shirtNumber: string;
+  shirtNumber: number;
   createdAt: Date;
-  teams: Team[];
-  card: Card;
+  teams: Team;
 }
 
 interface Card {

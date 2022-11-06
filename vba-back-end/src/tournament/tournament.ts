@@ -5,8 +5,8 @@ export interface Tournament {
   id: string;
   name: string;
   description: string;
-  startDate?: string;
-  endDate?: string;
+  startDate?: Date;
+  endDate?: Date;
   type: string;
   competitor: string;
   seasons: Season[];
@@ -28,8 +28,8 @@ export interface Match {
   round: string;
   home: Team;
   away: Team;
-  homeResult: string;
-  awayResult: string;
+  homeResult: number;
+  awayResult: number;
   matchDay: Date;
   endmatch: boolean;
   createdAt: Date;
@@ -54,10 +54,9 @@ export interface Player {
   firstName: string;
   dateOfBirth: Date;
   image: string;
-  shirtNumber: string;
-  scored: string;
+  shirtNumber: number;
+  scored: number;
   createdAt: Date;
-  card: Card;
 }
 
 interface Card {
@@ -83,27 +82,16 @@ export interface Standings {
 export interface Statistics {
   team: Team;
   played: string;
-  won: string;
-  drawn: string;
-  lost: string;
-  goalsFor: string;
-  goalsAgainst: string;
-  goalsDifference: string;
-  points: string;
+  won: number;
+  drawn: number;
+  lost: number;
+  goalsFor: number;
+  goalsAgainst: number;
+  goalsDifference: number;
+  points: number;
   form: Match[];
 }
-// interface Team {
-//   name: string;
-//   logo: string;
-// }
 
-// interface Match {
-//   home: Team;
-//   away: Team;
-//   homResult: string;
-//   awayresult: string;
-//   matchDay: string;
-// }
 export interface TournamentRepository extends Repository<Tournament, string> {
   getTournamentById(id: string): Promise<Tournament[]>;
   updateSeasonTournament(
@@ -162,19 +150,21 @@ export const tournamentModel: Attributes = {
   id: {
     key: true,
     match: "equal",
+    type: "string",
   },
   name: {
+    type: "string",
     required: true,
   },
-  description: {},
+  description: { type: "string" },
   startDate: {
-    field: "startdate",
+    type: "datetime",
   },
-  endDate: {},
-  type: {},
-  competitor: {},
-  seasons: { type: "array" },
-  team: { type: "array" },
+  endDate: { type: "datetime" },
+  type: { type: "string" },
+  competitor: { type: "string" },
+  seasons: {},
+  team: {},
   createdAt: { type: "datetime" },
 };
 

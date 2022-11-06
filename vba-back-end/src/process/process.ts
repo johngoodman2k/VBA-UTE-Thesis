@@ -5,7 +5,7 @@ import { Team } from "../team/team";
 export interface Process {
   id: string;
   type: string;
-  mins: string;
+  mins: number;
   quater: string;
   player: Player[];
   cardcolor: string;
@@ -36,21 +36,22 @@ export const processModel: Attributes = {
     key: true,
     match: "equal",
   },
-  type: {},
-  mins: {},
+  type: { type: "string" },
+  mins: { type: "number" },
+  quater: { type: "string" },
   player: { type: "array" },
-  cardcolor: {},
-  side: {},
-  match: {},
-  option: {},
-  description: {},
+  cardcolor: { type: "string" },
+  side: { type: "string" },
+  match: { type: "string" },
+  option: { type: "string" },
+  description: { type: "string" },
   createdAt: { type: "datetime" },
 };
 
 export interface ProcessFilter extends Filter {
   id: string;
   type: string;
-  mins: string;
+  mins: number;
   quater: string;
   player: Player[];
   cardcolor: string;

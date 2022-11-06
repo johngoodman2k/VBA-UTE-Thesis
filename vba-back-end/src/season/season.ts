@@ -26,8 +26,8 @@ export interface Match {
   round: string;
   home: Team;
   away: Team;
-  homeResult: string;
-  awayResult: string;
+  homeResult: number;
+  awayResult: number;
   matchDay: Date;
   endmatch: boolean;
   createdAt: Date;
@@ -41,6 +41,7 @@ export const seasonModel: Attributes = {
   id: {
     key: true,
     match: "equal",
+    type: "string",
   },
   name: {
     type: "string",

@@ -10,7 +10,6 @@ export interface Player {
   shirtNumber: string;
   createdAt: Date;
   teams: Team[];
-  card: Card;
 }
 
 export interface Team {
@@ -27,10 +26,9 @@ export interface PlayerFilter extends Filter {
   lastName: string;
   dateOfBirth: Date;
   image: string;
-  shirtNumber: string;
+  shirtNumber: number;
   createdAt: Date;
-  teams: Team[];
-  card: Card;
+  teams: Team;
 }
 export interface PlayerRepository extends Repository<Player, string> {
   getPlayersByTeamId(teamId: Team): Promise<Player[]>;
@@ -47,8 +45,7 @@ export const playerModel: Attributes = {
   lastName: { type: "string" },
   dateOfBirth: { type: "datetime" },
   image: { type: "string" },
-  shirtNumber: { type: "string" },
+  shirtNumber: { type: "number" },
   createdAt: { type: "datetime" },
-  teams: { type: "array" },
-  card: { type: "object" },
+  teams: {},
 };

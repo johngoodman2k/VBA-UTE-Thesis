@@ -29,8 +29,8 @@ create table matches (
     round character varying(40),
     home jsonb,
     away jsonb,
-    homeResult character varying(40) DEFAULT '0',
-    awayResult character varying(40) DEFAULT '0',
+    homeResult integer DEFAULT 0,
+    awayResult integer DEFAULT 0,
     createdAt timestamp with time zone default now(),
     matchDay timestamp with time zone default now(),
     referee  character varying(40),
@@ -114,20 +114,19 @@ create table standings
 create table players
 (
     id character varying(40),
-    name character varying(40),
+    firstname character varying(40),
+    lastname character varying(40),
     dateOfBirth timestamp with time zone default now(),
     image character varying(120),
-    shirtNumber character varying(40),
+    shirtNumber integer,
     createdAt  timestamp with time zone default now(),
-    teams jsonb[],
-    card jsonb,
+    teams jsonb,
     constraint player_pkey primary key (id)
-
 );
 --player
-insert into players (id, name, dateOfBirth, image, shirtNumber, teams, card) values ('1', 'Shane Henry', '2000-10-10', 'https://newsmd2fr.keeng.net/tiin/archive/imageslead/2022/06/25/90_e18184d88e8fe3b9dd0271d1f1a6f7d1.jpg', '8',array['{"id":"1"}']::jsonb[] ,'{"red":"0","yellow":"0"}'::jsonb);
-insert into players (id, name, dateOfBirth, image, shirtNumber, teams, card) values ('2', 'Jefferey Stubbs', '2000-10-10', 'https://kenh14cdn.com/thumb_w/660/203336854389633024/2022/6/16/694686633659241176280292943390252027793047n-1655364408144465259158.jpg', '15',array['{"id":"1"}']::jsonb[] ,'{"red":"0","yellow":"0"}'::jsonb);
-insert into players (id, name, dateOfBirth, image, shirtNumber, teams, card) values ('3', 'Đinh Thanh Tâm', '2000-10-10', 'https://znews-photo.zingcdn.me/w660/Uploaded/qxjrcqjwq/2022_07_31/Tam_Dinh_an_mung_3_diem.jpg', '23',array['{"id":"1"}']::jsonb[] ,'{"red":"0","yellow":"0"}'::jsonb);
+insert into players (id, firstname,lastname, dateOfBirth, image, shirtNumber, teams, card) values ('1', 'Henry','Shane', '2000-10-10', 'https://newsmd2fr.keeng.net/tiin/archive/imageslead/2022/06/25/90_e18184d88e8fe3b9dd0271d1f1a6f7d1.jpg', '8',array['{"id":"1"}']::jsonb[] ,'{"red":"0","yellow":"0"}'::jsonb);
+insert into players (id, firstname,lastname, dateOfBirth, image, shirtNumber, teams, card) values ('2', 'Stubbs', 'Jefferey', '2000-10-10', 'https://znews-photo.zingcdn.me/w660/Uploaded/qxjrcqjwq/2022_08_21/HTUG8851.jpg', '15',array['{"id":"1"}']::jsonb[] ,'{"red":"0","yellow":"0"}'::jsonb);
+insert into players (id, firstname,lastname, dateOfBirth, image, shirtNumber, teams, card) values ('3',  'Tâm','Đinh Thanh', '2000-10-10', 'https://znews-photo.zingcdn.me/w660/Uploaded/qxjrcqjwq/2022_07_31/Tam_Dinh_an_mung_3_diem.jpg', '23',array['{"id":"1"}']::jsonb[] ,'{"red":"0","yellow":"0"}'::jsonb);
 
 
 create table process
