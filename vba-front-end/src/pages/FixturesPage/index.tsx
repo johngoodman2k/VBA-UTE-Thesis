@@ -28,15 +28,6 @@ export const FixturesPage = () => {
 			setTournament(res);
 		})();
 	}, []);
-
-	//   const [tournaments, setTournaments] = useState<Tournaments>();
-	//   useEffect(() => {
-	//     (async () => {
-	//       const res = await tournamentService.getTournamentById("1");
-	//       console.log(res);
-	//       setTournaments(res);
-	//     })();
-	//   }, []);
 	return (
 		<>
 			<ContentWrapper>

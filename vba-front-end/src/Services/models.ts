@@ -146,6 +146,8 @@ export interface Player {
 	shirtNumber: string;
 	createdAt: Date;
 	teams: Team[];
+	flag?: string;
+	nationality?: string;
 	card: Card;
 }
 

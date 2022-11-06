@@ -85,6 +85,7 @@ export class TeamServices implements TeamServicesRoot {
 export class PlayerServices implements PlayerServicesRoot {
 	constructor(private url: string, private httpRequest: HttpRequest) {
 		this.getPlayersByTeamId = this.getPlayersByTeamId.bind(this);
+		this.getPlayerById = this.getPlayerById.bind(this);
 	}
 
 	getPlayersByTeamId(
@@ -93,6 +94,11 @@ export class PlayerServices implements PlayerServicesRoot {
 	): Promise<Player[]> {
 		const url = `${this.url}/getplayersbyteamid/${teamid}`;
 		return this.httpRequest.get<Player[]>(url);
+	}
+
+	getPlayerById(id: string | undefined): Promise<Player> {
+		const url = `${this.url}/${id}`;
+		return this.httpRequest.get<Player>(url);
 	}
 }
 

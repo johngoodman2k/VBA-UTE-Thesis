@@ -106,11 +106,9 @@ export const MatchDetailPage = () => {
 			const res = await matchServices.getMatchDetailsById(params.id);
 			const res1 = await playerServices.getPlayersByTeamId(res.home.id);
 			const res2 = await playerServices.getPlayersByTeamId(res.away.id);
-
 			setMatchDetail(res);
-
 			setHomePlayers(res1);
-			console.log(110, res1);
+			console.log(110, res);
 			setAwayPlayers(res2);
 			const init =
 				sideSelected === 'home' && res1.length !== 0
@@ -544,7 +542,9 @@ export const MatchDetailPage = () => {
 									className={
 										clickedId === 'lineUps' ? cx('__active') : cx('__inactive')
 									}>
-									<LineUp></LineUp>
+									<LineUp
+										home={matchDetail?.home}
+										away={matchDetail?.away}></LineUp>
 								</div>
 
 								<div

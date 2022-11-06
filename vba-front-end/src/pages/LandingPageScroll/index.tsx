@@ -1,15 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './landingPageScroll.module.scss';
-import videoG2 from './../../videos/G2cut.mp4';
 import { Power3, gsap, Expo } from 'gsap';
 import CSSRulePlugin from 'gsap/CSSRulePlugin';
 import { NavigationBar } from '../../components/Bar/NavigationBar';
-import { SidebarFixture } from '../../components/LandingPage/SideBarFixtures';
 import { NewsCard } from '../../components/News/NewsCard';
 import { Slider2 } from '../../components/Slider/Slider2';
-import PlayerCard1 from '../../components/Player/PlayerCard1';
-import { PlayerCard } from '../../components/Player/PlayerCard';
 import { RelatedNews } from '../../components/NewsDetail/RelatedNews';
 
 const cx = classNames.bind(styles);

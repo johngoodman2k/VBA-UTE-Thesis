@@ -45,6 +45,7 @@ export interface PlayerServicesRoot {
 		id: string | undefined,
 		globalHost?: string
 	): Promise<Player[]>;
+	getPlayerById(id: string | undefined): Promise<Player>;
 }
 
 export interface ProcessServicesRoot {
