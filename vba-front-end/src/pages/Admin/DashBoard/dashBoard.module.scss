@@ -1,0 +1,41 @@
+.dashboard-wapper {
+	&-container {
+		padding: 8px 16px;
+		margin-top: -155px;
+
+		&-chart {
+			display: flex;
+			justify-content: space-between;
+			flex-direction: row;
+			padding: 16px 0px;
+			margin: 8px 16px 0px 16px;
+			// border: 1px solid #fff
+		}
+	}
+}
+.kzboxshadow {
+	display: flex;
+	justify-content: space-between;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 5px;
+	&-1 {
+		height: auto;
+		width: 800px;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		border-radius: 5px;
+	}
+
+	&-2 {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: auto;
+		width: 430px;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		border-radius: 5px;
+	}
+}
+.kzitem-chart {
+	height: 300px;
+	width: 470px;
+}

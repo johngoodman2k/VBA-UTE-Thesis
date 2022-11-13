@@ -33,7 +33,11 @@ type OffenseUpdateModalProps = {
 const typeOptions = [
 	{ name: 'Offensive', value: 'offensive' },
 	{ name: 'Defensive', value: 'defensive' },
-	{ name: 'Sub', value: 'sub' }
+	{ name: 'Sub', value: 'sub' },
+	{
+		name: 'LineUp',
+		value: 'lineup'
+	}
 ];
 
 const sideOptions = [
@@ -376,6 +380,8 @@ export const ControlModal = ({
 									</div>
 								</div>
 							</div>
+						) : typeSelected === 'lineup' ? (
+							<></>
 						) : (
 							<div>
 								<div>

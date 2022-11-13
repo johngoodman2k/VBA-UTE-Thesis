@@ -71,12 +71,22 @@ export class MatchServices implements MatchServicesRoot {
 export class TeamServices implements TeamServicesRoot {
 	constructor(private url: string, private httpRequest: HttpRequest) {
 		this.getPlayersByTeamId = this.getPlayersByTeamId.bind(this);
+		this.getAllTeams = this.getAllTeams.bind(this);
+		this.getTeamById = this.getTeamById.bind(this);
 	}
 
 	getPlayersByTeamId(
 		id: string | undefined,
 		globalHost?: string
 	): Promise<Team> {
+		const url = `${this.url}/${id}`;
+		return this.httpRequest.get<Team>(url);
+	}
+	getAllTeams(): Promise<Team[]> {
+		const url = `${this.url}/search`;
+		return this.httpRequest.get<Team[]>(url);
+	}
+	getTeamById(id: string, globalHost?: string): Promise<Team> {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.get<Team>(url);
 	}

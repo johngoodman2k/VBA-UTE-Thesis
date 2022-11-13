@@ -38,6 +38,8 @@ export interface TeamServicesRoot {
 		id: string | undefined,
 		globalHost?: string
 	): Promise<Team>;
+	getAllTeams(): Promise<Team[]>;
+	getTeamById(id: string, globalHost?: string): Promise<Team>;
 }
 
 export interface PlayerServicesRoot {

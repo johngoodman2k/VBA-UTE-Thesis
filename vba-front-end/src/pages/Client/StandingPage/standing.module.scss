@@ -1,0 +1,158 @@
+.container {
+	max-width: 1376px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+.standings {
+	&-form {
+		width: 13rem;
+		padding-right: 1px;
+		text-align: left;
+		&__won {
+			width: 2.2rem;
+			height: 2.2rem;
+			line-height: 2.3rem;
+			text-align: center;
+			background: #76766f;
+			color: #fff;
+			border-radius: 100%;
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 1rem;
+			cursor: pointer;
+			font-weight: 400;
+			background: #13cf00;
+			margin-right: 5px;
+		}
+	}
+	&-team {
+		&__pic {
+			width: 2.5rem;
+			height: 2.5rem;
+			vertical-align: middle;
+		}
+		&__name {
+			padding-left: 1rem;
+			font-weight: 300px;
+			font-size: 1rem;
+			color: black;
+			margin: 0.5rem 0;
+		}
+		&__name:hover {
+			text-decoration: underline;
+		}
+	}
+	&-position {
+		&__value {
+			width: 2rem;
+			display: inline-block;
+			font-size: 1rem;
+		}
+		&__before {
+			border-radius: 100%;
+			width: 4px;
+			height: 4px;
+			background: #adadad;
+			top: -0.3rem;
+			display: inline-block;
+			position: relative;
+			margin: 0;
+		}
+	}
+	&-button {
+		&__tooltip {
+			text-align: center;
+			position: relative;
+
+			z-index: 1;
+			cursor: pointer;
+		}
+	}
+	&-text {
+		&-centre {
+			vertical-align: middle;
+			text-align: center;
+			padding: 1.2rem 1rem;
+		}
+		&-team {
+			padding-left: 5.5rem;
+			text-align: left;
+
+			vertical-align: middle;
+		}
+	}
+	&-header {
+		position: relative;
+		padding: 20px 0;
+		background-color: #f5f5f5;
+	}
+	&-box {
+		margin-bottom: 20px;
+		&--body {
+		}
+	}
+	&-rules {
+		margin-bottom: 5px;
+		text-align: right;
+		&--won {
+			width: 2.2rem;
+			height: 2.2rem;
+			line-height: 2.3rem;
+			text-align: center;
+			background: #76766f;
+			color: #fff;
+			border-radius: 100%;
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 1rem;
+			cursor: pointer;
+			font-weight: 400;
+			background: #13cf00;
+			margin-right: 5px;
+		}
+		&--drawn {
+			width: 2.2rem;
+			height: 2.2rem;
+			line-height: 2.3rem;
+			text-align: center;
+			background: #76766f;
+			color: #fff;
+			border-radius: 100%;
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 1rem;
+			cursor: pointer;
+			font-weight: 400;
+
+			margin-right: 5px;
+		}
+		&--lost {
+			width: 2.2rem;
+			height: 2.2rem;
+			line-height: 2.3rem;
+			text-align: center;
+			background: #d81920;
+			color: #fff;
+			border-radius: 100%;
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 1rem;
+			cursor: pointer;
+			font-weight: 400;
+
+			margin-right: 5px;
+		}
+	}
+}
+
+.text-adjust {
+	font-size: 1rem;
+	color: black;
+	font-weight: 300;
+	&__bold {
+		font-weight: 600;
+		color: black;
+	}
+}

@@ -15,11 +15,16 @@ type LineUpProps = {
 	home?: Team;
 	away?: Team;
 };
+const defaultPlayer: Player = {} as any;
+defaultPlayer.lastName = 'Click for more details';
 
 export const LineUp = ({ home, away }: LineUpProps) => {
-	const [playerInfo, setPlayerInfo] = useState();
-	const getPlayer = () => {
-		console.log('hello khangbh');
+	const [playerInfo, setPlayerInfo] = useState<Player>();
+
+	const getPlayer = (player: Player) => {
+		if (player) {
+			setPlayerInfo(player);
+		}
 	};
 	console.log('20', away);
 	return (
@@ -39,7 +44,7 @@ export const LineUp = ({ home, away }: LineUpProps) => {
 					<ul className='list-none'>
 						{home?.players?.map((x: Player) => (
 							<PlayerLineUpBar
-								onClick={getPlayer}
+								getPlayer={getPlayer}
 								side='home'
 								player={x}></PlayerLineUpBar>
 						))}
@@ -47,7 +52,7 @@ export const LineUp = ({ home, away }: LineUpProps) => {
 				</div>
 			</div>
 			<div>
-				<PlayerCard></PlayerCard>
+				<PlayerCard player={playerInfo}></PlayerCard>
 			</div>
 			<div className='px-4'>
 				<header className={`${cx('__header')}`}>
@@ -64,7 +69,7 @@ export const LineUp = ({ home, away }: LineUpProps) => {
 					<ul className='list-none'>
 						{away?.players?.map((x: Player) => (
 							<PlayerLineUpBar
-								onClick={getPlayer}
+								getPlayer={getPlayer}
 								side='away'
 								player={x}></PlayerLineUpBar>
 						))}

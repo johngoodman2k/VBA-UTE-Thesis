@@ -1,0 +1,62 @@
+.tournament_type {
+	&-adjust {
+		text-align: center;
+		align-items: center;
+		flex-basis: 50%;
+		margin: 0 1rem;
+	}
+
+	&-label {
+		background: #000000;
+		padding: 15px;
+		transition: all 0.3s ease;
+		border-radius: 3px;
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 90px;
+		color: white;
+	}
+	&-image {
+		width: 50px;
+		border-radius: 50%;
+		position: relative;
+		z-index: 2;
+		transition: all 0.35s;
+		object-fit: cover;
+		margin: 0 auto;
+	}
+	&-text {
+		font-family: 'Open Sans', sans-serif;
+		position: absolute;
+		z-index: 2;
+		width: 100%;
+		text-align: center;
+		left: 0;
+		font-weight: 300;
+		font-size: 11px;
+		display: block;
+	}
+}
+.tournament_type-block:hover .tournament_type-image {
+	transform: scale(1.2);
+}
+
+// .tournament_type-label::before {
+//   content: "";
+//   background: black;
+//   position: absolute;
+//   width: 100%;
+//   z-index: 1;
+//   height: 90px;
+//   left: 0;
+//   top: 0;
+//   margin-top: 0;
+//   margin-left: 0;
+//   border-radius: 3px;
+//   transition: all 0.2s;
+// }
+
+.tournament_type-label--active {
+	background: linear-gradient(to right, #642b73, #c6426e);
+}

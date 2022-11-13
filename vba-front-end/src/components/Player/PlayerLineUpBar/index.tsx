@@ -7,10 +7,13 @@ const cx = classNames.bind(styles);
 type PlayerLineUpBar = {
 	side?: 'home' | 'away';
 	player: Player;
-	onClick: () => void;
+	getPlayer: (player: Player) => void;
 };
 
 export const PlayerLineUpBar = (props: PlayerLineUpBar) => {
+	const handleOnClick = () => {
+		props.getPlayer(props.player);
+	};
 	const blockSideCheck = cx(
 		'__block',
 		props.side === 'home' ? 'flex-row-reverse' : ''
@@ -28,7 +31,7 @@ export const PlayerLineUpBar = (props: PlayerLineUpBar) => {
 
 	return (
 		<>
-			<li onClick={props.onClick} className=''>
+			<li onClick={handleOnClick} className=''>
 				<div className={blockSideCheck}>
 					<div className={`${cx('__number')}`}>{props.player.shirtNumber}</div>
 					<img className='w-[4rem] my-0 mx-5' src={props.player.image}></img>

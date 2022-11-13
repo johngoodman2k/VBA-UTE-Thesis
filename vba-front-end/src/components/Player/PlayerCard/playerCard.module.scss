@@ -24,10 +24,14 @@
 	align-items: flex-end;
 }
 
+.__headerTop {
+	margin: 0 auto;
+}
+
 .__playerImage {
 	position: absolute;
 	bottom: 8rem;
-	left: 12%;
+	left: 32%;
 	max-width: none;
 	right: 0;
 }
