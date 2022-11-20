@@ -22,18 +22,15 @@ export const CreateTournament = () => {
 	const test = [
 		{
 			name: 'eliminate',
-			image:
-				'https://www.interbasket.net/wp-content/uploads/14-team-bracket-single-elimination.jpg'
+			image: 'https://www.interbasket.net/wp-content/uploads/14-team-bracket-single-elimination.jpg'
 		},
 		{
 			name: 'eliminate',
-			image:
-				'https://www.interbasket.net/wp-content/uploads/14-team-bracket-single-elimination.jpg'
+			image: 'https://www.interbasket.net/wp-content/uploads/14-team-bracket-single-elimination.jpg'
 		},
 		{
 			name: 'eliminate',
-			image:
-				'https://www.interbasket.net/wp-content/uploads/14-team-bracket-single-elimination.jpg'
+			image: 'https://www.interbasket.net/wp-content/uploads/14-team-bracket-single-elimination.jpg'
 		}
 	];
 	//Create TOURNAMENT
@@ -76,9 +73,7 @@ export const CreateTournament = () => {
 				<div className={`${cx('panel')}`}>
 					<header className={`${cx('createtournament_type-header')}`}>
 						<div className='container'>
-							<h1 className='text-xl font-bold text-white'>
-								Create Tournament
-							</h1>
+							<h1 className='text-xl font-bold text-white'>Create Tournament</h1>
 						</div>
 					</header>
 					<div className={`${cx('createtournament-body')}`}>
@@ -92,88 +87,39 @@ export const CreateTournament = () => {
 								)}`}>
 								<div className='w-1/2'>
 									<div className='my-2'>
-										<p className={`${cx('createtournament_text-adjust')}`}>
-											ID
-										</p>
-										<input
-											className={`${cx('createtournament_input')}`}
-											type='text'
-											name='id'
-										/>
+										<p className={`${cx('createtournament_text-adjust')}`}>ID</p>
+										<input className={`${cx('createtournament_input')}`} type='text' name='id' />
 									</div>
 									<div className='my-2'>
-										<p className={`${cx('createtournament_text-adjust')}`}>
-											Name
-										</p>
-										<input
-											className={`${cx('createtournament_input')}`}
-											type='text'
-											name='name'
-										/>
+										<p className={`${cx('createtournament_text-adjust')}`}>Name</p>
+										<input className={`${cx('createtournament_input')}`} type='text' name='name' />
 									</div>
 								</div>
 								<div className=''>
 									<div className='my-2'>
-										<p className={`${cx('createtournament_text-adjust')}`}>
-											Start Date
-										</p>
-										<input
-											className={`${cx('createtournament_input-date')}`}
-											type='date'
-											name='start'
-										/>
+										<p className={`${cx('createtournament_text-adjust')}`}>Start Date</p>
+										<input className={`${cx('createtournament_input-date')}`} type='date' name='start' />
 									</div>
 									<div className='my-2'>
-										<p className={`${cx('createtournament_text-adjust')}`}>
-											End Date
-										</p>
-										<input
-											className={`${cx('createtournament_input-date')}`}
-											type='date'
-											name='end'
-										/>
+										<p className={`${cx('createtournament_text-adjust')}`}>End Date</p>
+										<input className={`${cx('createtournament_input-date')}`} type='date' name='end' />
 									</div>
 								</div>
 							</div>
-							<div
-								className={`${cx(
-									'createtournament_row-wrapper',
-									'grid grid-cols-2'
-								)}`}>
+							<div className={`${cx('createtournament_row-wrapper', 'grid grid-cols-2')}`}>
 								<div className='w-1/2'>
 									<div className='mb-4'>
-										<p
-											className={`${cx(
-												'createtournament_text-adjust',
-												'text-left'
-											)}`}>
-											Competitors type
-										</p>
+										<p className={`${cx('createtournament_text-adjust', 'text-left')}`}>Competitors type</p>
 										<ButtonGroup buttons={['One', 'Two']}></ButtonGroup>
 									</div>
-									<div
-										className={`${cx(
-											'createtournament_competitortype-block'
-										)}`}>
-										<p
-											className={`${cx(
-												'createtournament_text-adjust',
-												'text-left'
-											)}`}>
-											Number of Teams
-										</p>
-										<input
-											className={`${cx('createtournament_input')}`}
-											type='text'
-											name='name'
-										/>
+									<div className={`${cx('createtournament_competitortype-block')}`}>
+										<p className={`${cx('createtournament_text-adjust', 'text-left')}`}>Number of Teams</p>
+										<input className={`${cx('createtournament_input')}`} type='text' name='name' />
 									</div>
 								</div>
 
 								<div className={`${cx('position-adjust')}`}>
-									<h1 className={`${cx('createtournament_text-desc')}`}>
-										Description
-									</h1>
+									<h1 className={`${cx('createtournament_text-desc')}`}>Description</h1>
 									<textarea
 										className={`${cx('createtournament_textarea')}`}
 										name='description'
@@ -184,21 +130,14 @@ export const CreateTournament = () => {
 							</div>
 
 							<div className=''>
-								<label className={`${cx('createtournament_type-header')}`}>
-									Choose your type
-								</label>
+								<label className={`${cx('createtournament_type-header')}`}>Choose your type</label>
 								<div className={`${cx('createtournament_type-block')}`}>
 									<Type type={test}></Type>
 								</div>
 							</div>
 
 							<div className={`${cx('createTournamentButton-block')}`}>
-								<button
-									type='submit'
-									className={`${cx(
-										'position-adjust',
-										'createTournamentButton-adjust'
-									)}`}>
+								<button type='submit' className={`${cx('position-adjust', 'createTournamentButton-adjust')}`}>
 									<span>Submit!</span>
 								</button>
 							</div>

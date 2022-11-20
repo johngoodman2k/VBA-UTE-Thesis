@@ -10,7 +10,6 @@ type RightClickModalAdjustProps = {
 const cx = classNames.bind(styles);
 
 export const RightClickModalAdjust = (props: RightClickModalAdjustProps) => {
-	console.log(props);
 	return (
 		<div
 			style={{

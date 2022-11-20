@@ -44,7 +44,6 @@ export const LandingPageScroll = () => {
 		(async () => {
 			const res: any = await teamServices.getAllTeams();
 			getTeams(res.list);
-			console.log('46', res);
 		})();
 	}, []);
 
@@ -113,9 +112,7 @@ export const LandingPageScroll = () => {
 				<section>
 					<div className='container mx-auto px-4 w-full text-center align-middle text-third-color'>
 						<div className='grid grid-cols-3'>
-							<nav className={cx('__fixturesBlock')}>
-								{/* <SidebarFixture></SidebarFixture> */}
-							</nav>
+							<nav className={cx('__fixturesBlock')}>{/* <SidebarFixture></SidebarFixture> */}</nav>
 							<div className='col-span-2 pt-12 mt-12'>
 								<NewsCard
 									heroImage='http://api-news.vba.vn/storage/images/Game-35-Nha-Trang-Dolphins-Danang-Dragons%20.JPG'

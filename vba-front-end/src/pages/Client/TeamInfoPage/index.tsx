@@ -23,27 +23,19 @@ export const TeamInfoPage = () => {
 			if (param.id) {
 				const res1 = await teamServices.getTeamById(param.id);
 				setTeam(res1);
-				console.log('21', res);
 			}
 		})();
 	}, []);
 	return (
 		<div className={`${cx('__wrapper')}`}>
 			<section>
-				<TeamInfoHeader
-					name={team?.teamname}
-					image={team?.teamlogo}
-					color={team?.color}></TeamInfoHeader>
+				<TeamInfoHeader name={team?.teamname} image={team?.teamlogo} color={team?.color}></TeamInfoHeader>
 			</section>
 			<div className={`${cx('__displayAd')}`}></div>
 			<div className={`${cx('__container')}`}>
 				<div className={`${cx('__background')}`}>
 					<div className={`${cx('__background__block')}`}>
-						<img
-							src={team?.teamlogo}
-							className={`${cx('__background__block--adjust')}`}
-							alt=''
-						/>
+						<img src={team?.teamlogo} className={`${cx('__background__block--adjust')}`} alt='' />
 					</div>
 				</div>
 				<TeamUpCommingGames></TeamUpCommingGames>

@@ -14,7 +14,6 @@ type PlayByPlayProps = {
 	matchId: string | undefined;
 	homePlayers: Player[];
 	awayPlayers: Player[];
-
 	// handleCloseModal?: () => void;
 };
 
@@ -30,7 +29,6 @@ export const PlayByPlay = (props: PlayByPlayProps) => {
 		setProcess(process);
 	};
 
-	console.log(props.process);
 	// useEffect(() => {
 	// 	async () => {
 	// 		const res = await processServices.getProcessById();
@@ -53,73 +51,41 @@ export const PlayByPlay = (props: PlayByPlayProps) => {
 						<nav className={cx('__quaterBlock__nav')}>
 							<button
 								id='Q1'
-								onClick={(e: any) =>
-									e.currentTarget.id === 'Q1' ? setClickedId('Q1') : ''
-								}
+								onClick={(e: any) => (e.currentTarget.id === 'Q1' ? setClickedId('Q1') : '')}
 								className={
 									clickedId === 'Q1'
-										? cx(
-												'__quaterBlock__button',
-												'__quaterBlock__button--active'
-										  )
-										: cx(
-												'__quaterBlock__button',
-												'__quaterBlock__button--inactive'
-										  )
+										? cx('__quaterBlock__button', '__quaterBlock__button--active')
+										: cx('__quaterBlock__button', '__quaterBlock__button--inactive')
 								}>
 								Q1
 							</button>
 							<button
 								id='Q2'
-								onClick={(e: any) =>
-									e.currentTarget.id === 'Q2' ? setClickedId('Q2') : ''
-								}
+								onClick={(e: any) => (e.currentTarget.id === 'Q2' ? setClickedId('Q2') : '')}
 								className={
 									clickedId === 'Q2'
-										? cx(
-												'__quaterBlock__button',
-												'__quaterBlock__button--active'
-										  )
-										: cx(
-												'__quaterBlock__button',
-												'__quaterBlock__button--inactive'
-										  )
+										? cx('__quaterBlock__button', '__quaterBlock__button--active')
+										: cx('__quaterBlock__button', '__quaterBlock__button--inactive')
 								}>
 								Q2
 							</button>
 							<button
 								id='Q3'
-								onClick={(e: any) =>
-									e.currentTarget.id === 'Q3' ? setClickedId('Q3') : ''
-								}
+								onClick={(e: any) => (e.currentTarget.id === 'Q3' ? setClickedId('Q3') : '')}
 								className={
 									clickedId === 'Q3'
-										? cx(
-												'__quaterBlock__button',
-												'__quaterBlock__button--active'
-										  )
-										: cx(
-												'__quaterBlock__button',
-												'__quaterBlock__button--inactive'
-										  )
+										? cx('__quaterBlock__button', '__quaterBlock__button--active')
+										: cx('__quaterBlock__button', '__quaterBlock__button--inactive')
 								}>
 								Q3
 							</button>
 							<button
 								id='Q4'
-								onClick={(e: any) =>
-									e.currentTarget.id === 'Q4' ? setClickedId('Q4') : ''
-								}
+								onClick={(e: any) => (e.currentTarget.id === 'Q4' ? setClickedId('Q4') : '')}
 								className={
 									clickedId === 'Q4'
-										? cx(
-												'__quaterBlock__button',
-												'__quaterBlock__button--active'
-										  )
-										: cx(
-												'__quaterBlock__button',
-												'__quaterBlock__button--inactive'
-										  )
+										? cx('__quaterBlock__button', '__quaterBlock__button--active')
+										: cx('__quaterBlock__button', '__quaterBlock__button--inactive')
 								}>
 								Q4
 							</button>
@@ -137,8 +103,7 @@ export const PlayByPlay = (props: PlayByPlayProps) => {
 					})}
 				</div>
 			</section>
-			<div
-				className={updateModal === 'open' ? cx('__active') : cx('__inactive')}>
+			<div className={updateModal === 'open' ? cx('__active') : cx('__inactive')}>
 				<ControlModal
 					handleCloseModal={handleCloseModal}
 					modalType='update'

@@ -6,12 +6,13 @@ import { Player } from '../../../Services/models';
 const cx = classNames.bind(styles);
 
 type PlayerSelectProps = {
-	title: string;
+	title?: string;
 	sideSelected: string;
 	value: string;
 	onChange: (e: any) => void;
 	homePlayers: Player[];
 	awayPlayers: Player[];
+	required: boolean;
 };
 
 export const PlayerSelect = (props: PlayerSelectProps) => {
@@ -19,20 +20,15 @@ export const PlayerSelect = (props: PlayerSelectProps) => {
 		<div>
 			<label className={`${cx('__modal__title')}`}>
 				{props.title}&nbsp;
-				<div className='inline'>*</div>
+				<div className='inline'>{props.required === true ? '*' : ''}</div>
 			</label>
 
 			{props.sideSelected === 'home' ? (
 				<>
 					<div className={`relative block ${cx('__optionsDropdown')}`}>
-						<select
-							value={props.value}
-							onChange={props.onChange}
-							className={`${cx('__options')}`}>
+						<select value={props.value} onChange={props.onChange} className={`${cx('__options')}`}>
 							{props.homePlayers?.map((x: any) => {
-								return (
-									<option value={x.id}>{x.lastname + ' ' + x.firstname}</option>
-								);
+								return <option value={x.id}>{x.lastname + ' ' + x.firstname}</option>;
 							})}
 						</select>
 					</div>
@@ -40,14 +36,9 @@ export const PlayerSelect = (props: PlayerSelectProps) => {
 			) : (
 				<>
 					<div className={`relative block ${cx('__optionsDropdown')}`}>
-						<select
-							value={props.value}
-							onChange={props.onChange}
-							className={`${cx('__options')}`}>
+						<select value={props.value} onChange={props.onChange} className={`${cx('__options')}`}>
 							{props.awayPlayers?.map((x: any) => {
-								return (
-									<option value={x.id}>{x.lastname + ' ' + x.firstname}</option>
-								);
+								return <option value={x.id}>{x.lastname + ' ' + x.firstname}</option>;
 							})}
 						</select>
 					</div>

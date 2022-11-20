@@ -27,11 +27,9 @@ export const PlayByPlayBlock = (props: PlayByPlayBlockProps) => {
 	const [positions, setPositions] = React.useState({ x: 0, y: 0 });
 
 	const handleContextMenu = (e: any) => {
-		console.log('context menu clicked');
 		e.preventDefault();
 		setShow(true);
 		setPositions({ x: e.pageX, y: e.pageY });
-		console.log(positions.x, positions.y);
 	};
 
 	useEffect(() => {
@@ -39,20 +37,13 @@ export const PlayByPlayBlock = (props: PlayByPlayBlockProps) => {
 		window.addEventListener('click', handleClick);
 		return () => window.removeEventListener('click', handleClick);
 	}, []);
-	const sideCheck = cx(
-		'md:mb-1 text-sm flex',
-		props.side === 'home' ? 'justify-start' : 'justify-end'
-	);
+	const sideCheck = cx('md:mb-1 text-sm flex', props.side === 'home' ? 'justify-start' : 'justify-end');
 
 	return (
 		<div className='-mx-4 md:mx-0'>
-			<h2 className='px-2 my-2 text-sm uppercase font-bold text-center text-black'>
-				Q1 Start
-			</h2>
+			<h2 className='px-2 my-2 text-sm uppercase font-bold text-center text-black'>Q1 Start</h2>
 			<article className={sideCheck}>
-				<PlayByPlayEvent
-					process={props.process}
-					onContextMenu={handleContextMenu}></PlayByPlayEvent>
+				<PlayByPlayEvent process={props.process} onContextMenu={handleContextMenu}></PlayByPlayEvent>
 				{show === true ? (
 					<RightClickModalAdjust
 						onClick={() => {

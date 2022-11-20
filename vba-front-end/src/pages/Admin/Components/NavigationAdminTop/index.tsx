@@ -34,9 +34,7 @@ function NavigationAdminTop({ data }: NavigationTopProps) {
 
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const open = Boolean(anchorEl);
-	const handleAnchorElMenuAvatar = (event: {
-		currentTarget: React.SetStateAction<null>;
-	}) => {
+	const handleAnchorElMenuAvatar = (event: { currentTarget: React.SetStateAction<null> }) => {
 		setAnchorEl(event.currentTarget);
 	};
 
@@ -52,13 +50,11 @@ function NavigationAdminTop({ data }: NavigationTopProps) {
 				setOffset(window.pageYOffset);
 			};
 			setShadow(2);
-			console.log('shadow', shadow);
 		} else {
 			window.onscroll = () => {
 				setOffset(window.pageYOffset);
 			};
 			setShadow(0);
-			console.log('shadow', shadow);
 		}
 	}, [offset]);
 
@@ -68,10 +64,7 @@ function NavigationAdminTop({ data }: NavigationTopProps) {
 
 	return (
 		<React.Fragment>
-			<AppBar
-				sx={{ backgroundColor: '#9B2335' }}
-				position='sticky'
-				elevation={shadow}>
+			<AppBar sx={{ backgroundColor: '#9B2335' }} position='sticky' elevation={shadow}>
 				<Toolbar>
 					<Grid container spacing={1} alignItems='center'>
 						<Grid sx={{ display: { sm: 'none', xs: 'block' } }} item>
@@ -82,9 +75,7 @@ function NavigationAdminTop({ data }: NavigationTopProps) {
 						<Grid item xs />
 						<Grid item>
 							<Tooltip title='Alerts • No alerts'>
-								<IconButton color='inherit'>
-									{/* <NotificationsIcon /> */}
-								</IconButton>
+								<IconButton color='inherit'>{/* <NotificationsIcon /> */}</IconButton>
 							</Tooltip>
 						</Grid>
 

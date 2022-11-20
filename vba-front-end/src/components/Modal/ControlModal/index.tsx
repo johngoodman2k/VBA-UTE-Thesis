@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Player, Process } from '../../../Services/models';
+import { Match, Player, Process } from '../../../Services/models';
 import { vbaContext } from '../../../Services/services';
 import { EditorSelect } from '../../Utils/EditorSelect';
 import { ModalBlock } from '../ModalBlock';
@@ -8,6 +8,8 @@ import classNames from 'classnames/bind';
 import { PlayerSelect } from '../../Utils/PlayerSelect';
 import { id } from 'date-fns/locale';
 import process from 'process';
+import { MatchDetailPage } from '../../../pages/Client/MatchDetailPage';
+import { PlayerCard } from '../../Player/PlayerCard';
 const cx = classNames.bind(styles);
 
 type OffenseUpdateModalProps = {
@@ -16,7 +18,7 @@ type OffenseUpdateModalProps = {
 	homePlayers: Player[];
 	awayPlayers: Player[];
 	process?: Process;
-
+	matchDetail?: Match | undefined;
 	handleCloseModal?: () => void;
 };
 // type ProcessProps = {
@@ -72,16 +74,15 @@ export const ControlModal = ({
 	homePlayers,
 	awayPlayers,
 	process,
+	matchDetail,
 	handleCloseModal
 }: OffenseUpdateModalProps) => {
 	const [clickedId, setClickedId] = useState('');
-
 	const [defenseType, setDefenseType] = useState('rebound');
 	const [offenseType, setOffenseType] = useState('2PT');
 	const [quaterSelected, setQuaterSelected] = useState('q1');
 	const [typeSelected, setTypeSelected] = useState('offensive');
 	const [sideSelected, setSideSelected] = useState('home');
-
 	const [playerSelected, setPlayerSelected] = useState('');
 	const [assistantSelected, setAssistantSelected] = useState('');
 	const [subInSelected, setSubInSelected] = useState('');
@@ -104,45 +105,23 @@ export const ControlModal = ({
 		e.preventDefault();
 		const type = typeSelected;
 		const side = sideSelected;
-
 		const offense = offenseType;
 		const defense = defenseType;
 		const quater = quaterSelected;
 		const des = typeSelected !== 'sub' ? e.target.des.value : '';
 		const assistant =
-			assistantSelected !== ''
-				? getPlayerById(assistantSelected)
-				: getPlayerById(getPlayerBySide(side));
-		console.log('128', playerSelected);
-		const player =
-			playerSelected !== ''
-				? getPlayerById(playerSelected)
-				: getPlayerById(getPlayerBySide(side));
+			assistantSelected !== '' ? getPlayerById(assistantSelected) : getPlayerById(getPlayerBySide(side));
+
+		const player = playerSelected !== '' ? getPlayerById(playerSelected) : getPlayerById(getPlayerBySide(side));
 
 		const mins = e.target.mins.value;
-		const subIn =
-			subInSelected !== ''
-				? getPlayerById(subInSelected)
-				: getPlayerById(getPlayerBySide(side));
-		const subOff =
-			subOffSelected !== ''
-				? getPlayerById(subOffSelected)
-				: getPlayerById(getPlayerBySide(side));
+		const subIn = subInSelected !== '' ? getPlayerById(subInSelected) : getPlayerById(getPlayerBySide(side));
+		const subOff = subOffSelected !== '' ? getPlayerById(subOffSelected) : getPlayerById(getPlayerBySide(side));
 
-		const checkType =
-			type === 'offensive' ? offense : type === 'defensive' ? defense : 'sub';
-
-		console.log('129', player);
+		const checkType = type === 'offensive' ? offense : type === 'defensive' ? defense : 'sub';
 
 		const checkPlayer =
-			subIn && subOff
-				? [subIn, subOff]
-				: player && assistant
-				? [player, assistant]
-				: player
-				? [player]
-				: undefined;
-		console.log('137', checkPlayer);
+			subIn && subOff ? [subIn, subOff] : player && assistant ? [player, assistant] : player ? [player] : undefined;
 
 		const process = {
 			type: type,
@@ -193,13 +172,11 @@ export const ControlModal = ({
 		const des = typeSelected !== 'sub' ? e.target.des.value : '';
 		const assistant = getPlayerById(assistantSelected);
 		const player = getPlayerById(playerSelected);
-
 		const mins = e.target.mins.value;
 		const subIn = getPlayerById(subInSelected);
 		const subOff = getPlayerById(subOffSelected);
 
-		const checkType =
-			type === 'offensive' ? offense : type === 'defensive' ? defense : 'sub';
+		const checkType = type === 'offensive' ? offense : type === 'defensive' ? defense : 'sub';
 
 		const checkPlayer =
 			type === 'sub' && subIn && subOff
@@ -229,9 +206,7 @@ export const ControlModal = ({
 			<ModalBlock>
 				<form onSubmit={modalType === 'update' ? onUpdate : onEdit}>
 					<section className='container mx-auto text-left '>
-						<div className='max-w-[70%] text-7xl font-bold uppercase'>
-							match detail
-						</div>
+						<div className='max-w-[70%] text-7xl font-bold uppercase'>match detail</div>
 						<EditorSelect
 							title='Type'
 							value={typeSelected}
@@ -277,11 +252,9 @@ export const ControlModal = ({
 											className={`${cx('__modal__input--des')}`}></input>
 									</div>
 
-									<div
-										className={`grid grid-cols-3   text-center ${cx(
-											'__modal__main'
-										)}`}>
+									<div className={`grid grid-cols-3   text-center ${cx('__modal__main')}`}>
 										<PlayerSelect
+											required={true}
 											title='Scorer'
 											sideSelected={sideSelected}
 											value={playerSelected}
@@ -292,6 +265,7 @@ export const ControlModal = ({
 											awayPlayers={awayPlayers}></PlayerSelect>
 
 										<PlayerSelect
+											required={true}
 											title='Assistant'
 											sideSelected={sideSelected}
 											value={assistantSelected}
@@ -306,10 +280,7 @@ export const ControlModal = ({
 												Mins&nbsp;
 												<div className='inline'>*</div>
 											</label>
-											<input
-												id='mins'
-												defaultValue={process?.mins}
-												className={`${cx('__modal__input--goal')}`}></input>
+											<input id='mins' defaultValue={process?.mins} className={`${cx('__modal__input--goal')}`}></input>
 										</div>
 									</div>
 								</div>
@@ -323,7 +294,6 @@ export const ControlModal = ({
 										setSideSelected(e.target.value);
 									}}
 									options={sideOptions}></EditorSelect>
-
 								<div>
 									<EditorSelect
 										title='Defense options'
@@ -352,12 +322,10 @@ export const ControlModal = ({
 											className={`${cx('__modal__input--des')}`}></input>
 									</div>
 
-									<div
-										className={`grid grid-cols-2   text-center ${cx(
-											'__modal__main'
-										)}`}>
+									<div className={`grid grid-cols-2   text-center ${cx('__modal__main')}`}>
 										<div>
 											<PlayerSelect
+												required={true}
 												title='Name'
 												sideSelected={sideSelected}
 												value={playerSelected}
@@ -372,16 +340,118 @@ export const ControlModal = ({
 												Mins&nbsp;
 												<div className='inline'>*</div>
 											</label>
-											<input
-												id='mins'
-												defaultValue={process?.mins}
-												className={`${cx('__modal__input--goal')}`}></input>
+											<input id='mins' defaultValue={process?.mins} className={`${cx('__modal__input--goal')}`}></input>
 										</div>
 									</div>
 								</div>
 							</div>
 						) : typeSelected === 'lineup' ? (
-							<></>
+							<>
+								<EditorSelect
+									title='Side'
+									value={sideSelected}
+									onChange={(e: any) => {
+										setSideSelected(e.target.value);
+									}}
+									options={sideOptions}></EditorSelect>
+								{sideSelected === 'home' ? (
+									<div className='grid grid-cols-3 pt-4'>
+										<div className='px-4'>
+											<header className={`${cx('__header')}`}>
+												<a>
+													<div>
+														<img className='w-[5rem] h-[5rem] m-auto' src={matchDetail?.home.teamlogo}></img>
+													</div>
+												</a>
+												<label className={`${cx('__modal__title')}`}>Choose your starting 5</label>
+												<PlayerSelect
+													required={false}
+													sideSelected={sideSelected}
+													value={playerSelected}
+													onChange={(e: any) => {
+														setPlayerSelected(e.target.value);
+													}}
+													homePlayers={homePlayers}
+													awayPlayers={awayPlayers}></PlayerSelect>
+												<PlayerSelect
+													required={false}
+													sideSelected={sideSelected}
+													value={playerSelected}
+													onChange={(e: any) => {
+														setPlayerSelected(e.target.value);
+													}}
+													homePlayers={homePlayers}
+													awayPlayers={awayPlayers}></PlayerSelect>
+												<PlayerSelect
+													required={false}
+													sideSelected={sideSelected}
+													value={playerSelected}
+													onChange={(e: any) => {
+														setPlayerSelected(e.target.value);
+													}}
+													homePlayers={homePlayers}
+													awayPlayers={awayPlayers}></PlayerSelect>
+												<PlayerSelect
+													required={false}
+													sideSelected={sideSelected}
+													value={playerSelected}
+													onChange={(e: any) => {
+														setPlayerSelected(e.target.value);
+													}}
+													homePlayers={homePlayers}
+													awayPlayers={awayPlayers}></PlayerSelect>
+												<PlayerSelect
+													required={false}
+													sideSelected={sideSelected}
+													value={playerSelected}
+													onChange={(e: any) => {
+														setPlayerSelected(e.target.value);
+													}}
+													homePlayers={homePlayers}
+													awayPlayers={awayPlayers}></PlayerSelect>
+											</header>
+											<div>
+												<ul className='list-none'></ul>
+											</div>
+										</div>
+										<div>{/* <PlayerCard player={playerInfo}></PlayerCard> */}</div>
+									</div>
+								) : (
+									<div className='grid grid-cols-3 pt-4'>
+										<div className='px-4'>
+											<header className={`${cx('__header')}`}>
+												<a>
+													<div>
+														<img className='w-[5rem] h-[5rem] m-auto' src={matchDetail?.away.teamlogo}></img>
+													</div>
+												</a>
+												<label className={`${cx('__modal__title')}`}>Choose your starting 5</label>
+											</header>
+											<PlayerSelect
+												required={false}
+												sideSelected={sideSelected}
+												value={playerSelected}
+												onChange={(e: any) => {
+													setPlayerSelected(e.target.value);
+												}}
+												homePlayers={homePlayers}
+												awayPlayers={awayPlayers}></PlayerSelect>
+											<PlayerSelect
+												required={false}
+												sideSelected={sideSelected}
+												value={playerSelected}
+												onChange={(e: any) => {
+													setPlayerSelected(e.target.value);
+												}}
+												homePlayers={homePlayers}
+												awayPlayers={awayPlayers}></PlayerSelect>
+										</div>
+										<div className='col-span-2'>
+											<PlayerCard player={getPlayerById(playerSelected)}></PlayerCard>
+										</div>
+									</div>
+								)}
+							</>
 						) : (
 							<div>
 								<div>
@@ -401,11 +471,9 @@ export const ControlModal = ({
 										}}
 										options={quaterOptions}></EditorSelect>
 
-									<div
-										className={`grid grid-cols-3   text-center ${cx(
-											'__modal__main'
-										)}`}>
+									<div className={`grid grid-cols-3   text-center ${cx('__modal__main')}`}>
 										<PlayerSelect
+											required={true}
 											title='Substituition In'
 											sideSelected={sideSelected}
 											value={subInSelected}
@@ -416,6 +484,7 @@ export const ControlModal = ({
 											awayPlayers={awayPlayers}></PlayerSelect>
 										<div>
 											<PlayerSelect
+												required={true}
 												title='Substituition Off'
 												sideSelected={sideSelected}
 												value={subOffSelected}
@@ -431,10 +500,7 @@ export const ControlModal = ({
 												Mins&nbsp;
 												<div className='inline'>*</div>
 											</label>
-											<input
-												id='mins'
-												defaultValue={process?.mins}
-												className={`${cx('__modal__input--goal')}`}></input>
+											<input id='mins' defaultValue={process?.mins} className={`${cx('__modal__input--goal')}`}></input>
 										</div>
 									</div>
 								</div>
@@ -449,18 +515,14 @@ export const ControlModal = ({
 												id='save'
 												type='submit'
 												onClick={handleCloseModal}
-												className={
-													clickedId === 'save' ? cx('__editActive') : ''
-												}>
+												className={clickedId === 'save' ? cx('__editActive') : ''}>
 												Save
 											</button>
 										</li>
 										<li
 											id='close'
 											onClick={handleCloseModal}
-											className={
-												clickedId === 'close' ? cx('__editActive') : ''
-											}>
+											className={clickedId === 'close' ? cx('__editActive') : ''}>
 											Close
 										</li>
 									</ul>

@@ -26,16 +26,14 @@ export const LineUp = ({ home, away }: LineUpProps) => {
 			setPlayerInfo(player);
 		}
 	};
-	console.log('20', away);
+
 	return (
 		<div className='grid grid-cols-3 pt-4'>
 			<div className='px-4'>
 				<header className={`${cx('__header')}`}>
 					<a>
 						<div>
-							<img
-								className='w-[5rem] h-[5rem] m-auto'
-								src={home?.teamlogo}></img>
+							<img className='w-[5rem] h-[5rem] m-auto' src={home?.teamlogo}></img>
 						</div>
 					</a>
 					<div>{home?.teamname}</div>
@@ -43,10 +41,7 @@ export const LineUp = ({ home, away }: LineUpProps) => {
 				<div>
 					<ul className='list-none'>
 						{home?.players?.map((x: Player) => (
-							<PlayerLineUpBar
-								getPlayer={getPlayer}
-								side='home'
-								player={x}></PlayerLineUpBar>
+							<PlayerLineUpBar getPlayer={getPlayer} side='home' player={x}></PlayerLineUpBar>
 						))}
 					</ul>
 				</div>
@@ -58,9 +53,7 @@ export const LineUp = ({ home, away }: LineUpProps) => {
 				<header className={`${cx('__header')}`}>
 					<a>
 						<div>
-							<img
-								className='w-[5rem] h-[5rem] m-auto'
-								src={away?.teamlogo}></img>
+							<img className='w-[5rem] h-[5rem] m-auto' src={away?.teamlogo}></img>
 						</div>
 					</a>
 					<div>{away?.teamname}</div>
@@ -68,10 +61,7 @@ export const LineUp = ({ home, away }: LineUpProps) => {
 				<div>
 					<ul className='list-none'>
 						{away?.players?.map((x: Player) => (
-							<PlayerLineUpBar
-								getPlayer={getPlayer}
-								side='away'
-								player={x}></PlayerLineUpBar>
+							<PlayerLineUpBar getPlayer={getPlayer} side='away' player={x}></PlayerLineUpBar>
 						))}
 					</ul>
 				</div>

@@ -17,11 +17,7 @@ const CardHover = styled(CardHoverType2)`
 	width: 300px;
 	border-radius: 5px;
 	color: blue;
-	background: linear-gradient(
-			217deg,
-			rgba(255, 0, 0, 0.8),
-			rgba(255, 0, 0, 0) 70.71%
-		),
+	background: linear-gradient(217deg, rgba(255, 0, 0, 0.8), rgba(255, 0, 0, 0) 70.71%),
 		linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%),
 		linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
 `;
@@ -36,26 +32,6 @@ const Dashboard = () => {
 	const [POST, setPOST] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [completed, setCompleted] = useState(false);
-
-	// useEffect(() => {
-	//     setTimeout(() =>{
-	//         (async () => {
-	//             const res = await getStatisticApi();
-
-	//             setSTATISTIC(res)
-	//             const resPost = await getPostHipHopTopDayApi({page: 1, limit: 4});
-	//             console.log(resPost)
-	//             setPOST(resPost.post)
-
-	//             setLoading(true)
-	// 			  setTimeout(()=>{
-	// 			  	setCompleted(true)
-	// 			  },1000)
-
-	//          })();
-	//     },2000)
-
-	//   }, []);
 
 	return (
 		<>
@@ -98,13 +74,9 @@ const Dashboard = () => {
 					</div>
 
 					<div className={`${cx('dashboard-wapper-container-chart')}`}>
-						<div className={`${cx('kzboxshadow-1')}`}>
-							{/* <Carousel data={POST}></Carousel> */}
-						</div>
+						<div className={`${cx('kzboxshadow-1')}`}>{/* <Carousel data={POST}></Carousel> */}</div>
 
-						<div className={`${cx('kzboxshadow-2')}`}>
-							{/* <PieChart {...STATISTIC}></PieChart> */}
-						</div>
+						<div className={`${cx('kzboxshadow-2')}`}>{/* <PieChart {...STATISTIC}></PieChart> */}</div>
 					</div>
 				</>
 			)}

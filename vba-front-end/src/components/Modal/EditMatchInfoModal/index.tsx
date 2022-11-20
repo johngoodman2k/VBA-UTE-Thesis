@@ -10,7 +10,7 @@ type EditMatchInfoModalProps = {
 
 export const EditMatchInfoModal = ({ close }: EditMatchInfoModalProps) => {
 	const [clickedId, setClickedId] = React.useState('');
-	console.log(clickedId);
+
 	// const handleClose = () => {
 	//   close();
 	// };
@@ -19,34 +19,27 @@ export const EditMatchInfoModal = ({ close }: EditMatchInfoModalProps) => {
 			<ModalBlock>
 				<section className='container mx-auto text-left'>
 					<div className='max-w-[70%] text-7xl font-bold uppercase'>UPDATE</div>
-					<div
-						className={`grid grid-cols-4   text-center ${cx('__modal__main')}`}>
+					<div className={`grid grid-cols-4   text-center ${cx('__modal__main')}`}>
 						<div>
 							<label className={`${cx('__modal__title')}`}>
 								Date&nbsp;
 								<div className='inline'>*</div>
 							</label>
-							<input
-								id='mins'
-								className={`${cx('__modal__input--goal')}`}></input>
+							<input id='mins' className={`${cx('__modal__input--goal')}`}></input>
 						</div>
 						<div>
 							<label className={`${cx('__modal__title')}`}>
 								Stadium&nbsp;
 								<div className='inline'>*</div>
 							</label>
-							<input
-								id='mins'
-								className={`${cx('__modal__input--goal')}`}></input>
+							<input id='mins' className={`${cx('__modal__input--goal')}`}></input>
 						</div>
 						<div>
 							<label className={`${cx('__modal__title')}`}>
 								Referee&nbsp;
 								<div className='inline'>*</div>
 							</label>
-							<input
-								id='mins'
-								className={`${cx('__modal__input--goal')}`}></input>
+							<input id='mins' className={`${cx('__modal__input--goal')}`}></input>
 						</div>
 
 						<div>
@@ -54,9 +47,7 @@ export const EditMatchInfoModal = ({ close }: EditMatchInfoModalProps) => {
 								Spectators&nbsp;
 								<div className='inline'>*</div>
 							</label>
-							<input
-								id='mins'
-								className={`${cx('__modal__input--goal')}`}></input>
+							<input id='mins' className={`${cx('__modal__input--goal')}`}></input>
 						</div>
 					</div>
 
@@ -69,19 +60,12 @@ export const EditMatchInfoModal = ({ close }: EditMatchInfoModalProps) => {
 											id='save'
 											type='submit'
 											// onClick={(e: any) => }
-											className={
-												clickedId === 'save' ? cx('__editActive') : ''
-											}>
+											className={clickedId === 'save' ? cx('__editActive') : ''}>
 											Save
 										</button>
 									</li>
 									<li>
-										<button
-											id='close'
-											onClick={close}
-											className={
-												clickedId === 'close' ? cx('__editActive') : ''
-											}>
+										<button id='close' onClick={close} className={clickedId === 'close' ? cx('__editActive') : ''}>
 											Close
 										</button>
 									</li>

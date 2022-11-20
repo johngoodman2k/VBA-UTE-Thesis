@@ -20,8 +20,7 @@ module.exports = {
 				middle: '50%'
 			},
 			backgroundImage: {
-				'shadow-layer':
-					'linear-gradient(90deg,#000 30%,transparent 52%),linear-gradient(0deg,#000 20%,transparent 35%)'
+				'shadow-layer': 'linear-gradient(90deg,#000 30%,transparent 52%),linear-gradient(0deg,#000 20%,transparent 35%)'
 			},
 			screens: {
 				sm: '640px',
@@ -36,7 +35,9 @@ module.exports = {
 				xl: '1280px',
 				// => @media (min-width: 1280px) { ... }
 
-				'2xl': '1536px'
+				xxl: '1440px',
+
+				xxxl: '1536px'
 				// => @media (min-width: 1536px) { ... }
 			}
 		}

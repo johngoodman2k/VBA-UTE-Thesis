@@ -14,7 +14,7 @@ export const SidebarFixture = () => {
 	useEffect(() => {
 		(async () => {
 			const res = await tournamentServices.getTournamentById('2');
-			console.log('17', res);
+
 			setUpCommingMatches(res);
 		})();
 	}, []);
@@ -47,9 +47,7 @@ export const SidebarFixture = () => {
 											homeBadge={y.home.teamlogo}
 											awayName={y.away.shortname ? y.away.shortname : ''}
 											awayBadge={y.away.teamlogo}
-											time={timeFormat(
-												y.matchDay
-											).toString()}></UpCommingMatchBar>
+											time={timeFormat(y.matchDay).toString()}></UpCommingMatchBar>
 									);
 								})}
 							</div>

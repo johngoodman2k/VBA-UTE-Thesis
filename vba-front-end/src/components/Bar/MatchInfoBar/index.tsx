@@ -27,11 +27,9 @@ export const MatchInfoBar = (props: MatchInfoBarProps) => {
 	const [positions, setPositions] = React.useState({ x: 0, y: 0 });
 	const [updateModal, setUpdateModal] = React.useState(false);
 	const handleContextMenu = (e: any) => {
-		console.log('context menu clicked');
 		e.preventDefault();
 		setShow(true);
 		setPositions({ x: e.pageX, y: e.pageY });
-		console.log(positions.x, positions.y);
 	};
 	useEffect(() => {
 		const handleClick = () => setShow(false);
@@ -42,29 +40,20 @@ export const MatchInfoBar = (props: MatchInfoBarProps) => {
 	return (
 		<>
 			<div className={cx('__matchBar')}>
-				<div
-					onContextMenu={handleContextMenu}
-					className={cx('__matchBar__text', '__matchBar__position')}
-					style={{}}>
+				<div onContextMenu={handleContextMenu} className={cx('__matchBar__text', '__matchBar__position')} style={{}}>
 					{props.date}
 				</div>
-				<div
-					onContextMenu={handleContextMenu}
-					className={cx('__matchBar__text', '__matchBar__position')}>
+				<div onContextMenu={handleContextMenu} className={cx('__matchBar__text', '__matchBar__position')}>
 					<RefereeLogo className={cx('__matchBar__referee')}></RefereeLogo>
 
 					{props.referee}
 				</div>
-				<div
-					onContextMenu={handleContextMenu}
-					className={cx('__matchBar__text', '__matchBar__position')}>
+				<div onContextMenu={handleContextMenu} className={cx('__matchBar__text', '__matchBar__position')}>
 					<StadiumLogo className={cx('__matchBar__stadium')}></StadiumLogo>
 
 					{props.stadiumName}
 				</div>
-				<div
-					onContextMenu={handleContextMenu}
-					className={cx('__matchBar__text', '__matchBar__position')}>
+				<div onContextMenu={handleContextMenu} className={cx('__matchBar__text', '__matchBar__position')}>
 					<EyesLogo className={cx('__matchBar__attendance')}></EyesLogo>
 
 					{props.spectators}

@@ -7,13 +7,7 @@ import { SidebarFixture } from '../../../components/LandingPage/SideBarFixtures'
 import { MatchInfoBar } from '../../../components/Bar/MatchInfoBar';
 import { MatchResultDetailBar } from '../../../components/Bar/MatchResultDetailBar';
 
-import {
-	MatchEventInterface,
-	Player,
-	Process,
-	Team,
-	Tournament
-} from '../../../Services/models';
+import { MatchEventInterface, Player, Process, Team, Tournament } from '../../../Services/models';
 import { MatchEventAssistant } from '../../../components/Match/MatchEventAssistant';
 import { MatchEventTimeLine } from '../../../components/Match/MatchEventTimeLine';
 import { ModalBlock } from '../../../components/Modal/ModalBlock';
@@ -77,7 +71,6 @@ export const MatchDetailPage = () => {
 	const params = useParams();
 	const [clickedId, setClickedId] = useState('');
 	// const [clickedType, setClickedType] = useState("");
-	console.log('78', clickedId);
 	const [cardType, setCardType] = useState('yellow');
 	const [defenseType, setDefenseType] = useState('rebound');
 	const [offenseType, setOffenseType] = useState('2PT');
@@ -108,7 +101,7 @@ export const MatchDetailPage = () => {
 			const res2 = await playerServices.getPlayersByTeamId(res.away.id);
 			setMatchDetail(res);
 			setHomePlayers(res1);
-			console.log(110, res);
+
 			setAwayPlayers(res2);
 			const init =
 				sideSelected === 'home' && res1.length !== 0
@@ -193,9 +186,7 @@ export const MatchDetailPage = () => {
 											<img
 												src={matchDetail ? matchDetail.home.teamlogo : ''}
 												alt=''
-												className={cx(
-													'__centralContent__teamLogoBlock--adjust'
-												)}
+												className={cx('__centralContent__teamLogoBlock--adjust')}
 											/>
 										</div>
 									</div>
@@ -208,20 +199,14 @@ export const MatchDetailPage = () => {
 											<img
 												src={matchDetail ? matchDetail.away.teamlogo : '/'}
 												alt=''
-												className={cx(
-													'__centralContent__teamLogoBlock--adjust'
-												)}
+												className={cx('__centralContent__teamLogoBlock--adjust')}
 											/>
 										</div>
 									</div>
 									{/* </div> */}
 								</div>
 								<div className={cx('__centralContent__theme')}>
-									<svg
-										width='100%'
-										height='100%'
-										viewBox='0 0 100 100'
-										preserveAspectRatio='none'>
+									<svg width='100%' height='100%' viewBox='0 0 100 100' preserveAspectRatio='none'>
 										<polygon
 											points='0,0 60,0 40,100 0,100 0,0'
 											fill={matchDetail ? matchDetail.home.color : ''}
@@ -249,15 +234,9 @@ export const MatchDetailPage = () => {
 								<div className={cx('__container')}>
 									<div className={cx('__bar')}>
 										<MatchInfoBar
-											date={
-												matchDetail
-													? dateFormat(matchDetail.matchDay).toString()
-													: ''
-											}
+											date={matchDetail ? dateFormat(matchDetail.matchDay).toString() : ''}
 											referee={matchDetail ? matchDetail.referee : ''}
-											stadiumName={
-												matchDetail ? matchDetail.home.stadiumname : ''
-											}
+											stadiumName={matchDetail ? matchDetail.home.stadiumname : ''}
 											spectators={matchDetail ? matchDetail.spectators : ''}
 										/>
 									</div>
@@ -269,14 +248,8 @@ export const MatchDetailPage = () => {
 										<ul className={cx('__editBlock__wrapper--adjust')}>
 											<li
 												id='edit'
-												onClick={(e: any) =>
-													e.currentTarget.id === 'edit'
-														? setClickedId('edit')
-														: ''
-												}
-												className={
-													clickedId === 'edit' ? cx('__editActive') : ''
-												}>
+												onClick={(e: any) => (e.currentTarget.id === 'edit' ? setClickedId('edit') : '')}
+												className={clickedId === 'edit' ? cx('__editActive') : ''}>
 												Edit
 											</li>
 											{/* <li
@@ -296,11 +269,9 @@ export const MatchDetailPage = () => {
 									</div>
 								</div>
 
-								<div
-									className={
-										clickedId === 'edit' ? cx('__active') : cx('__inactive')
-									}>
+								<div className={clickedId === 'edit' ? cx('__active') : cx('__inactive')}>
 									<ControlModal
+										matchDetail={matchDetail}
 										modalType='edit'
 										handleCloseModal={handleCloseModal}
 										matchId={params.id}
@@ -318,9 +289,7 @@ export const MatchDetailPage = () => {
 												homeResult={matchDetail ? matchDetail.homeResult : ''}
 												awayBadge={matchDetail ? matchDetail.away.teamlogo : ''}
 												awayName={matchDetail ? matchDetail.away.teamname : ''}
-												awayResult={
-													matchDetail ? matchDetail.awayResult : ''
-												}></MatchResultDetailBar>
+												awayResult={matchDetail ? matchDetail.awayResult : ''}></MatchResultDetailBar>
 
 											{/* <div className={cx('__matchStats')}>
 												<div className={cx('__matchStats__halfTime')}>
@@ -426,20 +395,14 @@ export const MatchDetailPage = () => {
 													<span className={cx('__timeLine__badge')}>
 														<span className={cx('__timeLine__badge__block')}>
 															<img
-																src={
-																	matchDetail ? matchDetail.home.teamlogo : ''
-																}
-																className={cx(
-																	'__timeLine__badge--adjust'
-																)}></img>
+																src={matchDetail ? matchDetail.home.teamlogo : ''}
+																className={cx('__timeLine__badge--adjust')}></img>
 														</span>
 													</span>
 													{matchDetail ? matchDetail.home.teamname : ''}
 												</a>
 												<div className={cx('__timeLine__crossbar')}>
-													<div className={cx('__timeLine__crossbar--adjust')}>
-														HT
-													</div>
+													<div className={cx('__timeLine__crossbar--adjust')}>HT</div>
 													{matchDetail
 														? matchDetail.process?.map((x: any) => {
 																return (
@@ -472,12 +435,8 @@ export const MatchDetailPage = () => {
 													<span className={cx('__timeLine__badge')}>
 														<span className={cx('__timeLine__badge__block')}>
 															<img
-																src={
-																	matchDetail ? matchDetail.away.teamlogo : ''
-																}
-																className={cx(
-																	'__timeLine__badge--adjust'
-																)}></img>
+																src={matchDetail ? matchDetail.away.teamlogo : ''}
+																className={cx('__timeLine__badge--adjust')}></img>
 														</span>
 													</span>
 													{matchDetail ? matchDetail.away.teamname : ''}
@@ -492,67 +451,36 @@ export const MatchDetailPage = () => {
 									<ul className={cx('__optionsBlock__wrapper--adjust')}>
 										<li
 											id='stats'
-											onClick={(e: any) =>
-												e.currentTarget.id === 'stats'
-													? setClickedId('stats')
-													: ''
-											}
-											className={
-												clickedId === 'stats' ? cx('__optionsActive') : ''
-											}>
+											onClick={(e: any) => (e.currentTarget.id === 'stats' ? setClickedId('stats') : '')}
+											className={clickedId === 'stats' ? cx('__optionsActive') : ''}>
 											Stats
 										</li>
 										<li
 											id='lineUps'
-											onClick={(e: any) =>
-												e.currentTarget.id === 'lineUps'
-													? setClickedId('lineUps')
-													: ''
-											}
-											className={
-												clickedId === 'lineUps' ? cx('__optionsActive') : ''
-											}>
+											onClick={(e: any) => (e.currentTarget.id === 'lineUps' ? setClickedId('lineUps') : '')}
+											className={clickedId === 'lineUps' ? cx('__optionsActive') : ''}>
 											Line up
 										</li>
 
 										<li
 											id='PlayByPlay'
-											onClick={(e: any) =>
-												e.currentTarget.id === 'PlayByPlay'
-													? setClickedId('PlayByPlay')
-													: ''
-											}
-											className={
-												clickedId === 'PlayByPlay' ? cx('__optionsActive') : ''
-											}>
+											onClick={(e: any) => (e.currentTarget.id === 'PlayByPlay' ? setClickedId('PlayByPlay') : '')}
+											className={clickedId === 'PlayByPlay' ? cx('__optionsActive') : ''}>
 											Play-By-Play
 										</li>
 									</ul>
 								</div>
 							</div>
 							<div className={cx('_detailsWrapper')}>
-								<div
-									className={
-										clickedId === 'stats' ? cx('__active') : cx('__inactive')
-									}>
+								<div className={clickedId === 'stats' ? cx('__active') : cx('__inactive')}>
 									<GameLeaders></GameLeaders>
 									<TeamComparison></TeamComparison>
 								</div>
-								<div
-									className={
-										clickedId === 'lineUps' ? cx('__active') : cx('__inactive')
-									}>
-									<LineUp
-										home={matchDetail?.home}
-										away={matchDetail?.away}></LineUp>
+								<div className={clickedId === 'lineUps' ? cx('__active') : cx('__inactive')}>
+									<LineUp home={matchDetail?.home} away={matchDetail?.away}></LineUp>
 								</div>
 
-								<div
-									className={
-										clickedId === 'PlayByPlay'
-											? cx('__active')
-											: cx('__inactive')
-									}>
+								<div className={clickedId === 'PlayByPlay' ? cx('__active') : cx('__inactive')}>
 									<PlayByPlay
 										matchId={matchDetail?.id}
 										process={matchDetail?.process}
