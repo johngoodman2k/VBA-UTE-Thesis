@@ -32,6 +32,9 @@ export class TournamentController extends Controller<
         super(log, tournamentService);
         this.GetGeneratedMatches = this.GetGeneratedMatches.bind(this);
         this.GetAllTournament = this.GetAllTournament.bind(this);
+        this.createSeasonAndAddToTournament =
+            this.createSeasonAndAddToTournament.bind(this);
+
         // this.createTournament = this.createTournament.bind(this);
         // this. = this.getTeamByTournament.bind(this);
     }
@@ -316,7 +319,23 @@ export class TournamentController extends Controller<
 
         return res.status(200).json(tournament);
     }
+
+    async createSeasonAndAddToTournament(req: Request, res: Response) {
+        const season = req.body as Season;
+        const tournament = await this.tournamentService.getTournamentById(
+            season.tournamentId
+        );
+
+        const seasonId = nanoid();
+        season.id = seasonId;
+        await this.tournamentService.createSeason(season);
+
+        tournament[0].seasons.push(season);
+
+        return res.status(200).json(tournament);
+    }
 }
+
 class StandingsClass {
     id: string;
     seasonId: string;

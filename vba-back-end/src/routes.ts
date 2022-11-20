@@ -27,6 +27,11 @@ export function routes(app: Application, ctx: ApplicationContext): void {
         ctx.tournament.GetGeneratedMatches
     );
 
+    app.post(
+        "/tournaments/createSeasonAndAddToTournament/:tournamentId",
+        ctx.tournament.createSeasonAndAddToTournament
+    );
+
     app.post("/players/search", ctx.player.search);
     app.get("/players/search", ctx.player.search);
     app.get("/players/:id", ctx.player.load);

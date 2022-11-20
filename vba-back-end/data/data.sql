@@ -9,7 +9,6 @@ create table tournaments
     type character varying(40),
     competitor character varying(10),
     seasons jsonb[],
-    team jsonb[],
     createdAt timestamp with time zone default now(),
     constraint tournaments_pkey primary key (id)
 );
