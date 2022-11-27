@@ -18,7 +18,7 @@ export interface Season {
     status: string;
     rounds: Round[];
     standingsId: string;
-    team: Team[];
+    teams: Team[];
     tournamentId: string;
     createdAt: Date;
 }
@@ -38,13 +38,15 @@ export interface Match {
 
 export interface Team {
     id: string;
-    teamname: string;
-    teamlogo: string;
+    teamName: string;
+    teamLogo: string;
     stadiumname?: string;
     stadiumpic?: string;
     description?: string;
     status?: string;
     eliminated?: boolean;
+    shortName: string;
+    seasonId: string;
     players: Player[];
     createdAt: Date;
 }
@@ -95,6 +97,7 @@ export interface Statistics {
 
 export interface TournamentRepository extends Repository<Tournament, string> {
     getTournamentById(id: string): Promise<Tournament[]>;
+    updateTournament(tournament: Tournament, ctx?: any): Promise<number>;
     updateSeasonTournament(
         tournament: Tournament,
         newSeason: Season[],
@@ -130,6 +133,7 @@ export interface TournamentService
 
     getTeamByTournament(tournament: string): Promise<Team[]>;
     getTournamentById(id: string): Promise<Tournament[]>;
+    updateTournament(tournament: Tournament, ctx?: any): Promise<number>;
 
     updateSeasonTournament(
         tournament: Tournament,

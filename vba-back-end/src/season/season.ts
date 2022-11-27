@@ -1,14 +1,12 @@
 import { Attributes, DateRange, Filter, Repository, Service } from "onecore";
 // import { Player } from "../player/player";
-import { Team } from "../team/team";
-
 export interface Season {
     id: string;
     name: string;
     status: string;
     rounds: Round[];
     standingsId: string;
-    team: Team[];
+    teams: Team[];
     tournamentId: string;
     createdAt: Date;
 }
@@ -34,9 +32,58 @@ export interface Match {
     createdAt: Date;
 }
 
-export interface SeasonRepository extends Repository<Season, string> {}
+export interface Team {
+    id: string;
+    teamName: string;
+    teamLogo: string;
+    stadiumname: string;
+    stadiumpic: string;
+    description: string;
+    status: string;
+    color: string;
+    seasonId: string;
+    players: Player[];
+    eliminated: boolean;
+    shortName: string;
+    createdAt: Date;
+}
 
-export interface SeasonService extends Service<Season, string, SeasonFilter> {}
+export interface Player {
+    id: string;
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
+    image: string;
+    shirtNumber: number;
+    createdAt: Date;
+    teams: Team;
+}
+
+export interface Tournament {
+    id: string;
+    name: string;
+    description: string;
+    startDate?: string;
+    endDate?: string;
+    type: string;
+    status: string;
+    createdAt: Date;
+}
+
+export interface SeasonRepository extends Repository<Season, string> {
+    getSeasonById(seasonId: string): Promise<Season[]>;
+    updateSeason(season: Season, ctx?: any): Promise<number>;
+}
+
+export interface TeamRepository extends Repository<Team, string> {
+    createTeam(team: Team, ctx?: any): Promise<number>;
+}
+
+export interface SeasonService extends Service<Season, string, SeasonFilter> {
+    createTeam(team: Team, ctx?: any): Promise<number>;
+    getSeasonById(seasonId: string): Promise<Season[]>;
+    updateSeason(season: Season, ctx?: any): Promise<number>;
+}
 
 export const seasonModel: Attributes = {
     id: {
@@ -53,12 +100,11 @@ export const seasonModel: Attributes = {
     rounds: {
         type: "array",
     },
-    team: {
-        type: "array",
-    },
-
     stangdingsId: {
         type: "string",
+    },
+    teams: {
+        type: "array",
     },
     tournamentId: {
         type: "string",
@@ -72,6 +118,7 @@ export interface SeasonFilter extends Filter {
     status: string;
     rounds: Round[];
     standingsId: string;
+    team: Team[];
     tournamentId: string;
     createdAt: Date;
 }

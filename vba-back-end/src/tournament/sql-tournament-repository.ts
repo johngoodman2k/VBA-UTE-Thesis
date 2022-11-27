@@ -2,41 +2,45 @@ import { handleError } from "express-ext";
 import { DB, Repository, select } from "query-core";
 import { getTournamentById } from "./query";
 import {
-  Match,
-  Round,
-  Season,
-  Team,
-  Tournament,
-  tournamentModel,
-  TournamentRepository,
+    Match,
+    Round,
+    Season,
+    Team,
+    Tournament,
+    tournamentModel,
+    TournamentRepository,
 } from "./tournament";
 
 export class SqlTournamentRepository
-  extends Repository<Tournament, string>
-  implements TournamentRepository
+    extends Repository<Tournament, string>
+    implements TournamentRepository
 {
-  constructor(db: DB) {
-    super(db, "tournaments", tournamentModel);
-  }
-  getTournamentById(id: string): Promise<Tournament[]> {
-    return this.query<Tournament>(getTournamentById, [id]);
-  }
+    constructor(db: DB) {
+        super(db, "tournaments", tournamentModel);
+    }
+    getTournamentById(id: string): Promise<Tournament[]> {
+        return this.query<Tournament>(getTournamentById, [id]);
+    }
 
-  updateSeasonTournament(
-    tournament: Tournament,
-    newSeason: Season[],
-    ctx?: any
-  ): Promise<number> {
-    const result = this.update({ ...tournament, seasons: newSeason }, ctx);
+    updateTournament(tournament: Tournament, ctx: any): Promise<number> {
+        return this.update(tournament, ctx);
+    }
 
-    return result;
-  }
+    updateSeasonTournament(
+        tournament: Tournament,
+        newSeason: Season[],
+        ctx?: any
+    ): Promise<number> {
+        const result = this.update({ ...tournament, seasons: newSeason }, ctx);
 
-  getAllTournament(): Promise<Tournament[]> {
-    return this.all();
-  }
+        return result;
+    }
 
-  createTournament(tournament: Tournament, ctx?: any): Promise<number> {
-    return this.insert(tournament, ctx);
-  }
+    getAllTournament(): Promise<Tournament[]> {
+        return this.all();
+    }
+
+    createTournament(tournament: Tournament, ctx?: any): Promise<number> {
+        return this.insert(tournament, ctx);
+    }
 }

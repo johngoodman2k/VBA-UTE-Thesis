@@ -326,11 +326,21 @@ export class TournamentController extends Controller<
             season.tournamentId
         );
 
+        //create season
         const seasonId = nanoid();
         season.id = seasonId;
         await this.tournamentService.createSeason(season);
 
+        //add season to tournament
         tournament[0].seasons.push(season);
+        await this.tournamentService.updateTournament(tournament[0]);
+
+        //create standings
+        const standingsId = nanoid();
+        const standings = {} as Standings;
+        standings.id = standingsId;
+        standings.seasonId = seasonId;
+        await this.tournamentService.createStandings(standings);
 
         return res.status(200).json(tournament);
     }

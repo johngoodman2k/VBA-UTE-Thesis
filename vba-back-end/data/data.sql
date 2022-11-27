@@ -74,15 +74,16 @@ insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,st
 
 create table teams (
     id character varying(40),
-    teamname character varying(40),
-    teamlogo character varying(200),
+    teamName character varying(40),
+    teamLogo character varying(200),
     stadiumname character varying(40),
     stadiumpic character varying(200),
     description character varying(200),
     status character varying(40),
     color character varying(40),
-    tournaments jsonb[],
+    seasonId character varying(40),
     eliminated boolean default false,
+    shortName character varying(40),
     players json[],
     createdAt timestamp with time zone default now(),
     constraint teams_pkey primary key (id)
@@ -152,6 +153,7 @@ create table seasons
     rounds jsonb[],
     tournamentId character varying(40),
     standingsId character varying(40),
+    teams jsonb[],
     createdAt timestamp with time zone default now(),
     constraint seasons_pkey primary key (id)
 
