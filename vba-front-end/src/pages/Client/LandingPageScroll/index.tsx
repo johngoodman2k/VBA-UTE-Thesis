@@ -10,6 +10,8 @@ import { RelatedNews } from '../../../components/NewsDetail/RelatedNews';
 import { Team } from '../../../Services/models';
 import { vbaContext } from '../../../Services/services';
 import { Link } from 'react-router-dom';
+import { LilStanding } from '../../../components/LilStanding';
+import { Footer } from '../../../components/Footer';
 
 const cx = classNames.bind(styles);
 const teamServices = vbaContext.getTeamServices();
@@ -112,7 +114,10 @@ export const LandingPageScroll = () => {
 				<section>
 					<div className='container mx-auto px-4 w-full text-center align-middle text-third-color'>
 						<div className='grid grid-cols-3'>
-							<nav className={cx('__fixturesBlock')}>{/* <SidebarFixture></SidebarFixture> */}</nav>
+							<nav className={cx('__fixturesBlock')}>
+								{/* <SidebarFixture></SidebarFixture> */}
+								<LilStanding></LilStanding>
+							</nav>
 							<div className='col-span-2 pt-12 mt-12'>
 								<NewsCard
 									heroImage='http://api-news.vba.vn/storage/images/Game-35-Nha-Trang-Dolphins-Danang-Dragons%20.JPG'
@@ -161,12 +166,8 @@ export const LandingPageScroll = () => {
 						<RelatedNews></RelatedNews>
 					</div>
 				</section>
-				<section className='bg-amber-500'>
-					<h1>Fourth Page</h1>
-				</section>
-				<section>
-					<h1>Fifth Page</h1>
-				</section>
+
+				<Footer />
 			</div>
 		</>
 	);

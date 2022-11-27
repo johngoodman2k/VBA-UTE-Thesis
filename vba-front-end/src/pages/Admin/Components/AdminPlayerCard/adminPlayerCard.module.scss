@@ -1,0 +1,79 @@
+._playerInfo {
+	transition: all ease 0.75s;
+	text-transform: uppercase;
+	font-weight: 400;
+	line-height: 1rem;
+	font-size: 0.875rem;
+	font-family: Titillium Web;
+	padding: 1.5625rem;
+	height: 100%;
+	width: 100%;
+	max-height: 6.25rem;
+	z-index: 0;
+	left: 0;
+	bottom: 0;
+	position: absolute;
+	overflow: hidden;
+	display: grid;
+	align-content: flex-start !important;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: white;
+	padding: 2rem;
+}
+._logo {
+	padding: 0.3125rem !important;
+	margin: 0 !important;
+	background: linear-gradient(#000, #000) padding-box,
+		linear-gradient(
+				to right,
+				rgb(230, 85, 37),
+				rgb(230, 85, 37) 5%,
+				rgb(212, 26, 104) 5%,
+				rgb(212, 26, 104) 20%,
+				rgb(56, 181, 230) 20%,
+				rgb(56, 181, 230) 30%,
+				rgb(249, 160, 27) 30%,
+				rgb(249, 160, 27) 45%,
+				rgb(152, 0, 46) 45%,
+				rgb(152, 0, 46) 67.5%,
+				rgb(230, 85, 37) 67.5%,
+				rgb(230, 85, 37) 90%,
+				rgb(212, 26, 104) 90%,
+				rgb(212, 26, 104)
+			)
+			border-box;
+	border-color: transparent !important;
+	border-width: 0.15rem;
+	background-color: rgba(0, 0, 0, 0.8);
+	z-index: 5;
+	right: 5%;
+	bottom: 5%;
+	position: absolute;
+	line-height: 1;
+	text-decoration: none !important;
+	transition: all 0.3s ease-in-out;
+	white-space: normal;
+	// border-radius: 0.25rem;
+	// // border: 0.125rem solid rgba(0, 0, 0, 1);
+	// cursor: pointer;
+	// display: inline-block;
+	// font-size: 0.75rem;
+	// font-weight: 800;
+	// letter-spacing: 1px;
+	// outline: 0;
+	// text-align: center;
+	// text-transform: uppercase;
+	width: 70px;
+	height: 70px;
+}
+._name {
+	color: white;
+}
+
+._playerInfo:hover ._name {
+	color: #3366cc;
+}
+._playerInfo:hover {
+	max-height: 100%;
+	cursor: pointer;
+}

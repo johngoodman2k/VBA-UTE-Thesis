@@ -1,0 +1,33 @@
+.footer-block {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: white;
+	padding: 6rem 10rem;
+
+	background-image: url(https://teamnigma.com/wp-content/uploads/2020/07/Nigma-Pattern-Smaller.png);
+	background-repeat: repeat;
+	background-position: 0 0;
+	position: relative;
+
+	vertical-align: center;
+}
+.footer-header {
+	text-transform: uppercase;
+	color: #838383;
+}
+.footer-ceremony {
+	text-transform: uppercase;
+	color: #838383;
+	text-align: center;
+}
+
+.logo-footer-adjustment {
+	margin: 0;
+}
+.logo {
+	width: 5rem;
+	height: auto;
+	border: none;
+	display: block;
+}

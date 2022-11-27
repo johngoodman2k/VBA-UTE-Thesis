@@ -301,7 +301,6 @@ const StandingPage = () => {
 						</ul>
 					</section>
 				</div>
-				<LilStanding></LilStanding>
 			</div>
 		</>
 	);

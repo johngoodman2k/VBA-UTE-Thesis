@@ -15,6 +15,7 @@ import { Articles } from './pages/Client/Articles';
 import { News } from './pages/Client/News';
 import StandingPage from './pages/Client/StandingPage';
 import { CreateTournament } from './components/Modal/CreateTournamentModal';
+import { AdminHomePage } from './pages/Admin/AdminHomePage';
 
 function App() {
 	return (
@@ -22,30 +23,19 @@ function App() {
 			<Routes>
 				<Route path='fixtures/match/:id' element={<MatchDetailPage />} />
 				<Route path='/fixtures' element={<FixturesPage></FixturesPage>} />
-				<Route
-					path='/'
-					element={<ModalAddPlayerToTeam></ModalAddPlayerToTeam>}
-				/>
+				<Route path='/' element={<ModalAddPlayerToTeam></ModalAddPlayerToTeam>} />
 				<Route path='/home' element={<LandingPageScroll />} />
 				<Route path='/player' element={<PlayerInformation />} />
 				<Route path='/playercard' element={<PlayerCard1 />} />
 				<Route path='/new' element={<NewsContainer />} />
-				<Route
-					path='/calendar'
-					element={<Calendar data={new Date(Date.now())} />}
-				/>
+				<Route path='/calendar' element={<Calendar data={new Date(Date.now())} />} />
 				<Route path='/teaminfo/:id' element={<TeamInfoPage></TeamInfoPage>} />
-				<Route
-					path='/teaminfofixtures'
-					element={<TeamInfoFixturesPage></TeamInfoFixturesPage>}
-				/>
+				<Route path='/teaminfofixtures' element={<TeamInfoFixturesPage></TeamInfoFixturesPage>} />
 				<Route path='/articles' element={<Articles></Articles>} />
 				<Route path='/news' element={<News></News>} />
 				<Route path='/standing' element={<StandingPage></StandingPage>} />
-				<Route
-					path='/createtournament'
-					element={<CreateTournament></CreateTournament>}
-				/>
+				<Route path='/createtournament' element={<CreateTournament></CreateTournament>} />
+				<Route path='/admin' element={<AdminHomePage></AdminHomePage>} />
 			</Routes>
 		</BrowserRouter>
 	);

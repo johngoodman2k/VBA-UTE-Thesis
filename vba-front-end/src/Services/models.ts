@@ -155,3 +155,23 @@ interface Card {
 	red: string;
 	yellow: string;
 }
+
+export interface Standings {
+	id: string;
+	seasonId: string;
+	statistics: Statistics[];
+	createdAt: Date;
+}
+
+interface Statistics {
+	team: Team;
+	played: string;
+	won: string;
+	drawn: string;
+	lost: string;
+	goalsFor: string;
+	goalsAgainst: string;
+	goalsDifference: string;
+	points: string;
+	form: Match[];
+}
