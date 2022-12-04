@@ -1,3 +1,34 @@
+._block {
+	display: block;
+	background-image: url(https://teamnigma.com/wp-content/uploads/2020/07/Nigma-Pattern-Smaller.png);
+	background-repeat: repeat;
+	background-position: 0 0;
+	position: relative;
+}
+._matchInfo {
+	max-width: calc(100vw - 200px);
+	min-width: 0;
+
+	padding: 2rem;
+}
+._button {
+	height: 2rem;
+	padding: 0 20px;
+	margin-left: 10px;
+	font-size: 1rem;
+	line-height: 1.8rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	cursor: pointer;
+	background: transparent;
+	border: 1px solid #fff;
+	border-radius: 1.8rem;
+}
+._event-date {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 .__wrapper {
 	// background-image: url(https://teamnigma.com/wp-content/uploads/2020/07/Nigma-Pattern-Smaller.png);
 	// background-repeat: repeat;
@@ -12,8 +43,7 @@
 	margin: auto;
 	position: relative;
 	color: white;
-	align-items: center;
-	justify-content: center;
+	padding: 13px 15px 12px;
 }
 
 .__title {
@@ -28,6 +58,7 @@
 	margin-left: auto;
 	margin-right: auto;
 	position: relative;
+	padding: 2rem 0;
 }
 .__filterByType {
 	display: flex;
@@ -97,4 +128,24 @@
 
 .__active {
 	background-color: rgb(208, 208, 208);
+}
+
+._ticketPrice {
+	border-bottom: 1px dashed #ccc;
+	border-right: 1px dashed #ccc;
+	box-sizing: border-box;
+	justify-content: flex-start;
+}
+._square {
+	background-color: #b2b9f4;
+	border: 1px solid #aaa;
+	padding: 15px;
+	// width: 15px;
+	// height: 15px;
+}
+._personalBlock {
+	box-shadow: 0 1px 2px 0 rgb(0 0 0 / 30%);
+	border-bottom: 0;
+	min-height: 125px;
+	padding: 15px;
 }

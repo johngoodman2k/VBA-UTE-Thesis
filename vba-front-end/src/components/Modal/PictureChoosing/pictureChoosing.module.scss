@@ -1,0 +1,60 @@
+.TitleTop {
+	color: #fff;
+	font-size: 1rem;
+	font-weight: 500;
+	line-height: 1.2;
+}
+
+.Input__Preview__Image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.ImageUploadWrap {
+	display: flex;
+	flex-direction: row;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: auto;
+	border-radius: 5px;
+	width: 100%;
+	box-shadow: 0px 0px 5px rgb(114, 114, 114);
+}
+.Input__ButtonLabel {
+	display: inline-block;
+	padding: 8px 8px;
+	z-index: 2;
+	border-radius: 5px;
+	width: 100%;
+	background-color: #98002e;
+	cursor: pointer;
+	transition: ease-in 0.2s;
+	&:hover {
+		background-color: #760024;
+	}
+}
+._Input {
+	outline: none;
+}
+._Input__Image {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+	font-size: 17px;
+	color: #b8b8b8;
+}
+.Input__Preview {
+	background-color: #fff;
+	width: 100%;
+	height: 100%;
+}
+.Input__Preview__TextBlock {
+	transform: translateX(-3%);
+	width: 100%;
+	border-radius: 5px;
+	flex: 1 1 0%;
+}

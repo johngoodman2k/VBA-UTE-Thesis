@@ -5,6 +5,9 @@ import { ReactComponent as Hamburger } from '../../../assets/svg/hamburger-com.s
 import classNames from 'classnames/bind';
 import styles from './adminHomePage.module.scss';
 import { TournamentManager } from '../TournamentManager';
+import { SeasonManager } from '../SeasonManager';
+import { TeamManager } from '../TeamManager';
+import { PlayerManager } from '../PlayerManager';
 const cx = classNames.bind(styles);
 
 export const AdminHomePage = () => {
@@ -38,7 +41,10 @@ export const AdminHomePage = () => {
 				<AdminSideBar visible={clicked}></AdminSideBar>
 
 				<section className='my-4 w-full m-auto p-2'>
-					<TournamentManager />
+					{/* <TournamentManager /> */}
+					<SeasonManager></SeasonManager>
+					{/* <TeamManager></TeamManager> */}
+					{/* <PlayerManager></PlayerManager> */}
 				</section>
 			</div>
 		</div>

@@ -4,6 +4,12 @@
 	margin-right: auto;
 	background-color: #f5f5f5;
 }
+._background {
+	width: 100%;
+	background-image: url(https://teamnigma.com/wp-content/uploads/2020/07/Nigma-Pattern-Smaller.png);
+	background-repeat: repeat;
+	background-position: 0 0;
+}
 .standings {
 	&-form {
 		width: 13rem;
@@ -84,8 +90,13 @@
 	}
 	&-header {
 		position: relative;
-		padding: 20px 0;
+		padding: 2rem;
 		background-color: white;
+		text-transform: uppercase;
+
+		font-weight: 600;
+		font-size: 1.5rem;
+		line-height: 0.8;
 	}
 	&-box {
 		margin-bottom: 20px;

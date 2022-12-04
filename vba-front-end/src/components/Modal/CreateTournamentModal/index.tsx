@@ -3,7 +3,7 @@
 // import { CreateTournamentHeading } from '../components/CreateTournamentHeading';
 import React, { useState } from 'react';
 // import UploadAndDisplayImage from '../components/UploadandDisplayImage';
-
+import { ReactComponent as Close } from '../../../assets/svg/close-com.svg';
 // import { validate } from './validate';
 // import { createTournamentApi } from '../Apis/createTournamentApi.api';
 // import { TournamentHeading } from '../components/TournamentHeading';
@@ -13,10 +13,14 @@ import { ButtonGroup } from '../../Button/ButtonGroup';
 import { Type } from '../../Button/Type';
 import classNames from 'classnames/bind';
 import styles from './createTournament.module.scss';
+import { ModalBlock } from '../ModalBlock';
 
 const cx = classNames.bind(styles);
+type createTournamentProps = {
+	handleCloseModal?: () => void;
+};
 
-export const CreateTournament = () => {
+export const CreateTournamentModal = (props: createTournamentProps) => {
 	const [kindState, setKindState] = useState('round robin');
 	const [statusState, setStatusState] = useState('active');
 	const test = [
@@ -69,82 +73,94 @@ export const CreateTournament = () => {
 			{/* <TournamentContainer>
         <h1>Create Tournament</h1>
       </TournamentContainer> */}
-			<div className='container text-center m-auto '>
-				<div className={`${cx('panel')}`}>
-					<header className={`${cx('createtournament_type-header')}`}>
-						<div className='container'>
-							<h1 className='text-xl font-bold text-white'>Create Tournament</h1>
-						</div>
-					</header>
-					<div className={`${cx('createtournament-body')}`}>
-						<form onSubmit={() => {}}>
-							<div
-								className={`${cx(
-									'createtourament-body-adjust',
-									'createtournament_row-wrapper',
-									'grid grid-cols-2',
-									'text-left'
-								)}`}>
-								<div className='w-1/2'>
-									<div className='my-2'>
-										<p className={`${cx('createtournament_text-adjust')}`}>ID</p>
-										<input className={`${cx('createtournament_input')}`} type='text' name='id' />
+			<ModalBlock>
+				<div className='container text-center m-auto '>
+					<div className={`${cx('panel')}`}>
+						<header className={`${cx('createtournament_type-header')}`}>
+							<div className='container flex justify-center items-center '>
+								<h1 className='text-2xl font-bold text-white uppercase '>Create Tournament</h1>
+								<div className='ml-auto text-right hover:cursor-pointer'>
+									<Close onClick={props.handleCloseModal} className='w-[48px] h-[48px]'></Close>
+								</div>
+							</div>
+						</header>
+						<div className={`${cx('createtournament-body')}`}>
+							<form onSubmit={() => {}}>
+								<div
+									className={`${cx(
+										'createtourament-body-adjust',
+										'createtournament_row-wrapper',
+										'grid grid-cols-2',
+										'text-left'
+									)}`}>
+									<div className='w-1/2'>
+										<div className='my-2'>
+											<p className={`${cx('createtournament_text-adjust')}`}>ID</p>
+											<input className={`${cx('createtournament_input')}`} type='text' name='id' />
+										</div>
+										<div className='my-2'>
+											<p className={`${cx('createtournament_text-adjust')}`}>Name</p>
+											<input className={`${cx('createtournament_input')}`} type='text' name='name' />
+										</div>
 									</div>
-									<div className='my-2'>
-										<p className={`${cx('createtournament_text-adjust')}`}>Name</p>
-										<input className={`${cx('createtournament_input')}`} type='text' name='name' />
+									<div className=''>
+										<div className='my-2'>
+											<p className={`${cx('createtournament_text-adjust')}`}>Start Date</p>
+											<input className={`${cx('createtournament_input-date')}`} type='date' name='start' />
+										</div>
+										<div className='my-2'>
+											<p className={`${cx('createtournament_text-adjust')}`}>End Date</p>
+											<input className={`${cx('createtournament_input-date')}`} type='date' name='end' />
+										</div>
 									</div>
 								</div>
+								<div className={`${cx('createtournament_row-wrapper', 'grid grid-cols-2')}`}>
+									<div className='w-3/4'>
+										<div className='mb-4'>
+											<p className={`${cx('createtournament_text-adjust', 'text-left')}`}>Competitors type</p>
+											<ButtonGroup buttons={['One', 'Two']}></ButtonGroup>
+										</div>
+										<div className={`${cx('createtournament_competitortype-block')}`}>
+											<p className={`${cx('createtournament_text-adjust', 'text-left')}`}>Number of Teams</p>
+											<input className={`${cx('createtournament_input')}`} type='text' name='name' />
+										</div>
+									</div>
+
+									<div className={`${cx('position-adjust')}`}>
+										<h1 className={`${cx('createtournament_text-desc')}`}>Description</h1>
+										<textarea
+											className={`${cx('createtournament_textarea')}`}
+											name='description'
+											rows={6}
+											cols={50}
+											placeholder='Write something ... '></textarea>
+									</div>
+								</div>
+
 								<div className=''>
-									<div className='my-2'>
-										<p className={`${cx('createtournament_text-adjust')}`}>Start Date</p>
-										<input className={`${cx('createtournament_input-date')}`} type='date' name='start' />
-									</div>
-									<div className='my-2'>
-										<p className={`${cx('createtournament_text-adjust')}`}>End Date</p>
-										<input className={`${cx('createtournament_input-date')}`} type='date' name='end' />
-									</div>
-								</div>
-							</div>
-							<div className={`${cx('createtournament_row-wrapper', 'grid grid-cols-2')}`}>
-								<div className='w-1/2'>
-									<div className='mb-4'>
-										<p className={`${cx('createtournament_text-adjust', 'text-left')}`}>Competitors type</p>
-										<ButtonGroup buttons={['One', 'Two']}></ButtonGroup>
-									</div>
-									<div className={`${cx('createtournament_competitortype-block')}`}>
-										<p className={`${cx('createtournament_text-adjust', 'text-left')}`}>Number of Teams</p>
-										<input className={`${cx('createtournament_input')}`} type='text' name='name' />
+									<label className={`${cx('createtournament_type-header')}`}>Choose your type</label>
+									<div className={`${cx('createtournament_type-block')}`}>
+										<Type type={test}></Type>
 									</div>
 								</div>
 
-								<div className={`${cx('position-adjust')}`}>
-									<h1 className={`${cx('createtournament_text-desc')}`}>Description</h1>
-									<textarea
-										className={`${cx('createtournament_textarea')}`}
-										name='description'
-										rows={6}
-										cols={50}
-										placeholder='Write something ... '></textarea>
+								<div className={`${cx('createTournamentButton-block')}`}>
+									<button type='submit' className={`${cx('position-adjust', 'createTournamentButton-adjust')}`}>
+										<span>Submit!</span>
+										<span className={cx('__block__icon', 'w-[15px]', 'h-[14px]')}>
+											<img
+												className={`${cx('__block__icon--adjust')}`}
+												src='https://www.freeiconspng.com/uploads/right-arrow-icon-12.png'
+												alt=''
+											/>
+										</span>
+									</button>
 								</div>
-							</div>
-
-							<div className=''>
-								<label className={`${cx('createtournament_type-header')}`}>Choose your type</label>
-								<div className={`${cx('createtournament_type-block')}`}>
-									<Type type={test}></Type>
-								</div>
-							</div>
-
-							<div className={`${cx('createTournamentButton-block')}`}>
-								<button type='submit' className={`${cx('position-adjust', 'createTournamentButton-adjust')}`}>
-									<span>Submit!</span>
-								</button>
-							</div>
-						</form>
+							</form>
+						</div>
 					</div>
 				</div>
-			</div>
+			</ModalBlock>
 		</>
 	);
 };

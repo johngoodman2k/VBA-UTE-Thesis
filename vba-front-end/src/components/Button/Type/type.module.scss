@@ -36,10 +36,14 @@
 		font-weight: 300;
 		font-size: 11px;
 		display: block;
+		margin: 0.5rem 0;
 	}
 }
-.tournament_type-block:hover .tournament_type-image {
+@import '/src/styles/Variables.scss';
+.tournament_type-adjust:hover .tournament_type-label {
 	transform: scale(1.2);
+	background: linear-gradient(to right, $third-color, $fourth-color, $second-color, $primary-color, $third-color);
+	cursor: pointer;
 }
 
 // .tournament_type-label::before {
@@ -58,5 +62,14 @@
 // }
 
 .tournament_type-label--active {
-	background: linear-gradient(to right, #642b73, #c6426e);
+	background: linear-gradient(
+		to right,
+		$primary-color,
+		$second-color,
+		$third-color,
+		$fourth-color,
+		$second-color,
+		$primary-color,
+		$third-color
+	);
 }

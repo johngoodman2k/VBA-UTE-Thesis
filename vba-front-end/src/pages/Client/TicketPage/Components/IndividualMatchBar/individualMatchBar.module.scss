@@ -1,0 +1,36 @@
+.__side {
+	padding-top: 0.625rem;
+	padding-bottom: 0.625rem;
+	display: grid;
+	align-items: center;
+	// border: 1px solid rgb(173, 173, 173);
+	background-color: #e1ece4;
+}
+
+.__content {
+	display: grid;
+	padding: 0.9rem;
+	align-items: center;
+	border: 1px solid rgb(173, 173, 173);
+}
+.__detailInfo {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.__button {
+	display: inline-block;
+	font-size: 0.75rem;
+	font-weight: 800;
+	letter-spacing: 1px;
+	outline: 0;
+	padding: 0.6rem 0.7rem;
+	text-align: center;
+	background-color: black;
+	color: white;
+	border: 0.125rem;
+	&:hover {
+		cursor: pointer;
+	}
+}

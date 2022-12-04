@@ -63,7 +63,7 @@ export const NavigationBar = (props: NavigationBarProps) => {
 														className={
 															clickedId === 'stats' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<span className={cx('__item__text')}>Stats</span>
+													<span className={cx('__item__text')}>Standings</span>
 												</span>
 											</a>
 										</li>
@@ -96,7 +96,7 @@ export const NavigationBar = (props: NavigationBarProps) => {
 														className={
 															clickedId === 'results' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<span className={cx('__item__text')}>Results</span>
+													<span className={cx('__item__text')}>Tickets</span>
 												</span>
 											</a>
 										</li>
@@ -126,7 +126,7 @@ export const NavigationBar = (props: NavigationBarProps) => {
 														className={
 															clickedId === 'merch' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<span className={cx('__item__text')}>Merch</span>
+													<span className={cx('__item__text')}>Sign In</span>
 												</span>
 											</a>
 										</li>

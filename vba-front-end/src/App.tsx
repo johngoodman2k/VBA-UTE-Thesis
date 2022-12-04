@@ -1,7 +1,7 @@
 import './App.css';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import ModalAddPlayerToTeam from './components/Modal/ModalAddPlayerToTeam';
+
 import Calendar from './components/Calendar';
 import { NewsContainer } from './components/News/NewsContainer';
 import PlayerCard1 from './components/Player/PlayerCard1';
@@ -14,8 +14,13 @@ import { TeamInfoFixturesPage } from './pages/Client/TeamInfoPage/TeamInfoFixtur
 import { Articles } from './pages/Client/Articles';
 import { News } from './pages/Client/News';
 import StandingPage from './pages/Client/StandingPage';
-import { CreateTournament } from './components/Modal/CreateTournamentModal';
+
 import { AdminHomePage } from './pages/Admin/AdminHomePage';
+import { TicketPage } from './pages/Client/TicketPage';
+import { TicketDetailsPage } from './pages/Client/TicketDetailsPage';
+import { CreateSeasonModal } from './components/Modal/CreateSeasonModal';
+import { CreateTeamModal } from './components/Modal/CreateTeamModal';
+import { SeasonManager } from './pages/Admin/SeasonManager';
 
 function App() {
 	return (
@@ -23,7 +28,7 @@ function App() {
 			<Routes>
 				<Route path='fixtures/match/:id' element={<MatchDetailPage />} />
 				<Route path='/fixtures' element={<FixturesPage></FixturesPage>} />
-				<Route path='/' element={<ModalAddPlayerToTeam></ModalAddPlayerToTeam>} />
+
 				<Route path='/home' element={<LandingPageScroll />} />
 				<Route path='/player' element={<PlayerInformation />} />
 				<Route path='/playercard' element={<PlayerCard1 />} />
@@ -34,8 +39,11 @@ function App() {
 				<Route path='/articles' element={<Articles></Articles>} />
 				<Route path='/news' element={<News></News>} />
 				<Route path='/standing' element={<StandingPage></StandingPage>} />
-				<Route path='/createtournament' element={<CreateTournament></CreateTournament>} />
+
 				<Route path='/admin' element={<AdminHomePage></AdminHomePage>} />
+
+				<Route path='/ticketpage' element={<TicketPage></TicketPage>} />
+				<Route path='/ticketdetailspage' element={<TicketDetailsPage></TicketDetailsPage>} />
 			</Routes>
 		</BrowserRouter>
 	);

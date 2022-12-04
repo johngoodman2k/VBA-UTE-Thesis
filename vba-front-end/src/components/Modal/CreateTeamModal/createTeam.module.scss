@@ -1,5 +1,5 @@
 @import '/src/styles/Variables.scss';
-.createtournament_text {
+.createTeam_text {
 	&-adjust {
 		display: block;
 		margin-bottom: 0.5rem;
@@ -16,7 +16,7 @@
 		color: white;
 	}
 }
-.createtournament_type {
+.createTeam_type {
 	&-header {
 		font-family: 'Open Sans', sans-serif;
 		font-size: 1rem !important;
@@ -34,14 +34,14 @@
 	}
 }
 
-.createtournament_competitortype {
+.createTeam_competitortype {
 	&-block {
 		height: 100%;
 		text-align: center;
 	}
 }
 
-.createtournament_input {
+.createTeam_input {
 	font-family: 'Open Sans', sans-serif;
 	border: none;
 	padding: 15px;
@@ -64,7 +64,7 @@
 		appearance: none;
 	}
 }
-.createtournament_textarea {
+.createTeam_textarea {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 1rem;
 	line-height: 1.5rem;
@@ -89,12 +89,11 @@
 	background-position: 0 0;
 }
 
-.createtournament-body {
+.createTeam-body {
 	margin: 0px 2rem;
 	&-adjust {
 		display: flex;
-		justify-content: center;
-		align-items: center;
+		justify-content: space-between;
 	}
 }
 
@@ -106,7 +105,7 @@
 	margin: 10px 0;
 }
 
-.createTournamentButton {
+.createTeamButton {
 	&-block {
 		text-align: center;
 		margin: 2rem 0rem;
@@ -126,14 +125,14 @@
 	}
 }
 
-.createTournamentButton-adjust span {
+.createTeamButton-adjust span {
 	cursor: pointer;
 	display: inline-block;
 	position: relative;
 	transition: 0.5s;
 }
 
-.createTournamentButton-adjust span:after {
+.createTeamButton-adjust span:after {
 	content: '';
 	position: absolute;
 	opacity: 0;
@@ -142,20 +141,20 @@
 	transition: 0.5s;
 }
 
-.createTournamentButton-adjust:hover span {
+.createTeamButton-adjust:hover span {
 	padding-right: 15px;
 	cursor: pointer;
 }
-.createTournamentButton-adjust:hover {
+.createTeamButton-adjust:hover {
 	background: linear-gradient(to right, $third-color, $fourth-color, $second-color, $third-color);
 }
 
-.createTournamentButton-adjust:hover span:after {
+.createTeamButton-adjust:hover span:after {
 	opacity: 1;
 	right: 0;
 }
 
-.createtournament_row-wrapper {
+.createTeam_row-wrapper {
 	margin-bottom: 2rem;
 }
 
@@ -167,4 +166,66 @@
 	width: 15px;
 	height: 14px;
 	transition: right 0.2s;
+}
+
+//picture
+.TitleTop {
+	color: #fff;
+	font-size: 1rem;
+	font-weight: 500;
+	line-height: 1.2;
+}
+
+.Input__Preview__Image {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.ImageUploadWrap {
+	display: flex;
+	flex-direction: row;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: auto;
+	border-radius: 5px;
+	width: 100%;
+	box-shadow: 0px 0px 5px rgb(114, 114, 114);
+}
+.Input__ButtonLabel {
+	display: inline-block;
+	padding: 8px 8px;
+	z-index: 2;
+	border-radius: 5px;
+	width: 100%;
+	background-color: #98002e;
+	cursor: pointer;
+	transition: ease-in 0.2s;
+	&:hover {
+		background-color: #760024;
+	}
+}
+._Input {
+	outline: none;
+}
+._Input__Image {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	z-index: -1;
+	font-size: 17px;
+	color: #b8b8b8;
+}
+.Input__Preview {
+	background-color: #fff;
+	width: 100%;
+	height: 100%;
+}
+.Input__Preview__TextBlock {
+	transform: translateX(-3%);
+	width: 100%;
+	border-radius: 5px;
+	flex: 1 1 0%;
 }

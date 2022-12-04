@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import classNames from 'classnames/bind';
-import styles from './tournamentManager.module.scss';
+import styles from './seasonManager.module.scss';
 import { ReactComponent as Plus } from '../../../assets/svg/plus-com.svg';
 import { AdminTeamCard } from '../Components/AdminTeamCard';
 import { AdminSeasonCard } from '../Components/AdminSeasonCard';
 import { AdminPlayerCard } from '../Components/AdminPlayerCard';
-import { CreateTournamentModal } from '../../../components/Modal/CreateTournamentModal';
+
+import { CreateSeasonModal } from '../../../components/Modal/CreateSeasonModal';
 const cx = classNames.bind(styles);
 
-export const TournamentManager = () => {
+export const SeasonManager = () => {
 	const [clicked, setClicked] = useState(false);
 	const handleCreate = () => {
 		setClicked(!clicked);
@@ -22,14 +23,14 @@ export const TournamentManager = () => {
 				<p
 					className='uppercase font-bold text-4xl  text-left p-4 mx-2 flex
                  '>
-					tournament manager
+					Season manager
 					<div className='ml-auto text-right hover:cursor-pointer'>
 						<Plus onClick={handleCreate} className='w-[48px] h-[48px]'></Plus>
 					</div>
 				</p>
 			</div>
 			<div className={clicked === true ? cx('__active') : cx('__inactive')}>
-				<CreateTournamentModal handleCloseModal={handleCloseModal}></CreateTournamentModal>
+				<CreateSeasonModal handleCloseModal={handleCloseModal}></CreateSeasonModal>
 			</div>
 			<div className='m-2 p-2 justify-between flex-1 block space-y-8 md:space-y-0 md:space-x-8 md:flex'>
 				<AdminTeamCard

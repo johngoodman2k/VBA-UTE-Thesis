@@ -16,9 +16,7 @@ export const TeamInfoFixturesPage = () => {
 				<div className='block bg-[#008348]'>
 					<div className={`${cx('__headerContainer')}`}>
 						<div className='py-5 px-4'>
-							<h4 className='text-white text-center font-bold uppercase'>
-								Boston Celtics
-							</h4>
+							<h4 className='text-white text-center font-bold uppercase'>Boston Celtics</h4>
 							<h1 className={`${cx('__title')} text-center text-white`}>
 								Season<br></br>Schedule
 							</h1>
@@ -30,9 +28,7 @@ export const TeamInfoFixturesPage = () => {
 					<div className='my-8 container'>
 						<div className={`header-wrap justify-between w-full  flex`}>
 							<div id='filter-section' className='flex flex-col w-full '>
-								<h3 className='uppercase text-lg mb-2'>
-									Filter Game Selection{' '}
-								</h3>
+								<h3 className='uppercase text-lg mb-2'>Filter Game Selection </h3>
 								<div className='flex m-0 w-full'>
 									<div className={`${cx('__filterByType')}`}>
 										<label
@@ -40,9 +36,7 @@ export const TeamInfoFixturesPage = () => {
 												setClicked(true);
 											}}
 											className={
-												clicked === true
-													? `${cx('__filterBackground', '__active')}`
-													: `${cx('__filterBackground')}`
+												clicked === true ? `${cx('__filterBackground', '__active')}` : `${cx('__filterBackground')}`
 											}>
 											<img
 												className={`${cx('__filterBackground__image')}`}
@@ -64,19 +58,13 @@ export const TeamInfoFixturesPage = () => {
 									<div className='relative inline-block w-2/5 mr-2 ml-2 '>
 										<label className={`${cx('__selection')} w-full `}>
 											<select className={`${cx('__selection__button')} `}>
-												<option
-													className={`${cx('__selection__button')}`}
-													value='all-month'>
+												<option className={`${cx('__selection__button')}`} value='all-month'>
 													MONTH:ALL
 												</option>
-												<option
-													className={`${cx('__selection__button')}`}
-													value='all-month'>
+												<option className={`${cx('__selection__button')}`} value='all-month'>
 													MONTH:ALL
 												</option>
-												<option
-													className={`${cx('__selection__button')}`}
-													value='all-month'>
+												<option className={`${cx('__selection__button')}`} value='all-month'>
 													MONTH:ALL
 												</option>
 											</select>
@@ -90,19 +78,13 @@ export const TeamInfoFixturesPage = () => {
 									<div className='relative inline-block w-2/5 mr-2 ml-2 '>
 										<label className={`${cx('__selection')} w-full `}>
 											<select className={`${cx('__selection__button')} `}>
-												<option
-													className={`${cx('__selection__button')}`}
-													value='all-month'>
+												<option className={`${cx('__selection__button')}`} value='all-month'>
 													MONTH:ALL
 												</option>
-												<option
-													className={`${cx('__selection__button')}`}
-													value='all-month'>
+												<option className={`${cx('__selection__button')}`} value='all-month'>
 													MONTH:ALL
 												</option>
-												<option
-													className={`${cx('__selection__button')}`}
-													value='all-month'>
+												<option className={`${cx('__selection__button')}`} value='all-month'>
 													MONTH:ALL
 												</option>
 											</select>
@@ -122,34 +104,11 @@ export const TeamInfoFixturesPage = () => {
 							<div id='filter-section' className='flex flex-col w-full '>
 								<h3 className='uppercase text-lg mb-2'>Regular Season </h3>
 								<NextGameBar></NextGameBar>
-								{/* <div className='flex w-full'>
-									<div>Home</div>
-									<div>Shirt</div>
-									<div>LOGO</div>
-									<div>Info</div>
-									<div>Match recap</div>
-								</div> */}
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
-			{/* <div className={`${cx('__displayAd')}`}></div>
-    <div className={`${cx('__container')}`}>
-        <div className={`${cx('__background')}`}>
-            <div className={`${cx('__background__block')}`}>
-                <img
-                    src='https://cdn.nba.com/logos/nba/1610612738/global/L/logo.svg'
-                    className={`${cx('__background__block--adjust')}`}
-                    alt=''
-                />
-            </div>
-        </div>
-        <TeamUpCommingGames></TeamUpCommingGames>
-        <TeamRoster></TeamRoster>
-        <TeamProfile></TeamProfile>
-    </div> */}
-			<GameLeaders></GameLeaders>
 		</div>
 	);
 };
