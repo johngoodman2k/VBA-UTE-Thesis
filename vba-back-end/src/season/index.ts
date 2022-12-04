@@ -7,6 +7,8 @@ import {
     seasonModel,
     SeasonRepository,
     SeasonService,
+    Standings,
+    StandingsRepository,
     Team,
     TeamRepository,
 } from "./season";
@@ -15,6 +17,7 @@ export * from "./season";
 export { SeasonController };
 import { SqlSeasonRepository } from "./sql-season-repository";
 import { SqlTeamRepository } from "./sql-team-repository";
+import { SqlStandingsRepository } from "./sql-standings-repository";
 
 export class SeasonManager
     extends Manager<Season, string, SeasonFilter>
@@ -23,7 +26,8 @@ export class SeasonManager
     constructor(
         search: Search<Season, SeasonFilter>,
         protected seasonRepository: SeasonRepository,
-        protected teamRepository: TeamRepository
+        protected teamRepository: TeamRepository,
+        protected standingsRepository: StandingsRepository
     ) {
         super(search, seasonRepository);
     }
@@ -36,6 +40,12 @@ export class SeasonManager
     updateSeason(season: Season, ctx?: any): Promise<number> {
         return this.seasonRepository.updateSeason(season, ctx);
     }
+    getStandingsById(id: string): Promise<Standings[]> {
+        return this.standingsRepository.getStandingsById(id);
+    }
+    updateStandings(stangdings: Standings, ctx?: any): Promise<number> {
+        return this.standingsRepository.updateStandings(stangdings, ctx);
+    }
 }
 export function useSeasonService(db: DB): SeasonService {
     const builder = new SearchBuilder<Season, SeasonFilter>(
@@ -46,8 +56,14 @@ export function useSeasonService(db: DB): SeasonService {
     );
     const seasonRepository = new SqlSeasonRepository(db);
     const teamRepository = new SqlTeamRepository(db);
+    const standingsRepository = new SqlStandingsRepository(db);
 
-    return new SeasonManager(builder.search, seasonRepository, teamRepository);
+    return new SeasonManager(
+        builder.search,
+        seasonRepository,
+        teamRepository,
+        standingsRepository
+    );
 }
 export function useSeasonController(log: Log, db: DB): SeasonController {
     return new SeasonController(log, useSeasonService(db));

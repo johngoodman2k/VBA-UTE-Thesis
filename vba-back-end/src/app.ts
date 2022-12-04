@@ -27,14 +27,14 @@ app.use(allow(conf.allow), json(), middleware.log);
 // const devConfig = `postgresql://${config.db.user}:${config.db.password}@${config.db.host}:${config.db.port}/${config.db.database}`;
 // var pool = new Pool(config.dblocal);
 var pool = new Pool({
-  user: config.db.user,
-  password: config.db.password,
-  database: config.db.database,
-  port: config.db.port,
-  host: config.db.host,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+    user: conf.db.user,
+    password: conf.db.password,
+    database: conf.db.database,
+    port: conf.db.port,
+    host: conf.db.host,
+    ssl: {
+        rejectUnauthorized: false,
+    },
 });
 
 const proConfig = conf.db.url;
@@ -46,23 +46,23 @@ const proConfig = conf.db.url;
 
 // test;
 pool.connect().then((client) => {
-  client
-    .query("select $1::text as name", ["pg-pool"])
-    .then((res) => {
-      client.release();
-      console.log("hello from", res.rows[0].name);
-    })
-    .catch((e) => {
-      client.release();
-      console.error("query error", e.message, e.stack);
-    });
+    client
+        .query("select $1::text as name", ["pg-pool"])
+        .then((res) => {
+            client.release();
+            console.log("hello from", res.rows[0].name);
+        })
+        .catch((e) => {
+            client.release();
+            console.error("query error", e.message, e.stack);
+        });
 });
 
 const db = log(new PoolManager(pool), conf.log.db, logger, "sql");
-const ctx = useContext(db, logger, middleware);
+const ctx = useContext(db, logger, middleware, conf);
 
 routes(app, ctx);
 
 http.createServer(app).listen(conf.port, () => {
-  console.log("Start server at port " + conf.port);
+    console.log("Start server at port " + conf.port);
 });

@@ -1,5 +1,5 @@
 import { Attributes, DateRange, Filter, Repository, Service } from "onecore";
-import { StringLiteral } from "typescript";
+import { nanoid } from "nanoid";
 
 export interface Tournament {
     id: string;
@@ -62,11 +62,6 @@ export interface Player {
     createdAt: Date;
 }
 
-interface Card {
-    red: string;
-    yellow: string;
-}
-
 export interface Round {
     id: string;
     roundname: string;
@@ -82,27 +77,26 @@ export interface Standings {
     createdAt: Date;
 }
 
-export interface Statistics {
+interface Statistics {
     team: Team;
-    played: string;
+    played?: number;
+    won?: number;
+    drawn?: number;
+    lost?: number;
+    home?: Point;
+    road?: Point;
+    matchResult: number[];
+}
+
+interface Point {
     won: number;
-    drawn: number;
     lost: number;
-    goalsFor: number;
-    goalsAgainst: number;
-    goalsDifference: number;
-    points: number;
-    form: Match[];
 }
 
 export interface TournamentRepository extends Repository<Tournament, string> {
     getTournamentById(id: string): Promise<Tournament[]>;
     updateTournament(tournament: Tournament, ctx?: any): Promise<number>;
-    updateSeasonTournament(
-        tournament: Tournament,
-        newSeason: Season[],
-        ctx?: any
-    ): Promise<number>;
+    updateSeasonTournament(tournament: Tournament, newSeason: Season[], ctx?: any): Promise<number>;
     getAllTournament(): Promise<Tournament[]>;
     createTournament(tournament: Tournament, ctx?: any): Promise<number>;
 }
@@ -123,9 +117,9 @@ export interface StandingsRepository extends Repository<Standings, string> {
 }
 export interface SeasonRepository extends Repository<Season, string> {
     createSeason(season: Season, ctx?: any): Promise<number>;
+    getSeasonById(id: string): Promise<Season[]>;
 }
-export interface TournamentService
-    extends Service<Tournament, string, TournamentFilter> {
+export interface TournamentService extends Service<Tournament, string, TournamentFilter> {
     buildToInsertMatches(matches: Match[], ctx?: any): Promise<number>;
     buildToInsertRound(rounds: Round[], ctx?: any): Promise<number>;
 
@@ -135,11 +129,7 @@ export interface TournamentService
     getTournamentById(id: string): Promise<Tournament[]>;
     updateTournament(tournament: Tournament, ctx?: any): Promise<number>;
 
-    updateSeasonTournament(
-        tournament: Tournament,
-        newSeason: Season[],
-        ctx?: any
-    ): Promise<number>;
+    updateSeasonTournament(tournament: Tournament, newSeason: Season[], ctx?: any): Promise<number>;
 
     getAllTournament(): Promise<Tournament[]>;
     createTournament(tournament: Tournament, ctx?: any): Promise<number>;
@@ -148,6 +138,7 @@ export interface TournamentService
 
     createSeason(season: Season, ctx?: any): Promise<number>;
 
+    getSeasonById(id: string): Promise<Season[]>;
     // addTeamForTournament();
 }
 
@@ -156,6 +147,7 @@ export const tournamentModel: Attributes = {
         key: true,
         match: "equal",
         type: "string",
+        default: nanoid(),
     },
     name: {
         type: "string",
@@ -168,8 +160,7 @@ export const tournamentModel: Attributes = {
     endDate: { type: "datetime" },
     type: { type: "string" },
     competitor: { type: "string" },
-    seasons: {},
-    team: {},
+    seasons: { type: "array" },
     createdAt: { type: "datetime" },
 };
 
@@ -182,6 +173,5 @@ export interface TournamentFilter extends Filter {
     type: string;
     competitor: string;
     seasons: Season[];
-    team: Team[];
     createdAt: Date;
 }

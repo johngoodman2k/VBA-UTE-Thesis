@@ -8,16 +8,19 @@ import { teamModel } from "../team/team";
 import { Season, SeasonRepository } from "./tournament";
 
 export class SqlSeasonRepository
-  extends Repository<Season, string>
-  implements SeasonRepository
+    extends Repository<Season, string>
+    implements SeasonRepository
 {
-  constructor(db: DB) {
-    super(db, "seasons", seasonModel);
-  }
+    constructor(db: DB) {
+        super(db, "seasons", seasonModel);
+    }
 
-  createSeason(season: Season, ctx?: any): Promise<number> {
-    return this.insert(season, ctx);
-  }
+    createSeason(season: Season, ctx?: any): Promise<number> {
+        return this.insert(season, ctx);
+    }
+    getSeasonById(id: string): Promise<Season[]> {
+        return this.query("select * from seasons where id = $1", [id]);
+    }
 
-  //
+    //
 }

@@ -70,6 +70,28 @@ export interface Tournament {
     createdAt: Date;
 }
 
+export interface Standings {
+    id: string;
+    seasonId: string;
+    statistics: Statistics[];
+    createdAt: Date;
+}
+
+interface Statistics {
+    team: Team;
+    played?: number;
+    won?: number;
+    drawn?: number;
+    lost?: number;
+    home?: Point;
+    road?: Point;
+}
+
+interface Point {
+    won: number;
+    lost: number;
+}
+
 export interface SeasonRepository extends Repository<Season, string> {
     getSeasonById(seasonId: string): Promise<Season[]>;
     updateSeason(season: Season, ctx?: any): Promise<number>;
@@ -79,10 +101,17 @@ export interface TeamRepository extends Repository<Team, string> {
     createTeam(team: Team, ctx?: any): Promise<number>;
 }
 
+export interface StandingsRepository extends Repository<Standings, string> {
+    getStandingsById(id: string): Promise<Standings[]>;
+    updateStandings(stangdings: Standings, ctx?: any): Promise<number>;
+}
+
 export interface SeasonService extends Service<Season, string, SeasonFilter> {
     createTeam(team: Team, ctx?: any): Promise<number>;
     getSeasonById(seasonId: string): Promise<Season[]>;
     updateSeason(season: Season, ctx?: any): Promise<number>;
+    getStandingsById(id: string): Promise<Standings[]>;
+    updateStandings(stangdings: Standings, ctx?: any): Promise<number>;
 }
 
 export const seasonModel: Attributes = {
@@ -100,13 +129,15 @@ export const seasonModel: Attributes = {
     rounds: {
         type: "array",
     },
-    stangdingsId: {
+    standingsId: {
+        column: "standingsid",
         type: "string",
     },
     teams: {
         type: "array",
     },
     tournamentId: {
+        column: "tournamentid",
         type: "string",
     },
     createdAt: { type: "datetime" },

@@ -158,3 +158,22 @@ create table seasons
     constraint seasons_pkey primary key (id)
 
 );
+
+
+create table users
+(
+    id character varying(40),
+    username character varying(40),
+    password character varying(120),
+    email character varying(40),
+    name character varying(40),
+    image character varying(360),
+    role integer,
+    lock boolean,
+    resetLink character varying(40),
+    otp character varying(40),
+    otpFG character varying(40),
+    activated boolean,
+    createdAt timestamp with time zone default now(),
+    constraint users_pkey primary key (id)
+);

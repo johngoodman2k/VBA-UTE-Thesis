@@ -22,7 +22,7 @@ export class SqlTournamentRepository
         return this.query<Tournament>(getTournamentById, [id]);
     }
 
-    updateTournament(tournament: Tournament, ctx: any): Promise<number> {
+    updateTournament(tournament: Tournament, ctx?: any): Promise<number> {
         return this.update(tournament, ctx);
     }
 

@@ -86,6 +86,9 @@ export class TournamentManager
     createSeason(season: Season, ctx?: any): Promise<number> {
         return this.seasonRepository.createSeason(season, ctx);
     }
+    getSeasonById(id: string): Promise<Season[]> {
+        return this.seasonRepository.getSeasonById(id);
+    }
 }
 export function useTournamentService(
     db: DB,

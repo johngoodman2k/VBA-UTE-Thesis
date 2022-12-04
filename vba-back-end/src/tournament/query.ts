@@ -11,7 +11,6 @@ import e from "express";
 
 export const getTournamentById = `select * from tournaments where id = $1`;
 
-export const getAllTeamsByTournamentId = `select * from teams where $1 = ANY(tournaments)`;
 export const getRoundByTournamentId = `select * from rounds where tournamentId = $1`;
 
 export function buildQuery(s: TournamentFilter): Statement {

@@ -1,16 +1,7 @@
 import { Controller, handleError, Log } from "express-ext";
 import e, { Request, Response } from "express";
 import { nanoid } from "nanoid";
-import {
-    Match,
-    Tournament,
-    TournamentFilter,
-    TournamentService,
-    Statistics,
-    Standings,
-    Team,
-    Season,
-} from "./tournament";
+import { Match, Tournament, TournamentFilter, TournamentService, Standings, Team, Season } from "./tournament";
 import { buildToInsertBatch } from "query-core";
 import {
     checkDuplicateMatch,
@@ -23,46 +14,33 @@ import {
     splitTheTeam,
 } from "./query";
 
-export class TournamentController extends Controller<
-    Tournament,
-    string,
-    TournamentFilter
-> {
+export class TournamentController extends Controller<Tournament, string, TournamentFilter> {
     constructor(log: Log, protected tournamentService: TournamentService) {
         super(log, tournamentService);
         this.GetGeneratedMatches = this.GetGeneratedMatches.bind(this);
         this.GetAllTournament = this.GetAllTournament.bind(this);
-        this.createSeasonAndAddToTournament =
-            this.createSeasonAndAddToTournament.bind(this);
+        this.createSeasonAndAddToTournament = this.createSeasonAndAddToTournament.bind(this);
 
         // this.createTournament = this.createTournament.bind(this);
         // this. = this.getTeamByTournament.bind(this);
     }
 
     async GetGeneratedMatches(req: Request, res: Response) {
-        const { tournament, seasons } = req.params;
+        const { tournamentId, seasonId } = req.params;
         //get object tournament theo id
-        const tournamentResult = await this.tournamentService.getTournamentById(
-            tournament
-        );
-
-        // console.log("a", tournamentResult);
-
-        if (!tournamentResult)
+        const tournamentResult = await this.tournamentService.getTournamentById(tournamentId);
+        if (!tournamentResult || tournamentResult.length === 0)
             return res.status(400).json({ err: "Failed to get tournament" });
 
-        if (tournamentResult.length === 0)
-            return res.status(200).json(tournamentResult);
-
-        const teams = await this.tournamentService.getTeamByTournament(
-            tournament
-        );
-
         // console.log("b", teams);
-
-        if (!teams) return res.status(400).json({ err: "Failed to get teams" });
-        console.log(teams);
-
+        const season = await this.tournamentService.getSeasonById(seasonId);
+        if (!season || season.length === 0) {
+            return res.status(400).json({ err: "Failed to get season" });
+        }
+        const teams = season[0].teams;
+        if (!teams) {
+            return res.status(400).json({ error: "Need more team in season to generate" });
+        }
         // const teams = tournamentResult[0].seasons[0].team
 
         let roundArray = [];
@@ -91,7 +69,7 @@ export class TournamentController extends Controller<
                 const newTeamGenerated = splitTheTeam(teamGenerated);
                 const matches = convertTeamsGeneratedToMatches(
                     newTeamGenerated,
-                    tournament,
+                    tournamentId,
                     roundId,
                     "roundrobin",
                     teamLength - indexRound
@@ -109,7 +87,7 @@ export class TournamentController extends Controller<
                         id: roundId,
                         matches: newMatches,
                         roundname: (teamLength - indexRound + 1).toString(),
-                        tournamentId: tournament,
+                        tournamentId: tournamentId,
                         createdAt: new Date(Date.now()),
                     },
                 ];
@@ -134,7 +112,7 @@ export class TournamentController extends Controller<
 
                         const matches = convertTeamsGeneratedToMatches(
                             newTeamGenerated,
-                            tournament,
+                            tournamentId,
                             roundId,
                             "roundrobin",
                             teamLength * 2 - indexReverse
@@ -150,12 +128,8 @@ export class TournamentController extends Controller<
                             {
                                 id: roundId,
                                 matches: newMatches,
-                                roundname: (
-                                    teamLength * 2 -
-                                    indexReverse +
-                                    1
-                                ).toString(),
-                                tournamentId: tournament,
+                                roundname: (teamLength * 2 - indexReverse + 1).toString(),
+                                tournamentId: tournamentId,
                                 createdAt: new Date(Date.now()),
                             },
                         ];
@@ -171,13 +145,7 @@ export class TournamentController extends Controller<
 
             // return res.status(200).json(newTeamGenerated);
 
-            const matches = convertTeamsGeneratedToMatches(
-                newTeamGenerated,
-                tournament,
-                roundId,
-                "elimination",
-                1
-            );
+            const matches = convertTeamsGeneratedToMatches(newTeamGenerated, tournamentId, roundId, "elimination", 1);
 
             const teamPlayWithGhostTeam = getTeamPlayWithGhostTeam(matches);
             const newMatches = checkGhostTeamAndRemove(matches);
@@ -190,7 +158,7 @@ export class TournamentController extends Controller<
                     id: roundId,
                     matches: newMatches,
                     roundname: `1/${newTeam.length}`,
-                    tournamentId: tournament,
+                    tournamentId: tournamentId,
                     createdAt: new Date(Date.now()),
                 },
             ];
@@ -205,26 +173,14 @@ export class TournamentController extends Controller<
 
                 for (let i = 0; i < remainingTeams - 1; i++) {
                     newTeam1.push({
-                        teamname:
-                            "W" +
-                            "#" +
-                            (i + 1) +
-                            " " +
-                            "1/" +
-                            remainingTeams * 2,
+                        teamname: "W" + "#" + (i + 1) + " " + "1/" + remainingTeams * 2,
                     });
                 }
                 if (remainingTeams === flag && teamPlayWithGhostTeam) {
                     newTeam1.push(teamPlayWithGhostTeam);
                 } else {
                     const lastTeam = {
-                        teamname:
-                            "W" +
-                            "#" +
-                            remainingTeams +
-                            " " +
-                            "1/" +
-                            remainingTeams * 2,
+                        teamname: "W" + "#" + remainingTeams + " " + "1/" + remainingTeams * 2,
                     };
                     newTeam1.push(lastTeam);
 
@@ -233,12 +189,10 @@ export class TournamentController extends Controller<
 
                 if (remainingTeams === 1) {
                     const bronzeMatchTeam1 = {
-                        teamname:
-                            "L" + "#" + 1 + " " + "1/" + remainingTeams * 2,
+                        teamname: "L" + "#" + 1 + " " + "1/" + remainingTeams * 2,
                     };
                     const bronzeMatchTeam2 = {
-                        teamname:
-                            "L" + "#" + 2 + " " + "1/" + remainingTeams * 2,
+                        teamname: "L" + "#" + 2 + " " + "1/" + remainingTeams * 2,
                     };
                     newTeam1.push(bronzeMatchTeam1, bronzeMatchTeam2);
                 }
@@ -247,7 +201,7 @@ export class TournamentController extends Controller<
 
                 const matches = convertTeamsGeneratedToMatches(
                     teamSplited,
-                    tournament,
+                    tournamentId,
                     roundId1,
                     "elimination",
                     round
@@ -261,7 +215,7 @@ export class TournamentController extends Controller<
                         id: roundId1,
                         matches: matches,
                         roundname: `1/${remainingTeams}`,
-                        tournamentId: tournament,
+                        tournamentId: tournamentId,
                         createdAt: new Date(Date.now()),
                     },
                 ];
@@ -273,32 +227,13 @@ export class TournamentController extends Controller<
         // return res.status(200).json(roundArray);
 
         // console.log("OK!");
-        const createMatches = await this.tournamentService.buildToInsertMatches(
-            matchesArray
-        );
+        const createMatches = await this.tournamentService.buildToInsertMatches(matchesArray);
 
-        if (!createMatches || createMatches === 0)
-            return res.status(400).json({ err: "Save matches failed" });
+        if (!createMatches || createMatches === 0) return res.status(400).json({ err: "Save matches failed" });
 
-        const createRound = await this.tournamentService.buildToInsertRound(
-            roundArray
-        );
+        const createRound = await this.tournamentService.buildToInsertRound(roundArray);
 
-        if (!createRound || createRound === 0)
-            return res.status(400).json({ err: "Save rounds failed" });
-
-        const standingsId = nanoid();
-        const seasonId = nanoid();
-
-        const standingsObj = new StandingsClass(
-            standingsId,
-            seasonId,
-            new Date(Date.now())
-        );
-
-        await this.tournamentService.createStandings(
-            standingsObj.getObjDefault()
-        );
+        if (!createRound || createRound === 0) return res.status(400).json({ err: "Save rounds failed" });
 
         return res.status(200).json({ message: "Generate succedded" });
     }
@@ -307,8 +242,7 @@ export class TournamentController extends Controller<
         const { _page, _limit } = req.query;
 
         const tournament = await this.tournamentService.getAllTournament();
-        if (!tournament)
-            return res.status(400).json({ err: "Failed to get tournament" });
+        if (!tournament) return res.status(400).json({ err: "Failed to get tournament" });
         if (_page && !_limit) {
             const limit = 10;
             const page = parseInt(_page.toString());
@@ -322,51 +256,29 @@ export class TournamentController extends Controller<
 
     async createSeasonAndAddToTournament(req: Request, res: Response) {
         const season = req.body as Season;
-        const tournament = await this.tournamentService.getTournamentById(
-            season.tournamentId
-        );
+        const tournament = await this.tournamentService.getTournamentById(season.tournamentId);
 
         //create season
         const seasonId = nanoid();
         season.id = seasonId;
-        await this.tournamentService.createSeason(season);
 
         //add season to tournament
+        if (!tournament[0].seasons) {
+            tournament[0].seasons = [];
+        }
         tournament[0].seasons.push(season);
-        await this.tournamentService.updateTournament(tournament[0]);
 
         //create standings
         const standingsId = nanoid();
         const standings = {} as Standings;
         standings.id = standingsId;
         standings.seasonId = seasonId;
+        season.standingsId = standings.id;
+
+        await this.tournamentService.createSeason(season);
         await this.tournamentService.createStandings(standings);
+        await this.tournamentService.updateTournament(tournament[0]);
 
-        return res.status(200).json(tournament);
-    }
-}
-
-class StandingsClass {
-    id: string;
-    seasonId: string;
-    createdAt: Date;
-    statistics: Statistics[];
-    // objDefault = {};
-
-    constructor(id: string, seasonId: string, createdAt: Date) {
-        this.id = id;
-        this.seasonId = seasonId;
-        this.createdAt = createdAt;
-        this.statistics = [];
-        this.getObjDefault = this.getObjDefault.bind(this);
-    }
-
-    getObjDefault(): Standings {
-        return {
-            id: this.id,
-            seasonId: this.seasonId,
-            statistics: this.statistics,
-            createdAt: this.createdAt,
-        };
+        return res.status(201).json(tournament);
     }
 }
