@@ -1,4 +1,5 @@
 import { Application } from "express";
+import { authenToken } from "./middlewares/verifyToken";
 import { Pool } from "pg";
 import { ApplicationContext } from "./context";
 export function routes(app: Application, ctx: ApplicationContext): void {
@@ -89,6 +90,12 @@ export function routes(app: Application, ctx: ApplicationContext): void {
     app.put("/authenticate/:id", ctx.user.update); //ok
     app.patch("/authenticate/:id", ctx.user.patch); //ok
     app.delete("/authenticate/:id", ctx.user.delete); //ok
-    app.post("/authenticate/signIn", ctx.user.signIn);
-    app.post("/authenticate/signUp", ctx.user.signUp);
+    app.post("/authenticate/signin", ctx.user.signIn); //ok
+    app.post("/authenticate/signup", ctx.user.signUp); //ok
+
+    app.post("/authenticate/checkotpsignup", ctx.user.checkOtpSignUp);
+    app.post("/authenticate/forgetPassword", ctx.user.forgetPassword);
+    app.post("/authenticate/resetpassword", ctx.user.resetPassword);
+    app.post("/authenticate/checkotpfg", ctx.user.checkOtpFG);
+    app.get("/authenticate/user", authenToken, ctx.user.userInfo);
 }

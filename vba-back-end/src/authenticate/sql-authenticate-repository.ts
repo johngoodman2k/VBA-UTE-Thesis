@@ -11,4 +11,7 @@ export class SqlUserRepository extends Repository<User, string> implements UserR
     createUser(user: User, ctx?: any): Promise<number> {
         return this.insert(user, ctx);
     }
+    updateUser(user: User, ctx?: any): Promise<number> {
+        return this.update(user, ctx);
+    }
 }

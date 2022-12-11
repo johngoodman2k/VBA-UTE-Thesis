@@ -17,7 +17,10 @@ export class UserManager extends Manager<User, string, UserFilter> implements Us
         return this.userRepository.findOne(field, fieldValue);
     }
     createUser(user: User, ctx?: any): Promise<number> {
-        return this.userRepository.createUser(user);
+        return this.userRepository.createUser(user, ctx);
+    }
+    updateUser(user: User, ctx?: any): Promise<number> {
+        return this.userRepository.updateUser(user, ctx);
     }
 }
 export function useUserService(db: DB): UserService {

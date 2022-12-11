@@ -1,69 +1,96 @@
-import React, { useState } from 'react';
-import classNames from 'classnames/bind';
-import styles from './tournamentManager.module.scss';
-import { ReactComponent as Plus } from '../../../assets/svg/plus-com.svg';
-import { AdminTeamCard } from '../Components/AdminTeamCard';
-import { AdminSeasonCard } from '../Components/AdminSeasonCard';
-import { AdminPlayerCard } from '../Components/AdminPlayerCard';
-import { CreateTournamentModal } from '../../../components/Modal/CreateTournamentModal';
+import React, { useState } from "react";
+import classNames from "classnames/bind";
+import styles from "./tournamentManager.module.scss";
+import { ReactComponent as Plus } from "../../../assets/svg/plus-com.svg";
+import { AdminTeamCard } from "../Components/AdminTeamCard";
+import { AdminSeasonCard } from "../Components/AdminSeasonCard";
+import { AdminPlayerCard } from "../Components/AdminPlayerCard";
+import { CreateTournamentModal } from "../../../components/Modal/CreateTournamentModal";
+import { vbaContext } from "../../../Services/services";
+import { Tournament } from "../../../Services/models";
 const cx = classNames.bind(styles);
 
+const tournamnetServices = vbaContext.getTournamentServices();
+
 export const TournamentManager = () => {
-	const [clicked, setClicked] = useState(false);
-	const handleCreate = () => {
-		setClicked(!clicked);
-	};
-	const handleCloseModal = () => {
-		setClicked(false);
-	};
-	return (
-		<>
-			<div className='border-b border-solid'>
-				<p
-					className='uppercase font-bold text-4xl  text-left p-4 mx-2 flex
-                 '>
-					tournament manager
-					<div className='ml-auto text-right hover:cursor-pointer'>
-						<Plus onClick={handleCreate} className='w-[48px] h-[48px]'></Plus>
-					</div>
-				</p>
-			</div>
-			<div className={clicked === true ? cx('__active') : cx('__inactive')}>
-				<CreateTournamentModal handleCloseModal={handleCloseModal}></CreateTournamentModal>
-			</div>
-			<div className='m-2 p-2 justify-between flex-1 block space-y-8 md:space-y-0 md:space-x-8 md:flex'>
-				<AdminTeamCard
-					type='tournament'
-					tournamentName='VBA'
-					tournamentPic='https://vba.vn/assets/img/svg/vba-logo.svg'
-					tournamentType='Round Robin'></AdminTeamCard>
+    const [clicked, setClicked] = useState(false);
+    const [listTournament, setListTournament] = useState<Tournament[]>([]);
+    const handleCreate = () => {
+        setClicked(!clicked);
+    };
+    const handleCloseModal = () => {
+        setClicked(false);
+    };
+    React.useMemo(async () => {
+        try {
+            const res = await tournamnetServices.getAllTournament();
+            setListTournament(res);
+            console.log(listTournament);
+        } catch (err) {
+            alert("Error get tournament");
+        }
+    }, []);
+    return (
+        <>
+            <div className="border-b border-solid">
+                <p
+                    className="uppercase font-bold text-4xl  text-left p-4 mx-2 flex
+                 "
+                >
+                    tournament manager
+                    <div className="ml-auto text-right hover:cursor-pointer">
+                        <Plus onClick={handleCreate} className="w-[48px] h-[48px]"></Plus>
+                    </div>
+                </p>
+            </div>
+            <div className={clicked === true ? cx("__active") : cx("__inactive")}>
+                <CreateTournamentModal handleCloseModal={handleCloseModal}></CreateTournamentModal>
+            </div>
+            <div className="m-2 p-2 justify-start flex-1 block space-y-8 md:space-y-0 md:space-x-8 md:flex">
+                {listTournament.map((tournament: Tournament, i: number) => (
+                    <AdminTeamCard
+                        type="tournament"
+                        tournamentName={tournament.name}
+                        tournamentPic="https://vba.vn/assets/img/svg/vba-logo.svg"
+                        tournamentType={
+                            tournament.type === "roundrobin"
+                                ? "Round Robin"
+                                : tournament.type === "eliminate"
+                                ? "Eliminate"
+                                : ""
+                        }
+                    ></AdminTeamCard>
+                ))}
 
-				<AdminTeamCard
-					type='team'
-					teamName='Boston Celtics'
-					teamLogo='https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg'
-					teamStadium='https://www.enr.com/ext/resources/Issues/NewEng_Issues/2020/11-Nov/16-Nov/Best-Projects/td-garden1.jpg'
-					teamColor='#007A33'
-					stadiumName='TD Garden'></AdminTeamCard>
-				<AdminTeamCard
-					type='tournament'
-					tournamentName='VBA'
-					tournamentPic='https://vba.vn/assets/img/svg/vba-logo.svg'
-					tournamentType='Round Robin'></AdminTeamCard>
+                {/* 
+                <AdminTeamCard
+                    type="team"
+                    teamName="Boston Celtics"
+                    teamLogo="https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg"
+                    teamStadium="https://www.enr.com/ext/resources/Issues/NewEng_Issues/2020/11-Nov/16-Nov/Best-Projects/td-garden1.jpg"
+                    teamColor="#007A33"
+                    stadiumName="TD Garden"
+                ></AdminTeamCard>
+                <AdminTeamCard
+                    type="tournament"
+                    tournamentName="VBA"
+                    tournamentPic="https://vba.vn/assets/img/svg/vba-logo.svg"
+                    tournamentType="Round Robin"
+                ></AdminTeamCard> */}
 
-				{/* <AdminTeamCard
+                {/* <AdminTeamCard
 					type='team'
 					teamName='Boston Celtics'
 					teamLogo='https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg'
 					teamStadium='https://www.enr.com/ext/resources/Issues/NewEng_Issues/2020/11-Nov/16-Nov/Best-Projects/td-garden1.jpg'
 					teamColor='#007A33'
 					stadiumName='TD Garden'></AdminTeamCard> */}
-				<AdminSeasonCard></AdminSeasonCard>
-			</div>
+                {/* <AdminSeasonCard></AdminSeasonCard> */}
+            </div>
 
-			<div className='m-2 p-2 justify-between flex-1 block space-y-8 md:space-y-0 md:space-x-8 md:flex'>
+            {/* <div className='m-2 p-2 justify-between flex-1 block space-y-8 md:space-y-0 md:space-x-8 md:flex'>
 				<AdminPlayerCard></AdminPlayerCard>
-			</div>
-		</>
-	);
+			</div> */}
+        </>
+    );
 };
