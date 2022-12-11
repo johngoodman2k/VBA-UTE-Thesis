@@ -3,7 +3,7 @@
 	box-sizing: border-box;
 	width: 100%;
 	height: 100vh;
-	background-image: url('https://images.hdqwalls.com/download/horror-pumpkins-halloween-4k-jf-1920x1080.jpg');
+	background-image: url('http://vba.vn/assets/img/thumbnail-social.png');
 	background-size: cover;
 	background-position-y: center;
 	display: flex;
@@ -18,47 +18,45 @@
 	width: 100%;
 	max-width: 500px;
 	border-radius: 20px;
-	&-heading {
-		font-size: 50px;
-		font-family: $f-3;
-		font-weight: 700;
-		text-align: center;
-		margin-bottom: 35px;
-		color: $second-color;
+}
+.signup-heading {
+	font-size: 50px;
+	font-family: Teko;
+	font-weight: 700;
+	text-align: center;
+	margin-bottom: 35px;
+	color: $third-color;
+}
+.signup-form {
+	align-items: center;
+}
+.signup-form-adjust {
+	width: 100%;
+}
+.signup-form-button {
+	padding-top: 10px;
+	margin-top: 10px;
+	text-align: center;
+	width: 100%;
+}
+.signup-form-already {
+	font-family: Teko;
+	position: relative;
+	& span {
+		margin-right: 10px;
 	}
-	&-form {
-		align-items: center;
-		&-adjust {
-			width: 100%;
-		}
-		&-button {
-			padding-top: 10px;
-			margin-top: 10px;
-			text-align: center;
-			width: 100%;
-		}
-		&-already {
-			font-family: $f-1;
-			position: relative;
-			& span {
-				margin-right: 10px;
-			}
-			& a {
-				position: absolute;
-				top: 30px;
-				left: 50%;
-				transform: translateX(-50%) !important;
-			}
-		}
-		&-back {
-			margin-top: 10px;
-		}
+	& a {
+		position: absolute;
+		top: 30px;
+		left: 50%;
+		transform: translateX(-50%) !important;
 	}
 }
 
 .adjust-1 {
 	margin: 20px;
-	font-family: $f-1;
+	font-family: Teko;
+
 	position: relative;
 	& a {
 		top: 50px;

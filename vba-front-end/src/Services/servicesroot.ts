@@ -1,7 +1,7 @@
-import { Match, MatchProcess, Player, Process, Team, Tournament } from './models';
+import { Match, MatchProcess, Player, Process, Result, Standings, Team, Tournament, User } from './models';
 
 export interface TournamentServicesRoot {
-	getTournamentById(id: string, globalHost?: string): Promise<Tournament>;
+	getTournamentById(id: string | undefined, globalHost?: string): Promise<Tournament>;
 }
 
 export interface MatchServicesRoot {
@@ -31,6 +31,11 @@ export interface ProcessServicesRoot {
 	getProcessById(id: string | undefined, globalHost?: string): Promise<Process[]>;
 }
 
-export interface StandingServicesRoot {
-	getStandingById(id: string | undefined, globalHost?: string): Promise<Process[]>;
+export interface StandingsServicesRoot {
+	getStandingsById(id: string | undefined, globalHost?: string): Promise<Standings>;
+}
+
+export interface AuthenticateServicesRoot {
+	signUpApi(user: User): Promise<Result<User>>;
+	signInApi(user: User): Promise<Result<User>>;
 }

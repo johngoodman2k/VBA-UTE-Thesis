@@ -1,4 +1,4 @@
-@import '/src/styles/Variables.scss';
+@import '/src/Styles/Variables.scss';
 .input-block {
 	margin: 10px 0 20px 0;
 }
@@ -29,6 +29,7 @@
 	font-family: $f-1;
 	transition: 0.25s ease;
 	font-size: 10px;
+	border: 4px;
 }
 .form-input:not(:placeholder-shown) + .form-label,
 .form-input:focus + .form-label {

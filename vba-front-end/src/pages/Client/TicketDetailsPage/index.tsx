@@ -5,6 +5,7 @@ import { ReactComponent as HomeLogo } from '../../../assets/images/home-com.svg'
 import { ReactComponent as PlaneLogo } from '../../../assets/images/plane-com.svg';
 import { ReactComponent as DownArrowLogo } from '../../../assets/images/downarrow-com.svg';
 import { NextGameBar } from '../TeamInfoPage/TeamInfoFixturesPage/NextGameBar';
+import { TicketBooking } from '../TicketPage/Components/TicketBooking';
 
 const cx = classNames.bind(styles);
 export const TicketDetailsPage = () => {
@@ -92,7 +93,7 @@ export const TicketDetailsPage = () => {
 								</div>
 							</div>
 							{/* seatmap */}
-							<div></div>
+							<TicketBooking></TicketBooking>
 						</div>
 
 						<div className='px-[15px]'>

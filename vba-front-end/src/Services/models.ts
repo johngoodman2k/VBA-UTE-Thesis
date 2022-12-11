@@ -104,6 +104,23 @@ export interface Team {
 	color: string;
 }
 
+export interface TeamStandings {
+	id: string;
+	teamName: string;
+	teamLogo: string;
+	stadiumname?: string;
+	stadiumpic?: string;
+	description?: string;
+	status?: string;
+	eliminated?: boolean;
+	players: Player[];
+	homeResult: string;
+	awayResult: string;
+
+	createdAt: Date;
+	color: string;
+}
+
 export interface Match {
 	id: string;
 	tournamentId: string;
@@ -163,15 +180,41 @@ export interface Standings {
 	createdAt: Date;
 }
 
-interface Statistics {
-	team: Team;
-	played: string;
-	won: string;
-	drawn: string;
-	lost: string;
-	goalsFor: string;
-	goalsAgainst: string;
-	goalsDifference: string;
-	points: string;
-	form: Match[];
+export interface Statistics {
+	team: TeamStandings;
+	played?: number;
+	won?: number;
+	drawn?: number;
+	lost?: number;
+	home?: Point;
+	road?: Point;
+	matchResult: number[];
+}
+
+interface Point {
+	won: number;
+	lost: number;
+}
+
+export interface User {
+	id?: string;
+	username: string;
+	password: string;
+	email?: string;
+	name?: string;
+	image?: string;
+	role?: number;
+	lock?: boolean;
+	resetLink?: string;
+	otp?: string;
+	otpFG?: string;
+	activated?: boolean;
+}
+
+export interface Result<T> {
+	status: number | string;
+	message?: string;
+	value?: T;
+	err?: string;
+	success?: string;
 }

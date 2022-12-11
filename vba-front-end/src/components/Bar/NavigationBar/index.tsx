@@ -1,20 +1,24 @@
 import React, { useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './navigationBar.module.scss';
+import { Link } from 'react-router-dom';
+import { Tournament } from '../../../Services/models';
 const cx = classNames.bind(styles);
 // type NavigationBarProps = {
 //   children: any;
 // };
 type NavigationBarProps = {
 	ref?: (e: any) => void;
+
+	tournament?: Tournament;
 };
-export const NavigationBar = (props: NavigationBarProps) => {
+export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 	const [clickedId, setClickedId] = useState('');
 
 	return (
 		<>
 			<header
-				ref={props.ref}
+				ref={ref}
 				className={`m-0 p-0 z-[110] relative w-full inline-block box-border align-middle ${cx('__wrapper')}`}>
 				<div className={cx('__block')}>
 					<div className='relavitve w-full h-full p-0 pl-[5%] pr-[5%] text-third-color'>
@@ -63,7 +67,9 @@ export const NavigationBar = (props: NavigationBarProps) => {
 														className={
 															clickedId === 'stats' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<span className={cx('__item__text')}>Standings</span>
+													<Link to={`/standings/${tournament?.seasons[0].standingsId}`}>
+														<span className={cx('__item__text')}>Standings</span>
+													</Link>
 												</span>
 											</a>
 										</li>
@@ -111,7 +117,9 @@ export const NavigationBar = (props: NavigationBarProps) => {
 														className={
 															clickedId === 'fixtures' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<span className={cx('__item__text')}>Fixtures</span>
+													<Link to={`/fixtures/${tournament?.seasons[0].id}`}>
+														<span className={cx('__item__text')}>Fixtures</span>
+													</Link>
 												</span>
 											</a>
 										</li>

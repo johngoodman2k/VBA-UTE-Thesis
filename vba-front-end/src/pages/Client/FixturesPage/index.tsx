@@ -10,6 +10,7 @@ import userEvent from '@testing-library/user-event';
 
 import { vbaContext } from '../../../Services/services';
 import { dateFormat, timeFormat } from '../../../utils/dateFormat';
+import { useParams } from 'react-router-dom';
 // import { getRoundApi } from "../Apis/getRoundApi.api";
 // import { TournamentHeading } from "../components/TournamentHeading";
 // import { UpcommingMatchesLong } from "../components/UpcommingMatchesLong";
@@ -17,17 +18,18 @@ import { dateFormat, timeFormat } from '../../../utils/dateFormat';
 // import { tournamentcontext } from "../Services/services";
 
 const cx = classNames.bind(styles);
-const VbaServices = vbaContext.getTournamentServices();
+const tournamentServices = vbaContext.getTournamentServices();
 
 export const FixturesPage = () => {
+	const params = useParams();
 	const [tournament, setTournament] = useState<Tournament>();
 	useEffect(() => {
 		(async () => {
-			const res = await VbaServices.getTournamentById('2');
-
+			const res = await tournamentServices.getTournamentById(params.id);
 			setTournament(res);
+			console.log('30', res);
 		})();
-	}, []);
+	}, [params.id]);
 	return (
 		<>
 			<ContentWrapper>
@@ -38,34 +40,22 @@ export const FixturesPage = () => {
 							return (
 								<>
 									<header>
-										<div className={`${cx('__main-fixturesHeader--week')}`}>
-											MatchWeek {x.roundname}
-										</div>
-										<div
-											className={`${cx('__main-fixturesHeader--competition')}`}>
+										<div className={`${cx('__main-fixturesHeader--week')}`}>MatchWeek {x.roundname}</div>
+										<div className={`${cx('__main-fixturesHeader--competition')}`}>
 											<img
-												className={`${cx(
-													'__main-fixturesHeader--competition---image'
-												)}`}
+												className={`${cx('__main-fixturesHeader--competition---image')}`}
 												src='https://upload.wikimedia.org/wikipedia/vi/thumb/f/f2/Premier_League_Logo.svg/1200px-Premier_League_Logo.svg.png'
 												alt=''
 											/>
 										</div>
-										<div
-											className={`${cx('__main-fixturesHeader--localtime')}`}>
+										<div className={`${cx('__main-fixturesHeader--localtime')}`}>
 											All times shown are your <strong>local time</strong>
 										</div>
 									</header>
 									<div className={`${cx('__main-matchListContainer')}`}>
 										<div className={`${cx('__main-matchListContainer--time')}`}>
-											<h3
-												className={`${cx(
-													'__main-matchListContainer--time---text'
-												)}`}>
-												{dateFormat(x.createdAt)}
-											</h3>
-											<ul
-												className={`${cx('__main-matchListContainer--list')}`}>
+											<h3 className={`${cx('__main-matchListContainer--time---text')}`}>{dateFormat(x.createdAt)}</h3>
+											<ul className={`${cx('__main-matchListContainer--list')}`}>
 												{x.matches.map((y: any) => {
 													return (
 														<UpcommingMatchLongBar
@@ -75,9 +65,7 @@ export const FixturesPage = () => {
 															team2Image={y.away.teamlogo}
 															team2Name={y.away.teamname}
 															time={timeFormat(y.matchDay).toString()}
-															stadium={
-																y.home.stadiumname
-															}></UpcommingMatchLongBar>
+															stadium={y.home.stadiumname}></UpcommingMatchLongBar>
 													);
 												})}
 											</ul>

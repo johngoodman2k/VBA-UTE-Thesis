@@ -1,0 +1,73 @@
+@import '/src/Styles/Variables.scss';
+.buttonTournament {
+	display: inline-block;
+	padding: 15px 30px;
+	background-color: transparent;
+	color: $third-color;
+	font-family: Teko;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	position: relative;
+	font-weight: 600;
+	text-transform: uppercase;
+	&-block {
+		margin: 0 10px;
+	}
+
+	& span {
+		position: absolute;
+		background-color: $third-color;
+		display: block;
+		transition: all 0.25s linear;
+	}
+	:nth-child(1) {
+		top: 0;
+		left: 0;
+		width: 0;
+		height: 2px;
+	}
+	:nth-child(2) {
+		top: 0;
+		right: 0;
+		width: 2px;
+		height: 0;
+		transition-delay: 0.25s;
+	}
+	:nth-child(3) {
+		bottom: 0;
+		right: 0;
+		width: 0;
+		height: 2px;
+		transition-delay: 0.5s;
+	}
+	:nth-child(4) {
+		bottom: 0;
+		left: 0;
+		width: 2px;
+		height: 0;
+		transition-delay: 0.75s;
+	}
+}
+
+.buttonTournament:hover span:nth-child(odd) {
+	width: 100%;
+}
+.buttonTournament:hover span:nth-child(even) {
+	height: 100%;
+}
+
+.buttonTournament::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 0;
+	background-color: black;
+	transition: width 0.25s linear;
+	z-index: -1;
+}
+.buttonTournament:hover::before {
+	width: 100%;
+}

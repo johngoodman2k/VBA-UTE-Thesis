@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './standing.module.scss';
 import { LilStanding } from '../../../components/LilStanding';
+import { StandingsServices } from '../../../Services';
+import { vbaContext } from '../../../Services/services';
+import { Standings, Statistics } from '../../../Services/models';
+import { useParams } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
+const standingsServices = vbaContext.getStandingsServices();
 const StandingPage = () => {
+	const params = useParams();
+	const [standings, setStandings] = useState<Standings>();
+	useEffect(() => {
+		(async () => {
+			const res = await standingsServices.getStandingsById(params.id);
+			setStandings(res);
+			console.log('standing', res);
+		})();
+	}, [params.id]);
 	return (
 		<>
 			<div className={`${cx('_background')}`}>
@@ -17,82 +31,92 @@ const StandingPage = () => {
 
 							<span className={`${cx('standings-rules--lost')}`}>L</span>
 						</div> */}
-						<table className='w-full text-center bg-white'>
-							<thead>
-								<tr>
-									<th scope='col' className={`${cx('standings-text-centre')}`}>
-										<div>Position</div>
-									</th>
-									<th scope='col' className={`${cx('standings-text-team')}`}>
-										Team
-									</th>
-									<th>
-										<div>Played</div>
-									</th>
-									<th>
-										<div>Won</div>
-									</th>
 
-									<th>
-										<div>Lost</div>
-									</th>
-									<th>
-										<div>Win%</div>
-									</th>
-									<th>
-										<div>Home</div>
-									</th>
-									<th>
-										<div>Road</div>
-									</th>
-									<th>
-										<div>Last 10</div>
-									</th>
-									<th>
-										<div>Form</div>
-									</th>
-								</tr>
-							</thead>
-							<tbody className={`${cx('standings-box-body')}`}>
-								<tr>
-									<td className={`${cx('standings-button__tooltip')}`}>
-										<span className={`${cx('standings-position__value text-adjust')}`}>1</span>
-										{/* <span
-										className={`${cx('standings-position__before')}`}></span> */}
-									</td>
-									<td scope='row' className=''>
-										<a>
-											<span>
-												<img
-													src='https://cdn.nba.com/logos/nba/1610612748/global/L/logo.svg'
-													className={`${cx('standings-team__pic', 'inline-block')}`}></img>
-											</span>
-											<span className={`${cx('standings-team__name')}`}>Miami Heat</span>
-										</a>
-									</td>
-									<td className={cx('text-adjust')}>10</td>
-									<td className={cx('text-adjust')}>10</td>
-									<td className={cx('text-adjust')}>10</td>
-									<td className={cx('text-adjust')}>100%</td>
-									<td className={cx('text-adjust')}>13-2</td>
-									<td className={cx('text-adjust')}>14-3</td>
-									<td className={cx('text-adjust')}>8-2</td>
+						<>
+							<table className='w-full text-center bg-white'>
+								<thead>
+									<tr>
+										<th scope='col' className={`${cx('standings-text-centre')}`}>
+											<div>Position</div>
+										</th>
+										<th scope='col' className={`${cx('standings-text-team')}`}>
+											Team
+										</th>
+										<th>
+											<div>Played</div>
+										</th>
+										<th>
+											<div>Won</div>
+										</th>
 
-									<td className={`${cx('standings-form')}`}>
-										<ul>
-											<li className={`${cx('standings-form__won')}`}>W</li>
-										</ul>
-									</td>
-								</tr>
-								<tr>
-									<td className={`${cx('standings-button_tooltip')}`}>
-										<span className={`${cx('standings-position__value')}`}>2</span>
-										{/* <span
-										className={`${cx('standings-position__before')}`}></span> */}
-									</td>
-								</tr>
-							</tbody>
-						</table>
+										<th>
+											<div>Lost</div>
+										</th>
+										<th>
+											<div>Win%</div>
+										</th>
+										<th>
+											<div>Home</div>
+										</th>
+										<th>
+											<div>Road</div>
+										</th>
+										<th>
+											<div>Last 10</div>
+										</th>
+										<th>
+											<div>Form</div>
+										</th>
+									</tr>
+								</thead>
+								<tbody className={`${cx('standings-box-body')}`}>
+									{standings?.statistics.map((x: Statistics) => {
+										return (
+											<>
+												<tr>
+													<td className={`${cx('standings-button__tooltip')}`}>
+														<span className={`${cx('standings-position__value text-adjust')}`}>1</span>
+														{/* <span
+									className={`${cx('standings-position__before')}`}></span> */}
+													</td>
+													<td scope='row' className=''>
+														<a>
+															<span>
+																<img
+																	src={x.team.teamLogo}
+																	className={`${cx('standings-team__pic', 'inline-block')}`}></img>
+															</span>
+															<span className={`${cx('standings-team__name')}`}>{x.team.teamName}</span>
+														</a>
+													</td>
+													<td className={cx('text-adjust')}>10</td>
+													<td className={cx('text-adjust')}>10</td>
+													<td className={cx('text-adjust')}>10</td>
+													<td className={cx('text-adjust')}>100%</td>
+													<td className={cx('text-adjust')}>13-2</td>
+													<td className={cx('text-adjust')}>14-3</td>
+													<td className={cx('text-adjust')}>8-2</td>
+
+													<td className={`${cx('standings-form')}`}>
+														<ul>
+															<li className={`${cx('standings-form__won')}`}>W</li>
+														</ul>
+													</td>
+												</tr>
+
+												{/* <tr>
+													<td className={`${cx('standings-button_tooltip')}`}>
+														<span className={`${cx('standings-position__value')}`}>2</span>
+														<span
+									className={`${cx('standings-position__before')}`}></span>
+													</td>
+												</tr> */}
+											</>
+										);
+									})}
+								</tbody>
+							</table>
+						</>
 					</div>
 
 					<div className={`${cx('_rules')}`}>

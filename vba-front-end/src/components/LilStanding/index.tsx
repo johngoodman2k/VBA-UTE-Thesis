@@ -1,11 +1,16 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './lilStanding.module.scss';
+import { Standings, Statistics } from '../../Services/models';
+
+type LilStandingTypes = {
+	standings?: Standings;
+};
 
 const cx = classNames.bind(styles);
 const test = [{ won: 9, lost: 15 }];
 
-export const LilStanding = () => {
+export const LilStanding = ({ standings }: LilStandingTypes) => {
 	const checkLastTen = (x: number, y: number) => {
 		const minus = x - y;
 		console.log('25', minus);
@@ -45,58 +50,34 @@ export const LilStanding = () => {
 									</tr>
 								</thead>
 								<tbody className={`${cx('_tableBody')}`}>
-									<tr className='text-left'>
-										<td className='p-2'>
-											<a href='' className={`${cx('_teamBar')}`}>
-												<span className={`${cx('_teamRank')}`}>1</span>
-												<div className={`${cx('_teamLogoBlock')}`}>
-													<div className='min-w-full  relative'>
-														<img
-															src='https://cdn.nba.com/logos/nba/1610612738/global/L/logo.svg'
-															className='block min-w-full'></img>
-													</div>
-												</div>
-												<span>BOS</span>
-											</a>
-										</td>
-										<td>13</td>
-										<td>3</td>
-										<td>
-											{test.map((x: any) => {
-												return (
-													<div className={`${cx('_lastTen', checkLastTen(x.won, x.lost), 'ml-auto')}`}>
-														{x.won} - {x.lost}
-													</div>
-												);
-											})}
-										</td>
-									</tr>
-									<tr className='text-left'>
-										<td className='p-2'>
-											<a href='' className={`${cx('_teamBar')}`}>
-												<span className={`${cx('_teamRank')}`}>1</span>
-												<div className={`${cx('_teamLogoBlock')}`}>
-													<div className='min-w-full  relative'>
-														<img
-															src='https://cdn.nba.com/logos/nba/1610612738/global/L/logo.svg'
-															className='block min-w-full'></img>
-													</div>
-												</div>
-												<span>BOS</span>
-											</a>
-										</td>
-										<td>13</td>
-										<td>3</td>
-										<td>
-											{test.map((x: any) => {
-												return (
-													<div className={`${cx('_lastTen', checkLastTen(x.won, x.lost), 'ml-auto')}`}>
-														{x.won} - {x.lost}
-													</div>
-												);
-											})}
-										</td>
-									</tr>
+									{standings?.statistics?.map((x: Statistics) => {
+										return (
+											<tr className='text-left'>
+												<td className='p-2'>
+													<a href='' className={`${cx('_teamBar')}`}>
+														<span className={`${cx('_teamRank')}`}>1</span>
+														<div className={`${cx('_teamLogoBlock')}`}>
+															<div className='min-w-full  relative'>
+																<img src={x.team.teamLogo} className='block min-w-full'></img>
+															</div>
+														</div>
+														<span>{x.team.teamName}</span>
+													</a>
+												</td>
+												<td>13</td>
+												<td>3</td>
+												<td>
+													{test.map((x: any) => {
+														return (
+															<div className={`${cx('_lastTen', checkLastTen(x.won, x.lost), 'ml-auto')}`}>
+																{x.won} - {x.lost}
+															</div>
+														);
+													})}
+												</td>
+											</tr>
+										);
+									})}
 								</tbody>
 							</table>
 						</div>
