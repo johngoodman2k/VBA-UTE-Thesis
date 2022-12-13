@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './forgotPassWord.module.scss';
 import { Input } from '../Components/Input';
+import ButtonTournament from '../Components/ButtonTournament';
 const cx = classNames.bind(styles);
 export const ForgotPassword = () => {
 	const navigate = useNavigate();
@@ -28,13 +29,12 @@ export const ForgotPassword = () => {
 				<div className={cx('forgotpassword')}>
 					<div className={cx('forgotpassword-heading')}>Forgot Password</div>
 					<div className={cx('forgotpassword-form')}>
-						<form
-							onSubmit={() => {}}
-							className={cx('forgotpassword-form-adjust')}>
+						<form onSubmit={() => {}} className={cx('forgotpassword-form-adjust')}>
 							<Input type='text' name='Username'></Input>
 							<Input type='text' name='Email'></Input>
 							<div className={cx('forgotpassword-form-button')}>
 								{/* <ButtonHipHop name='Go !'></ButtonHipHop> */}
+								<ButtonTournament name='Go !' type='submit'></ButtonTournament>
 								<p className={cx('forgotpassword-form-already')}>
 									<span>Didn't have an account ?</span>
 									<Link to='/signup'>Sign up now</Link>

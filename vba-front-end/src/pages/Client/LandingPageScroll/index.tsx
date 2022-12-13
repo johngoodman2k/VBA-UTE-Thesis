@@ -50,12 +50,11 @@ export const LandingPageScroll = () => {
 		(async () => {
 			const res: any = await teamServices.getAllTeams();
 			const res1 = await tournamentServices.getTournamentById('09NmnaUrGxa5RtAhqlaZ1');
-			const res2 = await standingsServices.getStandingsById(res1?.seasons[res1.seasons.length - 1].standingsId);
-			console.log('55', res1);
-
-			console.log('56', res2);
-			setTournament(res1);
-			setStandings(res2);
+			if (res1 && res1.seasons) {
+				const res2 = await standingsServices.getStandingsById(res1?.seasons[res1.seasons.length - 1].standingsId);
+				setTournament(res1);
+				setStandings(res2);
+			}
 		})();
 	}, []);
 	console.log(tournament);

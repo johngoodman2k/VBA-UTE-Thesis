@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { Link, useNavigate } from 'react-router-dom';
-import classNames from "classnames/bind";
-import styles from "./otp.module.scss";
+import classNames from 'classnames/bind';
+import styles from './otp.module.scss';
 import { Input } from '../Components/Input';
+import ButtonTournament from '../Components/ButtonTournament';
 const cx = classNames.bind(styles);
 
 export const OTP = () => {
@@ -26,18 +27,16 @@ export const OTP = () => {
 		<>
 			<div className={cx('otp-block')}>
 				<div className={cx('otp')}>
-					<div className={cx('otp-heading')}>Sign in</div>
+					<div className={cx('otp-heading')}>Sign up</div>
 					<div className={cx('otp-form')}>
-						<form onSubmit={()=>{}} className={cx('otp-form-adjust')}>
+						<form onSubmit={() => {}} className={cx('otp-form-adjust')}>
 							<Input name='OTP' type={''}></Input>
 
 							<div className={cx('otp-form-button')}>
-								{/* <ButtonHipHop name='Go !'></ButtonHipHop> */}
+								<ButtonTournament type='submit' name='Go!'></ButtonTournament>
 								<p className={cx('otp-form-already')}>
 									<span>Verify passcode has been sent to your email</span>
-									<Link to='/https://mail.google.com/mail/u/0/'>
-										Check now !
-									</Link>
+									<Link to='/https://mail.google.com/mail/u/0/'>Check now !</Link>
 								</p>
 								<p className={cx('adjust-1')}>
 									<Link to='/'>Back to Town</Link>

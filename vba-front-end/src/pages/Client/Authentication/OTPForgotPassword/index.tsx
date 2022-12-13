@@ -3,9 +3,10 @@ import React from 'react';
 // import './style.scss';
 // import ButtonHipHop from '../../../Components/ButtonHipHop';
 import { Link, useNavigate } from 'react-router-dom';
-import classNames from "classnames/bind";
-import styles from "./otpForgotPassword.module.scss";
+import classNames from 'classnames/bind';
+import styles from './otpForgotPassWord.module.scss';
 import { Input } from '../Components/Input';
+import ButtonTournament from '../Components/ButtonTournament';
 const cx = classNames.bind(styles);
 // import toastNotify from '../../../Components/Toast';
 // import { otpForgotPasswordApi } from '../../../Apis/auth.api';
@@ -34,18 +35,15 @@ export const OTPForgotPassword = () => {
 				<div className={cx('otpforgotpassword')}>
 					<div className={cx('otpforgotpassword-heading')}>Forgot Password</div>
 					<div className={cx('otpforgotpassword-form')}>
-						<form
-							onSubmit={()=>{}}
-							className={cx('otpforgotpassword-form-adjust')}>
+						<form onSubmit={() => {}} className={cx('otpforgotpassword-form-adjust')}>
 							<Input name='OTP' type={''}></Input>
 
 							<div className={cx('otpforgotpassword-form-button')}>
 								{/* <ButtonHipHop name='Go !'></ButtonHipHop> */}
+								<ButtonTournament name='Go !' type='submit'></ButtonTournament>
 								<p className={cx('otpforgotpassword-form-already')}>
 									<span>Verify passcode has been sent to your email</span>
-									<Link to='/https://mail.google.com/mail/u/0/'>
-										Check now !
-									</Link>
+									<Link to='/https://mail.google.com/mail/u/0/'>Check now !</Link>
 								</p>
 								<p className={cx('adjust-1')}>
 									<Link to='/'>Back to Town</Link>

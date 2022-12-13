@@ -67,7 +67,10 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 														className={
 															clickedId === 'stats' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<Link to={`/standings/${tournament?.seasons[0].standingsId}`}>
+													<Link
+														to={`/standings/${
+															tournament && tournament.seasons ? tournament.seasons[0].standingsId : ''
+														}`}>
 														<span className={cx('__item__text')}>Standings</span>
 													</Link>
 												</span>
@@ -117,7 +120,7 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 														className={
 															clickedId === 'fixtures' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<Link to={`/fixtures/${tournament?.seasons[0].id}`}>
+													<Link to={`/fixtures/${tournament && tournament.seasons ? tournament?.seasons[0].id : ' '}`}>
 														<span className={cx('__item__text')}>Fixtures</span>
 													</Link>
 												</span>

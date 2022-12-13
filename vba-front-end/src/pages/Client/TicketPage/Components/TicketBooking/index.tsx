@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import styles from './booking.module.scss';
+
+import { type } from 'os';
 
 const cx = classNames.bind(styles);
 export const TicketBooking = () => {
 	return (
 		<>
 			<div className={cx('movie-container')}>
-				<label> Select a something:</label>
+				<label> Select something:</label>
 				<select id='movie'>
 					<option value='220'>Khang dam sau</option>
 					<option value='320'>duc cop </option>

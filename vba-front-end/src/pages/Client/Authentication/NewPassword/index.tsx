@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import classNames from "classnames/bind";
-import styles from "./newPassWord.module.scss";
+import classNames from 'classnames/bind';
+import styles from './newPassWord.module.scss';
 import { Input } from '../Components/Input';
+import ButtonTournament from '../Components/ButtonTournament';
 const cx = classNames.bind(styles);
 export const NewPassword = () => {
 	// const { otp } = useParams();
@@ -34,11 +35,11 @@ export const NewPassword = () => {
 				<div className={cx('newpassword')}>
 					<div className={cx('newpassword-heading')}>New Password</div>
 					<div className={cx('newpassword-form')}>
-						<form onSubmit={()=>{}} className={cx('newpassword-form-adjust')}>
+						<form onSubmit={() => {}} className={cx('newpassword-form-adjust')}>
 							<Input name='NewPassword' type={''}></Input>
 							<Input name='ConfirmPassword' type={''}></Input>
 							<div className={cx('newpassword-form-button')}>
-								{/* <ButtonHipHop name='Go !'></ButtonHipHop> */}
+								<ButtonTournament type='submit' name='Go !'></ButtonTournament>
 								<p className={cx('newpassword-form-already')}>
 									<span>Didn't have an account ?</span>
 									<Link to='/signup'>Sign up</Link>
