@@ -10,7 +10,11 @@ import { TeamManager } from '../TeamManager';
 import { PlayerManager } from '../PlayerManager';
 const cx = classNames.bind(styles);
 
-export const AdminHomePage = () => {
+type AdminHomePageProps = {
+	manager: 'tournaments' | 'seasons' | 'teams' | 'players';
+};
+
+export const AdminHomePage = ({ manager }: AdminHomePageProps) => {
 	const [clicked, setClicked] = useState(false);
 
 	const handleHamburger = () => {
@@ -41,10 +45,15 @@ export const AdminHomePage = () => {
 				<AdminSideBar visible={clicked}></AdminSideBar>
 
 				<section className='my-4 w-full  m-auto p-2'>
-					<TournamentManager />
-					{/* <SeasonManager></SeasonManager> */}
-					{/* <TeamManager></TeamManager> */}
-					{/* <PlayerManager></PlayerManager> */}
+					{manager === 'tournaments' ? (
+						<TournamentManager />
+					) : manager === 'seasons' ? (
+						<SeasonManager></SeasonManager>
+					) : manager === 'teams' ? (
+						<TeamManager></TeamManager>
+					) : (
+						<PlayerManager></PlayerManager>
+					)}
 				</section>
 			</div>
 		</div>

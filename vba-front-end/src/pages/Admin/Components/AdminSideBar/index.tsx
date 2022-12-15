@@ -17,11 +17,11 @@ export const AdminSideBar = (props: AdminSideBarProps) => {
 					</a>
 				</div>
 			</div>
-			<div>
-				<SidebarButton></SidebarButton>
-				<SidebarButton></SidebarButton>
-				<SidebarButton></SidebarButton>
-				<SidebarButton></SidebarButton>
+			<div className='w-full px-8'>
+				<SidebarButton title='Tournaments' to='tournaments'></SidebarButton>
+				<SidebarButton title='Seasons' to='seasons'></SidebarButton>
+				<SidebarButton title='Teams' to='teams'></SidebarButton>
+				<SidebarButton title='Players' to='players'></SidebarButton>
 			</div>
 		</section>
 	);

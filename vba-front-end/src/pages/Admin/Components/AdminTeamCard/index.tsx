@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './adminTeamCard.module.scss';
+import { ReactComponent as BasketballIcon } from '../../../../assets/svg/basketball.svg';
+import { CustomSelectBar } from '../CustomSelectBar';
+import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 type AdminTeamCardProps = {
@@ -13,13 +16,17 @@ type AdminTeamCardProps = {
 	tournamentPic?: string;
 	tournamentName?: string;
 	tournamentType?: string;
+	tournamentId?: string;
 };
 
 export const AdminTeamCard = (props: AdminTeamCardProps) => {
 	return (
 		<div className='w-1/4'>
 			{props.type === 'tournament' ? (
-				<a className={`${cx('team__card-box')}`}>
+				<Link className={`${cx('team__card-box')}`} to={`${props.tournamentId}`}>
+					<div className='absolute z-20 right-8 top-8	'>
+						<CustomSelectBar addNext='Season'></CustomSelectBar>
+					</div>
 					<div className={`${cx('team__card-image')}`}>
 						<span>
 							<img
@@ -50,7 +57,7 @@ export const AdminTeamCard = (props: AdminTeamCardProps) => {
 							</span>
 						</div>
 					</div>
-				</a>
+				</Link>
 			) : props.type === 'team' ? (
 				<a className={`${cx('team__card-box')}`}>
 					<div className={`${cx('team__card-image')}`}>

@@ -1,4 +1,4 @@
-import { Match, MatchProcess, Player, Process, Result, Standings, Team, Tournament, User } from './models';
+import { Match, MatchProcess, Player, Process, Result, Season, Standings, Team, Tournament, User } from './models';
 
 export interface TournamentServicesRoot {
 	getTournamentById(id: string | undefined, globalHost?: string): Promise<Tournament>;
@@ -40,4 +40,9 @@ export interface StandingsServicesRoot {
 export interface AuthenticateServicesRoot {
 	signUpApi(user: User): Promise<Result<User>>;
 	signInApi(user: User): Promise<Result<User>>;
+}
+export interface SeasonServicesRoot {
+	getAllSeason(): Promise<Season[]>;
+	getSeasonById(id: string): Promise<Season>;
+	getSeasonByTournamentId(tournamentId: string): Promise<Season[]>;
 }

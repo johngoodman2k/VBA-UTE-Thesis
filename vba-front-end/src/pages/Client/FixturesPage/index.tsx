@@ -38,6 +38,7 @@ export const FixturesPage = () => {
 					<div className={`${cx('__main-fixturesHeader')}`}>
 						{tournament &&
 							tournament.seasons &&
+							tournament.seasons[0].rounds &&
 							tournament?.seasons[0].rounds.map((x: any, i: number) => {
 								return (
 									<>
@@ -67,7 +68,8 @@ export const FixturesPage = () => {
 																team2Image={y.away.teamlogo}
 																team2Name={y.away.teamname}
 																time={timeFormat(y.matchDay).toString()}
-																stadium={y.home.stadiumname}></UpcommingMatchLongBar>
+																stadium={y.home.stadiumname}
+															></UpcommingMatchLongBar>
 														);
 													})}
 												</ul>

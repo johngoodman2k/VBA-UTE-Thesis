@@ -50,7 +50,13 @@ function App() {
 					<Route path='/news' element={<News></News>} />
 					<Route path='/standings/:id' element={<StandingPage></StandingPage>} />
 
-					<Route path='/admin' element={<AdminHomePage></AdminHomePage>} />
+					<Route path='/admin'>
+						<Route path='tournaments' element={<AdminHomePage manager='tournaments'></AdminHomePage>} />
+						<Route path='tournaments/:id' element={<AdminHomePage manager='seasons'></AdminHomePage>} />
+						<Route path='seasons' element={<AdminHomePage manager='seasons'></AdminHomePage>} />
+						<Route path='teams' element={<AdminHomePage manager='teams'></AdminHomePage>} />
+						<Route path='players' element={<AdminHomePage manager='players'></AdminHomePage>} />
+					</Route>
 
 					<Route path='/ticketpage' element={<TicketPage></TicketPage>} />
 					<Route path='/ticketdetailspage' element={<TicketDetailsPage></TicketDetailsPage>} />
