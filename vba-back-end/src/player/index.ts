@@ -30,6 +30,10 @@ export class PlayerManager
     updatePlayer(id:string,player:Player):Promise<number>{
         return this.playerrepository.updatePlayer(id,player);
     }
+    getAllPlayer():Promise<Player[]>{
+        return this.playerrepository.getAllPlayer();
+    }
+
 }
 export function usePlayerService(db: DB): PlayerService {
     const builder = new SearchBuilder<Player, PlayerFilter>(

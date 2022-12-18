@@ -27,12 +27,16 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 
 	app.post('/players/search', ctx.player.search); //xem xet
 	app.get('/players/search', ctx.player.search); //used
+	app.get('/players/getall', ctx.player.getAllPlayer); //used
+
 	app.get('/players/:id', ctx.player.load); //ok
 	app.post('/players', ctx.player.create); //ok
 	app.put('/players/:id',upload.single("image"),uploadFile, ctx.player.update); //ok
 	app.patch('/players/:id', ctx.player.patch); //ok
 	app.delete('/players/:id', ctx.player.delete); //ok
 	app.get('/players/getplayersbyteamid/:teamId', ctx.player.getPlayersByTeamId); //ok
+
+	
 
 	app.post('/matches/search', ctx.match.search); //xem xet
 	app.get('/matches/search', ctx.match.search); // used

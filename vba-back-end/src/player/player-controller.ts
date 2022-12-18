@@ -10,6 +10,9 @@ export class PlayerController extends Controller<Player, string, PlayerFilter> {
     super(log, playerService);
     this.getPlayersByTeamId = this.getPlayersByTeamId.bind(this);
     this.update = this.update.bind(this);
+    this.getAllPlayer = this.getAllPlayer.bind(this);
+
+    
   }
 
   async getPlayersByTeamId(req: Request, res: Response) {
@@ -38,5 +41,11 @@ export class PlayerController extends Controller<Player, string, PlayerFilter> {
     if(saveUrl) deleteFile(saveUrl)
     return res.status(200).json(updatePlayer)
     
+  }
+
+  async getAllPlayer(req:Request,res:Response){
+    const players = await this.playerService.getAllPlayer()
+    if(!players) return res.status(404).json({message: "No players found"})
+    return res.status(200).json(players)
   }
 }

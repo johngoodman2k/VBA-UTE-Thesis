@@ -135,7 +135,7 @@ export class PlayerServices implements PlayerServicesRoot {
 		return this.httpRequest.get<Player>(url);
 	}
 	getAllPlayers(): Promise<Player[]>{
-		const url = `${this.url}/search`;
+		const url = `${this.url}/getall`;
 		return this.httpRequest.get<Player[]>(url);
 	}
 	updatePlayer(id:string,player:Player): Promise<Number>{

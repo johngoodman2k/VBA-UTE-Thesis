@@ -6,19 +6,24 @@ import { AdminTeamCard } from '../Components/AdminTeamCard';
 import { AdminSeasonCard } from '../Components/AdminSeasonCard';
 import { AdminPlayerCard } from '../Components/AdminPlayerCard';
 import { CreateTeamModal } from '../../../components/Modal/CreateTeamModal';
-import { Player, Team } from '../../../Services/models';
+import { Player, Season, Team } from '../../../Services/models';
 import { NoData } from '../Components/NoData';
 import { useParams } from 'react-router-dom';
 import { vbaContext } from '../../../Services/services';
 import toastNotify from '../../../utils/toast';
+import { SeasonServices } from '../../../Services';
 const cx = classNames.bind(styles);
 
 const teamServices = vbaContext.getTeamServices()
+const seasonServices = vbaContext.getSeasonServices()
+
+
 export const TeamManager = () => {
 	const params = useParams();
 	const [listTeam,setListTeam] = useState<Team[]>([])
 	const [clicked, setClicked] = useState(false);
 	const [reload,setReload] =useState(false);
+	const [season,setSeason] = useState<Season>()
 	const handleCreate = () => {
 		setClicked(!clicked);
 	};
@@ -29,14 +34,18 @@ export const TeamManager = () => {
 	useEffect(()=>{
 		(async () => {
 		try {
-			let res: Team[] = [];
+			let res: any;
+			let res1: Season
 			if (params && params.id) {
 				res = await teamServices.getTeamsBySeasonId(params.id);
-				console.log(res)
+				res1 = await seasonServices.getSeasonById(params.id)
+				setSeason(res1);
+				setListTeam(res);
 			} else {
 				res = await teamServices.getAllTeams();
+				setListTeam(res.list);
+
 			}
-			setListTeam(res);
 
 			console.log(listTeam);
 		} catch (err) {
@@ -50,7 +59,7 @@ export const TeamManager = () => {
 			<div className='border-b border-solid'>
 				<p className='uppercase font-bold text-4xl  text-left p-4 mx-2 flex flex-col'>
 
-					{params.id && <div className='block'>Season: {params.id}</div>}
+					{params.id && <div className='block'>Season: {season ? season.name : ""}</div>}
 
 					<div className='ml-6 block'>Team manager</div>
 					<div className='ml-auto text-right hover:cursor-pointer'>

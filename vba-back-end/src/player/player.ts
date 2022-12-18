@@ -32,11 +32,13 @@ export interface PlayerFilter extends Filter{
 export interface PlayerRepository extends Repository<Player, string> {
     getPlayersByTeamId(teamId: string): Promise<Player[]>;
     updatePlayer(id:string,player:Player):Promise<number>;
-    }
+    getAllPlayer():Promise<Player[]>;
+}
 export interface PlayerService extends Service<Player, string, PlayerFilter> {
     getPlayersByTeamId(teamId: string): Promise<Player[]>;
     updatePlayer(id:string,player:Player):Promise<number>;
-    }
+    getAllPlayer():Promise<Player[]>;
+}
 export const playerModel: Attributes = {
     id: {
         key: true,

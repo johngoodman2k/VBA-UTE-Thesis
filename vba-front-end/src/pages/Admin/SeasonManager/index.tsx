@@ -8,19 +8,21 @@ import { AdminPlayerCard } from '../Components/AdminPlayerCard';
 
 import { CreateSeasonModal } from '../../../components/Modal/CreateSeasonModal';
 import { vbaContext } from '../../../Services/services';
-import { Season } from '../../../Services/models';
+import { Season, Tournament } from '../../../Services/models';
 import toastNotify from '../../../utils/toast';
 import { NoData } from '../Components/NoData';
 import { useParams } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 const seasonServices = vbaContext.getSeasonServices();
+const tournamentServices = vbaContext.getTournamentServices();
 
 export const SeasonManager = () => {
 	const params = useParams();
 	const [listSeason, setListSeason] = useState<Season[]>([]);
 	const [clicked, setClicked] = useState(false);
 	const [reload,setReload] = useState(false);
+	const [tournament,setTournament] = useState<Tournament>()
 	const handleCreate = () => {
 		setClicked(true);
 	};
@@ -30,14 +32,19 @@ export const SeasonManager = () => {
 	useEffect(()=>{
 		(async () => {
 		try {
-			let res: Season[] = [];
+			let res: any;
+			let res1: Tournament;
+
 			if (params && params.id) {
 				res = await seasonServices.getSeasonByTournamentId(params.id);
-				console.log(res)
+				res1 = await tournamentServices.getTournamentById(params.id);
+				setTournament(res1)
+				setListSeason(res);
+
 			} else {
 				res = await seasonServices.getAllSeason();
+				setListSeason(res.list);
 			}
-			setListSeason(res);
 
 			console.log(listSeason);
 		} catch (err) {
@@ -50,7 +57,7 @@ export const SeasonManager = () => {
 		<>
 			<div className='border-b border-solid'>
 				<p className='uppercase font-bold text-4xl  text-left p-4 mx-2 flex flex-col'>
-					{params.id && <div className='block'>Tournament: {params.id}</div>}
+					{params.id && <div className='block'>Tournament: {tournament ? tournament.name :""}</div>}
 
 					<div className='ml-6 block'>Season manager</div>
 					<div className='ml-auto text-right hover:cursor-pointer'>

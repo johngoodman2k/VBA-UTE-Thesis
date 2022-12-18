@@ -176,6 +176,7 @@ export interface Player {
 	shirtnumber?: number;
     createdat?: Date;
 
+	teamlogo?:string;
 }
 
 export interface Standings {

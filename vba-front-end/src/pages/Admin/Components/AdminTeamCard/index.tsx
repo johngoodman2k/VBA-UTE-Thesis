@@ -105,18 +105,18 @@ export const AdminTeamCard = (props: AdminTeamCardProps) => {
 					</div>
 					<div className={`${cx('team__card-image')}`}>
 						<span>
-							<img className={`${cx('team__card-image--adjust')}`} src={props.team.stadiumpic as string ?? "https://vba.vn/assets/img/svg/vba-logo.svg"} alt='' />
+							<img className={`${cx('team__card-image--adjust')}`} src={props.team.stadiumpic as string ??  "https://vba.vn/assets/img/svg/vba-logo.svg"} alt='' />
 						</span>
 					</div>
 					<div className={`${cx('team__card-image--badge')}`}>
 						<span className={`${cx('team__card-image--badge---container')}`}>
-							<img className={`${cx('team__card-image--badge---adjust')}`} src={props.team.teamlogo as string ?? "https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg"  } alt='' />
+							<img className={`${cx('team__card-image--badge---adjust')}`} src={props.team.teamlogo as string ?? props.team.teamLogo as string?? "https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg"  } alt='' />
 						</span>
 					</div>
 					<div style={{ backgroundColor: `${props.team.color}` }} className={`${cx('team__card-info--box')}`}>
 						<div className=''>
-							<h4 className={`${cx('team__card-info--box---adjust')}`}>{props.team.teamname}</h4>
-							<div className={`${cx('team__card-info--box---stadiumname')}`}>{props.team.stadiumname}</div>
+							<h4 className={`${cx('team__card-info--box---adjust')}`}>{props.team.teamname ?? props.team.teamName??""}</h4>
+							<div className={`${cx('team__card-info--box---stadiumname')}`}>{props.team.stadiumname} </div>
 						</div>
 						<Link to={`../teams/${props.team.id}`} className={`${cx('team__card-info--box---button')}`}>
 							<span className={`${cx('team__card-info--box---button----text', '!text-white')}`}>

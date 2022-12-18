@@ -32,7 +32,7 @@ export const AdminPlayerCard = ({reload,setReload,player,teamImage}:AdminPlayerC
 				{player ? player.shirtNumber??player.shirtnumber: ""}
 			</p>
 			<a className={`${cx('_logo')}`}>
-				<img src={player ? teamImage as string:'https://cdn.nba.com/logos/nba/1610612755/primary/L/logo.svg'} alt='' />
+				<img src={player ? teamImage as string ?? player.teamlogo:'https://cdn.nba.com/logos/nba/1610612755/primary/L/logo.svg'} alt='' />
 			</a>
 			<Link to={`/player/${player?.id??""}`} className={`${cx('_playerInfo')}`}> 
 				<p className={`${cx('font-extrabold text-left !leading-5 text-2xl !ml-0 mb-1', '_name')}`}>

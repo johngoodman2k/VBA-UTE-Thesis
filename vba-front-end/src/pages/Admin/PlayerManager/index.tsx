@@ -31,17 +31,20 @@ export const PlayerManager = () => {
 	useEffect(()=>{
 		(async () => {
 		try {
-			let res: Player[] = [];
+			let res: any;
 			let res1: Team
 			if (params && params.id) {
 				res = await playerServices.getPlayersByTeamId(params.id);
 				res1 = await teamServices.getTeamById(params.id)
 				setTeam(res1)
+				setListPlayer(res);
+
 			} else {
 				res = await playerServices.getAllPlayers();
+				setListPlayer(res);
+				console.log("45",res)
 			}
 
-			setListPlayer(res);
 
 
 			console.log(listPlayer);
