@@ -52,7 +52,10 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 														className={
 															clickedId === 'news' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<span className={cx('__item__text')}>News</span>
+
+													<Link to={'/news'}>
+														<span className={cx('__item__text')}>News</span>
+													</Link>
 												</span>
 											</a>
 										</li>
@@ -105,7 +108,9 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 														className={
 															clickedId === 'results' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<span className={cx('__item__text')}>Tickets</span>
+													<Link to={'/about'}>
+														<span className={cx('__item__text')}>About</span>
+													</Link>
 												</span>
 											</a>
 										</li>

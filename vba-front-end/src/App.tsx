@@ -29,6 +29,7 @@ import { OTP } from './pages/Client/Authentication/OTP';
 import { OTPForgotPassword } from './pages/Client/Authentication/OTPForgotPassword';
 import { NewPassword } from './pages/Client/Authentication/NewPassword';
 import { ForgotPassword } from './pages/Client/Authentication/ForgotPassword';
+import { AboutPage } from './pages/Client/AboutPage';
 
 function App() {
 	return (
@@ -58,7 +59,7 @@ function App() {
 						<Route path='players' element={<AdminHomePage manager='players'></AdminHomePage>} />
 					</Route>
 
-					<Route path='/ticketpage' element={<TicketPage></TicketPage>} />
+					<Route path='/ticyketpage' element={<TicketPage></TicketPage>} />
 					<Route path='/ticketdetailspage' element={<TicketDetailsPage></TicketDetailsPage>} />
 					<Route path='/signup' element={<SignUp></SignUp>} />
 					<Route path='/signin' element={<SignIn></SignIn>} />
@@ -66,6 +67,7 @@ function App() {
 					<Route path='/otpforgotpassword' element={<OTPForgotPassword></OTPForgotPassword>} />
 					<Route path='/newpassword' element={<NewPassword></NewPassword>} />
 					<Route path='/forgotpassword' element={<ForgotPassword></ForgotPassword>} />
+					<Route path='/about' element={<AboutPage></AboutPage>} />
 				</Routes>
 			</BrowserRouter>
 		</>
