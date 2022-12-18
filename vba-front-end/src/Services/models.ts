@@ -41,20 +41,17 @@ export interface MatchEventInterface {
 //   subOffNumber?: number;
 // }
 
+
 export interface Tournament {
 	id?: string;
 	name?: string;
 	description?: string;
-	startDate?: string;
-	endDate?: string;
+	startDate?: Date| string;
+	endDate?: Date |string;
 	type?: string;
-	status?: string;
 	competitor?: string;
-	rounds?: Round[];
-	team?: Team[];
-	standingId?: string;
-	createdAt?: Date;
 	seasons?: Season[];
+	createdAt?: Date;
 }
 
 export interface Season {
@@ -88,21 +85,27 @@ export interface Round {
 // }
 
 export interface Team {
-	id: string;
-	teamname: string;
-	teamlogo: string;
+	id?: string;
+	teamname?: string;
+	teamlogo?: string |File;
 	stadiumname?: string;
-	stadiumpic?: string;
+	stadiumpic?: string |File;
 	description?: string;
 	status?: string;
 	eliminated?: boolean;
-	players: Player[];
-	homeResult: string;
-	awayResult: string;
+	players?: Player[];
+	homeResult?: string;
+	awayResult?: string;
+	seasonId?: string
+	createdAt?: Date;
+	color?: string;
+	shortname?:string;
 
-	createdAt: Date;
-	color: string;
+    teamName?: string;
+    teamLogo?: string|File;
+    shortName?: string;
 }
+
 
 export interface TeamStandings {
 	id: string;
@@ -155,22 +158,24 @@ export interface Process {
 }
 
 export interface Player {
-	id: string;
-	firstName: string;
-	lastName: string;
-	dateOfBirth: Date;
-	image: string;
-	shirtNumber: string;
-	createdAt: Date;
-	teams: Team[];
-	flag?: string;
-	nationality?: string;
-	card: Card;
-}
+    id?: string;
+    firstName?: string;
+    lastName?: string;
+    dateOfBirth?: Date;
+    image?: File | string;
+    shirtNumber?: number;
+    height?:number;
+    weight?:number;
+    createdAt?: Date;
+    teamId?: string;
+	country?:string;
 
-interface Card {
-	red: string;
-	yellow: string;
+	flag?: string;
+	firstname?: string;
+    lastname?: string;
+	shirtnumber?: number;
+    createdat?: Date;
+
 }
 
 export interface Standings {

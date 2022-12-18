@@ -33,7 +33,7 @@ export const LineUp = ({ home, away }: LineUpProps) => {
 				<header className={`${cx('__header')}`}>
 					<a>
 						<div>
-							<img className='w-[5rem] h-[5rem] m-auto' src={home?.teamlogo}></img>
+							<img className='w-[5rem] h-[5rem] m-auto' src={home?.teamlogo as string}></img>
 						</div>
 					</a>
 					<div>{home?.teamname}</div>
@@ -53,7 +53,7 @@ export const LineUp = ({ home, away }: LineUpProps) => {
 				<header className={`${cx('__header')}`}>
 					<a>
 						<div>
-							<img className='w-[5rem] h-[5rem] m-auto' src={away?.teamlogo}></img>
+							<img className='w-[5rem] h-[5rem] m-auto' src={away?.teamlogo as string}></img>
 						</div>
 					</a>
 					<div>{away?.teamname}</div>

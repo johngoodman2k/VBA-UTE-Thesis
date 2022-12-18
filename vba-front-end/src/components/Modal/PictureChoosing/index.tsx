@@ -5,14 +5,21 @@ const imageMimeType = /image\/(png|jpg|jpeg)/i;
 const cx = classNames.bind(styles);
 type PictureChoosingProps = {
 	header: string;
+	getFile: React.Dispatch<React.SetStateAction<File |undefined>>
+	defaultValue?: string
 };
 export const PictureChoosing = (props: PictureChoosingProps) => {
+	const initState ={
+		defaultValue: props.defaultValue ?? null
+	}
 	const [fileDataURL, setFileDataURL] = useState<any>(null);
-	const [file, setFile] = useState(null);
+	const [file, setFile] = useState<File>();
 	const onChangeImage = (e: any) => {
-		const file = e.target.files[0];
-		if (!file.type.match(imageMimeType)) return;
-		setFile(file);
+		const file1 = e.target.files[0];
+		
+		if (!file1.type.match(imageMimeType)) return;
+		setFile(file1);
+		props.getFile(file1);
 	};
 	useEffect(() => {
 		let isCancel = false;
@@ -45,20 +52,20 @@ export const PictureChoosing = (props: PictureChoosingProps) => {
 					<div className='w-full h-[162px]'>
 						<img
 							src={
-								fileDataURL === null
-									? 'https://th.bing.com/th/id/OIP.uQ03KuU1Jb_7HNs_We8__wAAAA?pid=ImgDet&rs=1'
-									: fileDataURL
+								fileDataURL !== null
+									?fileDataURL: props.defaultValue ??'https://th.bing.com/th/id/OIP.uQ03KuU1Jb_7HNs_We8__wAAAA?pid=ImgDet&rs=1'
+									
 							}
 							alt='playerImage'
 							className={cx('Input__Preview__Image')}></img>
 					</div>
 				</div>
 				<div className={cx('ImageUploadWrap')}>
-					<label className={cx('Input__ButtonLabel')} htmlFor='upload'>
+					<label className={cx('Input__ButtonLabel')} htmlFor={props.header}>
 						Upload image
 					</label>
 					<input
-						id='upload'
+						id={props.header}
 						type='file'
 						accept='image/*'
 						onChange={onChangeImage}

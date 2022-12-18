@@ -2,6 +2,8 @@ import { Application } from 'express';
 import { authenToken } from './middlewares/verifyToken';
 import { Pool } from 'pg';
 import { ApplicationContext } from './context';
+import { uploadFile, uploadFileFieldStadiumpic, uploadFileFieldTeamLogo, uploadFiles } from './middlewares/firebase';
+import { upload } from './middlewares/upload';
 export function routes(app: Application, ctx: ApplicationContext): void {
 	app.get('/health', ctx.health.check);
 	app.patch('/log', ctx.log.config);
@@ -27,7 +29,7 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 	app.get('/players/search', ctx.player.search); //used
 	app.get('/players/:id', ctx.player.load); //ok
 	app.post('/players', ctx.player.create); //ok
-	app.put('/players/:id', ctx.player.update); //ok
+	app.put('/players/:id',upload.single("image"),uploadFile, ctx.player.update); //ok
 	app.patch('/players/:id', ctx.player.patch); //ok
 	app.delete('/players/:id', ctx.player.delete); //ok
 	app.get('/players/getplayersbyteamid/:teamId', ctx.player.getPlayersByTeamId); //ok
@@ -49,10 +51,12 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 	app.get('/teams/search', ctx.team.search); //used
 	app.get('/teams/:id', ctx.team.load); //ok
 	app.post('/teams', ctx.team.create);
-	app.put('/teams/:id', ctx.team.update); //ok
+	app.put('/teams/:id',upload.fields([{name: 'teamLogo', maxCount: 1}, {name: 'stadiumpic', maxCount: 1}]),uploadFileFieldTeamLogo,uploadFileFieldStadiumpic, ctx.team.update); //ok
 	app.patch('/teams/:id', ctx.team.patch); //ok
 	app.delete('/teams/:id', ctx.team.delete); //ok
-	app.post('/teams/addplayertoteam/:teamId', ctx.team.addPlayerToTeam); // fixing
+	app.post('/teams/addPlayerToTeam', upload.single("image"),uploadFile, ctx.team.addPlayerToTeam); // fixing
+	app.get('/teams/getTeamsBySeasonId/:seasonId', ctx.team.getTeamsBySeasonId); 
+
 
 	app.post('/process/search', ctx.process.search); //xem xet
 	app.get('/process/search', ctx.process.search); //ok
@@ -70,7 +74,7 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 	app.patch('/seasons/:id', ctx.season.patch); //ok
 	app.delete('/seasons/:id', ctx.season.delete); //ok
 	app.post(
-		'/seasons/createTeamAndAddTeamToSeason',
+		'/seasons/createTeamAndAddTeamToSeason',upload.fields([{name: 'teamLogo', maxCount: 1}, {name: 'stadiumpic', maxCount: 1}]),uploadFileFieldTeamLogo,uploadFileFieldStadiumpic,
 		ctx.season.createTeamAndAddTeamToSeason //ok
 	);
 	app.get('/seasons/getSeasonByTournamentId/:tournamentId', ctx.season.getSeasonByTournamentId);

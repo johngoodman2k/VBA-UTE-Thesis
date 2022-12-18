@@ -32,14 +32,19 @@ export class TeamManager
   getPlayerById(player: string, ctx?: any): Promise<Player[]> {
     return this.playerrepository.getPlayerById(player, ctx);
   }
-  updateTeam(team: Team, ctx?: any): Promise<number> {
-    return this.teamrepository.updateTeam(team, ctx);
-  }
+
   getTeamById(teamId: string): Promise<Team[]> {
     return this.teamrepository.getTeamById(teamId);
   }
-  addPlayer(players: Player[], ctx?: any): Promise<number> {
-    return this.playerrepository.addPlayer(players, ctx);
+
+  createPlayerAndAddPlayerToTeam(player: Player, team: Team): Promise<number>{
+    return this.teamrepository.createPlayerAndAddPlayerToTeam(player, team);
+  }
+  getTeamsBySeasonId(seasonId: string):Promise<Team[]> {
+    return this.teamrepository.getTeamsBySeasonId(seasonId)
+  }
+  updateTeam( id:string,team:Team):Promise<number>{
+    return this.teamrepository.updateTeam(id,team);
   }
 }
 export function useTeamService(db: DB, mapper?: TemplateMap): TeamService {

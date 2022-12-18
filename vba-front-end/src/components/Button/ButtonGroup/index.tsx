@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import styles from "./buttonGroup.module.scss";
 
 type TournamentButtonGroupProps = {
+
     buttons: ButtonOptions[];
     getValue: React.Dispatch<React.SetStateAction<string>>;
+    defaultValue?:string;
+
 };
 interface ButtonOptions {
     name: string;
@@ -13,10 +16,11 @@ interface ButtonOptions {
 
 const cx = classNames.bind(styles);
 
-export const ButtonGroup = ({ buttons, getValue }: TournamentButtonGroupProps) => {
-    const [clickedId, setClickedId] = useState(-1);
+export const ButtonGroup = ({defaultValue, buttons, getValue} : TournamentButtonGroupProps) => {
+    const initState = defaultValue?? ""
+    const [clickedId, setClickedId] = useState(initState);
     const handleClick = (e: React.BaseSyntheticEvent<MouseEvent, EventTarget & Element, EventTarget>, i: number) => {
-        setClickedId(i);
+        setClickedId(e.currentTarget.getAttribute("data-value") as string);
         getValue(e.currentTarget.getAttribute("data-value") as string);
     };
     return (
@@ -27,7 +31,8 @@ export const ButtonGroup = ({ buttons, getValue }: TournamentButtonGroupProps) =
                     key={i}
                     type="button"
                     onClick={(e) => handleClick(e, i)}
-                    className={i === clickedId ? `${cx("_customButton", "_active")}` : `${cx("_customButton")}`}
+                    
+                    className={x.value === clickedId ? `${cx("_customButton", "_active")}` : `${cx("_customButton")}`}
                 >
                     {x.name}
                 </button>

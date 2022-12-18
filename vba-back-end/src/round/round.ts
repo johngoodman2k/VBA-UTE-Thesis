@@ -10,13 +10,6 @@ export interface Round {
   createdAt: Date;
 }
 
-export interface Round {
-  id: string;
-  roundname: string;
-  tournamentId: string;
-  matches: Match[];
-  createdAt: Date;
-}
 export const roundModel: Attributes = {
   id: {
     key: true,

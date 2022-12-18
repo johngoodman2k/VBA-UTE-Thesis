@@ -110,13 +110,13 @@ export const ControlModal = ({
 		const quater = quaterSelected;
 		const des = typeSelected !== 'sub' ? e.target.des.value : '';
 		const assistant =
-			assistantSelected !== '' ? getPlayerById(assistantSelected) : getPlayerById(getPlayerBySide(side));
+			assistantSelected !== '' ? getPlayerById(assistantSelected) : getPlayerById(getPlayerBySide(side)?? "");
 
-		const player = playerSelected !== '' ? getPlayerById(playerSelected) : getPlayerById(getPlayerBySide(side));
+		const player = playerSelected !== '' ? getPlayerById(playerSelected) : getPlayerById(getPlayerBySide(side)?? "");
 
 		const mins = e.target.mins.value;
-		const subIn = subInSelected !== '' ? getPlayerById(subInSelected) : getPlayerById(getPlayerBySide(side));
-		const subOff = subOffSelected !== '' ? getPlayerById(subOffSelected) : getPlayerById(getPlayerBySide(side));
+		const subIn = subInSelected !== '' ? getPlayerById(subInSelected) : getPlayerById(getPlayerBySide(side)?? "");
+		const subOff = subOffSelected !== '' ? getPlayerById(subOffSelected) : getPlayerById(getPlayerBySide(side)?? "");
 
 		const checkType = type === 'offensive' ? offense : type === 'defensive' ? defense : 'sub';
 
@@ -144,17 +144,17 @@ export const ControlModal = ({
 				if (process.type === 'offensive') {
 					setTypeSelected(process.type);
 					setOffenseType(process.option);
-					setPlayerSelected(process.player[0].id);
-					setAssistantSelected(process.player[1].id);
+					setPlayerSelected(process.player[0].id?? "");
+					setAssistantSelected(process.player[1].id?? "");
 				} else if (process.type === 'defensive') {
 					setTypeSelected(process.type);
 					setDefenseType(process.option);
-					setPlayerSelected(process.player[0].id);
+					setPlayerSelected(process.player[0].id ?? "");
 				} else if (process.type === 'sub') {
 					setTypeSelected(process.type);
 
-					setSubInSelected(process.player[0].id);
-					setSubOffSelected(process.player[1].id);
+					setSubInSelected(process.player[0].id ?? "");
+					setSubOffSelected(process.player[1].id ?? "");
 				}
 				setSideSelected(process.side);
 				setQuaterSelected(process.quater);
@@ -360,7 +360,7 @@ export const ControlModal = ({
 											<header className={`${cx('__header')}`}>
 												<a>
 													<div>
-														<img className='w-[5rem] h-[5rem] m-auto' src={matchDetail?.home.teamlogo}></img>
+														<img className='w-[5rem] h-[5rem] m-auto' src={matchDetail?.home.teamlogo as string}></img>
 													</div>
 												</a>
 												<label className={`${cx('__modal__title')}`}>Choose your starting 5</label>
@@ -422,7 +422,7 @@ export const ControlModal = ({
 											<header className={`${cx('__header')}`}>
 												<a>
 													<div>
-														<img className='w-[5rem] h-[5rem] m-auto' src={matchDetail?.away.teamlogo}></img>
+														<img className='w-[5rem] h-[5rem] m-auto' src={matchDetail?.away.teamlogo as string}></img>
 													</div>
 												</a>
 												<label className={`${cx('__modal__title')}`}>Choose your starting 5</label>

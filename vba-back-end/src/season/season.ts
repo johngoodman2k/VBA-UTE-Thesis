@@ -57,7 +57,7 @@ export interface Player {
 	image: string;
 	shirtNumber: number;
 	createdAt: Date;
-	teams: Team;
+	teamId: string;
 }
 
 export interface Tournament {

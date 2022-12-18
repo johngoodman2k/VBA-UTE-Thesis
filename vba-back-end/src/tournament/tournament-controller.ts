@@ -1,5 +1,5 @@
 import { Controller, handleError, Log } from 'express-ext';
-import e, { Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { nanoid } from 'nanoid';
 import { Match, Tournament, TournamentFilter, TournamentService, Standings, Team, Season } from './tournament';
 import { buildToInsertBatch } from 'query-core';

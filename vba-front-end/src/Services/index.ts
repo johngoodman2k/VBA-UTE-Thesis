@@ -14,6 +14,11 @@ import {
 export class TournamentServices implements TournamentServicesRoot {
 	constructor(private url: string, private httpRequest: HttpRequest) {
 		this.getTournamentById = this.getTournamentById.bind(this);
+		this.getAllTournament = this.getAllTournament.bind(this);
+		this.createTournament = this.createTournament.bind(this);
+		this.createSeasonAndAddToTournament = this.createSeasonAndAddToTournament.bind(this);
+
+
 	}
 
 	getTournamentById(id: string | undefined, globalHost?: string): Promise<Tournament> {
@@ -28,6 +33,16 @@ export class TournamentServices implements TournamentServicesRoot {
 		const url = `${this.url}`;
 		return this.httpRequest.post<Result<Tournament>>(url, tournament);
 	}
+	createSeasonAndAddToTournament(name:string,tournamentId:string):Promise<Result<Tournament[]>>{
+		const url = `${this.url}/createSeasonAndAddToTournament`;
+		return this.httpRequest.post<Result<Tournament[]>>(url, {name:name,tournamentId:tournamentId});
+	}
+	updateTournament(id:string,tournament:Tournament): Promise<number>{
+		const url = `${this.url}/${id}`;
+		return this.httpRequest.put(url, tournament);
+	}
+
+
 }
 
 export class MatchServices implements MatchServicesRoot {
@@ -67,6 +82,9 @@ export class TeamServices implements TeamServicesRoot {
 		this.getAllTeams = this.getAllTeams.bind(this);
 		this.getTeamById = this.getTeamById.bind(this);
 		this.addPlayerToTeam = this.addPlayerToTeam.bind(this);
+		this.updateTeam = this.updateTeam.bind(this);
+
+		
 	}
 
 	getAllTeams(): Promise<Team[]> {
@@ -83,16 +101,28 @@ export class TeamServices implements TeamServicesRoot {
 		return this.httpRequest.get<Team>(url);
 	}
 
-	addPlayerToTeam(teamId: string, obj: Player, globalHost: string): Promise<number> {
-		const url = `${this.url}/addplayertoteam/${teamId}`;
-		return this.httpRequest.post(url, obj);
+	addPlayerToTeam(player: Player, globalHost?: string): Promise<number> {
+		const url = `${this.url}/addPlayerToTeam`;
+		return this.httpRequest.post(url, player,{headers: {'Content-Type': 'multipart/form-data'}});
 	}
+	getTeamsBySeasonId(seasonId: string, globalHost?: string): Promise<Team[]>{
+		const url = `${this.url}/getTeamsBySeasonId/${seasonId}`;
+		return this.httpRequest.get<Team[]>(url)
+	}
+	updateTeam(id:string,team:Team):Promise<Team>{
+		const url = `${this.url}/${id}`;
+		return this.httpRequest.put<Team>(url,team,{headers: {'Content-Type': 'multipart/form-data'}})
+	}
+
 }
 
 export class PlayerServices implements PlayerServicesRoot {
 	constructor(private url: string, private httpRequest: HttpRequest) {
 		this.getPlayersByTeamId = this.getPlayersByTeamId.bind(this);
 		this.getPlayerById = this.getPlayerById.bind(this);
+		this.getAllPlayers = this.getAllPlayers.bind(this);
+		this.updatePlayer = this.updatePlayer.bind(this);
+		
 	}
 
 	getPlayersByTeamId(teamid: string | undefined, globalHost?: string): Promise<Player[]> {
@@ -104,6 +134,15 @@ export class PlayerServices implements PlayerServicesRoot {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.get<Player>(url);
 	}
+	getAllPlayers(): Promise<Player[]>{
+		const url = `${this.url}/search`;
+		return this.httpRequest.get<Player[]>(url);
+	}
+	updatePlayer(id:string,player:Player): Promise<Number>{
+		const url = `${this.url}/${id}`;
+		return this.httpRequest.put(url,player,{headers: {'Content-Type': 'multipart/form-data'}});
+	}
+
 }
 
 export class ProcessServices implements ProcessServicesRoot {
@@ -158,4 +197,13 @@ export class SeasonServices implements SeasonServicesRoot {
 		const url = `${this.url}/getSeasonByTournamentId/${tournamentId}`;
 		return this.httpRequest.get<Season[]>(url);
 	}
+	createTeamAndAddTeamToSeason(team: Team,seasonId:string):Promise<Result<Season[]>>{
+		const url = `${this.url}/createTeamAndAddTeamToSeason`;
+		return this.httpRequest.post<Result<Season[]>>(url, team,{headers: {'Content-Type': 'multipart/form-data'}});
+	}
+	updateSeason(id:string,season:Season):Promise<Result<Season>>{
+		const url = `${this.url}/${id}`;
+		return this.httpRequest.put<Result<Season>>(url,season)
+	}
+
 }

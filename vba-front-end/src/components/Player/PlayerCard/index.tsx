@@ -20,7 +20,7 @@ export const PlayerCard = ({ player }: PlayerCard) => {
 									<span className={cx('__ImageBox')}>
 										<img
 											className={cx('__ImageBox--adjust')}
-											src={player.image}
+											src={player.image as string}
 											alt=''
 										/>
 									</span>

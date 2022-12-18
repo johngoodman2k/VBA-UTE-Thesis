@@ -17,14 +17,14 @@ export interface Team {
 }
 
 export interface Player {
-    id: string;
-    firstName: string;
-    lastName: string;
-    dateOfBirth: Date;
-    image: string;
-    shirtNumber: number;
-    createdAt: Date;
-    teams: Team;
+    id?: string;
+    firstName?: string;
+    lastName?: string;
+    dateOfBirth?: Date;
+    image?: string;
+    shirtNumber?: number;
+    createdAt?: Date;
+    teamId?: string;
 }
 
 export interface Tournament {
@@ -39,21 +39,23 @@ export interface Tournament {
 }
 
 export interface TeamRepository extends Repository<Team, string> {
-    // getTeamByTournamentId(tournamentId: string): Promise<Team[]>;
+    createPlayerAndAddPlayerToTeam(player: Player, team: Team): Promise<number>
     getTeamById(teamId: string): Promise<Team[]>;
-    updateTeam(team: Team, ctx?: any): Promise<number>;
+    getTeamsBySeasonId(seasonId: string):Promise<Team[]>;
+    updateTeam( id:string,team:Team):Promise<number>;
 }
 
 export interface PlayerRepository extends Repository<Player, string> {
     getPlayerById(player: string, ctx?: any): Promise<Player[]>;
-    addPlayer(players: Player[], ctx?: any): Promise<number>;
 }
 export interface TeamService extends Service<Team, string, TeamFilter> {
     // getTeamByTournamentId(tournamentId: string): Promise<Team[]>;
     getPlayerById(player: string, ctx?: any): Promise<Player[]>;
     getTeamById(teamId: string): Promise<Team[]>;
-    updateTeam(team: Team, ctx?: any): Promise<number>;
-    addPlayer(players: Player[], ctx?: any): Promise<number>;
+    createPlayerAndAddPlayerToTeam(player: Player, team: Team): Promise<number>
+    getTeamsBySeasonId(seasonId: string):Promise<Team[]>;
+    updateTeam( id:string,team:Team):Promise<number>;
+
 }
 
 export const teamModel: Attributes = {
@@ -70,7 +72,7 @@ export const teamModel: Attributes = {
     description: { type: "string" },
     status: { type: "string" },
     color: { type: "string" },
-    season: { type: "string" },
+    seasonId: { type: "string" },
     eliminated: {
         default: false,
         type: "boolean",
@@ -82,16 +84,17 @@ export const teamModel: Attributes = {
 
 export interface TeamFilter extends Filter {
     id: string;
-    teamname: string;
-    teamlogo: string;
+    teamName: string;
+    teamLogo: string;
     stadiumname: string;
     stadiumpic: string;
     description: string;
     status: string;
     color: string;
-    tournament: Tournament[];
+    seasonId: string;
     players: Player[];
     eliminated: boolean;
-    shortname: string;
+    shortName: string;
     createdAt: Date;
+    
 }

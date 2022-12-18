@@ -8,6 +8,7 @@ const cx = classNames.bind(styles);
 type TypeProps = {
     type: TypeOption[];
     getValue?: React.Dispatch<React.SetStateAction<string>>;
+    defaultValue?:string;
 };
 
 interface TypeOption {
@@ -16,10 +17,11 @@ interface TypeOption {
     image: string;
 }
 
-export const Type = ({ type, getValue }: TypeProps) => {
-    const [clickedId, setClickedId] = useState(-1);
+export const Type = ({ type, getValue,defaultValue }: TypeProps) => {
+    const initState =defaultValue?? ""
+    const [clickedId, setClickedId] = useState(initState);
     const handleClick = (e: any, i: number) => {
-        setClickedId(i);
+        setClickedId(e.currentTarget.getAttribute("data-value"));
         if (getValue) getValue(e.currentTarget.getAttribute("data-value"));
     };
     return (
@@ -34,7 +36,7 @@ export const Type = ({ type, getValue }: TypeProps) => {
                         <label
                             key={i}
                             className={
-                                i === clickedId
+                                x.value === clickedId
                                     ? `${cx("tournament_type-label", "tournament_type-label--active")}`
                                     : `${cx("tournament_type-label")}`
                             }

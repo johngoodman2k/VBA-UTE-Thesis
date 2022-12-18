@@ -75,9 +75,9 @@ insert into teams (id, teamname, teamlogo, stadiumname,stadiumpic,description,st
 create table teams (
     id character varying(40),
     teamName character varying(40),
-    teamLogo character varying(200),
+    teamLogo character varying(400),
     stadiumname character varying(40),
-    stadiumpic character varying(200),
+    stadiumpic character varying(400),
     description character varying(200),
     status character varying(40),
     color character varying(40),
@@ -119,8 +119,11 @@ create table players
     dateOfBirth timestamp with time zone default now(),
     image character varying(120),
     shirtNumber integer,
+    height float(3),
+    weight integer,
     createdAt  timestamp with time zone default now(),
-    teams jsonb,
+    teamId character varying(40),
+    country character varying(100),
     constraint player_pkey primary key (id)
 );
 --player

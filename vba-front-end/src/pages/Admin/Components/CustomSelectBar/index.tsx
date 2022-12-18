@@ -11,13 +11,14 @@ type CustomSelectBarProps = {
 	handleAdd?: () => void;
 	handleEdit?: () => void;
 	handleDelete?: () => void;
+	icon?: React.ReactNode;
 };
 
-export const CustomSelectBar = ({ addNext, styles, handleAdd, handleEdit, handleDelete }: CustomSelectBarProps) => {
+export const CustomSelectBar = ({ addNext, styles, handleAdd, handleEdit, handleDelete,icon }: CustomSelectBarProps) => {
 	return (
 		<div className={cx('dropdown')} style={styles}>
 			<div className={cx('dropdown-select')}>
-				<BasketballIcon />
+				{icon?? <BasketballIcon />}
 			</div>
 			<div className={cx('dropdown-list')}>
 				<div className={cx('dropdown-list__item')} onClick={handleAdd}>

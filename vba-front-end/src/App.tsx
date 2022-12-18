@@ -42,6 +42,7 @@ function App() {
 
 					<Route path='/home' element={<LandingPageScroll />} />
 					<Route path='/player' element={<PlayerInformation />} />
+					<Route path='/player/:id' element={<PlayerInformation />} />
 					<Route path='/playercard' element={<PlayerCard1 />} />
 					<Route path='/new' element={<NewsContainer />} />
 					<Route path='/calendar' element={<Calendar data={new Date(Date.now())} />} />
@@ -55,7 +56,9 @@ function App() {
 						<Route path='tournaments' element={<AdminHomePage manager='tournaments'></AdminHomePage>} />
 						<Route path='tournaments/:id' element={<AdminHomePage manager='seasons'></AdminHomePage>} />
 						<Route path='seasons' element={<AdminHomePage manager='seasons'></AdminHomePage>} />
+						<Route path='seasons/:id' element={<AdminHomePage manager='teams'></AdminHomePage>} />
 						<Route path='teams' element={<AdminHomePage manager='teams'></AdminHomePage>} />
+						<Route path='teams/:id' element={<AdminHomePage manager='players'></AdminHomePage>} />
 						<Route path='players' element={<AdminHomePage manager='players'></AdminHomePage>} />
 					</Route>
 

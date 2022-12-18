@@ -4,6 +4,8 @@ export interface TournamentServicesRoot {
 	getTournamentById(id: string | undefined, globalHost?: string): Promise<Tournament>;
 	getAllTournament(): Promise<Tournament[]>;
 	createTournament(tournament: Tournament): Promise<Result<Tournament>>;
+	createSeasonAndAddToTournament(name:string,tournamentId:string):Promise<Result<Tournament[]>>;
+	updateTournament(id:string,tournament:Tournament): Promise<number>;
 }
 
 export interface MatchServicesRoot {
@@ -21,12 +23,16 @@ export interface TeamServicesRoot {
 	getPlayersByTeamId(id: string | undefined, globalHost?: string): Promise<Team>;
 	getAllTeams(): Promise<Team[]>;
 	getTeamById(id: string, globalHost?: string): Promise<Team>;
-	addPlayerToTeam(teamId: string, obj: Player, globalHost?: string): Promise<number>;
+	addPlayerToTeam(player: Player, globalHost?: string): Promise<number>;
+	getTeamsBySeasonId(seasonId: string, globalHost?: string): Promise<Team[]>;
+	updateTeam(id:string,team:Team):Promise<Team>;
 }
 
 export interface PlayerServicesRoot {
 	getPlayersByTeamId(id: string | undefined, globalHost?: string): Promise<Player[]>;
 	getPlayerById(id: string | undefined): Promise<Player>;
+	getAllPlayers(): Promise<Player[]>;
+	updatePlayer(id:string,player:Player): Promise<Number>;
 }
 
 export interface ProcessServicesRoot {
@@ -45,4 +51,7 @@ export interface SeasonServicesRoot {
 	getAllSeason(): Promise<Season[]>;
 	getSeasonById(id: string): Promise<Season>;
 	getSeasonByTournamentId(tournamentId: string): Promise<Season[]>;
+	createTeamAndAddTeamToSeason(team:Team,seasonId:string):Promise<Result<Season[]>>
+	updateSeason(id:string,season:Season):Promise<Result<Season>>
+
 }

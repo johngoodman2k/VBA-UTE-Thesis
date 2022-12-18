@@ -34,7 +34,7 @@ export const PlayerLineUpBar = (props: PlayerLineUpBar) => {
 			<li onClick={handleOnClick} className=''>
 				<div className={blockSideCheck}>
 					<div className={`${cx('__number')}`}>{props.player.shirtNumber}</div>
-					<img className='w-[4rem] my-0 mx-5' src={props.player.image}></img>
+					<img className='w-[4rem] my-0 mx-5' src={props.player.image as string}></img>
 					<div>
 						<span className='flex font-normal text-white text-lg'>
 							{props.player.lastName + ' ' + props.player.firstName}
@@ -43,7 +43,7 @@ export const PlayerLineUpBar = (props: PlayerLineUpBar) => {
 							<img
 								className='w-[30px] h-[20px] inline-block'
 								src={props.player.flag}></img>
-							<span className={sideCheck}>{props.player.nationality}</span>
+							<span className={sideCheck}>{props.player.country}</span>
 						</span>
 					</div>
 				</div>

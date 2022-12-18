@@ -49,7 +49,7 @@ const PlayerInformation = () => {
 								</a>
 
 								<div className={cx('PlayerInformation__Information__InformationBlock__ImageBlock__ImageWarp__Image')}>
-									<img src={player?.image} alt='playerimage' className='w-full h-full'></img>
+									<img src={player?.image as string} alt='playerimage' className='w-full h-full'></img>
 								</div>
 							</div>
 							{/* <div

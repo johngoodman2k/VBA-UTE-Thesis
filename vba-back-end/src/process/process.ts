@@ -16,6 +16,7 @@ export interface Process {
     createdAt: Date;
 }
 interface Player {
+    id:string
     firstName: string;
     lastName: string;
     image: string;

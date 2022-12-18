@@ -63,6 +63,11 @@
 		border-radius: 0;
 		appearance: none;
 	}
+	&--color {
+		padding:0;
+		border: none;
+		outline: none;
+	}
 }
 .createTeam_textarea {
 	font-family: 'Open Sans', sans-serif;

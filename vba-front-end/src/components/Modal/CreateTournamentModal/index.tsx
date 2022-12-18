@@ -15,9 +15,16 @@ import styles from './createTournament.module.scss';
 import { ModalBlock } from '../ModalBlock';
 import { vbaContext } from '../../../Services/services';
 import toastNotify from '../../../utils/toast';
+import { Tournament } from '../../../Services/models';
+import { convertToDateTime } from '../../../utils/dateFormat';
+import { checkDuplicateObject } from '../../../utils/checker';
 const cx = classNames.bind(styles);
 type createTournamentProps = {
 	handleCloseModal?: () => void;
+	title:string;
+	tournament?: Tournament;
+	reload?: boolean;
+	setReload?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const typeOptions = [
@@ -41,12 +48,23 @@ const ButtonOptions = [
 const getTournamentServices = vbaContext.getTournamentServices();
 
 export const CreateTournamentModal = (props: createTournamentProps) => {
-	// const [statusState, setStatusState] = useState("active");
-	const [tournamentType, setTournamentType] = useState<string>('');
-	const [competitor, setCompetitor] = useState<string>('');
+	const initState = {
+		name: props.tournament?.name ?? "",
+		startDate: props.tournament?.startDate ?? "",
+		endDate: props.tournament?.endDate ?? "",
+		competitor: props.tournament?.competitor ?? "",
+		description:props.tournament?.description,
+		type:props.tournament?.type?? ""
+	}
+	console.log(initState)
+	const [tournamentType, setTournamentType] = useState<string>(initState.type);
+	const [competitor, setCompetitor] = useState<string>(initState.competitor);
+
+
+
 
 	//Create TOURNAMENT
-	const createTournament = async (e: any) => {
+	const createOrUpdateTournament = async (e: any) => {
 		e.preventDefault();
 		// const id = e.target.id.value;
 		const name = e.target.name.value;
@@ -56,17 +74,34 @@ export const CreateTournamentModal = (props: createTournamentProps) => {
 		const type = tournamentType;
 		const newCompetitor = competitor;
 		const validata = validate(name, newCompetitor, startDate, endDate, description, type);
-		console.log(validata);
-
 		try {
 			if (validata) {
-				const res = await getTournamentServices.createTournament(validata);
-				toastNotify('Create tournament is successfully', 'success');
+				if(props.tournament && props.tournament.id){
+					props.tournament.startDate = convertToDateTime(props.tournament.startDate)
+					props.tournament.endDate = convertToDateTime(props.tournament.endDate)
+					if(checkDuplicateObject(props.tournament,validata)){
+						toastNotify('Please change anything', 'warn');
+					}else{
+						await getTournamentServices.updateTournament(props.tournament.id,validata);
+						toastNotify('Update tournament is successfully', 'success');
+						if(props.handleCloseModal) props.handleCloseModal()
+
+					}
+					if(props.setReload) props.setReload(!props.reload);
+					if(props.handleCloseModal) props.handleCloseModal()
+				}else{
+					await getTournamentServices.createTournament(validata);
+					toastNotify('Create tournament is successfully', 'success');
+					if(props.handleCloseModal) props.handleCloseModal()
+				}
 			}
 		} catch (e) {
 			console.log('this is error tournament create ', e);
 		}
 	};
+
+	//Edit Tournament
+	
 
 	return (
 		<>
@@ -78,14 +113,14 @@ export const CreateTournamentModal = (props: createTournamentProps) => {
 					<div className={`${cx('panel')}`}>
 						<header className={`${cx('createtournament_type-header')}`}>
 							<div className='container flex justify-center items-center '>
-								<h1 className='text-2xl font-bold text-white uppercase '>Create Tournament</h1>
+								<h1 className='text-2xl font-bold text-white uppercase '>{props.title}</h1>
 								<div className='ml-auto text-right hover:cursor-pointer'>
 									<Close onClick={props.handleCloseModal} className='w-[48px] h-[48px]'></Close>
 								</div>
 							</div>
 						</header>
 						<div className={`${cx('createtournament-body')}`}>
-							<form onSubmit={createTournament}>
+							<form onSubmit={createOrUpdateTournament}>
 								<div
 									className={`${cx(
 										'createtourament-body-adjust',
@@ -101,21 +136,23 @@ export const CreateTournamentModal = (props: createTournamentProps) => {
 										</div> */}
 										<div className='my-2'>
 											<p className={`${cx('createtournament_text-adjust')}`}>Name</p>
-											<input className={`${cx('createtournament_input')}`} type='text' name='name' />
+											<input defaultValue={props.tournament?initState.name :undefined} className={`${cx('createtournament_input')}`} type='text' name='name' /> 
+
 										</div>
 										<div className='mb-4 w-full'>
 											<p className={`${cx('createtournament_text-adjust')}`}>Competitors type</p>
-											<ButtonGroup buttons={ButtonOptions} getValue={setCompetitor}></ButtonGroup>
+											<ButtonGroup defaultValue={initState.competitor} buttons={ButtonOptions} getValue={setCompetitor}></ButtonGroup>
 										</div>
 									</div>
 									<div className=''>
 										<div className='my-2'>
 											<p className={`${cx('createtournament_text-adjust')}`}>Start Date</p>
-											<input className={`${cx('createtournament_input-date')}`} type='date' name='startdate' />
+											<input required defaultValue={convertToDateTime(initState.startDate)}  className={`${cx('createtournament_input-date')}`} type='datetime-local' name='startdate' />
+											{/* defaultValue={props.tournament ?"2022-12-01":undefined} */}
 										</div>
 										<div className='my-2'>
 											<p className={`${cx('createtournament_text-adjust')}`}>End Date</p>
-											<input className={`${cx('createtournament_input-date')}`} type='date' name='enddate' />
+											<input required defaultValue={convertToDateTime(initState.endDate)} className={`${cx('createtournament_input-date')}`} type='datetime-local' name='enddate' />
 										</div>
 									</div>
 								</div>
@@ -127,6 +164,7 @@ export const CreateTournamentModal = (props: createTournamentProps) => {
 											name='description'
 											rows={6}
 											cols={50}
+											defaultValue={initState.description}
 											placeholder='Write something ... '
 										></textarea>
 									</div>
@@ -135,7 +173,7 @@ export const CreateTournamentModal = (props: createTournamentProps) => {
 								<div className=''>
 									<label className={`${cx('createtournament_type-header')}`}>Choose your type</label>
 									<div className={`${cx('createtournament_type-block')}`}>
-										<Type type={typeOptions} getValue={setTournamentType}></Type>
+										<Type defaultValue={initState.type} type={typeOptions} getValue={setTournamentType}></Type>
 									</div>
 								</div>
 

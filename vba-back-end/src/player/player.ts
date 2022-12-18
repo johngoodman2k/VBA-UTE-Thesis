@@ -7,30 +7,36 @@ export interface Player {
     lastName: string;
     dateOfBirth: Date;
     image: string;
-    shirtNumber: string;
+    shirtNumber: number;
+    height:number;
+    weight:number;
     createdAt: Date;
-    teams: Team[];
+    teamId: string;
+    country: string;
 }
 
-export interface Team {
-    id: string;
-}
-export interface PlayerFilter extends Filter {
+export interface PlayerFilter extends Filter{
     id: string;
     firstName: string;
     lastName: string;
     dateOfBirth: Date;
     image: string;
+    height:number;
+    weight:number;
     shirtNumber: number;
     createdAt: Date;
-    teams: Team;
+    teamId: string;
+    country:string;
 }
+
 export interface PlayerRepository extends Repository<Player, string> {
-    getPlayersByTeamId(teamId: Team): Promise<Player[]>;
-}
+    getPlayersByTeamId(teamId: string): Promise<Player[]>;
+    updatePlayer(id:string,player:Player):Promise<number>;
+    }
 export interface PlayerService extends Service<Player, string, PlayerFilter> {
-    getPlayersByTeamId(teamId: Team): Promise<Player[]>;
-}
+    getPlayersByTeamId(teamId: string): Promise<Player[]>;
+    updatePlayer(id:string,player:Player):Promise<number>;
+    }
 export const playerModel: Attributes = {
     id: {
         key: true,
@@ -41,7 +47,10 @@ export const playerModel: Attributes = {
     lastName: { type: "string" },
     dateOfBirth: { type: "datetime" },
     image: { type: "string" },
+    height: { type: "number" },
+    weight: { type: "number" },
     shirtNumber: { type: "number" },
+    country: {type: "string"},
     createdAt: { type: "datetime" },
-    teams: {},
+    teamId: {},
 };

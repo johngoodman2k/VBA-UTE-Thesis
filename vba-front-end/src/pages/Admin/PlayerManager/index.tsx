@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './playerManager.module.scss';
 import { ReactComponent as Plus } from '../../../assets/svg/plus-com.svg';
@@ -6,66 +6,75 @@ import { AdminTeamCard } from '../Components/AdminTeamCard';
 import { AdminSeasonCard } from '../Components/AdminSeasonCard';
 import { AdminPlayerCard } from '../Components/AdminPlayerCard';
 import { CreatePlayerModal } from '../../../components/Modal/CreatePlayerModal';
+import { useParams } from 'react-router-dom';
+import { vbaContext } from '../../../Services/services';
+import { Player, Team } from '../../../Services/models';
+import toastNotify from '../../../utils/toast';
+import { NoData } from '../Components/NoData';
 const cx = classNames.bind(styles);
+const teamServices = vbaContext.getTeamServices()
+const playerServices = vbaContext.getPlayerServices()
 
 export const PlayerManager = () => {
+	const params = useParams();
 	const [clicked, setClicked] = useState(false);
+	const [listPlayer, setListPlayer] = useState<Player[]>([]);
+	const [team, setTeam] = useState<Team |undefined>();
+	const [reload,setReload] = useState(false)
+
 	const handleCreate = () => {
 		setClicked(!clicked);
 	};
 	const handleCloseModal = () => {
 		setClicked(false);
 	};
+	useEffect(()=>{
+		(async () => {
+		try {
+			let res: Player[] = [];
+			let res1: Team
+			if (params && params.id) {
+				res = await playerServices.getPlayersByTeamId(params.id);
+				res1 = await teamServices.getTeamById(params.id)
+				setTeam(res1)
+			} else {
+				res = await playerServices.getAllPlayers();
+			}
+
+			setListPlayer(res);
+
+
+			console.log(listPlayer);
+		} catch (err) {
+			console.log(err);
+			toastNotify('Error for get Team', 'error');
+		}
+	})()
+	}, [reload]);
 	return (
 		<>
 			<div className='border-b border-solid'>
-				<p
-					className='uppercase font-bold text-4xl  text-left p-4 mx-2 flex
-                 '
-				>
-					player manager
+				<p className='uppercase font-bold text-4xl  text-left p-4 mx-2 flex'>
+					{params.id && <div className='block'>Team: {team ?team.teamName?? team.teamname :""}</div>}
+					<div className='ml-6 block'>Player Manager</div>
 					<div className='ml-auto text-right hover:cursor-pointer'>
 						<Plus onClick={handleCreate} className='w-[48px] h-[48px]'></Plus>
 					</div>
 				</p>
 			</div>
 			<div className={clicked === true ? cx('__active') : cx('__inactive')}>
-				<CreatePlayerModal handleCloseModal={handleCloseModal}></CreatePlayerModal>
+				<CreatePlayerModal reload={reload} setReload={setReload} id={params.id} title="Add Player" handleCloseModal={handleCloseModal}></CreatePlayerModal>
 			</div>
 			<div className='m-2 p-2 justify-between flex-1 block space-y-8 md:space-y-0 md:space-x-8 md:flex'>
-				<AdminTeamCard
-					type='tournament'
-					tournamentName='VBA'
-					tournamentPic='https://vba.vn/assets/img/svg/vba-logo.svg'
-					tournamentType='Round Robin'
-				></AdminTeamCard>
 
-				<AdminTeamCard
-					type='team'
-					teamName='Boston Celtics'
-					teamLogo='https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg'
-					teamStadium='https://www.enr.com/ext/resources/Issues/NewEng_Issues/2020/11-Nov/16-Nov/Best-Projects/td-garden1.jpg'
-					teamColor='#007A33'
-					stadiumName='TD Garden'
-				></AdminTeamCard>
-				<AdminTeamCard
-					type='tournament'
-					tournamentName='VBA'
-					tournamentPic='https://vba.vn/assets/img/svg/vba-logo.svg'
-					tournamentType='Round Robin'
-				></AdminTeamCard>
-
-				{/* <AdminTeamCard
-					type='team'
-					teamName='Boston Celtics'
-					teamLogo='https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg'
-					teamStadium='https://www.enr.com/ext/resources/Issues/NewEng_Issues/2020/11-Nov/16-Nov/Best-Projects/td-garden1.jpg'
-					teamColor='#007A33'
-					stadiumName='TD Garden'></AdminTeamCard> */}
 			</div>
 
-			<div className='m-2 p-2 justify-between flex-1 block space-y-8 md:space-y-0 md:space-x-8 md:flex'>
-				<AdminPlayerCard></AdminPlayerCard>
+			<div className='m-2 p-2 justify-start flex-wrap block space-y-8 md:space-y-0 md:space-x-8 md:flex'>
+			{listPlayer.length > 0 ? (
+					listPlayer.map((player: Player, i: number) =><AdminPlayerCard teamImage={team?.teamLogo as string} reload={reload} setReload={setReload} player={player}></AdminPlayerCard>)
+				) : (
+					<NoData content='No Data Team' />
+				)}
 			</div>
 		</>
 	);

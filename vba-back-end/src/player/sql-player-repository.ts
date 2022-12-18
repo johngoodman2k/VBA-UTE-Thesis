@@ -1,5 +1,4 @@
-import { DB, Repository } from "query-core";
-import { Team } from "./player";
+import { buildToUpdate, DB, Repository } from "query-core";
 import { Player, playerModel, PlayerRepository } from "./player";
 import { getPlayersByTeamId } from "./query";
 
@@ -10,9 +9,18 @@ export class SqlPlayerRepository
   constructor(db: DB) {
     super(db, "players", playerModel);
   }
-  getPlayersByTeamId(teamId: Team): Promise<Player[]> {
-    return this.query<Player>(`select * from players where teams @> $1`, [
+  getPlayersByTeamId(teamId: string): Promise<Player[]> {
+    return this.query<Player>("select * from players where teamid = $1", [
       teamId,
     ]);
   }
+  updatePlayer(id:string,player:Player):Promise<number>{
+    const q = "UPDATE players SET firstName = $1, lastName = $2,dateOfBirth = $3, shirtNumber = $4,country = $5,weight = $6,height = $7,image = $8 WHERE id = $9"
+    const params = [player.firstName, player.lastName, player.dateOfBirth, player.shirtNumber, player.country, player.weight, player.height, player.image,id]
+    return this.exec(q,params).then(c=>c>0?1:0)
+  }
+
+
 }
+
+// select * from players where teams @> $1`

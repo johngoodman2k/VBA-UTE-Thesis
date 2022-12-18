@@ -150,7 +150,7 @@ export const LandingPageScroll = () => {
 						{teams?.map((x: Team) => (
 							<div className={`${cx('__teamLogo')}`}>
 								<Link to={`/teaminfo/${x.id}`}>
-									<img src={x.teamlogo}></img>
+									<img src={x.teamlogo as string}></img>
 								</Link>
 							</div>
 						))}

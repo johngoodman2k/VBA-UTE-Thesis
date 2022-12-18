@@ -15,6 +15,8 @@ const tournamnetServices = vbaContext.getTournamentServices();
 export const TournamentManager = () => {
 	const [clicked, setClicked] = useState(false);
 	const [listTournament, setListTournament] = useState<Tournament[]>([]);
+	const [reload, setReload] = useState(false);
+
 	const handleCreate = () => {
 		setClicked(!clicked);
 	};
@@ -29,7 +31,7 @@ export const TournamentManager = () => {
 		} catch (err) {
 			alert('Error get tournament');
 		}
-	}, []);
+	}, [reload]);
 	return (
 		<>
 			<div className='border-b border-solid'>
@@ -39,23 +41,21 @@ export const TournamentManager = () => {
 				>
 					tournament manager
 					<div className='ml-auto text-right hover:cursor-pointer'>
-						<Plus onClick={handleCreate} className='w-[48px] h-[48px]'></Plus>
+						<Plus onClick={handleCreate}  className='w-[48px] h-[48px]'></Plus>
 					</div>
 				</p>
 			</div>
 			<div className={clicked === true ? cx('__active') : cx('__inactive')}>
-				<CreateTournamentModal handleCloseModal={handleCloseModal}></CreateTournamentModal>
+				<CreateTournamentModal title='Create Tournament' handleCloseModal={handleCloseModal} ></CreateTournamentModal>
 			</div>
 			<div className='m-2 p-2 justify-start flex-1 block space-y-8 md:space-y-0 md:space-x-8 md:flex'>
 				{listTournament.map((tournament: Tournament, i: number) => (
 					<AdminTeamCard
+						reload={reload}
+						setReload={setReload}
 						type='tournament'
-						tournamentName={tournament.name}
 						tournamentPic='https://vba.vn/assets/img/svg/vba-logo.svg'
-						tournamentType={
-							tournament.type === 'roundrobin' ? 'Round Robin' : tournament.type === 'eliminate' ? 'Eliminate' : ''
-						}
-						tournamentId={tournament.id}
+						tournament={tournament}
 					></AdminTeamCard>
 				))}
 

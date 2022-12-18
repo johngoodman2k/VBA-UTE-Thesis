@@ -41,7 +41,7 @@ interface Player {
     lastName: string;
     dateOfBirth: Date;
     createdAt: Date;
-    teams: Team[];
+    teamId: string;
 }
 
 export interface MatchRepository extends Repository<Match, string> {

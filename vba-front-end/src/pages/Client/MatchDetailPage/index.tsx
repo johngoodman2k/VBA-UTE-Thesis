@@ -109,10 +109,10 @@ export const MatchDetailPage = () => {
 					: sideSelected === 'away' && res2.length !== 0
 					? res2[0].id
 					: '';
-			setAssistantSelected(init);
-			setPlayerSelected(init);
-			setSubInSelected(init);
-			setSubOffSelected(init);
+			// setAssistantSelected(init);
+			// setPlayerSelected(init);
+			// setSubInSelected(init);
+			// setSubOffSelected(init);
 		})();
 	}, [params.id, sideSelected, reload]);
 
@@ -184,7 +184,7 @@ export const MatchDetailPage = () => {
 									<div className={cx('__centralContent__homeTheme')}>
 										<div className={cx('__centralContent__teamLogoBlock')}>
 											<img
-												src={matchDetail ? matchDetail.home.teamlogo : ''}
+												src={matchDetail ? matchDetail.home.teamlogo as string : ''}
 												alt=''
 												className={cx('__centralContent__teamLogoBlock--adjust')}
 											/>
@@ -197,7 +197,7 @@ export const MatchDetailPage = () => {
 									<div className={cx('__centralContent__awayTheme')}>
 										<div className={cx('__centralContent__teamLogoBlock')}>
 											<img
-												src={matchDetail ? matchDetail.away.teamlogo : '/'}
+												src={matchDetail ? matchDetail.away.teamlogo as string : '/'}
 												alt=''
 												className={cx('__centralContent__teamLogoBlock--adjust')}
 											/>
@@ -284,11 +284,11 @@ export const MatchDetailPage = () => {
 									<div className={cx('__container')}>
 										<div className={cx('__scoreboxContainer')}>
 											<MatchResultDetailBar
-												homeBadge={matchDetail ? matchDetail.home.teamlogo : ''}
-												homeName={matchDetail ? matchDetail.home.teamname : ''}
+												homeBadge={matchDetail ? matchDetail.home.teamlogo as string: ''}
+												homeName={matchDetail ? matchDetail.home.teamname?? "" : ''}
 												homeResult={matchDetail ? matchDetail.homeResult : ''}
-												awayBadge={matchDetail ? matchDetail.away.teamlogo : ''}
-												awayName={matchDetail ? matchDetail.away.teamname : ''}
+												awayBadge={matchDetail ? matchDetail.away.teamlogo as string?? "" : ''}
+												awayName={matchDetail ? matchDetail.away.teamname?? "" : ''}
 												awayResult={matchDetail ? matchDetail.awayResult : ''}></MatchResultDetailBar>
 
 											{/* <div className={cx('__matchStats')}>
@@ -395,7 +395,7 @@ export const MatchDetailPage = () => {
 													<span className={cx('__timeLine__badge')}>
 														<span className={cx('__timeLine__badge__block')}>
 															<img
-																src={matchDetail ? matchDetail.home.teamlogo : ''}
+																src={matchDetail ? matchDetail.home.teamlogo as string: ''}
 																className={cx('__timeLine__badge--adjust')}></img>
 														</span>
 													</span>
@@ -409,11 +409,11 @@ export const MatchDetailPage = () => {
 																	<MatchEventTimeLine
 																		type={x.type}
 																		mins={x.mins}
-																		homeBadge={matchDetail.home.teamlogo}
-																		homeName={matchDetail.home.teamname}
-																		homeResult={matchDetail.homeResult}
-																		awayBadge={matchDetail.away.teamlogo}
-																		awayName={matchDetail.away.teamname}
+																		homeBadge={matchDetail.home.teamlogo as string ?? ""}
+																		homeName={matchDetail.home.teamname?? ""}
+																		homeResult={matchDetail.homeResult?? ""}
+																		awayBadge={matchDetail.away.teamlogo as string?? ""}
+																		awayName={matchDetail.away.teamname?? ""}
 																		awayResult={matchDetail.awayResult}
 																		playerName={x.player[0].name}
 																		playerImg={x.player[0].image}
@@ -435,7 +435,7 @@ export const MatchDetailPage = () => {
 													<span className={cx('__timeLine__badge')}>
 														<span className={cx('__timeLine__badge__block')}>
 															<img
-																src={matchDetail ? matchDetail.away.teamlogo : ''}
+																src={matchDetail ? matchDetail.away.teamlogo as string : ''}
 																className={cx('__timeLine__badge--adjust')}></img>
 														</span>
 													</span>

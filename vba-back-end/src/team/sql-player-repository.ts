@@ -21,17 +21,5 @@ export class SqlPlayerRepository
   getPlayerById(player: string, ctx?: any): Promise<Player[]> {
     return this.query(getPlayerById, [player]);
   }
-  addPlayer(players: Player[], ctx?: any): Promise<number> {
-    const stmt = buildToInsertBatch<Player>(
-      players,
-      "players",
-      playerModel,
-      param
-    );
-    if (!stmt) {
-      return Promise.resolve(0);
-    } else {
-      return this.exec(stmt.query, stmt.params, ctx);
-    }
-  }
+
 }
