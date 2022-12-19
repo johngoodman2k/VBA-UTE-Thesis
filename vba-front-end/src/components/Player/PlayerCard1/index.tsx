@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 
 const PlayerCard1 = () => {
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="w-full flex justify-center items-center">
       <div className={cx("PlayerFigure")}>
         <div className={cx("PlayerFigure__teamBlock")}>
           <img

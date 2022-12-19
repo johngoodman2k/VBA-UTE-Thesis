@@ -8,6 +8,7 @@ import { AdminPlayerCard } from '../Components/AdminPlayerCard';
 import { CreateTournamentModal } from '../../../components/Modal/CreateTournamentModal';
 import { vbaContext } from '../../../Services/services';
 import { Tournament } from '../../../Services/models';
+import { NewsBlock } from '../../../components/News/NewsBlock';
 const cx = classNames.bind(styles);
 
 const tournamnetServices = vbaContext.getTournamentServices();
@@ -41,7 +42,7 @@ export const TournamentManager = () => {
 				>
 					tournament manager
 					<div className='ml-auto text-right hover:cursor-pointer'>
-						<Plus onClick={handleCreate}  className='w-[48px] h-[48px]'></Plus>
+						<Plus onClick={handleCreate} className='w-[48px] h-[48px]'></Plus>
 					</div>
 				</p>
 			</div>
@@ -58,6 +59,8 @@ export const TournamentManager = () => {
 						tournament={tournament}
 					></AdminTeamCard>
 				))}
+
+
 
 				{/* 
                 <AdminTeamCard

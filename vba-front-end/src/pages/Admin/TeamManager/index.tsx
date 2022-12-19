@@ -20,10 +20,10 @@ const seasonServices = vbaContext.getSeasonServices()
 
 export const TeamManager = () => {
 	const params = useParams();
-	const [listTeam,setListTeam] = useState<Team[]>([])
+	const [listTeam, setListTeam] = useState<Team[]>([])
 	const [clicked, setClicked] = useState(false);
-	const [reload,setReload] =useState(false);
-	const [season,setSeason] = useState<Season>()
+	const [reload, setReload] = useState(false);
+	const [season, setSeason] = useState<Season>()
 	const handleCreate = () => {
 		setClicked(!clicked);
 	};
@@ -31,28 +31,28 @@ export const TeamManager = () => {
 		setClicked(false);
 	};
 
-	useEffect(()=>{
+	useEffect(() => {
 		(async () => {
-		try {
-			let res: any;
-			let res1: Season
-			if (params && params.id) {
-				res = await teamServices.getTeamsBySeasonId(params.id);
-				res1 = await seasonServices.getSeasonById(params.id)
-				setSeason(res1);
-				setListTeam(res);
-			} else {
-				res = await teamServices.getAllTeams();
-				setListTeam(res.list);
+			try {
+				let res: any;
+				let res1: Season
+				if (params && params.id) {
+					res = await teamServices.getTeamsBySeasonId(params.id);
+					res1 = await seasonServices.getSeasonById(params.id)
+					setSeason(res1);
+					setListTeam(res);
+				} else {
+					res = await teamServices.getAllTeams();
+					setListTeam(res.list);
 
+				}
+
+				console.log(listTeam);
+			} catch (err) {
+				console.log(err);
+				toastNotify('Error for get Team', 'error');
 			}
-
-			console.log(listTeam);
-		} catch (err) {
-			console.log(err);
-			toastNotify('Error for get Team', 'error');
-		}
-	})()
+		})()
 	}, [reload]);
 	return (
 		<>
@@ -68,12 +68,12 @@ export const TeamManager = () => {
 				</p>
 			</div>
 			<div className={clicked === true ? cx('__active') : cx('__inactive')}>
-				<CreateTeamModal title="Create Team" seasonId={params.id} reload={reload} setReload={setReload}  handleCloseModal={handleCloseModal}></CreateTeamModal>
+				<CreateTeamModal title="Create Team" seasonId={params.id} reload={reload} setReload={setReload} handleCloseModal={handleCloseModal}></CreateTeamModal>
 			</div>
-			
-			<div className='m-2 p-2 justify-start flex-wrap block space-y-8 md:space-y-0 md:space-x-8 md:flex'>
-			{listTeam.length > 0 ? (
-					listTeam.map((team: Team, i: number) =><AdminTeamCard reload={reload} setReload={setReload} type="team" team={team}></AdminTeamCard>)
+
+			<div className='m-2 p-2 grid grid-cols-3 gap-[10rem]'>
+				{listTeam.length > 0 ? (
+					listTeam.map((team: Team, i: number) => <AdminTeamCard reload={reload} setReload={setReload} type="team" team={team}></AdminTeamCard>)
 				) : (
 					<NoData content='No Data Team' />
 				)}

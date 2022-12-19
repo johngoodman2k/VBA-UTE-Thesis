@@ -19,9 +19,9 @@ export const TeamRoster = ({ players }: teamRosterProps) => {
 									Roster
 								</h1>
 								<div className='flex justify-center items-center'>
-									<a className='font-normal text-xs leading-5 text-teal-600 mr-2'>
+									{/* <a className='font-normal text-xs leading-5 text-teal-600 mr-2'>
 										See full schedule
-									</a>
+									</a> */}
 								</div>
 							</div>
 							{/* content */}

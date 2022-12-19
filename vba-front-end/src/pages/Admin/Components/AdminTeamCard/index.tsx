@@ -16,9 +16,9 @@ const cx = classNames.bind(styles);
 
 type AdminTeamCardProps = {
 	type?: string;
-	team?:Team;
+	team?: Team;
 	reload?: boolean;
-	setReload?:React.Dispatch<React.SetStateAction<boolean>>
+	setReload?: React.Dispatch<React.SetStateAction<boolean>>
 	tournamentPic?: string;
 	tournament?: Tournament;
 };
@@ -31,34 +31,34 @@ export const AdminTeamCard = (props: AdminTeamCardProps) => {
 	const [openTeamEditModal, setOpenTeamEditModal] = useState(false)
 
 	//season
-	const handleAddSeason =()=>{
+	const handleAddSeason = () => {
 		setOpenSeasonModal(true)
 	}
-	const handleCloseSeasonModal =() =>{
+	const handleCloseSeasonModal = () => {
 		setOpenSeasonModal(false)
 	}
-	const handleEditSeason = () =>{
+	const handleEditSeason = () => {
 		setOpenSeasonEditModal(true)
 	}
-	const handleCloseSeasonEditModal = () =>{
+	const handleCloseSeasonEditModal = () => {
 		setOpenSeasonEditModal(false)
 	}
 
 	//team
-	const handleAddTeam =()=>{
+	const handleAddTeam = () => {
 		setOpenTeamModal(true)
 	}
-	const handleCloseTeamModal =() =>{
+	const handleCloseTeamModal = () => {
 		setOpenTeamModal(false)
 	}
-	const handleEditTeam = () =>{
+	const handleEditTeam = () => {
 		setOpenTeamEditModal(true)
 	}
-	const handleCloseTeamEditModal = () =>{
+	const handleCloseTeamEditModal = () => {
 		setOpenTeamEditModal(false)
 	}
 	return (
-		<div className='w-1/4'>
+		<div className=''>
 			{props.type === 'tournament' ? (
 				<div className={`${cx('team__card-box')}`} >
 					<div className='absolute z-20 right-8 top-8	'>
@@ -94,7 +94,7 @@ export const AdminTeamCard = (props: AdminTeamCardProps) => {
 							</span>
 						</Link>
 					</div>
-					{openSeasonModal && <CreateSeasonModal  id={props.tournament?.id} handleCloseModal={handleCloseSeasonModal}></CreateSeasonModal>}
+					{openSeasonModal && <CreateSeasonModal id={props.tournament?.id} handleCloseModal={handleCloseSeasonModal}></CreateSeasonModal>}
 					{openSeasonEditModal && <CreateTournamentModal reload={props.reload} setReload={props.setReload} tournament={props.tournament} handleCloseModal={handleCloseSeasonEditModal} title={"Edit Tournament"}></CreateTournamentModal>}
 
 				</div>
@@ -105,17 +105,17 @@ export const AdminTeamCard = (props: AdminTeamCardProps) => {
 					</div>
 					<div className={`${cx('team__card-image')}`}>
 						<span>
-							<img className={`${cx('team__card-image--adjust')}`} src={props.team.stadiumpic as string ??  "https://vba.vn/assets/img/svg/vba-logo.svg"} alt='' />
+							<img className={`${cx('team__card-image--adjust')}`} src={props.team.stadiumpic as string ?? "https://vba.vn/assets/img/svg/vba-logo.svg"} alt='' />
 						</span>
 					</div>
 					<div className={`${cx('team__card-image--badge')}`}>
 						<span className={`${cx('team__card-image--badge---container')}`}>
-							<img className={`${cx('team__card-image--badge---adjust')}`} src={props.team.teamlogo as string ?? props.team.teamLogo as string?? "https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg"  } alt='' />
+							<img className={`${cx('team__card-image--badge---adjust')}`} src={props.team.teamlogo as string ?? props.team.teamLogo as string ?? "https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg"} alt='' />
 						</span>
 					</div>
 					<div style={{ backgroundColor: `${props.team.color}` }} className={`${cx('team__card-info--box')}`}>
 						<div className=''>
-							<h4 className={`${cx('team__card-info--box---adjust')}`}>{props.team.teamname ?? props.team.teamName??""}</h4>
+							<h4 className={`${cx('team__card-info--box---adjust')}`}>{props.team.teamname ?? props.team.teamName ?? ""}</h4>
 							<div className={`${cx('team__card-info--box---stadiumname')}`}>{props.team.stadiumname} </div>
 						</div>
 						<Link to={`../teams/${props.team.id}`} className={`${cx('team__card-info--box---button')}`}>

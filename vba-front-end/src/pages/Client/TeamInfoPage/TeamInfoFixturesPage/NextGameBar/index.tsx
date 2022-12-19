@@ -22,9 +22,9 @@ export const NextGameBar = () => {
 						alt=''
 						className='w-full mx-auto max-w-[6.25rem] block  h-auto'
 					/>
-					<span className='block uppercase mt-5 pb-5 text-center text-xs font-bold'>
+					{/* <span className='block uppercase mt-5 pb-5 text-center text-xs font-bold'>
 						Go shop now
-					</span>
+					</span> */}
 				</a>
 			</div>
 

@@ -39,9 +39,9 @@ export const TeamInfoHeader = (props: teamInfoHeaderProps) => {
 						</div>
 					</div>
 					<div className='inline-block relative '>
-						<button className={`${cx('__infoButton')}`}>
+						{/* <button className={`${cx('__infoButton')}`}>
 							<span className={`${cx('__infoButton__text')}`}>FOLLOW ME</span>
-						</button>
+						</button> */}
 					</div>
 				</div>
 				<div className={`${cx('__rank')}`}>
