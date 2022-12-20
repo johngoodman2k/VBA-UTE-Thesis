@@ -125,19 +125,50 @@ export interface TeamStandings {
 }
 
 export interface Match {
-	id: string;
-	tournamentId: string;
-	round: string;
-	home: Team;
-	away: Team;
-	homeResult: string;
-	awayResult: string;
-	createdAt: Date;
-	matchDay: Date;
+	id?: string;
+	tournamentId?: string;
+	seasonid?:string;
+	seasonId?:string;
+	round?: string;
+	home?: CustomTeam[];
+	away?: CustomTeam[];
+	homeResult?: string;
+	awayResult?: string;
+	homeresult?: string;
+	awayresult?: string;
+	createdAt?: Date;
+	createdat?: Date;
+	matchDay?: Date;
+	matchday?: Date;
 	referee?: string;
 	spectators?: string;
 	assistance?: Player;
 	process: Process[];
+}
+
+export interface CustomTeam{
+	id?:string,
+	teamname?:string,
+	teamlogo?:string,
+	stadiumname?:string,
+	stadiumpic?:string,
+	description?:string,
+	status?:string,
+	color?:string,
+	seasonid?:string,
+	eliminated?:boolean,
+	shortname?:string,
+	createdat?:Date,
+	playerid?:string,
+	firstname?:string,
+	lastname?:string,
+	dateofbirth?:Date,
+	image?:string,
+	shirtnumber?:number,
+	height?:number,
+	weight?:number,
+	teamid?:string,
+	country?:string,
 }
 
 export interface MatchProcess {
@@ -147,16 +178,19 @@ export interface MatchProcess {
 }
 
 export interface Process {
-	id?: string;
-	type: string;
-	mins: string;
-	quater: string;
-	player: Player[];
-	side: string;
-	option: string;
-	description: string;
+    id?: string;
+    type?: string;
+    mins?: number;
+    quater?: string;
+    playerAttack?: string;
+    playerSupport?: string;
+    cardcolor?: string;
+    side?: string;
+    match?: string;
+    option?: string;
+    description?: string;
+    createdAt?: Date;
 }
-
 export interface Player {
     id?: string;
     firstName?: string;
@@ -223,4 +257,30 @@ export interface Result<T> {
 	value?: T;
 	err?: string;
 	success?: string;
+}
+
+export interface CustomTournament {
+	id?: string;
+	name?:string;
+	description?:string;
+	startdate?:string | Date;
+	enddate?:string | Date;
+	type?:string;
+	competitor?:string;
+	seasonid?:string;
+	seasonname?:string;
+	roundname?:string;
+	roundid?:string;
+	roundcreatedat?:Date | string;
+	teamname?:string;
+	teamlogo?:string;
+	matchday?:string|Date;
+
+	matchid?: string;
+	matchhome?:string;
+	matchaway?:string;
+	teamid?:string;
+
+	stadiumname?:string;
+
 }

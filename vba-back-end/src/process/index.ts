@@ -26,6 +26,9 @@ export class ProcessManager
   getMatches(tournamentId: string, round: string): Promise<Process[]> {
     return this.processRepository.getMatches(tournamentId, round);
   }
+  getProcessesByMatchId(matchId: string): Promise<Process[]> {
+    return this.processRepository.getProcessesByMatchId(matchId);
+  }
 }
 export function useProcessService(db: DB): ProcessService {
   const builder = new SearchBuilder<Process, ProcessFilter>(

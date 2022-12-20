@@ -18,7 +18,7 @@ type UpcommingMatchLongBarProps = {
 export const UpcommingMatchLongBar = (props: UpcommingMatchLongBarProps) => {
   return (
     <>
-      <Link to={`match/${props.id}`}>
+      <Link to={`/fixtures/match/${props.id}`}>
         <li className={cx("__wrapper")}>
           <a className={cx("__block")}>
             <span className={cx("__block__matchdetails")}>

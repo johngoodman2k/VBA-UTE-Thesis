@@ -99,6 +99,8 @@ export interface TournamentRepository extends Repository<Tournament, string> {
 	getAllTournament(): Promise<Tournament[]>;
 	createTournament(tournament: Tournament, ctx?: any): Promise<number>;
 	createSeasonAndAddToTournament(season: Season, tournament: Tournament, standings: Standings): Promise<number>;
+	createGenerate(matches: Match[],rounds:Round[],season:Season):Promise<number>;
+	getMergeTournamentById(tournamentId: string,seasonId:string):Promise<Tournament[]>;
 }
 export interface MatchRepository extends Repository<Match, string> {
 	buildToInsertMatches(matches: Match[], ctx?: any): Promise<number>;
@@ -111,6 +113,7 @@ export interface RoundRepository extends Repository<Round, string> {
 }
 export interface TeamRepository extends Repository<Team, string> {
 	getTeamByTournament(tournament: string): Promise<Team[]>;
+    getTeamBySeasonId(seasonId: string):Promise<Team[]>
 }
 export interface StandingsRepository extends Repository<Standings, string> {}
 export interface SeasonRepository extends Repository<Season, string> {
@@ -132,6 +135,9 @@ export interface TournamentService extends Service<Tournament, string, Tournamen
 
 	getSeasonById(id: string): Promise<Season[]>;
 	createSeasonAndAddToTournament(season: Season, tournament: Tournament, standings: Standings): Promise<number>;
+	getTeamBySeasonId(seasonId: string):Promise<Team[]>;
+	createGenerate(matches: Match[],rounds:Round[],season:Season):Promise<number>;
+	getMergeTournamentById(tournamentId: string,seasonId:string):Promise<Tournament[]>;
 }
 
 export const tournamentModel: Attributes = {

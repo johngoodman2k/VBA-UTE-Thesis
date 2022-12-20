@@ -24,10 +24,10 @@ insert into tournaments (id, name, description, startdate, enddate, type, compet
 
 create table matches (
     id character varying(40),
-    tournamentId character varying(40),
+    seasonId character varying(40),
     round character varying(40),
-    home jsonb,
-    away jsonb,
+    home character varying(40),
+    away character varying(40),
     homeResult integer DEFAULT 0,
     awayResult integer DEFAULT 0,
     createdAt timestamp with time zone default now(),
@@ -94,7 +94,7 @@ create table rounds
 (
     id character varying(40),
     roundname character varying(120),
-    tournamentid character varying(120),
+    seasonId character varying(120),
     matches jsonb[],
     createdAt timestamp with time zone default now(),
     constraint rounds_pkey primary key (id)
@@ -138,7 +138,8 @@ create table process
     type character varying(40),
     mins character varying(40),
     quater character varying(40),
-    player jsonb[],
+    playerAttack character varying(40),
+    playerSupport character varying(40),
     cardcolor character varying(40),
     side  character varying(40),
     match character varying(40),

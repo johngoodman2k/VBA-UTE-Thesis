@@ -22,6 +22,11 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 		'/tournaments/matches/:tournamentId/:seasonId',
 		ctx.tournament.GetGeneratedMatches //ok
 	);
+	app.get(
+		'/tournaments/getMergeTournamentById/:tournamentId/:seasonId',
+		ctx.tournament.getMergeTournamentById //ok
+	);
+	
 
 	app.post('/tournaments/createSeasonAndAddToTournament', ctx.tournament.createSeasonAndAddToTournament); //ok
 
@@ -37,7 +42,7 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 	app.get('/players/getplayersbyteamid/:teamId', ctx.player.getPlayersByTeamId); //ok
 
 	
-
+	
 	app.post('/matches/search', ctx.match.search); //xem xet
 	app.get('/matches/search', ctx.match.search); // used
 	app.get('/matches/:id', ctx.match.load); //ok
@@ -49,7 +54,7 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 		'/matches/addProcessToMatch/:matchId',
 		ctx.match.addProcessToMatch //ok
 	);
-	app.post('/matches/updateProcess/:matchId', ctx.match.updateProcess); //ok
+	app.get('/matches/getMatchDetails/:id', ctx.match.getMatchDetails); //ok
 
 	app.post('/teams/search', ctx.team.search); //xem xet
 	app.get('/teams/search', ctx.team.search); //used
@@ -65,10 +70,13 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 	app.post('/process/search', ctx.process.search); //xem xet
 	app.get('/process/search', ctx.process.search); //ok
 	app.get('/process/:id', ctx.process.load); //ok
+	app.get('/process/getProcessesByMatchId/:id', ctx.process.getProcessesByMatchId); //ok
 	app.post('/process', ctx.process.create); //ok
 	app.put('/process/:id', ctx.process.update); //ok
 	app.patch('/process/:id', ctx.process.patch); //ok
 	app.delete('/process/:id', ctx.process.delete); //ok
+
+	
 
 	app.post('/seasons/search', ctx.season.search); //xem xet
 	app.get('/seasons/search', ctx.season.search); //ok

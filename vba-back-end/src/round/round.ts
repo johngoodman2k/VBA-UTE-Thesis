@@ -5,7 +5,7 @@ import { Match } from "../match/match";
 export interface Round {
   id: string;
   roundname: string;
-  tournamentId: string;
+  seasonId: string;
   matches: Match[];
   createdAt: Date;
 }
@@ -18,7 +18,7 @@ export const roundModel: Attributes = {
     type: "string",
   },
   roundname: { type: "string" },
-  tournamentId: {
+  seasonId: {
     type: "string",
     required: true,
   },
@@ -29,7 +29,7 @@ export const roundModel: Attributes = {
 export interface RoundFilter extends Filter {
   id: string;
   roundname: string;
-  tournamentId: string;
+  seasonId: string;
   matches: Match[];
   createdAt: Date;
 }

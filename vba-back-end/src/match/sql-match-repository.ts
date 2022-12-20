@@ -28,4 +28,8 @@ export class SqlMatchRepository
       this.map
     );
   }
+  getMatchDetails(matchId: string): Promise<Match[]>{
+    return this.query<Match>("select * from matches where id = $1",[matchId])
+  }
+
 }

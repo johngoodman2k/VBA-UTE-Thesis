@@ -6,6 +6,8 @@ export interface TournamentServicesRoot {
 	createTournament(tournament: Tournament): Promise<Result<Tournament>>;
 	createSeasonAndAddToTournament(name:string,tournamentId:string):Promise<Result<Tournament[]>>;
 	updateTournament(id:string,tournament:Tournament): Promise<number>;
+	getMergeTournamentById(tournamentId:string, seasonId:string): Promise<Tournament[]>
+	
 }
 
 export interface MatchServicesRoot {
@@ -17,6 +19,7 @@ export interface MatchServicesRoot {
 	): Promise<Match>;
 	addProcessToMatch(id: string | undefined, process: Process[], globalHost?: string): Promise<Process>;
 	updateProcess(id: string | undefined, process: Process, globalHost?: string): Promise<Process>;
+	getMatchDetails(matchId:string):Promise<Match>;
 }
 
 export interface TeamServicesRoot {
@@ -37,6 +40,7 @@ export interface PlayerServicesRoot {
 
 export interface ProcessServicesRoot {
 	getProcessById(id: string | undefined, globalHost?: string): Promise<Process[]>;
+	getProcessesByMatchId(matchId:string):Promise<Process[]>;
 }
 
 export interface StandingsServicesRoot {

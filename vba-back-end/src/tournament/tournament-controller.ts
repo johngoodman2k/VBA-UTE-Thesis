@@ -20,7 +20,7 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 		this.GetGeneratedMatches = this.GetGeneratedMatches.bind(this);
 		this.GetAllTournament = this.GetAllTournament.bind(this);
 		this.createSeasonAndAddToTournament = this.createSeasonAndAddToTournament.bind(this);
-
+		this.getMergeTournamentById = this.getMergeTournamentById.bind(this);
 		// this.createTournament = this.createTournament.bind(this);
 		// this. = this.getTeamByTournament.bind(this);
 	}
@@ -37,8 +37,8 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 		if (!season || season.length === 0) {
 			return res.status(400).json({ err: 'Failed to get season' });
 		}
-		const teams = season[0].teams;
-		if (!teams) {
+		const teams = await this.tournamentService.getTeamBySeasonId(seasonId);
+		if (!teams || teams.length < 2 ) {
 			return res.status(400).json({ error: 'Need more team in season to generate' });
 		}
 		// const teams = tournamentResult[0].seasons[0].team
@@ -69,7 +69,7 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 				const newTeamGenerated = splitTheTeam(teamGenerated);
 				const matches = convertTeamsGeneratedToMatches(
 					newTeamGenerated,
-					tournamentId,
+					season[0].id,
 					roundId,
 					'roundrobin',
 					teamLength - indexRound
@@ -77,6 +77,7 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 
 				// // console.log(Date.now);
 				const newMatches = checkGhostTeamAndRemove(matches);
+				const matchesSaveToRound = newMatches.map((match) => {return {id: match.id}})
 
 				// console.log(newMatches);
 				matchesArray.push(...newMatches);
@@ -85,9 +86,9 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 					...roundArray,
 					{
 						id: roundId,
-						matches: newMatches,
+						matches: matchesSaveToRound,
 						roundname: (teamLength - indexRound + 1).toString(),
-						tournamentId: tournamentId,
+						seasonId: season[0].id,
 						createdAt: new Date(Date.now())
 					}
 				];
@@ -112,13 +113,14 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 
 						const matches = convertTeamsGeneratedToMatches(
 							newTeamGenerated,
-							tournamentId,
+							season[0].id,
 							roundId,
 							'roundrobin',
 							teamLength * 2 - indexReverse
 						);
 						// // console.log(Date.now);
 						const newMatches = checkGhostTeamAndRemove(matches);
+						const matchesSaveToRound = newMatches.map((match) => {return {id: match.id}})
 
 						// console.log(newMatches);
 						matchesArray.push(...newMatches);
@@ -127,9 +129,9 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 							...roundArray,
 							{
 								id: roundId,
-								matches: newMatches,
+								matches: matchesSaveToRound,
 								roundname: (teamLength * 2 - indexReverse + 1).toString(),
-								tournamentId: tournamentId,
+								seasonId: season[0].id,
 								createdAt: new Date(Date.now())
 							}
 						];
@@ -145,10 +147,11 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 
 			// return res.status(200).json(newTeamGenerated);
 
-			const matches = convertTeamsGeneratedToMatches(newTeamGenerated, tournamentId, roundId, 'elimination', 1);
+			const matches = convertTeamsGeneratedToMatches(newTeamGenerated, season[0].id, roundId, 'elimination', 1);
 
 			const teamPlayWithGhostTeam = getTeamPlayWithGhostTeam(matches);
 			const newMatches = checkGhostTeamAndRemove(matches);
+			const matchesSaveToRound = newMatches.map((match) => {return {id: match.id}})
 
 			matchesArray.push(...newMatches);
 
@@ -156,9 +159,9 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 				...roundArray,
 				{
 					id: roundId,
-					matches: newMatches,
+					matches: matchesSaveToRound,
 					roundname: `1/${newTeam.length}`,
-					tournamentId: tournamentId,
+					seasonId: season[0].id,
 					createdAt: new Date(Date.now())
 				}
 			];
@@ -199,7 +202,8 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 
 				const teamSplited = splitTheTeam(newTeam1);
 
-				const matches = convertTeamsGeneratedToMatches(teamSplited, tournamentId, roundId1, 'elimination', round);
+				const matches = convertTeamsGeneratedToMatches(teamSplited, season[0].id, roundId1, 'elimination', round);
+				const matchesSaveToRound = matches.map((match) => {return {id: match.id}})
 
 				matchesArray.push(...matches);
 
@@ -207,9 +211,9 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 					...roundArray,
 					{
 						id: roundId1,
-						matches: matches,
+						matches: matchesSaveToRound,
 						roundname: `1/${remainingTeams}`,
-						tournamentId: tournamentId,
+						seasonId: season[0].id,
 						createdAt: new Date(Date.now())
 					}
 				];
@@ -221,13 +225,16 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 		// return res.status(200).json(roundArray);
 
 		// console.log("OK!");
-		const createMatches = await this.tournamentService.buildToInsertMatches(matchesArray);
+		// matchesArray roundArray
+		const newRoundArray = roundArray.map((round) => {return {id: round.id}})
+		season[0].rounds = newRoundArray as any
 
-		if (!createMatches || createMatches === 0) return res.status(400).json({ err: 'Save matches failed' });
+		// const createMatches = await this.tournamentService.buildToInsertMatches(matchesArray);
 
-		const createRound = await this.tournamentService.buildToInsertRound(roundArray);
-
-		if (!createRound || createRound === 0) return res.status(400).json({ err: 'Save rounds failed' });
+		const rs = await this.tournamentService.createGenerate(matchesArray,roundArray,season[0])
+		if(rs === 0){
+			return res.status(400).json({ message: 'Generate failed' });
+		}
 
 		return res.status(200).json({ message: 'Generate succedded' });
 	}
@@ -274,5 +281,16 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 		if (rs === 0) return res.status(400).json({ message: 'season create failed' });
 
 		return res.status(201).json(tournament);
+	}
+
+	async getMergeTournamentById (req:Request, res:Response){
+		const {tournamentId,seasonId} = req.params
+
+		const tournaments = await this.tournamentService.getMergeTournamentById(tournamentId,seasonId)
+
+		if(!tournaments){
+			return res.status(400).json({err: "Tournament doest not exist"})
+		}
+		return res.status(200).json(tournaments)
 	}
 }

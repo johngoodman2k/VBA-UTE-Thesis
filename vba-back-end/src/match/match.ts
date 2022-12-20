@@ -4,10 +4,10 @@ import { Team } from "../team/team";
 
 export interface Match {
     id: string;
-    tournamentId: string;
+    seasonId: string;
     round: string;
-    home: Team;
-    away: Team;
+    home: string | Team;
+    away: string | Team;
     homeResult: number;
     awayResult: number;
     createdAt: Date;
@@ -24,7 +24,8 @@ export interface Process {
     type: string;
     mins: string;
     quater: string;
-    player: Player[];
+    playerAttack: string;
+    playerSupport: string;
     cardcolor: string;
     side: string;
     match: string;
@@ -32,6 +33,7 @@ export interface Process {
     description: string;
     createdAt: Date;
 }
+
 interface Player {
     name: string;
     image: string;
@@ -47,11 +49,17 @@ interface Player {
 export interface MatchRepository extends Repository<Match, string> {
     updateMatch(id: string, process: Process[], ctx?: any): Promise<Match[]>;
     getMatchById(matchId: string): Promise<Match[]>;
+    getMatchDetails(matchId: string): Promise<Match[]>;
 }
 export interface ProcessRepository extends Repository<Process, string> {
     addProcess(process: Process[], ctx?: any): Promise<number>;
     getProcessById(processId: string): Promise<Process[]>;
     updateProcess(process: Process, ctx?: any): Promise<number>;
+}
+
+export interface TeamRepository extends Repository<Team, string> {
+    getTeamByMatchId(matchId: string): Promise<Team[]>;
+    getTeamById(teamId: string): Promise<Team[]>
 }
 
 export interface MatchService extends Service<Match, string, MatchFilter> {
@@ -60,6 +68,9 @@ export interface MatchService extends Service<Match, string, MatchFilter> {
     getMatchById(matchId: string): Promise<Match[]>;
     getProcessById(processId: string): Promise<Process[]>;
     updateProcess(process: Process, ctx?: any): Promise<number>;
+    getMatchDetails(matchId: string): Promise<Match[]>;
+    getTeamByMatchId(matchId: string): Promise<Team[]>;
+    getTeamById(teamId: string): Promise<Team[]>
 }
 
 export const matchModel: Attributes = {
@@ -68,7 +79,7 @@ export const matchModel: Attributes = {
         match: "equal",
         type: "string",
     },
-    tournamentId: {
+    seasonId: {
         type: "string",
     },
     round: {
@@ -95,10 +106,10 @@ export const matchModel: Attributes = {
 
 export interface MatchFilter extends Filter {
     id: string;
-    tournamentId: string;
+    seasonId: string;
     round: string;
-    home: Team;
-    away: Team;
+    home: string;
+    away: string;
     homeResult: string;
     awayResult: string;
     createdAt: Date;

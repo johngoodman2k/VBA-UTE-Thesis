@@ -1,9 +1,12 @@
 import { format } from 'date-fns';
-export const dateFormat = (date: Date) => {
+export const dateFormat = (date?: Date | string) => {
+	if(!date) return;
+	console.log(date)
 	return format(new Date(date), 'dd MMMM yyyy');
 };
 
-export const timeFormat = (date: Date) => {
+export const timeFormat = (date?: Date) => {
+	if(!date) return "";
 	return format(new Date(date), ' HH:mm:ss');
 };
 

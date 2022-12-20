@@ -73,6 +73,15 @@ export class TournamentManager extends Manager<Tournament, string, TournamentFil
 	createSeasonAndAddToTournament(season: Season, tournament: Tournament, standings: Standings): Promise<number> {
 		return this.tournamentRepository.createSeasonAndAddToTournament(season, tournament, standings);
 	}
+	getTeamBySeasonId(seasonId: string):Promise<Team[]>{
+		return this.teamRepository.getTeamBySeasonId(seasonId);
+	}
+	createGenerate(matches: Match[],rounds:Round[],season:Season):Promise<number>{
+		return this.tournamentRepository.createGenerate(matches,rounds,season);
+	}
+	getMergeTournamentById(tournamentId: string,seasonId:string):Promise<Tournament[]>{
+		return this.tournamentRepository.getMergeTournamentById(tournamentId,seasonId);
+	}
 }
 export function useTournamentService(db: DB, mapper?: TemplateMap): TournamentService {
 	const query = useQuery('tournaments', mapper, tournamentModel, true);

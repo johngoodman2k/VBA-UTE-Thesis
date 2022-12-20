@@ -17,7 +17,7 @@ export class TournamentServices implements TournamentServicesRoot {
 		this.getAllTournament = this.getAllTournament.bind(this);
 		this.createTournament = this.createTournament.bind(this);
 		this.createSeasonAndAddToTournament = this.createSeasonAndAddToTournament.bind(this);
-
+		this.getMergeTournamentById = this.getMergeTournamentById.bind(this);
 
 	}
 
@@ -41,7 +41,10 @@ export class TournamentServices implements TournamentServicesRoot {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.put(url, tournament);
 	}
-
+	getMergeTournamentById(tournamentId:string, seasonId:string): Promise<Tournament[]>{
+		const url = `${this.url}/getMergeTournamentById/${tournamentId}/${seasonId}`;
+		return this.httpRequest.get<Tournament[]>(url);
+	}
 
 }
 
@@ -51,6 +54,8 @@ export class MatchServices implements MatchServicesRoot {
 		this.patchMatchDetailsById = this.patchMatchDetailsById.bind(this);
 		this.addProcessToMatch = this.addProcessToMatch.bind(this);
 		this.updateProcess = this.updateProcess.bind(this);
+		this.getMatchDetails = this.getMatchDetails.bind(this);
+
 	}
 
 	getMatchDetailsById(id: string | undefined, globalHost?: string): Promise<Match> {
@@ -74,6 +79,11 @@ export class MatchServices implements MatchServicesRoot {
 		const url = `${this.url}/updateProcess/${id}`;
 		return this.httpRequest.post<Process>(url, process);
 	}
+	getMatchDetails(matchId:string):Promise<Match>{
+		const url = `${this.url}/getMatchDetails/${matchId}`;
+		return this.httpRequest.get<Match>(url);
+	}
+
 }
 
 export class TeamServices implements TeamServicesRoot {
@@ -148,10 +158,15 @@ export class PlayerServices implements PlayerServicesRoot {
 export class ProcessServices implements ProcessServicesRoot {
 	constructor(private url: string, private httpRequest: HttpRequest) {
 		this.getProcessById = this.getProcessById.bind(this);
+		this.getProcessesByMatchId = this.getProcessesByMatchId.bind(this);
 	}
 
 	getProcessById(id: string | undefined, globalHost?: string | undefined): Promise<Process[]> {
 		const url = `${this.url}/process/${id}`;
+		return this.httpRequest.get<Process[]>(url);
+	}
+	getProcessesByMatchId(matchId:string):Promise<Process[]> {
+		const url = `${this.url}/getProcessesByMatchId/${matchId}`;
 		return this.httpRequest.get<Process[]>(url);
 	}
 }

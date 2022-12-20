@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Controller, handleError, Log } from "express-ext";
 import { nanoid } from "nanoid";
+import { Team } from "../team/team";
 import { findAncestor } from "typescript";
 import { Match, MatchFilter, MatchService, Process } from "./match";
 
@@ -9,6 +10,7 @@ export class MatchController extends Controller<Match, string, MatchFilter> {
         super(log, matchService);
         this.addProcessToMatch = this.addProcessToMatch.bind(this);
         this.updateProcess = this.updateProcess.bind(this);
+        this.getMatchDetails = this.getMatchDetails.bind(this);    
     }
 
     async addProcessToMatch(req: Request, res: Response) {
@@ -79,5 +81,24 @@ export class MatchController extends Controller<Match, string, MatchFilter> {
             await this.matchService.updateProcess(process);
             return res.status(200).json(process);
         }
+    }
+
+    async getMatchDetails(req:Request,res:Response){
+        const {id} = req.params
+        const matches = await this.matchService.getMatchDetails(id);
+        if(!matches) return res.status(404).json({ err: "Match not found" });
+        if(matches.length ===0) return res.status(200).json(matches);
+        const homeId= matches[0].home
+        const awayId = matches[0].away
+        const home = await this.matchService.getTeamByMatchId(homeId as string)
+        const away = await this.matchService.getTeamByMatchId(awayId as string)
+
+        matches[0].home = home as any
+        matches[0].away = away as any
+        if(!home || home.length ===0) matches[0].home = await this.matchService.getTeamById(homeId as string) as any
+        if(!away || away.length ===0) matches[0].home = await this.matchService.getTeamById(awayId as string) as any
+
+        
+        return res.status(200).json(matches[0])
     }
 }

@@ -27,4 +27,10 @@ export class SqlTeamRepository
             [tournament]
         );
     }
+    getTeamBySeasonId(seasonId: string):Promise<Team[]>{
+        return this.query<Team>(
+            `select * from teams where seasonid = $1`,
+            [seasonId]
+        );
+    }
 }

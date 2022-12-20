@@ -7,7 +7,8 @@ export interface Process {
     type: string;
     mins: number;
     quater: string;
-    player: Player[];
+    playerAttack: string;
+    playerSupport: string;
     cardcolor: string;
     side: string;
     match: string;
@@ -25,11 +26,13 @@ interface Player {
 
 export interface ProcessRepository extends Repository<Process, string> {
     getMatches(tournamentId: string, round: string): Promise<Process[]>;
+    getProcessesByMatchId(matchId: string): Promise<Process[]>;
 }
 
 export interface ProcessService
     extends Service<Process, string, ProcessFilter> {
     getMatches(tournamentId: string, round: string): Promise<Process[]>;
+    getProcessesByMatchId(matchId: string): Promise<Process[]>;
 }
 
 export const processModel: Attributes = {
@@ -41,7 +44,8 @@ export const processModel: Attributes = {
     type: { type: "string" },
     mins: { type: "number" },
     quater: { type: "string" },
-    player: { type: "array" },
+    playerAttack: { type: "string" },
+    playerSupport: { type: "string" },
     cardcolor: { type: "string" },
     side: { type: "string" },
     match: { type: "string" },
@@ -55,7 +59,8 @@ export interface ProcessFilter extends Filter {
     type: string;
     mins: number;
     quater: string;
-    player: Player[];
+    playerAttack: string;
+    playerSupport: string;
     cardcolor: string;
     side: string;
     match: string;

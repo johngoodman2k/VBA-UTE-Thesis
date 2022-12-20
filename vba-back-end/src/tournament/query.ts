@@ -178,8 +178,8 @@ const matchDayGenerated = (
 // };
 
 export const convertTeamsGeneratedToMatches = (
-    teamGenerated: Match[],
-    tournamentId: string,
+    teamGenerated: Team[],
+    seasonId: string,
     round: string,
     type: "roundrobin" | "elimination",
     indexRound: number
@@ -189,9 +189,9 @@ export const convertTeamsGeneratedToMatches = (
     teamGenerated.forEach((teamDuo, index: number) => {
         matches.push({
             id: nanoid(),
-            tournamentId: tournamentId,
-            home: teamDuo[0],
-            away: teamDuo[1],
+            seasonId: seasonId,
+            home: teamDuo[0].id,
+            away: teamDuo[1].id,
             homeResult: 0,
             awayResult: 0,
             round: round,

@@ -17,4 +17,7 @@ export class SqlProcessRepository
       this.map
     );
   }
+  getProcessesByMatchId(matchId: string): Promise<Process[]> {
+    return this.query<Process>("SELECT  p.id,  p.type,  p.mins,  p.quater,  p.playerattack,  p.playersupport,  p.side,  p.match,  p.option,  p.description, 	pl.id as playerid, pl.firstname,  pl.lastname,  pl.image,  pl.shirtnumber,  pl.country FROM  process p INNER JOIN players pl    on p.playerattack = pl.id or p.playersupport = pl.id where p.match = $1 ORDER BY p.createdat",[matchId])
+  }
 }

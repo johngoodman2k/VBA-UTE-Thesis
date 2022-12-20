@@ -5,15 +5,15 @@ import { PlayByPlayTeam } from './components/PlayByPlayTeam';
 import { PlayByPlayBlock } from './components/PlayByPlayBlock';
 import { vbaContext } from '../../../Services/services';
 import { id } from 'date-fns/locale';
-import { Player, Process } from '../../../Services/models';
+import { CustomTeam, Player, Process } from '../../../Services/models';
 import { ControlModal } from '../../Modal/ControlModal';
 const cx = classNames.bind(styles);
 
 type PlayByPlayProps = {
 	process: Process[] | undefined;
 	matchId: string | undefined;
-	homePlayers: Player[];
-	awayPlayers: Player[];
+	homePlayers: CustomTeam[];
+	awayPlayers: CustomTeam[];
 	// handleCloseModal?: () => void;
 };
 
