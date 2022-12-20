@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './adminTeamCard.module.scss';
 import { ReactComponent as BasketBallIcon } from '../../../../assets/svg/basketball.svg';
 import miamilogo from '../../../../assets/images/miami-heat-basketball-logo.png'
+import clocklogo from '../../../../assets/images/clock.png'
 import { ReactComponent as MiamiHeatLogo } from '../../../../assets/svg/miami-heat-logo.svg';
 
 import { CustomSelectBar } from '../CustomSelectBar';
@@ -101,7 +102,7 @@ export const AdminTeamCard = (props: AdminTeamCardProps) => {
 			) : props.type === 'team' && props.team ? (
 				<div className={`${cx('team__card-box')}`}>
 					<div className='absolute z-20 right-8 top-8	'>
-						<CustomSelectBar icon={<img src={miamilogo} className="w-[50px] h-[50px]" />} addNext='Player' handleAdd={handleAddTeam} handleEdit={handleEditTeam}></CustomSelectBar>
+						<CustomSelectBar icon={<img src={clocklogo} className="w-[50px] h-[50px] object-cover bg-transparent" />} addNext='Player' handleAdd={handleAddTeam} handleEdit={handleEditTeam}></CustomSelectBar>
 					</div>
 					<div className={`${cx('team__card-image')}`}>
 						<span>

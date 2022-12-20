@@ -21,45 +21,45 @@ export const SeasonManager = () => {
 	const params = useParams();
 	const [listSeason, setListSeason] = useState<Season[]>([]);
 	const [clicked, setClicked] = useState(false);
-	const [reload,setReload] = useState(false);
-	const [tournament,setTournament] = useState<Tournament>()
+	const [reload, setReload] = useState(false);
+	const [tournament, setTournament] = useState<Tournament>()
 	const handleCreate = () => {
 		setClicked(true);
 	};
 	const handleCloseModal = () => {
 		setClicked(false);
 	};
-	useEffect(()=>{
+	useEffect(() => {
 		(async () => {
-		try {
-			let res: any;
-			let res1: Tournament;
+			try {
+				let res: any;
+				let res1: Tournament;
 
-			if (params && params.id) {
-				res = await seasonServices.getSeasonByTournamentId(params.id);
-				res1 = await tournamentServices.getTournamentById(params.id);
-				setTournament(res1)
-				setListSeason(res);
+				if (params && params.id) {
+					res = await seasonServices.getSeasonByTournamentId(params.id);
+					res1 = await tournamentServices.getTournamentById(params.id);
+					setTournament(res1)
+					setListSeason(res);
 
-			} else {
-				res = await seasonServices.getAllSeason();
-				setListSeason(res.list);
+				} else {
+					res = await seasonServices.getAllSeason();
+					setListSeason(res.list);
+				}
+
+				console.log(listSeason);
+			} catch (err) {
+				console.log(err);
+				toastNotify('Error for get seasons', 'error');
 			}
-
-			console.log(listSeason);
-		} catch (err) {
-			console.log(err);
-			toastNotify('Error for get seasons', 'error');
-		}
-	})()
+		})()
 	}, [reload]);
 	return (
 		<>
 			<div className='border-b border-solid'>
 				<p className='uppercase font-bold text-4xl  text-left p-4 mx-2 flex flex-col'>
-					{params.id && <div className='block'>Tournament: {tournament ? tournament.name :""}</div>}
+					{params.id && <div className='block'>Tournament {tournament ? tournament.name : ""}</div>}
 
-					<div className='ml-6 block'>Season manager</div>
+					<div className='block'>Season manager</div>
 					<div className='ml-auto text-right hover:cursor-pointer'>
 						<Plus onClick={handleCreate} className='w-[48px] h-[48px]'></Plus>
 					</div>

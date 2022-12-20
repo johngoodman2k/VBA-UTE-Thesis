@@ -175,6 +175,8 @@ const PlayerInformation = () => {
 					<PlayerCard1></PlayerCard1>
 					<PlayerCard1></PlayerCard1>
 					<PlayerCard1></PlayerCard1>
+					<PlayerCard1></PlayerCard1>
+
 				</div>
 			</div>
 		</div>

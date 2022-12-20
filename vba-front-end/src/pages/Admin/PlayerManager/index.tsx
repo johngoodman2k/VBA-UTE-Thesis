@@ -19,8 +19,8 @@ export const PlayerManager = () => {
 	const params = useParams();
 	const [clicked, setClicked] = useState(false);
 	const [listPlayer, setListPlayer] = useState<Player[]>([]);
-	const [team, setTeam] = useState<Team |undefined>();
-	const [reload,setReload] = useState(false)
+	const [team, setTeam] = useState<Team | undefined>();
+	const [reload, setReload] = useState(false)
 
 	const handleCreate = () => {
 		setClicked(!clicked);
@@ -28,37 +28,37 @@ export const PlayerManager = () => {
 	const handleCloseModal = () => {
 		setClicked(false);
 	};
-	useEffect(()=>{
+	useEffect(() => {
 		(async () => {
-		try {
-			let res: any;
-			let res1: Team
-			if (params && params.id) {
-				res = await playerServices.getPlayersByTeamId(params.id);
-				res1 = await teamServices.getTeamById(params.id)
-				setTeam(res1)
-				setListPlayer(res);
+			try {
+				let res: any;
+				let res1: Team
+				if (params && params.id) {
+					res = await playerServices.getPlayersByTeamId(params.id);
+					res1 = await teamServices.getTeamById(params.id)
+					setTeam(res1)
+					setListPlayer(res);
 
-			} else {
-				res = await playerServices.getAllPlayers();
-				setListPlayer(res);
-				console.log("45",res)
+				} else {
+					res = await playerServices.getAllPlayers();
+					setListPlayer(res);
+					console.log("45", res)
+				}
+
+
+
+				console.log(listPlayer);
+			} catch (err) {
+				console.log(err);
+				toastNotify('Error for get Team', 'error');
 			}
-
-
-
-			console.log(listPlayer);
-		} catch (err) {
-			console.log(err);
-			toastNotify('Error for get Team', 'error');
-		}
-	})()
+		})()
 	}, [reload]);
 	return (
 		<>
 			<div className='border-b border-solid'>
 				<p className='uppercase font-bold text-4xl  text-left p-4 mx-2 flex'>
-					{params.id && <div className='block'>Team: {team ?team.teamName?? team.teamname :""}</div>}
+					{params.id && <div className='block'>Team: {team ? team.teamName ?? team.teamname : ""}</div>}
 					<div className='ml-6 block'>Player Manager</div>
 					<div className='ml-auto text-right hover:cursor-pointer'>
 						<Plus onClick={handleCreate} className='w-[48px] h-[48px]'></Plus>
@@ -72,9 +72,9 @@ export const PlayerManager = () => {
 
 			</div>
 
-			<div className='m-2 p-2 justify-start flex-wrap block space-y-8 md:space-y-0 md:space-x-8 md:flex'>
-			{listPlayer.length > 0 ? (
-					listPlayer.map((player: Player, i: number) =><AdminPlayerCard teamImage={team?.teamLogo as string} reload={reload} setReload={setReload} player={player}></AdminPlayerCard>)
+			<div className='m-2 p-2 grid grid-cols-4 align-middle gap-12'>
+				{listPlayer.length > 0 ? (
+					listPlayer.map((player: Player, i: number) => <AdminPlayerCard teamImage={team?.teamLogo as string} reload={reload} setReload={setReload} player={player}></AdminPlayerCard>)
 				) : (
 					<NoData content='No Data Team' />
 				)}

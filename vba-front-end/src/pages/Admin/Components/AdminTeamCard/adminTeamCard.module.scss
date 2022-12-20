@@ -14,6 +14,7 @@
 	height: 13rem;
 	overflow: hidden;
 }
+
 .team__card-image--adjust {
 	position: relative;
 	display: block;
@@ -22,6 +23,7 @@
 	background-size: cover;
 	width: 100%;
 }
+
 .team__card-image--badge {
 	width: 96px;
 	height: 96px;
@@ -32,31 +34,39 @@
 	border-radius: 100%;
 	background: #fff;
 }
+
 .team__card-image--badge---container {
 	left: 50%;
 	position: absolute;
 	top: 50%;
 	transform: translate(-50%, -50%);
+	object-fit: cover;
+	width: 100%;
 }
+
 .team__card-image--badge---adjust {
 	width: 6rem;
 	height: 6rem;
 	vertical-align: middle;
+	object-fit: cover;
 }
 
 .team__card-info--box {
 	padding: 3rem 0.5rem 1rem;
 	line-height: 1.8;
 }
+
 .team__card-info--box---adjust {
 	font-weight: 600;
 	font-size: 1.5rem;
 }
+
 .team__card-info--box---clubname {
 	font-size: 1.2rem;
 	font-weight: 400;
 	color: black;
 }
+
 .team__card-info--box---stadiumname {
 	font-size: 1rem;
 	line-height: 1.4;
@@ -72,12 +82,14 @@
 	cursor: pointer;
 	transition: all 0.2s ease;
 }
+
 .team__card-info--box---button----text {
 	font-size: 1rem;
 	line-height: 1.4;
 	color: black;
 	font-weight: 600;
 }
+
 // &----icon {
 // 	margin-left: 6px;
 // 	margin-bottom: 2px;
@@ -98,6 +110,7 @@
 .__block__icon {
 	background-color: transparent !important;
 }
+
 .__block__icon--adjust {
 	background-color: transparent !important;
 	position: absolute;
