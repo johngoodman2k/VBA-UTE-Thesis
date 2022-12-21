@@ -59,9 +59,9 @@ export const TeamManager = () => {
 			<div className='border-b border-solid'>
 				<p className='uppercase font-bold text-4xl  text-left p-4 mx-2 flex flex-col'>
 
-					{params.id && <div className='block'>Season: {season ? season.name : ""}</div>}
+					{params.id && <div className='block'>Season {season ? season.name : ""}</div>}
 
-					<div className='ml-6 block'>Team manager</div>
+					<div className=' block'>Team manager</div>
 					<div className='ml-auto text-right hover:cursor-pointer'>
 						<Plus onClick={handleCreate} className='w-[48px] h-[48px]'></Plus>
 					</div>

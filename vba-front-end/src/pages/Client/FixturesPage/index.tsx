@@ -47,7 +47,7 @@ export const FixturesPage = () => {
 
 	useEffect(() => {
 		(async () => {
-			if(params.id){
+			if (params.id) {
 				const res1 = await seasonServices.getSeasonByTournamentId(params.id)
 				if(res1 && res1.length !==0){
 					// setSeasonIdSelected(res1[0].id?? "")
@@ -73,10 +73,10 @@ export const FixturesPage = () => {
 				// 	setTournament(res);
 
 				// }
-				
+
 			}
 		})();
-	}, [params.id,seasonIdSelected]);
+	}, [params.id, seasonIdSelected]);
 	return (
 		<>
 			<ContentWrapper>
@@ -84,20 +84,24 @@ export const FixturesPage = () => {
 				<div className={`${cx('__main-wrapper')}`}>
 					<div className={`${cx('__main-fixturesHeader')}`}>
 						{/* season select */}
+						<div 
+						 className='flex justify-center gap-8'>
+						<div className='text-2xl font-bold italic'>Filter by season</div>
 						<div className='relative inline-block w-2/5 mr-2 ml-2 '>
 							<label className={`${cx('__selection')} w-full `}>
-								<select value={seasonIdSelected} onChange={(e:any) =>setSeasonIdSelected(e.target.value)} className={`${cx('__selection__button')} `}>
-									{seasonList.length>0 &&seasonList.map((season)=>
-										(<option value={season.id} className={`${cx('__selection__button')}`}>
-									{season.name}
-									</option> ))}
-										
-									
+								<select value={seasonIdSelected} onChange={(e: any) => setSeasonIdSelected(e.target.value)} className={`${cx('__selection__button')} `}>
+									{seasonList.length > 0 && seasonList.map((season) =>
+									(<option value={season.id} className={`${cx('__selection__button')}`}>
+										{season.name}
+									</option>))}
+
+
 								</select>
 								<div className={`${cx('__arrow')}`}>
 									<DownArrowLogo className='w-4 h-4'></DownArrowLogo>
 								</div>
 							</label>
+						</div>
 						</div>
 
 						{season && season.rounds && season.rounds.map((x: Round, i: number) => {
@@ -137,9 +141,8 @@ export const FixturesPage = () => {
 												;
 											</div>
 										</div>
-									</>
-								);
-							})}
+											</>
+						)})}
 					</div>
 				</div>
 			</ContentWrapper>
