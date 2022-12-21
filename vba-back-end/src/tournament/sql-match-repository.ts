@@ -26,4 +26,7 @@ export class SqlMatchRepository
       return this.exec(stmt.query, stmt.params, ctx);
     }
   }
+  getMatchesBySeasonId(matchId:string):Promise<Match[]>{
+    return this.query<Match>("select *from matches where seasonId =$1",[matchId])
+  }
 }

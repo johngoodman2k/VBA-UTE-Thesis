@@ -47,8 +47,8 @@ export class TournamentManager extends Manager<Tournament, string, TournamentFil
 	getTeamByTournament(tournament: string): Promise<Team[]> {
 		return this.teamRepository.getTeamByTournament(tournament);
 	}
-	getRoundByTournament(tournament: string): Promise<Round[]> {
-		return this.roundRepository.getRoundByTournament(tournament);
+	getRoundBySeasonId(seasonId: string): Promise<Round[]>{
+		return this.roundRepository.getRoundBySeasonId(seasonId);
 	}
 	getTournamentById(id: string): Promise<Tournament[]> {
 		return this.tournamentRepository.getTournamentById(id);
@@ -79,8 +79,11 @@ export class TournamentManager extends Manager<Tournament, string, TournamentFil
 	createGenerate(matches: Match[],rounds:Round[],season:Season):Promise<number>{
 		return this.tournamentRepository.createGenerate(matches,rounds,season);
 	}
-	getMergeTournamentById(tournamentId: string,seasonId:string):Promise<Tournament[]>{
+	getMergeTournamentById(tournamentId: string,seasonId:string):Promise<Season[]>{
 		return this.tournamentRepository.getMergeTournamentById(tournamentId,seasonId);
+	}
+	getMatchesBySeasonId(matchId:string):Promise<Match[]>{
+		return this.matchRepository.getMatchesBySeasonId(matchId);
 	}
 }
 export function useTournamentService(db: DB, mapper?: TemplateMap): TournamentService {

@@ -20,7 +20,7 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 		this.GetGeneratedMatches = this.GetGeneratedMatches.bind(this);
 		this.GetAllTournament = this.GetAllTournament.bind(this);
 		this.createSeasonAndAddToTournament = this.createSeasonAndAddToTournament.bind(this);
-		this.getMergeTournamentById = this.getMergeTournamentById.bind(this);
+		this.getMergeTournamentById  = this.getMergeTournamentById.bind(this);
 		// this.createTournament = this.createTournament.bind(this);
 		// this. = this.getTeamByTournament.bind(this);
 	}
@@ -286,11 +286,53 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 	async getMergeTournamentById (req:Request, res:Response){
 		const {tournamentId,seasonId} = req.params
 
-		const tournaments = await this.tournamentService.getMergeTournamentById(tournamentId,seasonId)
+		const seasons = await this.tournamentService.getMergeTournamentById(tournamentId,seasonId)
 
-		if(!tournaments){
+		if(!seasons){
 			return res.status(400).json({err: "Tournament doest not exist"})
 		}
-		return res.status(200).json(tournaments)
+		if(seasons.length ===0 )return res.status(200).json(seasons)
+
+		const rounds = await this.tournamentService.getRoundBySeasonId(seasons[0].id)
+		if(!rounds){
+			return res.status(404).json({err: "Rounds doest not exist"})
+		}
+		if(rounds.length ===0) {
+			seasons[0].rounds= []
+			return res.status(200).json(seasons[0])
+		}
+
+		
+		const matchesInSeason = await this.tournamentService.getMatchesBySeasonId(seasons[0].id);
+		if(!matchesInSeason){
+			return res.status(404).json({err: "Matches doest not exist"})
+		}
+		if(matchesInSeason.length ===0){
+			seasons[0].rounds = rounds
+			return res.status(200).json(seasons[0])
+		}
+
+		const teamsInSeason = await this.tournamentService.getTeamBySeasonId(seasons[0].id);
+		if(!teamsInSeason){
+			return res.status(404).json({err: "Teams doest not exist"})
+		}
+		if(teamsInSeason.length ===0){
+			seasons[0].rounds = rounds
+			return res.status(200).json(seasons[0])
+		}
+
+		for(const m of matchesInSeason){
+			m.home = teamsInSeason.find((t: Team) => t.id === m.home)
+			m.away = teamsInSeason.find((t: Team) => t.id === m.away)
+		}
+		
+		for(const r of rounds){
+			r.matches = matchesInSeason.filter((m:Match)=> m.round === r.id);
+		}
+		// const newArray = [...];
+
+		const rs = seasons.map((s) => {return {...s , rounds: rounds}}) as Season[]
+		// seasons[0].rounds =rounds;
+		return res.status(200).json(rs)
 	}
 }

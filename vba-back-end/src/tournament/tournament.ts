@@ -27,8 +27,8 @@ export interface Match {
 	id: string;
 	tournamentId: string;
 	round: string;
-	home: Team;
-	away: Team;
+	home: string | Team;
+	away: string | Team;
 	homeResult: number;
 	awayResult: number;
 	matchDay: Date;
@@ -100,14 +100,15 @@ export interface TournamentRepository extends Repository<Tournament, string> {
 	createTournament(tournament: Tournament, ctx?: any): Promise<number>;
 	createSeasonAndAddToTournament(season: Season, tournament: Tournament, standings: Standings): Promise<number>;
 	createGenerate(matches: Match[],rounds:Round[],season:Season):Promise<number>;
-	getMergeTournamentById(tournamentId: string,seasonId:string):Promise<Tournament[]>;
+	getMergeTournamentById(tournamentId: string,seasonId:string):Promise<Season[]>;
 }
 export interface MatchRepository extends Repository<Match, string> {
 	buildToInsertMatches(matches: Match[], ctx?: any): Promise<number>;
+	getMatchesBySeasonId(matchId:string):Promise<Match[]>
 }
 
 export interface RoundRepository extends Repository<Round, string> {
-	getRoundByTournament(tournament: string): Promise<Round[]>;
+	getRoundBySeasonId(seasonId: string): Promise<Round[]>
 	saveRound(roud: Round): Promise<number>;
 	buildToInsertRound(rounds: Round[], ctx?: any): Promise<number>;
 }
@@ -123,8 +124,7 @@ export interface TournamentService extends Service<Tournament, string, Tournamen
 	buildToInsertMatches(matches: Match[], ctx?: any): Promise<number>;
 	buildToInsertRound(rounds: Round[], ctx?: any): Promise<number>;
 
-	getRoundByTournament(tournament: string): Promise<Round[]>;
-
+	getRoundBySeasonId(seasonId: string): Promise<Round[]>;
 	getTeamByTournament(tournament: string): Promise<Team[]>;
 	getTournamentById(id: string): Promise<Tournament[]>;
 
@@ -137,7 +137,8 @@ export interface TournamentService extends Service<Tournament, string, Tournamen
 	createSeasonAndAddToTournament(season: Season, tournament: Tournament, standings: Standings): Promise<number>;
 	getTeamBySeasonId(seasonId: string):Promise<Team[]>;
 	createGenerate(matches: Match[],rounds:Round[],season:Season):Promise<number>;
-	getMergeTournamentById(tournamentId: string,seasonId:string):Promise<Tournament[]>;
+	getMergeTournamentById(tournamentId: string,seasonId:string):Promise<Season[]>;
+	getMatchesBySeasonId(matchId:string):Promise<Match[]>
 }
 
 export const tournamentModel: Attributes = {

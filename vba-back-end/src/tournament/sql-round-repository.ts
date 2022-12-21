@@ -15,8 +15,8 @@ export class SqlRoundRepository
     super(db, "rounds", roundModel);
   }
 
-  getRoundByTournament(tournament: string): Promise<Round[]> {
-    return this.query<Round>(getRoundByTournamentId, [tournament]);
+  getRoundBySeasonId(seasonId: string): Promise<Round[]> {
+    return this.query<Round>('select * from rounds where seasonid = $1', [seasonId]);
   }
 
   saveRound(round: Round): Promise<number> {

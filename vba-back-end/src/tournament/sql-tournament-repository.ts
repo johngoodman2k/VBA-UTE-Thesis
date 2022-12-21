@@ -42,7 +42,7 @@ export class SqlTournamentRepository extends Repository<Tournament, string> impl
 
 		return this.execBatch([q1,q2,q3]).then((count) => (count > 0 ?1:0))
 	}
-	getMergeTournamentById(tournamentId: string,seasonId:string):Promise<Tournament[]>{
-		return this.query<Tournament>('select t.id, t.name, t.description, startdate, enddate, type, competitor, s.id as seasonid, s.name as seasonname, r.roundname, te.teamname, te.teamlogo, m.matchday, m.id as matchid, m.home as matchhome, m.away as matchaway, te.id as teamid, te.stadiumname, r.id as roundid, r.createdat as roundcreatedat FROM 	tournaments t INNER JOIN seasons s 	ON  s.tournamentid = t.id INNER JOIN rounds r 	ON  r.seasonid  = s.id   INNER JOIN matches m  	ON  m.round  = r.id 	 INNER JOIN teams te 	ON  te.id  = m.home or te.id  = m.away      where t.id = $1 and  s.id = $2 ORDER BY t.createdat',[tournamentId,seasonId])
+	getMergeTournamentById(tournamentId: string,seasonId:string):Promise<Season[]>{
+		return this.query<Season>('select  s.id, s.name, s.status, s.tournamentid, s.standingsid, s.rounds, s.createdat from seasons s inner join tournaments t on t.id = s.tournamentid where s.id = $2 and t.id =$1',[tournamentId,seasonId])
 	}
 }

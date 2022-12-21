@@ -226,7 +226,7 @@ export const MatchDetailPage = () => {
 									<div className={cx('__centralContent__homeTheme')}>
 										<div className={cx('__centralContent__teamLogoBlock')}>
 											{matchDetail && matchDetail.home &&<img
-												src={matchDetail.home[0].teamlogo ??"" }
+												src={matchDetail.home[0].teamlogo as any ??"" }
 												alt=''
 												className={cx('__centralContent__teamLogoBlock--adjust')}
 											/>}
@@ -269,7 +269,7 @@ export const MatchDetailPage = () => {
 											<MatchInfoBar
 											date={dateFormat(matchDetail.matchday)?.toString()??""}
 											referee={matchDetail.referee??""}
-											stadiumName={matchDetail.home ? matchDetail.home[0].stadiumname??"" : ""}
+											stadiumName={matchDetail.home ? matchDetail.home[0].stadiumname ??"" : ""}
 											spectators={matchDetail.spectators ??""}
 										/>
 										}
