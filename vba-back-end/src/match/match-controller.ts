@@ -85,18 +85,10 @@ export class MatchController extends Controller<Match, string, MatchFilter> {
 
     async getMatchDetails(req:Request,res:Response){
         const {id} = req.params
-        const matches = await this.matchService.getMatchDetails(id);
+        const matches = await this.matchService.getMatchById(id);
         if(!matches) return res.status(404).json({ err: "Match not found" });
         if(matches.length ===0) return res.status(200).json(matches);
-        const homeId= matches[0].home
-        const awayId = matches[0].away
-        const home = await this.matchService.getTeamByMatchId(homeId as string)
-        const away = await this.matchService.getTeamByMatchId(awayId as string)
 
-        matches[0].home = home as any
-        matches[0].away = away as any
-        if(!home || home.length ===0) matches[0].home = await this.matchService.getTeamById(homeId as string) as any
-        if(!away || away.length ===0) matches[0].home = await this.matchService.getTeamById(awayId as string) as any
 
         
         return res.status(200).json(matches[0])

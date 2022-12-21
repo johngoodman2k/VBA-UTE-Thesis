@@ -331,7 +331,7 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 		}
 		// const newArray = [...];
 
-		const rs = seasons.map((s) => {return {...s , rounds: rounds}}) as Season[]
+		const rs = seasons.map((s) => {return {...s , rounds: rounds,teams: teamsInSeason}}) as Season[]
 		// seasons[0].rounds =rounds;
 		return res.status(200).json(rs)
 	}
