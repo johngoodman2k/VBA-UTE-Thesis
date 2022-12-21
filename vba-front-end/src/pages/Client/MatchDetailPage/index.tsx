@@ -37,26 +37,26 @@ const teamServices = vbaContext.getTeamServices();
 const playerServices = vbaContext.getPlayerServices();
 
 interface CustomProcess {
-	id?:string,
-	type?:string,
-	mins?:string |number,
-	quater?:string,
-	playerattack?:string,
-	playersupport?:string,
-	side?:string,
-	match?:string,
-	option?:string,
-	description?:string,
-	firstname?:string,
-	lastname?:string,
-	image?:string,
-	shirtnumber?:string | number,
-	country?:string,
-	playerid?:string,
+	id?: string,
+	type?: string,
+	mins?: string | number,
+	quater?: string,
+	playerattack?: string,
+	playersupport?: string,
+	side?: string,
+	match?: string,
+	option?: string,
+	description?: string,
+	firstname?: string,
+	lastname?: string,
+	image?: string,
+	shirtnumber?: string | number,
+	country?: string,
+	playerid?: string,
 }
 
 // const getHomeTeam = (m:CustomMatch[]) =>{
-	
+
 // 	return m.find((item)=> item.home === item.teamid)
 // }
 
@@ -64,16 +64,16 @@ interface CustomProcess {
 // 	return m.find((item)=> item.away === item.teamid)
 // }
 
-const getPlayerAttackByProcessId = (p:CustomProcess[],processId:string) =>{
-	return p.find((item)=> item.id === processId && item.playerattack === item.playerid)
+const getPlayerAttackByProcessId = (p: CustomProcess[], processId: string) => {
+	return p.find((item) => item.id === processId && item.playerattack === item.playerid)
 }
 
-const getPlayerSupportByProcessId = (p:CustomProcess[],processId:string) =>{
-	return p.find((item)=> item.id === processId && item.playersupport === item.playerid)
+const getPlayerSupportByProcessId = (p: CustomProcess[], processId: string) => {
+	return p.find((item) => item.id === processId && item.playersupport === item.playerid)
 }
 
-const getProcessById = (p:CustomProcess[],processId:string) =>{
-	return p.find((item)=> item.id === processId)
+const getProcessById = (p: CustomProcess[], processId: string) => {
+	return p.find((item) => item.id === processId)
 }
 
 
@@ -143,17 +143,17 @@ export const MatchDetailPage = () => {
 
 	useEffect(() => {
 		(async () => {
-			if(params.id){
+			if (params.id) {
 				const res = await matchServices.getMatchDetails(params.id);
 				setMatchDetail(res)
-				console.log("matches",res)
+				console.log("matches", res)
 				const res1 = await processServices.getProcessesByMatchId(params.id) as CustomProcess[];
 				setProcesses(res1);
-				console.log("process",res1)
+				console.log("process", res1)
 
-				const processArray = res1.map((item:CustomProcess) => item.id)
-				const process1 = processArray.filter((iteam, index) => {return processArray.indexOf(iteam) === index;});
-				setProcessIdArray(process1  as string[])
+				const processArray = res1.map((item: CustomProcess) => item.id)
+				const process1 = processArray.filter((iteam, index) => { return processArray.indexOf(iteam) === index; });
+				setProcessIdArray(process1 as string[])
 
 			}
 		})();
@@ -225,34 +225,34 @@ export const MatchDetailPage = () => {
 								<div className={cx('__centralContent__theme')}>
 									<div className={cx('__centralContent__homeTheme')}>
 										<div className={cx('__centralContent__teamLogoBlock')}>
-											{matchDetail && matchDetail.home &&<img
-												src={matchDetail.home[0].teamlogo ??"" }
+											{matchDetail && matchDetail.home && <img
+												src={matchDetail.home[0].teamlogo ?? ""}
 												alt=''
 												className={cx('__centralContent__teamLogoBlock--adjust')}
 											/>}
 										</div>
 									</div>
-								
+
 								</div>
 								<div className={cx('__centralContent__theme')}>
 									<div className={cx('__centralContent__awayTheme')}>
 										<div className={cx('__centralContent__teamLogoBlock')}>
-											{matchDetail && matchDetail.away &&<img
-												src={matchDetail.away[0].teamlogo ??""}
+											{matchDetail && matchDetail.away && <img
+												src={matchDetail.away[0].teamlogo ?? ""}
 												alt=''
 												className={cx('__centralContent__teamLogoBlock--adjust')}
 											/>}
 										</div>
 									</div>
-								
+
 								</div>
 								<div className={cx('__centralContent__theme')}>
 									<svg width='100%' height='100%' viewBox='0 0 100 100' preserveAspectRatio='none'>
-										{matchDetail && matchDetail.home &&<polygon
+										{matchDetail && matchDetail.home && <polygon
 											points='0,0 60,0 40,100 0,100 0,0'
 											fill={matchDetail.home[0].color ?? ""}
 											fillOpacity='0.95'></polygon>}
-										{matchDetail && matchDetail.away&&<polygon
+										{matchDetail && matchDetail.away && <polygon
 											points='60,0 40,100 100,100 100,0 60,0'
 											fill={matchDetail.away[0].color ?? ""}
 											fillOpacity='0.95'></polygon>}
@@ -267,13 +267,13 @@ export const MatchDetailPage = () => {
 									<div className={cx('__bar')}>
 										{matchDetail &&
 											<MatchInfoBar
-											date={dateFormat(matchDetail.matchday)?.toString()??""}
-											referee={matchDetail.referee??""}
-											stadiumName={matchDetail.home ? matchDetail.home[0].stadiumname??"" : ""}
-											spectators={matchDetail.spectators ??""}
-										/>
+												date={dateFormat(matchDetail.matchday)?.toString() ?? ""}
+												referee={matchDetail.referee ?? ""}
+												stadiumName={matchDetail.home ? matchDetail.home[0].stadiumname ?? "" : ""}
+												spectators={matchDetail.spectators ?? ""}
+											/>
 										}
-										
+
 									</div>
 								</div>
 
@@ -306,19 +306,19 @@ export const MatchDetailPage = () => {
 								<div className={cx('__scoreboxContainer')}>
 									<div className={cx('__container')}>
 										<div className={cx('__scoreboxContainer')}>
-											{matchDetail && matchDetail.home && matchDetail.away && 
+											{matchDetail && matchDetail.home && matchDetail.away &&
 												<MatchResultDetailBar
-												homeBadge={matchDetail.home[0].teamlogo?? ""}
-												homeName={matchDetail.home[0].teamname?? "" }
-												homeResult={matchDetail.homeresult ?? "0"}
-												awayBadge={matchDetail.away[0].teamlogo ??""}
-												awayName={matchDetail.away[0].teamname?? ""}
-												awayResult={matchDetail.awayresult ?? "0"}
-											/>
+													homeBadge={matchDetail.home[0].teamlogo ?? ""}
+													homeName={matchDetail.home[0].teamname ?? ""}
+													homeResult={matchDetail.homeresult ?? "0"}
+													awayBadge={matchDetail.away[0].teamlogo ?? ""}
+													awayName={matchDetail.away[0].teamname ?? ""}
+													awayResult={matchDetail.awayresult ?? "0"}
+												/>
 											}
-											
 
-											
+
+
 
 
 											<SummarizeBox></SummarizeBox>
@@ -326,58 +326,58 @@ export const MatchDetailPage = () => {
 												<a className={cx('__timeLine__team')}>
 													<span className={cx('__timeLine__badge')}>
 														<span className={cx('__timeLine__badge__block')}>
-															{matchDetail && matchDetail.home &&<img
+															{matchDetail && matchDetail.home && <img
 																alt=""
-																src={matchDetail.home[0].teamlogo ??""}
+																src={matchDetail.home[0].teamlogo ?? ""}
 																className={cx('__timeLine__badge--adjust')}></img>}
 														</span>
 													</span>
-													{matchDetail && matchDetail.home && matchDetail.home[0].teamname ?matchDetail.home[0].teamname :"" }
+													{matchDetail && matchDetail.home && matchDetail.home[0].teamname ? matchDetail.home[0].teamname : ""}
 												</a>
 												<div className={cx('__timeLine__crossbar')}>
 													<div className={cx('__timeLine__crossbar--adjust')}>HT</div>
-													{processIdArray.map((processId: string,i:number) => {
-																return (
-																	
-																		matchDetail && matchDetail.home && matchDetail.away &&
+													{processIdArray.map((processId: string, i: number) => {
+														return (
 
-																		<MatchEventTimeLine
-																		type={getProcessById(processes,processId)?.type ?? ""}
-																		mins={getProcessById(processes,processId)?.mins as number ?? ""}
-																		homeBadge={matchDetail.home[0].teamlogo ?? ""}
-																		homeName={matchDetail.home[0].teamname?? ""}
-																		homeResult={matchDetail.homeresult?? "0"}
-																		awayBadge={matchDetail.away[0].teamlogo as string?? ""}
-																		awayName={matchDetail.away[0].teamname?? ""}
-																		awayResult={matchDetail.awayresult ?? "0"}
-																		playerName={getPlayerAttackByProcessId(processes,processId)?.lastname && "" + getPlayerAttackByProcessId(processes,processId)?.firstname &&""}
-																		playerImg={getPlayerAttackByProcessId(processes,processId)?.image ?? ""}
-																		playerNumber={getPlayerAttackByProcessId(processes,processId)?.shirtnumber as number ?? ""}
-																		assistance={getPlayerSupportByProcessId(processes,processId)?.lastname && "" + getPlayerSupportByProcessId(processes,processId)?.firstname &&""}
-																		subOn={getPlayerAttackByProcessId(processes,processId)?.lastname && "" + getPlayerAttackByProcessId(processes,processId)?.firstname &&""}
-																		subOnImg={getPlayerAttackByProcessId(processes,processId)?.image ?? ""}
-																		subOnNumber={getPlayerAttackByProcessId(processes,processId)?.shirtnumber as number??""}
-																		subOff={getPlayerSupportByProcessId(processes,processId)?.lastname && "" + getPlayerSupportByProcessId(processes,processId)?.firstname &&""}
-																		subOffImg={getPlayerSupportByProcessId(processes,processId)?.image ?? ""}
-																		subOffNumber={getPlayerSupportByProcessId(processes,processId)?.shirtnumber as number ?? ""}
-																		side={getProcessById(processes,processId)?.side ?? ""}></MatchEventTimeLine>
-																	
-																	
-																);
-														  })
-														}
+															matchDetail && matchDetail.home && matchDetail.away &&
+
+															<MatchEventTimeLine
+																type={getProcessById(processes, processId)?.type ?? ""}
+																mins={getProcessById(processes, processId)?.mins as number ?? ""}
+																homeBadge={matchDetail.home[0].teamlogo ?? ""}
+																homeName={matchDetail.home[0].teamname ?? ""}
+																homeResult={matchDetail.homeresult ?? "0"}
+																awayBadge={matchDetail.away[0].teamlogo as string ?? ""}
+																awayName={matchDetail.away[0].teamname ?? ""}
+																awayResult={matchDetail.awayresult ?? "0"}
+																playerName={getPlayerAttackByProcessId(processes, processId)?.lastname && "" + getPlayerAttackByProcessId(processes, processId)?.firstname && ""}
+																playerImg={getPlayerAttackByProcessId(processes, processId)?.image ?? ""}
+																playerNumber={getPlayerAttackByProcessId(processes, processId)?.shirtnumber as number ?? ""}
+																assistance={getPlayerSupportByProcessId(processes, processId)?.lastname && "" + getPlayerSupportByProcessId(processes, processId)?.firstname && ""}
+																subOn={getPlayerAttackByProcessId(processes, processId)?.lastname && "" + getPlayerAttackByProcessId(processes, processId)?.firstname && ""}
+																subOnImg={getPlayerAttackByProcessId(processes, processId)?.image ?? ""}
+																subOnNumber={getPlayerAttackByProcessId(processes, processId)?.shirtnumber as number ?? ""}
+																subOff={getPlayerSupportByProcessId(processes, processId)?.lastname && "" + getPlayerSupportByProcessId(processes, processId)?.firstname && ""}
+																subOffImg={getPlayerSupportByProcessId(processes, processId)?.image ?? ""}
+																subOffNumber={getPlayerSupportByProcessId(processes, processId)?.shirtnumber as number ?? ""}
+																side={getProcessById(processes, processId)?.side ?? ""}></MatchEventTimeLine>
+
+
+														);
+													})
+													}
 												</div>
 
 												<a className={cx('__timeLine__team')}>
 													<span className={cx('__timeLine__badge')}>
 														<span className={cx('__timeLine__badge__block')}>
-															{matchDetail && matchDetail.away &&<img
-																alt= ""
+															{matchDetail && matchDetail.away && <img
+																alt=""
 																src={matchDetail.away[0].teamlogo ?? ""}
 																className={cx('__timeLine__badge--adjust')}></img>}
 														</span>
 													</span>
-													{matchDetail && matchDetail.away && matchDetail.away[0].teamname ?matchDetail.away[0].teamname :"" }
+													{matchDetail && matchDetail.away && matchDetail.away[0].teamname ? matchDetail.away[0].teamname : ""}
 												</a>
 											</div>
 										</div>
