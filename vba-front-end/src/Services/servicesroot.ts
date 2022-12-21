@@ -6,7 +6,7 @@ export interface TournamentServicesRoot {
 	createTournament(tournament: Tournament): Promise<Result<Tournament>>;
 	createSeasonAndAddToTournament(name:string,tournamentId:string):Promise<Result<Tournament[]>>;
 	updateTournament(id:string,tournament:Tournament): Promise<number>;
-	getMergeTournamentById(tournamentId:string, seasonId:string): Promise<Tournament[]>
+	getMergeTournamentById(tournamentId:string, seasonId:string): Promise<Season[]>
 	
 }
 

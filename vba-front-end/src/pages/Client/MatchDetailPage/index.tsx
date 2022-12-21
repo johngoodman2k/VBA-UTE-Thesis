@@ -226,7 +226,7 @@ export const MatchDetailPage = () => {
 									<div className={cx('__centralContent__homeTheme')}>
 										<div className={cx('__centralContent__teamLogoBlock')}>
 											{matchDetail && matchDetail.home && <img
-												src={matchDetail.home[0].teamlogo ?? ""}
+												src={matchDetail.home[0].teamlogo as any ?? ""}
 												alt=''
 												className={cx('__centralContent__teamLogoBlock--adjust')}
 											/>}

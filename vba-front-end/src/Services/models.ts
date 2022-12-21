@@ -66,11 +66,14 @@ export interface Season {
 }
 
 export interface Round {
-	id: string;
-	roundname: string;
-	tournamentId: string;
-	matches: Match[];
-	createdAt: Date;
+	id?: string;
+	roundname?: string;
+	tournamentId?: string;
+	tournamentid?: string;
+
+	matches?: Match[];
+	createdAt?: Date;
+	createdat?:Date
 }
 // export interface Match {
 //   id: string;
@@ -130,8 +133,8 @@ export interface Match {
 	seasonid?:string;
 	seasonId?:string;
 	round?: string;
-	home?: CustomTeam[];
-	away?: CustomTeam[];
+	home?: Team ;
+	away?: Team ;
 	homeResult?: string;
 	awayResult?: string;
 	homeresult?: string;

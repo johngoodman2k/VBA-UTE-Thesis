@@ -212,8 +212,8 @@ export const checkGhostTeamAndRemove = (matches: Match[]) => {
     // console.log(matches);
     const result = matches.filter((match) => {
         if (
-            match.home.teamName === "ghostteam" ||
-            match.away.teamName === "ghostteam"
+            match.home as any === 999 ||
+            match.away as any === 999
         ) {
             return false;
         } else {
@@ -228,9 +228,9 @@ export const getTeamPlayWithGhostTeam = (matches: Match[]) => {
     let result1 = undefined;
     let result2 = undefined;
     matches.forEach((match) => {
-        if (match.home.teamName === "ghostteam") {
+        if (match.home as any === 999) {
             result1 = match.away;
-        } else if (match.away.teamName === "ghostteam") {
+        } else if (match.away as any === 999) {
             result2 = match.home;
         }
     });

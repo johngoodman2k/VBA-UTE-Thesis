@@ -5,7 +5,7 @@ export const dateFormat = (date?: Date | string) => {
 	return format(new Date(date), 'dd MMMM yyyy');
 };
 
-export const timeFormat = (date?: Date) => {
+export const timeFormat = (date?: Date |string) => {
 	if(!date) return "";
 	return format(new Date(date), ' HH:mm:ss');
 };
