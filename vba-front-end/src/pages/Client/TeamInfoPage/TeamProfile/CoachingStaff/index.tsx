@@ -10,7 +10,7 @@ export const CoachingStaff = () => {
 				<div className={`${cx('__contentBlock')}`}>
 					<div className={`${cx('__titleBlock')}`}>
 						<h1 className='uppercase font-normal leading-3 text-2xl'>
-							Coaching Staff
+							Ban huấn luyện
 						</h1>
 						{/* <div className='flex justify-center items-center'>
 							<a className='font-normal text-xs leading-5 text-teal-600 mr-2'>
@@ -20,7 +20,7 @@ export const CoachingStaff = () => {
 					</div>
 					<div>
 						<div className='flex '>
-							<h3 className={`${cx('__heading')}`}>Head Coach</h3>
+							<h3 className={`${cx('__heading')}`}>HLV Trưởng</h3>
 							<ul className={`${cx('__list')}`}>
 								<li className=' hover:underline cursor-pointer hover:text-cyan-500'>
 									Khang Lit
@@ -28,7 +28,7 @@ export const CoachingStaff = () => {
 							</ul>
 						</div>
 						<div className='flex '>
-							<h3 className={`${cx('__heading')}`}>Head Coach</h3>
+							<h3 className={`${cx('__heading')}`}>Trợ lý</h3>
 							<ul className={`${cx('__list')}`}>
 								<li className=' hover:underline cursor-pointer hover:text-cyan-500'>
 									Khang Lit

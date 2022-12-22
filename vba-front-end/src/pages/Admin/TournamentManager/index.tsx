@@ -40,14 +40,14 @@ export const TournamentManager = () => {
 					className='uppercase font-bold text-4xl  text-left p-4 mx-2 flex
                  '
 				>
-					tournament manager
+					Quản lý giải đấu
 					<div className='ml-auto text-right hover:cursor-pointer'>
 						<Plus onClick={handleCreate} className='w-[48px] h-[48px]'></Plus>
 					</div>
 				</p>
 			</div>
 			<div className={clicked === true ? cx('__active') : cx('__inactive')}>
-				<CreateTournamentModal title='Create Tournament' handleCloseModal={handleCloseModal} ></CreateTournamentModal>
+				<CreateTournamentModal title='Tạo giải đấu' handleCloseModal={handleCloseModal} ></CreateTournamentModal>
 			</div>
 			<div className='m-2 p-2 justify-start flex-1 block space-y-8 md:space-y-0 md:space-x-8 md:flex'>
 				{listTournament.map((tournament: Tournament, i: number) => (

@@ -16,7 +16,7 @@ export const TeamRoster = ({ players }: teamRosterProps) => {
 						<div className={`${cx('__innerBlock__content')}`}>
 							<div className={`${cx('__titleBlock')}`}>
 								<h1 className='uppercase font-normal leading-3 text-2xl'>
-									Roster
+									Đội hình
 								</h1>
 								<div className='flex justify-center items-center'>
 									{/* <a className='font-normal text-xs leading-5 text-teal-600 mr-2'>
@@ -32,15 +32,15 @@ export const TeamRoster = ({ players }: teamRosterProps) => {
 											<thead>
 												<tr>
 													<th className={`${cx('__statsTable__primary')}`}>
-														Player
+														Tên
 													</th>
-													<th className='!pl-8'>Number</th>
-													<th>POS</th>
-													<th>HEIGHT</th>
-													<th>WEIGHT</th>
-													<th>BIRTHDATE</th>
-													<th>AGE</th>
-													<th>EXPERIENCE</th>
+													<th className='!pl-8'>Số</th>
+													<th>Vị trí</th>
+													<th>Chiều cao</th>
+													<th>Cân nặng</th>
+													<th>ngày sinh</th>
+													<th>tuổi</th>
+													<th>Kinh nghiệm</th>
 												</tr>
 											</thead>
 											<tbody>

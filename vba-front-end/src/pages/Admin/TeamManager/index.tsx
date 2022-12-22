@@ -59,16 +59,16 @@ export const TeamManager = () => {
 			<div className='border-b border-solid'>
 				<p className='uppercase font-bold text-4xl  text-left p-4 mx-2 flex flex-col'>
 
-					{params.id && <div className='block'>Season {season ? season.name : ""}</div>}
+					{params.id && <div className='block'>Mùa giải {season ? season.name : ""}</div>}
 
-					<div className=' block'>Team manager</div>
+					<div className=' block'>Quản lý đội</div>
 					<div className='ml-auto text-right hover:cursor-pointer'>
 						<Plus onClick={handleCreate} className='w-[48px] h-[48px]'></Plus>
 					</div>
 				</p>
 			</div>
 			<div className={clicked === true ? cx('__active') : cx('__inactive')}>
-				<CreateTeamModal title="Create Team" seasonId={params.id} reload={reload} setReload={setReload} handleCloseModal={handleCloseModal}></CreateTeamModal>
+				<CreateTeamModal title="Tạo đội" seasonId={params.id} reload={reload} setReload={setReload} handleCloseModal={handleCloseModal}></CreateTeamModal>
 			</div>
 
 			<div className='m-2 p-2 grid grid-cols-3 gap-[10rem]'>

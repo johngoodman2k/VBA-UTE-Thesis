@@ -36,14 +36,14 @@ export const LilStanding = ({ standings }: LilStandingTypes) => {
 				<div className='md:mb-3 md:rounded '>
 					<div className='p-2'>
 						<div className='flex justify-between border-b border-solid border-slate-300 my-4 py-6'>
-							<h1 className={`${cx('_header')}`}>2022-2023 standings</h1>
-							<a className='text-sm'>Go to Standings</a>
+							<h1 className={`${cx('_header')}`}>BXH 2022-2023</h1>
+							<a className='text-sm'>Xem thêm</a>
 						</div>
 						<div>
 							<table className={`${cx('_table')}`}>
 								<thead className='text-left'>
 									<tr>
-										<th className=' text-left min-w-[160px] w-[160px]'>Team</th>
+										<th className=' text-left min-w-[160px] w-[160px]'>Đội</th>
 										<th>W</th>
 										<th>L</th>
 										<th className='text-right'>Last 10</th>

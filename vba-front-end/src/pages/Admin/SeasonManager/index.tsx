@@ -57,9 +57,9 @@ export const SeasonManager = () => {
 		<>
 			<div className='border-b border-solid'>
 				<p className='uppercase font-bold text-4xl  text-left p-4 mx-2 flex flex-col'>
-					{params.id && <div className='block'>Tournament {tournament ? tournament.name : ""}</div>}
+					{params.id && <div className='block'>Giải đấu {tournament ? tournament.name : ""}</div>}
 
-					<div className='block'>Season manager</div>
+					<div className='block'>Quản lý mùa giải</div>
 					<div className='ml-auto text-right hover:cursor-pointer'>
 						<Plus onClick={handleCreate} className='w-[48px] h-[48px]'></Plus>
 					</div>

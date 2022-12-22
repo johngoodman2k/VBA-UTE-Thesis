@@ -27,42 +27,42 @@ const tournamentServices = vbaContext.getTournamentServices();
 const seasonServices = vbaContext.getSeasonServices();
 
 
-const getRoundByid = (t:CustomTournament[],roundId:string)=>{
-	if(t.length ===0) return;
-	return t.find((item)=> item.roundid === roundId)
+const getRoundByid = (t: CustomTournament[], roundId: string) => {
+	if (t.length === 0) return;
+	return t.find((item) => item.roundid === roundId)
 }
 
-const getMatchByRoundId = (t:CustomTournament[],roundId:string)=>{
-	if(t.length ===0) return [];
-	return t.filter((item)=> item.roundid === roundId)
+const getMatchByRoundId = (t: CustomTournament[], roundId: string) => {
+	if (t.length === 0) return [];
+	return t.filter((item) => item.roundid === roundId)
 }
 
 export const FixturesPage = () => {
 	const params = useParams();
 	const [season, setSeason] = useState<Season>();
-	const [seasonIdSelected,setSeasonIdSelected] = useState<string>("")
+	const [seasonIdSelected, setSeasonIdSelected] = useState<string>("")
 	const [seasonList, setSeasonList] = useState<Season[]>([])
-	const [rounds,setRounds] = useState<string[]>([]);
+	const [rounds, setRounds] = useState<string[]>([]);
 
 
 	useEffect(() => {
 		(async () => {
 			if (params.id) {
 				const res1 = await seasonServices.getSeasonByTournamentId(params.id)
-				if(res1 && res1.length !==0){
+				if (res1 && res1.length !== 0) {
 					// setSeasonIdSelected(res1[0].id?? "")
 					setSeasonList(res1)
-					if(seasonIdSelected && seasonIdSelected !==""){
-						const res = await tournamentServices.getMergeTournamentById(params.id,seasonIdSelected);
+					if (seasonIdSelected && seasonIdSelected !== "") {
+						const res = await tournamentServices.getMergeTournamentById(params.id, seasonIdSelected);
 						setSeason(res[0]);
 
-						console.log("60",res)
-					}else{
-						console.log(70,res1)
-						const res = await tournamentServices.getMergeTournamentById(params.id,res1[0].id?? "")
+						console.log("60", res)
+					} else {
+						console.log(70, res1)
+						const res = await tournamentServices.getMergeTournamentById(params.id, res1[0].id ?? "")
 						setSeason(res[0]);
 
-						console.log("80",res)
+						console.log("80", res)
 
 					}
 
@@ -84,65 +84,66 @@ export const FixturesPage = () => {
 				<div className={`${cx('__main-wrapper')}`}>
 					<div className={`${cx('__main-fixturesHeader')}`}>
 						{/* season select */}
-						<div 
-						 className='flex justify-center gap-8'>
-						<div className='text-2xl font-bold italic'>Filter by season</div>
-						<div className='relative inline-block w-2/5 mr-2 ml-2 '>
-							<label className={`${cx('__selection')} w-full `}>
-								<select value={seasonIdSelected} onChange={(e: any) => setSeasonIdSelected(e.target.value)} className={`${cx('__selection__button')} `}>
-									{seasonList.length > 0 && seasonList.map((season) =>
-									(<option value={season.id} className={`${cx('__selection__button')}`}>
-										{season.name}
-									</option>))}
+						<div
+							className='flex justify-center gap-8'>
+							<div className='text-2xl font-bold italic'>Mùa giải</div>
+							<div className='relative inline-block w-2/5 mr-2 ml-2 '>
+								<label className={`${cx('__selection')} w-full `}>
+									<select value={seasonIdSelected} onChange={(e: any) => setSeasonIdSelected(e.target.value)} className={`${cx('__selection__button')} `}>
+										{seasonList.length > 0 && seasonList.map((season) =>
+										(<option value={season.id} className={`${cx('__selection__button')}`}>
+											{season.name}
+										</option>))}
 
 
-								</select>
-								<div className={`${cx('__arrow')}`}>
-									<DownArrowLogo className='w-4 h-4'></DownArrowLogo>
-								</div>
-							</label>
-						</div>
+									</select>
+									<div className={`${cx('__arrow')}`}>
+										<DownArrowLogo className='w-4 h-4'></DownArrowLogo>
+									</div>
+								</label>
+							</div>
 						</div>
 
 						{season && season.rounds && season.rounds.map((x: Round, i: number) => {
-								return (
-									<>
-										<header>
-											<div className={`${cx('__main-fixturesHeader--week')}`}>MatchWeek {x.roundname}</div>
-											<div className={`${cx('__main-fixturesHeader--competition')}`}>
-												<img
-													className={`${cx('__main-fixturesHeader--competition---image')}`}
-													src='https://upload.wikimedia.org/wikipedia/vi/thumb/f/f2/Premier_League_Logo.svg/1200px-Premier_League_Logo.svg.png'
-													alt=''
-												/>
-											</div>
-											<div className={`${cx('__main-fixturesHeader--localtime')}`}>
-												All times shown are your <strong>local time</strong>
-											</div>
-										</header>
-										<div className={`${cx('__main-matchListContainer')}`}>
-											<div className={`${cx('__main-matchListContainer--time')}`}>
-												<h3 className={`${cx('__main-matchListContainer--time---text')}`}>{dateFormat(x.createdat as Date)}</h3>
-												<ul className={`${cx('__main-matchListContainer--list')}`}>
-													{x.matches && x.matches.map((y: Match) => {
-														return (
-															<UpcommingMatchLongBar
-																id={y.id}
-																team1Name={y.home?.teamname ?? ""}
-																team1Image={y.home?.teamlogo as string  ?? "" }
-																team2Image={y.away?.teamlogo as string ?? ""}
-																team2Name={y.away?.teamname ?? ""}
-																time={timeFormat(y.matchday ?? "").toString()}
-																stadium={y.home?.stadiumname ?? ""}
-															></UpcommingMatchLongBar>
-														);
-													})}
-												</ul>
-												;
-											</div>
+							return (
+								<>
+									<header>
+										<div className={`${cx('__main-fixturesHeader--week')}`}>Vòng {x.roundname}</div>
+										<div className={`${cx('__main-fixturesHeader--competition')}`}>
+											<img
+												className={`${cx('__main-fixturesHeader--competition---image')}`}
+												src='https://vba.vn/assets/img/svg/vba-logo.svg'
+												alt=''
+											/>
 										</div>
-											</>
-						)})}
+										<div className={`${cx('__main-fixturesHeader--localtime')}`}>
+											Thời gian được hiển thị theo <strong>khu vực của bạn</strong>
+										</div>
+									</header>
+									<div className={`${cx('__main-matchListContainer')}`}>
+										<div className={`${cx('__main-matchListContainer--time')}`}>
+											<h3 className={`${cx('__main-matchListContainer--time---text')}`}>{dateFormat(x.createdat as Date)}</h3>
+											<ul className={`${cx('__main-matchListContainer--list')}`}>
+												{x.matches && x.matches.map((y: Match) => {
+													return (
+														<UpcommingMatchLongBar
+															id={y.id}
+															team1Name={y.home?.teamname ?? ""}
+															team1Image={y.home?.teamlogo as string ?? ""}
+															team2Image={y.away?.teamlogo as string ?? ""}
+															team2Name={y.away?.teamname ?? ""}
+															time={timeFormat(y.matchday ?? "").toString()}
+															stadium={y.home?.stadiumname ?? ""}
+														></UpcommingMatchLongBar>
+													);
+												})}
+											</ul>
+											;
+										</div>
+									</div>
+								</>
+							)
+						})}
 					</div>
 				</div>
 			</ContentWrapper>

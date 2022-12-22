@@ -18,10 +18,10 @@ export const AdminSideBar = (props: AdminSideBarProps) => {
 				</div>
 			</div>
 			<div className='w-full px-8'>
-				<SidebarButton title='Tournaments' to='tournaments'></SidebarButton>
-				<SidebarButton title='Seasons' to='seasons'></SidebarButton>
-				<SidebarButton title='Teams' to='teams'></SidebarButton>
-				<SidebarButton title='Players' to='players'></SidebarButton>
+				<SidebarButton title='giải đấu' to='tournaments'></SidebarButton>
+				<SidebarButton title='mùa giải' to='seasons'></SidebarButton>
+				<SidebarButton title='đội' to='teams'></SidebarButton>
+				<SidebarButton title='cầu thủ' to='players'></SidebarButton>
 			</div>
 		</section>
 	);

@@ -59,14 +59,14 @@ export const PlayerManager = () => {
 			<div className='border-b border-solid'>
 				<p className='uppercase font-bold text-4xl  text-left p-4 mx-2 flex'>
 					{params.id && <div className='block'>Team: {team ? team.teamName ?? team.teamname : ""}</div>}
-					<div className='ml-6 block'>Player Manager</div>
+					<div className='ml-6 block'>Quản lý cầu thủ</div>
 					<div className='ml-auto text-right hover:cursor-pointer'>
 						<Plus onClick={handleCreate} className='w-[48px] h-[48px]'></Plus>
 					</div>
 				</p>
 			</div>
 			<div className={clicked === true ? cx('__active') : cx('__inactive')}>
-				<CreatePlayerModal reload={reload} setReload={setReload} id={params.id} title="Add Player" handleCloseModal={handleCloseModal}></CreatePlayerModal>
+				<CreatePlayerModal reload={reload} setReload={setReload} id={params.id} title="Tạo cầu thủ" handleCloseModal={handleCloseModal}></CreatePlayerModal>
 			</div>
 			<div className='m-2 p-2 justify-between flex-1 block space-y-8 md:space-y-0 md:space-x-8 md:flex'>
 

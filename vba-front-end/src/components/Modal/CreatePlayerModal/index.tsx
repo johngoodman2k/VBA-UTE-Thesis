@@ -121,55 +121,60 @@ export const CreatePlayerModal = (props: createPlayerProps) => {
 				<div className='flex flex-row'>
 					<div className='basis-3/6 flex flex-wrap'>
 						<div className='basis-1/2'>
-							<div className={cx('TitleTop')}>First Name</div>
+							<div className={cx('TitleTop')}>Họ</div>
 							<input id={props.title + "_firstname"} name="firstname" type='text' className={cx('Input', 'Input__Top')}></input>
 						</div>
 
 						<div className='basis-1/2'>
-							<div className={cx('TitleTop')}>Last Name</div>
+							<div className={cx('TitleTop')}>Tên</div>
 							<input id={props.title + "_lastname"} name="lastname" type='text' className={cx('Input', 'Input__Top')}></input>
 						</div>
 
 						<div className='basis-1/2 mt-1.5'>
-							<div className={cx('TitleTop')}>Date of Birth</div>
+							<div className={cx('TitleTop')}>Ngày sinh</div>
 							<input id={props.title + "_dayofbirth"} name="dateofbirth" type='date' className={cx('Input', 'Input__Top')}></input>
 						</div>
 
 						<div className='basis-1/2 mt-1.5'>
-							<div className={cx('TitleTop')}>Shirt Number</div>
+							<div className={cx('TitleTop')}>Số áo</div>
 							<input id={props.title + "_shirtnumber"} name="shirtnumber" type='number' min="0" max="999" className={cx('Input', 'Input__Top')}></input>
 						</div>
-						<div className='basis-full mt-3'>
-							{/* <div className={cx('TitleTop')}>Country</div>
-							<input id={props.title+"_country"}  name="country" type='text' className={cx('Input', 'Input__Top', 'Input__Top--oneobject')}></input> */}
-							<div className="bg-white color text-black rounded w-[90%] mx-auto">
-								<ReactFlagsSelect
-									className="pb-0"
-									selected={countrySelected}
-									onSelect={(code) => setCountrySelected(code)}
-								/>
-							</div>
 
+						{/* <div className={cx('TitleTop')}>Country</div>
+							<input id={props.title+"_country"}  name="country" type='text' className={cx('Input', 'Input__Top', 'Input__Top--oneobject')}></input> */}
+						<div className=" text-black rounded mt-3 basis-1/2">
+							<div className={cx('TitleTop')}>Quốc tịch</div>
+							<ReactFlagsSelect
+								className={cx('Input', '', 'bg-white')}
+								selected={countrySelected}
+								onSelect={(code) => setCountrySelected(code)}
+							/>
 						</div>
+						<div className='basis-1/2 mt-1.5'>
+							<div className={cx('TitleTop')}>Kinh nghiệm</div>
+							<input id='' name="experience" type='number' min="0" max="999" className={cx('Input', 'Input__Top')}></input>
+						</div>
+
+
 					</div>
 
 					<div className='basis-1/6 flex flex-col'>
 						<div className='h-auto w-full'>
-							<div className={cx('TitleTop')}>Weight(Kg)</div>
+							<div className={cx('TitleTop')}>Cân nặng(Kg)</div>
 							<input id={props.title + "_weight"} name="weight" type="number" min="20" max="200" className={cx('Input', 'Input__Top', 'Input__Top--oneobject')}></input>
 						</div>
 						<div className='h-auto w-full mt-1.5'>
-							<div className={cx('TitleTop')}>Height(m)</div>
+							<div className={cx('TitleTop')}>Chiều cao(m)</div>
 							<input id={props.title + "_height"} name="height" type='number' min="1" max="3" step="0.001" className={cx('Input', 'Input__Top', 'Input__Top--oneobject')}></input>
 						</div>
 						<div className='h-auto w-full mt-1.5'>
-							<div className={cx('TitleTop')}>Position</div>
+							<div className={cx('TitleTop')}>Vị trí</div>
 							<input type='text' className={cx('Input', 'Input__Top', 'Input__Top--oneobject')}></input>
 						</div>
 					</div>
 
 					<div className='basis-2/6 flex flex-col '>
-						<div className={cx('TitleTop')}>Image</div>
+						<div className={cx('TitleTop')}>Hình ảnh</div>
 
 						<div className='flex flex-col relative mt-4 h-full w-full rounded-md'>
 							<div className='w-full h-full bg-white rounded-md'>

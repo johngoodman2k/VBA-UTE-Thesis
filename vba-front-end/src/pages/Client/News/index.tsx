@@ -9,7 +9,9 @@ export const News = () => {
 	return (
 		<article className={`${cx('__container')}`}>
 			<div className={`${cx('__wrapper')}`}>
+				<div className='text-white text-6xl border-b border-solid border-third-color font-bold text-left uppercase p-4'>Tin tức</div>
 				<div className={`${cx('__layout')}`}>
+
 					<div className='grid grid-cols-3 gap-8 py-2 my-2'>
 						<NewsBlock
 							title='Khang dam sau'

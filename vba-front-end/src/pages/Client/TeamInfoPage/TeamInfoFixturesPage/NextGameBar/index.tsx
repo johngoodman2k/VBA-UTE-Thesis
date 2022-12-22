@@ -9,7 +9,7 @@ export const NextGameBar = () => {
 			{/* side */}
 			<div
 				className={`${cx('__side')} xl:col-span-1 md:col-span-2 sm:col-span-4`}>
-				<p className='uppercase text-sm font-bold '>Home</p>
+				<p className='uppercase text-sm font-bold '>Nhà</p>
 			</div>
 			{/* shirt */}
 			<div
@@ -57,7 +57,7 @@ export const NextGameBar = () => {
 
 				<p className='uppercase font-bold  text-sm'>
 					<span className='text-base text-gray-400 uppercase font-medium'>
-						stadium:{' '}
+						SVĐ:{' '}
 					</span>
 					TAN BINH AREA
 				</p>
@@ -65,7 +65,7 @@ export const NextGameBar = () => {
 
 			{/* game recap */}
 			<div className={`${cx('__content')} xl:col-span-2 sm:col-span-1`}>
-				<a className={`${cx('__button')} uppercase`}>Game Recap</a>
+				<a className={`${cx('__button')} uppercase`}>Chi tiết</a>
 			</div>
 		</div>
 	);

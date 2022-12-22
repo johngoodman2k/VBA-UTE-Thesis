@@ -51,6 +51,7 @@ function App() {
 					<Route path='/articles' element={<Articles></Articles>} />
 					<Route path='/news' element={<News></News>} />
 					<Route path='/standings/:id' element={<StandingPage></StandingPage>} />
+					<Route path='/about' element={<AboutPage></AboutPage>} />
 
 					<Route path='/admin'>
 						<Route path='tournaments' element={<AdminHomePage manager='tournaments'></AdminHomePage>} />
@@ -62,15 +63,15 @@ function App() {
 						<Route path='players' element={<AdminHomePage manager='players'></AdminHomePage>} />
 					</Route>
 
-					<Route path='/ticyketpage' element={<TicketPage></TicketPage>} />
-					<Route path='/ticketdetailspage' element={<TicketDetailsPage></TicketDetailsPage>} />
+					{/* <Route path='/ticketpage' element={<TicketPage></TicketPage>} />
+					<Route path='/ticketdetailspage' element={<TicketDetailsPage></TicketDetailsPage>} /> */}
 					<Route path='/signup' element={<SignUp></SignUp>} />
 					<Route path='/signin' element={<SignIn></SignIn>} />
 					<Route path='/otp' element={<OTP></OTP>} />
 					<Route path='/otpforgotpassword' element={<OTPForgotPassword></OTPForgotPassword>} />
 					<Route path='/newpassword' element={<NewPassword></NewPassword>} />
 					<Route path='/forgotpassword' element={<ForgotPassword></ForgotPassword>} />
-					<Route path='/about' element={<AboutPage></AboutPage>} />
+
 				</Routes>
 			</BrowserRouter>
 		</>

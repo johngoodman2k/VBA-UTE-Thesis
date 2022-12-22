@@ -12,12 +12,12 @@ export const TeamUpCommingGames = () => {
 						<div className={`${cx('__innerBlock__content')}`}>
 							<div className={`${cx('__titleBlock')}`}>
 								<h1 className='uppercase font-normal leading-3 text-2xl'>
-									upcoming games
+									Lịch thi đấu
 								</h1>
 								<div className='flex justify-center items-center'>
 									{/* <Link to={`/teaminfofixtures/`}> */}
 									<a className='font-normal text-xs leading-5 text-teal-600 mr-2'>
-										See full schedule
+										Xem thêm
 									</a>
 									{/* </Link> */}
 								</div>

@@ -18,9 +18,10 @@ const teamServices = vbaContext.getTeamServices();
 const tournamentServices = vbaContext.getTournamentServices();
 const standingsServices = vbaContext.getStandingsServices();
 
+
 export const LandingPageScroll = () => {
 	const [teams, getTeams] = useState<Team[]>();
-	const [tournament, setTournament] = useState<Tournament>();
+	const [tournament, setTournament] = useState<Season>();
 	const [standings, setStandings] = useState<Standings>();
 	gsap.registerPlugin(CSSRulePlugin);
 	let intro = useRef(null);
@@ -48,16 +49,18 @@ export const LandingPageScroll = () => {
 		);
 
 		(async () => {
-			const res: any = await teamServices.getAllTeams();
-			const res1 = await tournamentServices.getTournamentById('09NmnaUrGxa5RtAhqlaZ1');
-			if (res1 && res1.seasons) {
-				const res2 = await standingsServices.getStandingsById(res1?.seasons[res1.seasons.length - 1].standingsId);
-				setTournament(res1);
-				setStandings(res2);
-			}
+
+			const res = await tournamentServices.getMergeTournamentById('uWvQv6nLYcPAyztGvzqyZ', 'AHLn-VnvtNsxFh6olzbCd')
+			console.log('54', res)
+			// if (res1 && res1.seasons) {
+			// 	const res2 = await standingsServices.getStandingsById(res1?.seasons[res1.seasons.length - 1].standingsId);
+			// 	setTournament(res1);
+			// 	setStandings(res2);
+			setTournament(res[0])
+			// }
 		})();
 	}, []);
-	console.log(tournament);
+
 
 	return (
 		<>
@@ -145,9 +148,9 @@ export const LandingPageScroll = () => {
 					</div>
 				</section>
 				<div className={`${cx('__sectionAdjust')}`}>
-					<div className={`${cx('__newsHeader')}`}>VBA TEAMS</div>
-					<div className='grid grid-cols-7 gap-8 align-middle'>
-						{teams?.map((x: Team) => (
+					<div className={`${cx('__newsHeader')}`}>ĐỘI BÓNG VBA</div>
+					<div className='flex justify-center gap-8 align-middle'>
+						{tournament?.teams?.map((x: Team) => (
 							<div className={`${cx('__teamLogo')}`}>
 								<Link to={`/teaminfo/${x.id}`}>
 									<img src={x.teamlogo as string}></img>
@@ -158,7 +161,7 @@ export const LandingPageScroll = () => {
 				</div>
 
 				<section className='bg-red-100'>
-					<div className={`${cx('__newsHeader')}`}>Related News</div>
+					<div className={`${cx('__newsHeader')}`}>TIN TỨC</div>
 					<div className='grid grid-cols-6 align-middle'>
 						<RelatedNews></RelatedNews>
 						<RelatedNews></RelatedNews>

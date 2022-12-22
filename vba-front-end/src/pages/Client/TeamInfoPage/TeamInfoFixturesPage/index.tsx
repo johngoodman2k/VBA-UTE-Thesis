@@ -18,7 +18,7 @@ export const TeamInfoFixturesPage = () => {
 						<div className='py-5 px-4'>
 							<h4 className='text-white text-center font-bold uppercase'>Boston Celtics</h4>
 							<h1 className={`${cx('__title')} text-center text-white`}>
-								Season<br></br>Schedule
+								Lịch thi đấu
 							</h1>
 						</div>
 					</div>
@@ -28,7 +28,7 @@ export const TeamInfoFixturesPage = () => {
 					<div className='my-8 container'>
 						<div className={`header-wrap justify-between w-full  flex`}>
 							<div id='filter-section' className='flex flex-col w-full '>
-								<h3 className='uppercase text-lg mb-2'>Filter Game Selection </h3>
+								<h3 className='uppercase text-lg mb-2'>Tìm kiếm </h3>
 								<div className='flex m-0 w-full'>
 									<div className={`${cx('__filterByType')}`}>
 										<label
@@ -102,7 +102,7 @@ export const TeamInfoFixturesPage = () => {
 					<div className='my-8 container'>
 						<div className={`header-wrap justify-between w-full  flex`}>
 							<div id='filter-section' className='flex flex-col w-full '>
-								<h3 className='uppercase text-lg mb-2'>Regular Season </h3>
+								<h3 className='uppercase text-lg mb-2'>Mùa thường niên </h3>
 								<NextGameBar></NextGameBar>
 							</div>
 						</div>

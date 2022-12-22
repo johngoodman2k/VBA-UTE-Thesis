@@ -24,7 +24,7 @@ const StandingPage = () => {
 		<>
 			<div className={`${cx('_background')}`}>
 				<div className={`${cx('container', 'xxl:px-0', 'md:p-[1.75rem]')}`}>
-					<section className={`${cx('standings-header')}`}>VBA 2022-23 REGULAR SEASON STANDINGS</section>
+					<section className={`${cx('standings-header')}`}>Bảng xếp hạng VBA 2022-2023</section>
 					<div className={`${cx('standings-box')}`}>
 						{/* <div className={`${cx('standings-rules')}`}>
 							<span className={`${cx('standings-rules--won')}`}>W</span>
@@ -37,10 +37,10 @@ const StandingPage = () => {
 								<thead>
 									<tr>
 										<th scope='col' className={`${cx('standings-text-centre')}`}>
-											<div>Position</div>
+											<div>Xếp hạng</div>
 										</th>
 										<th scope='col' className={`${cx('standings-text-team')}`}>
-											Team
+											Đội
 										</th>
 										<th>
 											<div>Played</div>
@@ -56,10 +56,10 @@ const StandingPage = () => {
 											<div>Win%</div>
 										</th>
 										<th>
-											<div>Home</div>
+											<div>Sân nhà</div>
 										</th>
 										<th>
-											<div>Road</div>
+											<div>Sân khách</div>
 										</th>
 										<th>
 											<div>Last 10</div>

@@ -21,7 +21,7 @@ import { checkDuplicateObject } from '../../../utils/checker';
 const cx = classNames.bind(styles);
 type createTournamentProps = {
 	handleCloseModal?: () => void;
-	title:string;
+	title: string;
 	tournament?: Tournament;
 	reload?: boolean;
 	setReload?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,12 +29,12 @@ type createTournamentProps = {
 
 const typeOptions = [
 	{
-		name: 'Eliminate',
+		name: 'Loại trực tiếp',
 		image: 'https://www.interbasket.net/wp-content/uploads/14-team-bracket-single-elimination.jpg',
 		value: 'eliminate'
 	},
 	{
-		name: 'Round Robin',
+		name: 'Vòng tròn',
 		image: 'https://www.interbasket.net/wp-content/uploads/14-team-bracket-single-elimination.jpg',
 		value: 'roundrobin'
 	}
@@ -53,8 +53,8 @@ export const CreateTournamentModal = (props: createTournamentProps) => {
 		startDate: props.tournament?.startDate ?? "",
 		endDate: props.tournament?.endDate ?? "",
 		competitor: props.tournament?.competitor ?? "",
-		description:props.tournament?.description,
-		type:props.tournament?.type?? ""
+		description: props.tournament?.description,
+		type: props.tournament?.type ?? ""
 	}
 	console.log(initState)
 	const [tournamentType, setTournamentType] = useState<string>(initState.type);
@@ -76,23 +76,23 @@ export const CreateTournamentModal = (props: createTournamentProps) => {
 		const validata = validate(name, newCompetitor, startDate, endDate, description, type);
 		try {
 			if (validata) {
-				if(props.tournament && props.tournament.id){
+				if (props.tournament && props.tournament.id) {
 					props.tournament.startDate = convertToDateTime(props.tournament.startDate)
 					props.tournament.endDate = convertToDateTime(props.tournament.endDate)
-					if(checkDuplicateObject(props.tournament,validata)){
+					if (checkDuplicateObject(props.tournament, validata)) {
 						toastNotify('Please change anything', 'warn');
-					}else{
-						await getTournamentServices.updateTournament(props.tournament.id,validata);
+					} else {
+						await getTournamentServices.updateTournament(props.tournament.id, validata);
 						toastNotify('Update tournament is successfully', 'success');
-						if(props.handleCloseModal) props.handleCloseModal()
+						if (props.handleCloseModal) props.handleCloseModal()
 
 					}
-					if(props.setReload) props.setReload(!props.reload);
-					if(props.handleCloseModal) props.handleCloseModal()
-				}else{
+					if (props.setReload) props.setReload(!props.reload);
+					if (props.handleCloseModal) props.handleCloseModal()
+				} else {
 					await getTournamentServices.createTournament(validata);
 					toastNotify('Create tournament is successfully', 'success');
-					if(props.handleCloseModal) props.handleCloseModal()
+					if (props.handleCloseModal) props.handleCloseModal()
 				}
 			}
 		} catch (e) {
@@ -101,7 +101,7 @@ export const CreateTournamentModal = (props: createTournamentProps) => {
 	};
 
 	//Edit Tournament
-	
+
 
 	return (
 		<>
@@ -135,30 +135,30 @@ export const CreateTournamentModal = (props: createTournamentProps) => {
 											<input className={`${cx('createtournament_input')}`} type='text' name='id' />
 										</div> */}
 										<div className='my-2'>
-											<p className={`${cx('createtournament_text-adjust')}`}>Name</p>
-											<input defaultValue={props.tournament?initState.name :undefined} className={`${cx('createtournament_input')}`} type='text' name='name' /> 
+											<p className={`${cx('createtournament_text-adjust')}`}>Tên giải đấu</p>
+											<input defaultValue={props.tournament ? initState.name : undefined} className={`${cx('createtournament_input')}`} type='text' name='name' />
 
 										</div>
 										<div className='mb-4 w-full'>
-											<p className={`${cx('createtournament_text-adjust')}`}>Competitors type</p>
+											<p className={`${cx('createtournament_text-adjust')}`}>Thể thức</p>
 											<ButtonGroup defaultValue={initState.competitor} buttons={ButtonOptions} getValue={setCompetitor}></ButtonGroup>
 										</div>
 									</div>
 									<div className=''>
 										<div className='my-2'>
-											<p className={`${cx('createtournament_text-adjust')}`}>Start Date</p>
-											<input required defaultValue={convertToDateTime(initState.startDate)}  className={`${cx('createtournament_input-date')}`} type='datetime-local' name='startdate' />
+											<p className={`${cx('createtournament_text-adjust')}`}>Ngày bắt đầu</p>
+											<input required defaultValue={convertToDateTime(initState.startDate)} className={`${cx('createtournament_input-date')}`} type='datetime-local' name='startdate' />
 											{/* defaultValue={props.tournament ?"2022-12-01":undefined} */}
 										</div>
 										<div className='my-2'>
-											<p className={`${cx('createtournament_text-adjust')}`}>End Date</p>
+											<p className={`${cx('createtournament_text-adjust')}`}>Ngày kết thúc</p>
 											<input required defaultValue={convertToDateTime(initState.endDate)} className={`${cx('createtournament_input-date')}`} type='datetime-local' name='enddate' />
 										</div>
 									</div>
 								</div>
 								<div className={`${cx('createtournament_row-wrapper')}`}>
 									<div className={`${cx('position-adjust')}`}>
-										<h1 className={`${cx('createtournament_text-desc')}`}>Description</h1>
+										<h1 className={`${cx('createtournament_text-desc')}`}>Mô tả</h1>
 										<textarea
 											className={`${cx('createtournament_textarea')}`}
 											name='description'
@@ -171,7 +171,7 @@ export const CreateTournamentModal = (props: createTournamentProps) => {
 								</div>
 
 								<div className=''>
-									<label className={`${cx('createtournament_type-header')}`}>Choose your type</label>
+									<label className={`${cx('createtournament_type-header')}`}>Loại giải đấu</label>
 									<div className={`${cx('createtournament_type-block')}`}>
 										<Type defaultValue={initState.type} type={typeOptions} getValue={setTournamentType}></Type>
 									</div>

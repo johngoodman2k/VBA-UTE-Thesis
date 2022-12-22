@@ -123,36 +123,36 @@ export const CreateTeamModal = (props: createTeamProps) => {
 									)}`}>
 									<div className='w-2/5'>
 										<div className='my-2'>
-											<p className={`${cx('createTeam_text-adjust')}`}>Name</p>
+											<p className={`${cx('createTeam_text-adjust')}`}>Tên đội</p>
 											<input id={props.title + "teamname"} defaultValue={props.team ? initState.teamName : undefined} className={`${cx('createTeam_input')}`} type='text' name='teamname' />
 										</div>
-										<PictureChoosing defaultValue={props.team ? initState.teamLogo as string : undefined} getFile={setFileTeamLogo} header={props.team ? "Team logo" : "Team Logo"}></PictureChoosing>
+										<PictureChoosing defaultValue={props.team ? initState.teamLogo as string : undefined} getFile={setFileTeamLogo} header={props.team ? "Logo Đội" : "Logo Đội"}></PictureChoosing>
 									</div>
 
 									<div className='w-2/5'>
 										<div className='my-2'>
-											<p className={`${cx('createTeam_text-adjust')}`}>Stadium</p>
+											<p className={`${cx('createTeam_text-adjust')}`}>Tên sân</p>
 											<input id={props.title + "stadium"} defaultValue={props.team ? initState.stadiumname : undefined} className={`${cx('createTeam_input')}`} type='text' name='stadium' />
 										</div>
-										<PictureChoosing defaultValue={props.team ? initState.stadiumpic as string : undefined} getFile={setFileStadium} header={props.team ? "Stadium image" : "Stadium Image"}></PictureChoosing>
+										<PictureChoosing defaultValue={props.team ? initState.stadiumpic as string : undefined} getFile={setFileStadium} header={props.team ? "Hình sân vận động" : "Hình sân vận động"}></PictureChoosing>
 									</div>
 								</div>
 								<div className={`${cx('createTeam_row-wrapper', 'grid grid-cols-2')}`}>
 									<div className='w-3/4'>
 										<div className='mb-4'>
-											<p className={`${cx('createTeam_text-adjust', 'text-left')}`}>Team color</p>
+											<p className={`${cx('createTeam_text-adjust', 'text-left')}`}>Màu chủ đạo</p>
 											<div className="block w-full">
 												<input defaultValue={props.team ? initState.color : undefined} id={props.title + "teamcolor"} className={`${cx('createTeam_input', 'createTeam_input--color')}`} type='color' name='color' />
 											</div>
 										</div>
 										<div className={`${cx('createTeam_competitortype-block')}`}>
-											<p className={`${cx('createTeam_text-adjust', 'text-left')}`}>Team Abbreviation Name</p>
+											<p className={`${cx('createTeam_text-adjust', 'text-left')}`}>Tên viết tắt</p>
 											<input id={props.title + "shortname"} defaultValue={props.team ? initState.shortName : undefined} className={`${cx('createTeam_input')}`} type='text' name='name' />
 										</div>
 									</div>
 
 									<div className={`${cx('position-adjust')}`}>
-										<h1 className={`${cx('createTeam_text-desc')}`}>Description</h1>
+										<h1 className={`${cx('createTeam_text-desc')}`}>Mô tả</h1>
 										<textarea
 											defaultValue={props.team ? initState.description : undefined}
 											id={props.title + "description"}

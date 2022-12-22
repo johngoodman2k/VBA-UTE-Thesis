@@ -37,7 +37,7 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 														className={
 															clickedId === 'home' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<span className={cx('__item__text')}>Home</span>
+													<span className={cx('__item__text')}>Trang chủ</span>
 												</span>
 											</a>
 										</li>
@@ -54,7 +54,7 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 														}></span>
 
 													<Link to={'/news'}>
-														<span className={cx('__item__text')}>News</span>
+														<span className={cx('__item__text')}>Tin tức</span>
 													</Link>
 												</span>
 											</a>
@@ -71,10 +71,9 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 															clickedId === 'stats' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
 													<Link
-														to={`/standings/${
-															tournament && tournament.seasons ? tournament.seasons[0].standingsId : ''
-														}`}>
-														<span className={cx('__item__text')}>Standings</span>
+														to={`/standings/${tournament && tournament.seasons ? tournament.seasons[0].standingsId : ''
+															}`}>
+														<span className={cx('__item__text')}>Bảng xếp hạng</span>
 													</Link>
 												</span>
 											</a>
@@ -109,7 +108,7 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 															clickedId === 'results' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
 													<Link to={'/about'}>
-														<span className={cx('__item__text')}>About</span>
+														<span className={cx('__item__text')}>Về chúng tôi</span>
 													</Link>
 												</span>
 											</a>
@@ -126,7 +125,7 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 															clickedId === 'fixtures' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
 													<Link to={`/fixtures/${tournament && tournament.seasons ? tournament?.seasons[0].id : ' '}`}>
-														<span className={cx('__item__text')}>Fixtures</span>
+														<span className={cx('__item__text')}>Lịch thi đấu</span>
 													</Link>
 												</span>
 											</a>
@@ -142,7 +141,7 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 														className={
 															clickedId === 'merch' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<span className={cx('__item__text')}>Sign In</span>
+													<span className={cx('__item__text')}>Đăng nhập</span>
 												</span>
 											</a>
 										</li>

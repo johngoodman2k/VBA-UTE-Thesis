@@ -25,7 +25,7 @@ export const NewsBlock = (props: NewsProps) => {
           <div className={cx("blockWarp__arrow")}>
             <Arrow></Arrow>
           </div>
-          <span className={cx("blockWarp__detailtBtn")}>read more</span>
+          <span className={cx("blockWarp__detailtBtn")}>Xem thêm</span>
         </a>
       </div>
       <a href="/" className={cx("blockWarp__block")}></a>

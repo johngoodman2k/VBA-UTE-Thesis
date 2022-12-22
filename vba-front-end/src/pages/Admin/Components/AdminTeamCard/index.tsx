@@ -85,7 +85,7 @@ export const AdminTeamCard = (props: AdminTeamCardProps) => {
 							<div className={`${cx('team__card-info--box---stadiumname')}`}>{props.tournament?.type === 'roundrobin' ? 'Round Robin' : 'eliminate' ? 'Eliminate' : ''}</div>
 						</div>
 						<Link to={`${props.tournament?.id ?? ""}`} className={`${cx('team__card-info--box---button')}`}>
-							<span className={`${cx('team__card-info--box---button----text')}`}>Tournament Details</span>
+							<span className={`${cx('team__card-info--box---button----text')}`}>Chi tiết</span>
 							<span className={cx('__block__icon')}>
 								<img
 									className={cx('__block__icon--adjust')}
@@ -121,7 +121,7 @@ export const AdminTeamCard = (props: AdminTeamCardProps) => {
 						</div>
 						<Link to={`../teams/${props.team.id}`} className={`${cx('team__card-info--box---button')}`}>
 							<span className={`${cx('team__card-info--box---button----text', '!text-white')}`}>
-								Team Details
+								Chi tiết
 							</span>
 							<span className={cx('__block__icon')}>
 								<img

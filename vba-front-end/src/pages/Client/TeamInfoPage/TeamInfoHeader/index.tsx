@@ -46,28 +46,28 @@ export const TeamInfoHeader = (props: teamInfoHeaderProps) => {
 				</div>
 				<div className={`${cx('__rank')}`}>
 					<div className={`${cx('__rank__block')}`}>
-						<div className={`${cx('__rank__label')}`}>PPG</div>
+						<div className={`${cx('__rank__label')}`}>Số trận</div>
 						<div className={`${cx('__rank__ordinal')}`}>
 							<span>-</span>
 						</div>
 						<div className={`${cx('__rank__value')}`}>-</div>
 					</div>
 					<div className={`${cx('__rank__block')}`}>
-						<div className={`${cx('__rank__label')}`}>PPG</div>
+						<div className={`${cx('__rank__label')}`}>Won</div>
 						<div className={`${cx('__rank__ordinal')}`}>
 							<span>-</span>
 						</div>
 						<div className={`${cx('__rank__value')}`}>-</div>
 					</div>
 					<div className={`${cx('__rank__block')}`}>
-						<div className={`${cx('__rank__label')}`}>PPG</div>
+						<div className={`${cx('__rank__label')}`}>Lost</div>
 						<div className={`${cx('__rank__ordinal')}`}>
 							<span>-</span>
 						</div>
 						<div className={`${cx('__rank__value')}`}>-</div>
 					</div>
 					<div className={`${cx('__rank__block')}`}>
-						<div className={`${cx('__rank__label')}`}>PPG</div>
+						<div className={`${cx('__rank__label')}`}>Tỉ lệ</div>
 						<div className={`${cx('__rank__ordinal')}`}>
 							<span>-</span>
 						</div>
