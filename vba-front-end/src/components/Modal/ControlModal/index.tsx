@@ -33,18 +33,18 @@ type OffenseUpdateModalProps = {
 // };
 
 const typeOptions = [
-	{ name: 'Offensive', value: 'offensive' },
-	{ name: 'Defensive', value: 'defensive' },
-	{ name: 'Sub', value: 'sub' },
+	{ name: 'Tấn công', value: 'offensive' },
+	{ name: 'Phòng thủ', value: 'defensive' },
+	{ name: 'Thay người', value: 'sub' },
 	{
-		name: 'LineUp',
+		name: 'Đội hình',
 		value: 'lineup'
 	}
 ];
 
 const sideOptions = [
-	{ name: 'Home', value: 'home' },
-	{ name: 'Away', value: 'away' }
+	{ name: 'Đội nhà', value: 'home' },
+	{ name: 'Đội khách', value: 'away' }
 ];
 
 const scoreOptions = [
@@ -97,22 +97,22 @@ export const ControlModal = ({
 		const quater = quaterSelected;
 		const des = e.target.des.value;
 
-		const assistant =assistantSelected 
+		const assistant = assistantSelected
 		const player = playerSelected
 		const mins = e.target.mins.value;
-		const subIn = subInSelected 
+		const subIn = subInSelected
 		const subOff = subOffSelected
 		const checkType = type === 'offensive' ? offense : type === 'defensive' ? defense : 'sub';
 		const checkPlayer = subIn && subOff ? [subIn, subOff] : player && assistant ? [player, assistant] : player ? [player] : undefined;
 
-		console.log("typeSelected",typeSelected)
-		console.log("side",sideSelected)
-		console.log("offense",offenseType)
-		console.log("defense",defenseType)
-		console.log("quater",quaterSelected)
-		console.log("des",des)
-		console.log("player",player)
-		console.log("mins",mins)
+		console.log("typeSelected", typeSelected)
+		console.log("side", sideSelected)
+		console.log("offense", offenseType)
+		console.log("defense", defenseType)
+		console.log("quater", quaterSelected)
+		console.log("des", des)
+		console.log("player", player)
+		console.log("mins", mins)
 
 
 
@@ -177,10 +177,10 @@ export const ControlModal = ({
 			type === 'sub' && subIn && subOff
 				? [subIn, subOff]
 				: type === 'offensive' && player && assistant
-				? [player, assistant]
-				: player
-				? [player]
-				: undefined;
+					? [player, assistant]
+					: player
+						? [player]
+						: undefined;
 
 		const updatedProcess = {
 			id: process?.id,
@@ -201,9 +201,9 @@ export const ControlModal = ({
 			<ModalBlock>
 				<form onSubmit={modalType === 'update' ? onUpdate : onEdit}>
 					<section className='container mx-auto text-left '>
-						<div className='max-w-[70%] text-7xl font-bold uppercase'>match detail</div>
+						<div className='max-w-[70%] text-7xl font-bold uppercase'>Thông tin trận đấu</div>
 						<EditorSelect
-							title='Type'
+							title='Chọn loại'
 							value={typeSelected}
 							onChange={(e: any) => {
 								setTypeSelected(e.target.value);
@@ -212,7 +212,7 @@ export const ControlModal = ({
 						{typeSelected === 'offensive' ? (
 							<div>
 								<EditorSelect
-									title='Side'
+									title='Chọn bên'
 									value={sideSelected}
 									onChange={(e: any) => {
 										setSideSelected(e.target.value);
@@ -221,7 +221,7 @@ export const ControlModal = ({
 
 								<div>
 									<EditorSelect
-										title='Offense options'
+										title='Loại tấn công'
 										value={offenseType}
 										onChange={(e: any) => {
 											setOffenseType(e.target.value);
@@ -238,7 +238,7 @@ export const ControlModal = ({
 
 									<div>
 										<label className={`${cx('__modal__title')}`}>
-											Description&nbsp;
+											Mô tả&nbsp;
 											<div className='inline'>*</div>
 										</label>
 										<input
@@ -250,7 +250,7 @@ export const ControlModal = ({
 									<div className={`grid grid-cols-3   text-center ${cx('__modal__main')}`}>
 										<PlayerSelect
 											required={true}
-											title='Scorer'
+											title='Ghi điểm'
 											sideSelected={sideSelected}
 											value={playerSelected}
 											onChange={(e: any) => {
@@ -261,7 +261,7 @@ export const ControlModal = ({
 
 										<PlayerSelect
 											required={true}
-											title='Assistant'
+											title='Hỗ trợ'
 											sideSelected={sideSelected}
 											value={assistantSelected}
 											onChange={(e: any) => {
@@ -272,10 +272,10 @@ export const ControlModal = ({
 
 										<div>
 											<label className={`${cx('__modal__title')}`}>
-												Mins&nbsp;
+												Thời gian&nbsp;
 												<div className='inline'>*</div>
 											</label>
-											<input type="number" id='mins' defaultValue={process?.mins}  name="mins"className={`${cx('__modal__input--goal')}`}></input>
+											<input type="number" id='mins' defaultValue={process?.mins} name="mins" className={`${cx('__modal__input--goal')}`}></input>
 										</div>
 									</div>
 								</div>
@@ -283,7 +283,7 @@ export const ControlModal = ({
 						) : typeSelected === 'defensive' ? (
 							<div>
 								<EditorSelect
-									title='Side'
+									title='Chọn bên'
 									value={sideSelected}
 									onChange={(e: any) => {
 										setSideSelected(e.target.value);
@@ -291,7 +291,7 @@ export const ControlModal = ({
 									options={sideOptions}></EditorSelect>
 								<div>
 									<EditorSelect
-										title='Defense options'
+										title='Loại phòng thủ'
 										value={defenseType}
 										onChange={(e: any) => {
 											setDefenseType(e.target.value);
@@ -308,7 +308,7 @@ export const ControlModal = ({
 
 									<div>
 										<label className={`${cx('__modal__title')}`}>
-											Description&nbsp;
+											Mô tả&nbsp;
 											<div className='inline'>*</div>
 										</label>
 										<input
@@ -332,7 +332,7 @@ export const ControlModal = ({
 										</div>
 										<div>
 											<label className={`${cx('__modal__title')}`}>
-												Mins&nbsp;
+												Thời gian&nbsp;
 												<div className='inline'>*</div>
 											</label>
 											<input id='mins' defaultValue={process?.mins} className={`${cx('__modal__input--goal')}`}></input>
@@ -343,7 +343,7 @@ export const ControlModal = ({
 						) : typeSelected === 'lineup' ? (
 							<>
 								<EditorSelect
-									title='Side'
+									title='Chọn bên'
 									value={sideSelected}
 									onChange={(e: any) => {
 										setSideSelected(e.target.value);
@@ -358,7 +358,7 @@ export const ControlModal = ({
 														<img className='w-[5rem] h-[5rem] m-auto' src={"matchDetail?.home.teamlogo" as string}></img>
 													</div>
 												</a>
-												<label className={`${cx('__modal__title')}`}>Choose your starting 5</label>
+												<label className={`${cx('__modal__title')}`}>Đội hình ra sân</label>
 												<PlayerSelect
 													required={false}
 													sideSelected={sideSelected}
@@ -417,11 +417,11 @@ export const ControlModal = ({
 											<header className={`${cx('__header')}`}>
 												<a>
 													<div>
-														
+
 														<img className='w-[5rem] h-[5rem] m-auto' src={"matchDetail?.away?.teamlogo" as string ?? ""}></img>
 													</div>
 												</a>
-												<label className={`${cx('__modal__title')}`}>Choose your starting 5</label>
+												<label className={`${cx('__modal__title')}`}>Đội hình ra sân</label>
 											</header>
 											<PlayerSelect
 												required={false}
@@ -452,7 +452,7 @@ export const ControlModal = ({
 							<div>
 								<div>
 									<EditorSelect
-										title='Side'
+										title='Chọn bên'
 										value={sideSelected}
 										onChange={(e: any) => {
 											setSideSelected(e.target.value);
@@ -470,7 +470,7 @@ export const ControlModal = ({
 									<div className={`grid grid-cols-3   text-center ${cx('__modal__main')}`}>
 										<PlayerSelect
 											required={true}
-											title='Substituition In'
+											title='Vào sân'
 											sideSelected={sideSelected}
 											value={subInSelected}
 											onChange={(e: any) => {
@@ -481,7 +481,7 @@ export const ControlModal = ({
 										<div>
 											<PlayerSelect
 												required={true}
-												title='Substituition Off'
+												title='Ra sân'
 												sideSelected={sideSelected}
 												value={subOffSelected}
 												onChange={(e: any) => {
@@ -493,7 +493,7 @@ export const ControlModal = ({
 
 										<div>
 											<label className={`${cx('__modal__title')}`}>
-												Mins&nbsp;
+												Thời gian&nbsp;
 												<div className='inline'>*</div>
 											</label>
 											<input id='mins' defaultValue={process?.mins} className={`${cx('__modal__input--goal')}`}></input>

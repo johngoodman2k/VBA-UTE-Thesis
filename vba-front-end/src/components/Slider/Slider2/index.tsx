@@ -11,23 +11,25 @@ import videoDND from './../../../videos/danang.mp4';
 import videoTLW from './../../../videos/thanglong.mp4';
 
 import 'swiper/scss';
+import { Season } from '../../../Services/models';
+import { shortCutText } from '../../../utils/textCutting';
 
 const cx = classNames.bind(styles);
 
 const data = [
 	{
 		name: 'CanTho Catfish',
-		video: videoCTC,
+		video: videoHNB,
 		des: 'Lê Hiếu Thành is good'
 	},
 	{
 		name: 'SaiGon Heat',
-		video: videoSGH,
+		video: videoCTC,
 		des: 'Khoa Pham is friendlys'
 	},
 	{
 		name: 'NhaTrang Dolphins',
-		video: videoNTD,
+		video: videoSGH,
 		des: 'Khoa Pham is friendlys'
 	},
 	{
@@ -37,7 +39,7 @@ const data = [
 	},
 	{
 		name: 'Hanoi Buffaloes',
-		video: videoHNB,
+		video: videoTLW,
 		des: 'Trung Kien is god'
 	},
 	{
@@ -49,10 +51,11 @@ const data = [
 
 type Slider2Props = {
 	ref?: (el: any) => void;
+	tournament?: Season;
 };
 export const Slider2 = (props: Slider2Props) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
-
+	console.log('57', props.tournament)
 	// const imgRef = useRef<any>();
 
 	const handleMouseOverImg = (index: number) => {
@@ -92,7 +95,7 @@ export const Slider2 = (props: Slider2Props) => {
 			<div className={`${cx('Slider__DescriptionBlock')}`}>
 				<div className={cx('Slider__DescriptionBlock__Driver')}></div>
 				<div className={cx('Slider__DescriptionBlock__DescriptionFrame')}>
-					{data.map((item, index) => {
+					{props.tournament && props.tournament.teams && props.tournament.teams.map((item, index) => {
 						return (
 							<div
 								className={cx(
@@ -101,7 +104,7 @@ export const Slider2 = (props: Slider2Props) => {
 										? 'Slider__DescriptionBlock__DescriptionFrame__Description--active'
 										: ''
 								)}>
-								{item.des}
+								{shortCutText(item.description)}
 							</div>
 						);
 					})}
@@ -111,7 +114,7 @@ export const Slider2 = (props: Slider2Props) => {
 			<div className={cx('Slider__Footer')}>
 				<div className={cx('Slider__Footer__FooterWrap')}>
 					<div className={cx('Slider__Footer__FooterWrap__CurrentNumber')}>
-						{data.map((item, index) => {
+						{props.tournament && props.tournament.teams && props.tournament.teams.map((item, index) => {
 							return (
 								<div
 									className={cx(
@@ -140,7 +143,7 @@ export const Slider2 = (props: Slider2Props) => {
         </div> */}
 			</div>
 
-			<div className={`${cx('Slider__Swiper')}`}>
+			{props.tournament && props.tournament.teams && <div className={`${cx('Slider__Swiper')}`}>
 				<Swiper
 					modules={[Mousewheel]}
 					spaceBetween={0}
@@ -153,7 +156,7 @@ export const Slider2 = (props: Slider2Props) => {
 					mousewheel
 					loop={true}
 					className='w-full h-full bg-transparent'>
-					{data.map((data, index) => (
+					{props.tournament.teams.map((data, index) => (
 						<SwiperSlide
 							style={{ transform: 'translateX(2em)' }}
 							className={` ${cx('Slider__Swiper__SwiperItem')} `}
@@ -164,13 +167,13 @@ export const Slider2 = (props: Slider2Props) => {
 							<div
 								data-number={index + 1 < 10 ? '0' + (index + 1) : index + 1}
 								className={`${cx('Slider__Swiper__SwiperItem--titleItem')}`}>
-								{data.name}
+								{data.teamname}
 							</div>
 							{/* </a> */}
 						</SwiperSlide>
 					))}
 				</Swiper>
-			</div>
+			</div>}
 		</div>
 	);
 };

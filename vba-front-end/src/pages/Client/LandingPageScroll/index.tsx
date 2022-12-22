@@ -85,6 +85,7 @@ export const LandingPageScroll = () => {
 												muted></video> */}
 							<div className={`${cx('__hero')}`}>
 								<Slider2
+									tournament={tournament}
 									ref={(el: any) => {
 										title = el;
 									}}></Slider2>

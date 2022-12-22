@@ -15,6 +15,7 @@ import { ReactComponent as DownArrowLogo } from '../../../assets/images/downarro
 import { SeasonServices } from '../../../Services';
 import { NoData } from '../../Admin/Components/NoData';
 import { ListItemAvatar } from '@mui/material';
+import ButtonTournament from '../Authentication/Components/ButtonTournament';
 
 // import { getRoundApi } from "../Apis/getRoundApi.api";
 // import { TournamentHeading } from "../components/TournamentHeading";
@@ -85,7 +86,7 @@ export const FixturesPage = () => {
 					<div className={`${cx('__main-fixturesHeader')}`}>
 						{/* season select */}
 						<div
-							className='flex justify-center gap-8'>
+							className='flex justify-center gap-8 items-center'>
 							<div className='text-2xl font-bold italic'>Mùa giải</div>
 							<div className='relative inline-block w-2/5 mr-2 ml-2 '>
 								<label className={`${cx('__selection')} w-full `}>
@@ -102,6 +103,8 @@ export const FixturesPage = () => {
 									</div>
 								</label>
 							</div>
+							<div> <ButtonTournament type={undefined} name='Generate' ></ButtonTournament></div>
+
 						</div>
 
 						{season && season.rounds && season.rounds.map((x: Round, i: number) => {

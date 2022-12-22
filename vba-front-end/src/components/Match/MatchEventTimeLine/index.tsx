@@ -21,17 +21,18 @@ type TournamentEventProps = {
 	awayBadge: string;
 	awayName: string;
 	awayResult: string;
-	playerName?: string;
-	playerImg?: string;
-	playerNumber?: number;
-	assistance?: string;
-	subOn?: string;
-	subOnImg?: string;
-	subOnNumber?: number;
-	subOff?: string;
-	subOffImg?: string;
-	subOffNumber?: number;
 	side: string;
+	// playerName?: string;
+	// playerImg?: string;
+	// playerNumber?: number;
+	// assistance?: string;
+	// subOn?: string;
+	// subOnImg?: string;
+	// subOnNumber?: number;
+	// subOff?: string;
+	// subOffImg?: string;
+	// subOffNumber?: number;
+
 };
 
 const cx = classNames.bind(styles);

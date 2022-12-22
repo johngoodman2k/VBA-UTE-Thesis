@@ -47,7 +47,7 @@ export const SummarizeBox = () => {
 							</tbody>
 						</table>
 						<div className='h-full mx-8 border-r border-third-color'></div>
-						<div
+						{/* <div
 							className={`${cx(
 								'__boxes'
 							)} mx-6 border border-white flex flex-shrink-0 `}>
@@ -63,7 +63,7 @@ export const SummarizeBox = () => {
 								</p>
 								<p className='text-6xl font-bold text-center'>1</p>
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</section>

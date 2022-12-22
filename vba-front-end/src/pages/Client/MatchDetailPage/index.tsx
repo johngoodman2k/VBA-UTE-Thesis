@@ -287,6 +287,12 @@ export const MatchDetailPage = () => {
 												className={clickedId === 'edit' ? cx('__editActive') : ''}>
 												Edit
 											</li>
+											<li
+												id='edit'
+												onClick={(e: any) => (e.currentTarget.id === 'edit' ? setClickedId('edit') : '')}
+												className={clickedId === 'edit' ? cx('__editActive') : ''}>
+												Kết thúc
+											</li>
 
 										</ul>
 									</div>
@@ -350,17 +356,7 @@ export const MatchDetailPage = () => {
 																awayBadge={matchDetail.away[0].teamlogo as string ?? ""}
 																awayName={matchDetail.away[0].teamname ?? ""}
 																awayResult={matchDetail.awayresult ?? "0"}
-																playerName={getPlayerAttackByProcessId(processes, processId)?.lastname && "" + getPlayerAttackByProcessId(processes, processId)?.firstname && ""}
-																playerImg={getPlayerAttackByProcessId(processes, processId)?.image ?? ""}
-																playerNumber={getPlayerAttackByProcessId(processes, processId)?.shirtnumber as number ?? ""}
-																assistance={getPlayerSupportByProcessId(processes, processId)?.lastname && "" + getPlayerSupportByProcessId(processes, processId)?.firstname && ""}
-																subOn={getPlayerAttackByProcessId(processes, processId)?.lastname && "" + getPlayerAttackByProcessId(processes, processId)?.firstname && ""}
-																subOnImg={getPlayerAttackByProcessId(processes, processId)?.image ?? ""}
-																subOnNumber={getPlayerAttackByProcessId(processes, processId)?.shirtnumber as number ?? ""}
-																subOff={getPlayerSupportByProcessId(processes, processId)?.lastname && "" + getPlayerSupportByProcessId(processes, processId)?.firstname && ""}
-																subOffImg={getPlayerSupportByProcessId(processes, processId)?.image ?? ""}
-																subOffNumber={getPlayerSupportByProcessId(processes, processId)?.shirtnumber as number ?? ""}
-																side={getProcessById(processes, processId)?.side ?? ""}></MatchEventTimeLine>
+															></MatchEventTimeLine>
 
 
 														);

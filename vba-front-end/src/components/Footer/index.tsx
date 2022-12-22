@@ -11,16 +11,16 @@ export const Footer = () => {
 				<div className={`${cx('footer-header')}`}>
 					Sections
 					<p>
-						<Link to='/main'>Home</Link>
+						<Link to='/main'>Trang chủ</Link>
 					</p>
 					<p>
-						<Link to='/main'>News</Link>
+						<Link to='/main'>Tin tức</Link>
 					</p>
 					<p>
-						<Link to='/main'>Single</Link>
+						<Link to='/main'>Bảng xếp hạng</Link>
 					</p>
 					<p>
-						<Link to='/main'>Article</Link>
+						<Link to='/main'>Lịch thi đấu</Link>
 					</p>
 				</div>
 				<div className={`${cx('footer-ceremony')}`}>

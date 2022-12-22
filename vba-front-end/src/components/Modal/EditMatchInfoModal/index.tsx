@@ -18,25 +18,25 @@ export const EditMatchInfoModal = ({ close }: EditMatchInfoModalProps) => {
 		<>
 			<ModalBlock>
 				<section className='container mx-auto text-left'>
-					<div className='max-w-[70%] text-7xl font-bold uppercase'>UPDATE</div>
+					<div className='max-w-[70%] text-7xl font-bold uppercase'>CẬP NHẬT</div>
 					<div className={`grid grid-cols-4   text-center ${cx('__modal__main')}`}>
 						<div>
 							<label className={`${cx('__modal__title')}`}>
-								Date&nbsp;
+								Ngày &nbsp;
 								<div className='inline'>*</div>
 							</label>
 							<input id='mins' className={`${cx('__modal__input--goal')}`}></input>
 						</div>
 						<div>
 							<label className={`${cx('__modal__title')}`}>
-								Stadium&nbsp;
+								Sân&nbsp;
 								<div className='inline'>*</div>
 							</label>
 							<input id='mins' className={`${cx('__modal__input--goal')}`}></input>
 						</div>
 						<div>
 							<label className={`${cx('__modal__title')}`}>
-								Referee&nbsp;
+								Trọng tài&nbsp;
 								<div className='inline'>*</div>
 							</label>
 							<input id='mins' className={`${cx('__modal__input--goal')}`}></input>
@@ -44,7 +44,7 @@ export const EditMatchInfoModal = ({ close }: EditMatchInfoModalProps) => {
 
 						<div>
 							<label className={`${cx('__modal__title')}`}>
-								Spectators&nbsp;
+								Khán giả&nbsp;
 								<div className='inline'>*</div>
 							</label>
 							<input id='mins' className={`${cx('__modal__input--goal')}`}></input>
