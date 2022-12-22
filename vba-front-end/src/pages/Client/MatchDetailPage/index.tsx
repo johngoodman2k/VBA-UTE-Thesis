@@ -149,11 +149,7 @@ export const MatchDetailPage = () => {
 				console.log("matches", res)
 				const res1 = await processServices.getProcessesByMatchId(params.id) as CustomProcess[];
 				setProcesses(res1);
-				console.log("process", res1)
-
-				const processArray = res1.map((item: CustomProcess) => item.id)
-				const process1 = processArray.filter((iteam, index) => { return processArray.indexOf(iteam) === index; });
-				setProcessIdArray(process1 as string[])
+				
 
 			}
 		})();
@@ -217,7 +213,7 @@ export const MatchDetailPage = () => {
 			<ContentWrapper>
 				<section className='grid grid-cols-5'>
 					<div className={`${cx('__nav')} `}>
-						<SidebarFixture seasonId={matchDetail?.seasonid}></SidebarFixture>
+						<SidebarFixture seasonId={matchDetail?.seasonId}></SidebarFixture>
 					</div>
 					<div className='col-span-4'>
 						<div className={cx('__centralContent')}>
@@ -226,7 +222,7 @@ export const MatchDetailPage = () => {
 									<div className={cx('__centralContent__homeTheme')}>
 										<div className={cx('__centralContent__teamLogoBlock')}>
 											{matchDetail && matchDetail.home && <img
-												src={matchDetail.home[0].teamlogo as any ?? ""}
+												src={matchDetail.home.teamlogo as string ?? ""}
 												alt=''
 												className={cx('__centralContent__teamLogoBlock--adjust')}
 											/>}
@@ -238,7 +234,7 @@ export const MatchDetailPage = () => {
 									<div className={cx('__centralContent__awayTheme')}>
 										<div className={cx('__centralContent__teamLogoBlock')}>
 											{matchDetail && matchDetail.away && <img
-												src={matchDetail.away[0].teamlogo ?? ""}
+												src={matchDetail.away.teamlogo as string ?? ""}
 												alt=''
 												className={cx('__centralContent__teamLogoBlock--adjust')}
 											/>}
@@ -250,11 +246,11 @@ export const MatchDetailPage = () => {
 									<svg width='100%' height='100%' viewBox='0 0 100 100' preserveAspectRatio='none'>
 										{matchDetail && matchDetail.home && <polygon
 											points='0,0 60,0 40,100 0,100 0,0'
-											fill={matchDetail.home[0].color ?? ""}
+											fill={matchDetail.home.color ?? ""}
 											fillOpacity='0.95'></polygon>}
 										{matchDetail && matchDetail.away && <polygon
 											points='60,0 40,100 100,100 100,0 60,0'
-											fill={matchDetail.away[0].color ?? ""}
+											fill={matchDetail.away.color ?? ""}
 											fillOpacity='0.95'></polygon>}
 									</svg>
 								</div>
@@ -269,7 +265,7 @@ export const MatchDetailPage = () => {
 											<MatchInfoBar
 												date={dateFormat(matchDetail.matchday)?.toString() ?? ""}
 												referee={matchDetail.referee ?? ""}
-												stadiumName={matchDetail.home ? matchDetail.home[0].stadiumname ?? "" : ""}
+												stadiumName={matchDetail.home ? matchDetail.home.stadiumname ?? "" : ""}
 												spectators={matchDetail.spectators ?? ""}
 											/>
 										}
@@ -304,8 +300,8 @@ export const MatchDetailPage = () => {
 										modalType='edit'
 										handleCloseModal={handleCloseModal}
 										matchId={params.id}
-										homePlayers={matchDetail?.home}
-										awayPlayers={matchDetail?.away}></ControlModal>
+										homePlayers={matchDetail?.home?.players}
+										awayPlayers={matchDetail?.away?.players}></ControlModal>
 								</div>
 
 								{/* scorebox */}
@@ -314,11 +310,11 @@ export const MatchDetailPage = () => {
 										<div className={cx('__scoreboxContainer')}>
 											{matchDetail && matchDetail.home && matchDetail.away &&
 												<MatchResultDetailBar
-													homeBadge={matchDetail.home[0].teamlogo ?? ""}
-													homeName={matchDetail.home[0].teamname ?? ""}
+													homeBadge={matchDetail.home.teamlogo as string ?? ""}
+													homeName={matchDetail.home.teamname ?? ""}
 													homeResult={matchDetail.homeresult ?? "0"}
-													awayBadge={matchDetail.away[0].teamlogo ?? ""}
-													awayName={matchDetail.away[0].teamname ?? ""}
+													awayBadge={matchDetail.away.teamlogo as string ?? ""}
+													awayName={matchDetail.away.teamname ?? ""}
 													awayResult={matchDetail.awayresult ?? "0"}
 												/>
 											}
@@ -334,11 +330,11 @@ export const MatchDetailPage = () => {
 														<span className={cx('__timeLine__badge__block')}>
 															{matchDetail && matchDetail.home && <img
 																alt=""
-																src={matchDetail.home[0].teamlogo ?? ""}
+																src={matchDetail.home.teamlogo as string?? ""}
 																className={cx('__timeLine__badge--adjust')}></img>}
 														</span>
 													</span>
-													{matchDetail && matchDetail.home && matchDetail.home[0].teamname ? matchDetail.home[0].teamname : ""}
+													{matchDetail && matchDetail.home && matchDetail.home.teamname ? matchDetail.home.teamname : ""}
 												</a>
 												<div className={cx('__timeLine__crossbar')}>
 													<div className={cx('__timeLine__crossbar--adjust')}>HT</div>
@@ -350,12 +346,13 @@ export const MatchDetailPage = () => {
 															<MatchEventTimeLine
 																type={getProcessById(processes, processId)?.type ?? ""}
 																mins={getProcessById(processes, processId)?.mins as number ?? ""}
-																homeBadge={matchDetail.home[0].teamlogo ?? ""}
-																homeName={matchDetail.home[0].teamname ?? ""}
+																homeBadge={matchDetail.home.teamlogo as string ?? ""}
+																homeName={matchDetail.home.teamname ?? ""}
 																homeResult={matchDetail.homeresult ?? "0"}
-																awayBadge={matchDetail.away[0].teamlogo as string ?? ""}
-																awayName={matchDetail.away[0].teamname ?? ""}
+																awayBadge={matchDetail.away.teamlogo as string ?? ""}
+																awayName={matchDetail.away.teamname ?? ""}
 																awayResult={matchDetail.awayresult ?? "0"}
+																side={getProcessById(processes, processId)?.side ?? ""}
 															></MatchEventTimeLine>
 
 
@@ -369,11 +366,11 @@ export const MatchDetailPage = () => {
 														<span className={cx('__timeLine__badge__block')}>
 															{matchDetail && matchDetail.away && <img
 																alt=""
-																src={matchDetail.away[0].teamlogo ?? ""}
+																src={matchDetail.away.teamlogo as string ?? ""}
 																className={cx('__timeLine__badge--adjust')}></img>}
 														</span>
 													</span>
-													{matchDetail && matchDetail.away && matchDetail.away[0].teamname ? matchDetail.away[0].teamname : ""}
+													{matchDetail && matchDetail.away && matchDetail.away.teamname ? matchDetail.away.teamname : ""}
 												</a>
 											</div>
 										</div>

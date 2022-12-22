@@ -24,4 +24,7 @@ export class SqlProcessRepository
   updateProcess(process: Process,ctx?:any): Promise<number>{
     return this.patch(process,ctx)
   }
+  getProcessByMatchId(matchId:string): Promise<Process[]>{
+    return this.query<Process>("select * from process where match = $1",[matchId],this.map)
+  }
 }

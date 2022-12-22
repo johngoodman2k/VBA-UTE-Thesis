@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { CustomTeam, Match, Player, Process } from '../../../Services/models';
+import { CustomTeam, Match, Player, Process, Team } from '../../../Services/models';
 import { vbaContext } from '../../../Services/services';
 import { EditorSelect } from '../../Utils/EditorSelect';
 import { ModalBlock } from '../ModalBlock';
@@ -10,13 +10,14 @@ import { id } from 'date-fns/locale';
 import process from 'process';
 import { MatchDetailPage } from '../../../pages/Client/MatchDetailPage';
 import { PlayerCard } from '../../Player/PlayerCard';
+import { validate } from './validate';
 const cx = classNames.bind(styles);
 
 type OffenseUpdateModalProps = {
 	matchId: string | undefined;
 	modalType?: 'edit' | 'update';
-	homePlayers?: CustomTeam[];
-	awayPlayers?: CustomTeam[];
+	homePlayers?: Player[];
+	awayPlayers?: Player[];
 	process?: Process;
 	matchDetail?: Match | undefined;
 	handleCloseModal?: () => void;
@@ -48,15 +49,15 @@ const sideOptions = [
 ];
 
 const scoreOptions = [
-	{ name: '3PT', value: '3PT' },
-	{ name: '2PT', value: '2PT' },
-	{ name: 'Free Throw', value: 'FT' }
+	{ name: '3 ĐIỂM', value: '3PT' },
+	{ name: '2 ĐIỂM', value: '2PT' },
+	{ name: 'NÉM PHẠT', value: 'FT' }
 ];
 
 const defenseOptions = [
-	{ name: 'REBOUND', value: '3PT' },
-	{ name: 'STEAL', value: '2PT' },
-	{ name: 'BLOCK', value: 'FT' }
+	{ name: 'BẮT BÓNG', value: 'RB' },
+	{ name: 'CƯỚP BÓNG', value: 'STL' },
+	{ name: 'CHẶN BÓNG', value: 'BLK' }
 ];
 
 const quaterOptions = [
@@ -108,12 +109,16 @@ export const ControlModal = ({
 		console.log("typeSelected", typeSelected)
 		console.log("side", sideSelected)
 		console.log("offense", offenseType)
-		console.log("defense", defenseType)
+		// console.log("defense", defenseType)
 		console.log("quater", quaterSelected)
 		console.log("des", des)
 		console.log("player", player)
 		console.log("mins", mins)
 
+		// const validata = validate(typeSelected,sideSelected,offenseType,quaterSelected)
+
+
+		// const res3 = await matchServices.addProcessToMatch(matchId, [process]);
 
 
 
@@ -197,11 +202,10 @@ export const ControlModal = ({
 	};
 
 	return (
-		<>
 			<ModalBlock>
 				<form onSubmit={modalType === 'update' ? onUpdate : onEdit}>
 					<section className='container mx-auto text-left '>
-						<div className='max-w-[70%] text-7xl font-bold uppercase'>Thông tin trận đấu</div>
+						<div className='max-w-[100%] text-7xl font-bold uppercase'>Chi tiết trận đấu</div>
 						<EditorSelect
 							title='Chọn loại'
 							value={typeSelected}
@@ -502,32 +506,25 @@ export const ControlModal = ({
 								</div>
 							</div>
 						)}
-						<div>
-							<div className={cx('__modal__action')}>
-								<div className={cx('__modal__action__wrapper')}>
-									<ul className={cx('__modal__action__wrapper--adjust')}>
-										<li>
-											<button
-												id='save'
-												type='submit'
-												onClick={handleCloseModal}
-												className={clickedId === 'save' ? cx('__editActive') : ''}>
-												Save
-											</button>
-										</li>
-										<li
-											id='close'
-											onClick={handleCloseModal}
-											className={clickedId === 'close' ? cx('__editActive') : ''}>
-											Close
-										</li>
-									</ul>
-								</div>
-							</div>
+						<div className="flex justify-end gap-4">
+									<button
+										id='modalVBA_save'
+										type='submit'
+										onClick={handleCloseModal}
+										className="text-[#ec8521] font-bold text-2xl">
+										Save
+									</button>
+									<button
+										id='modalVBA_close'
+										onClick={handleCloseModal}
+										className="text-[#ec8521] font-bold text-2xl">
+										Close
+									</button>
+						
 						</div>
 					</section>
 				</form>
 			</ModalBlock>
-		</>
+
 	);
 };

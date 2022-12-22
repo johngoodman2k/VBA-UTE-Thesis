@@ -14,45 +14,35 @@ export class MatchController extends Controller<Match, string, MatchFilter> {
     }
 
     async addProcessToMatch(req: Request, res: Response) {
-        const { matchId } = req.params;
-        const process = req.body;
+        // const { matchId } = req.params;
+        const process = req.body as Process
 
-        if (Object.keys(process).length === 0) {
-            return res.status(400).json({ err: "Process is empty" });
+        try {
+
+            const match = await this.matchService.getMatchById(process.match);
+            if (!match || match.length === 0) {
+                return res.status(400).json({ err: 'Failed to get match' });
+            }
+    
+            //create process
+
+            process.id = nanoid();
+    
+            //add process to match
+            if (!match[0].process) {
+                match[0].process = [];
+            }
+            match[0].process.push({ id: process.id });
+    
+            const rs = await this.matchService.createProcessAndAddProcessToMatch(process,match[0]);
+            if (rs === 0){ return res.status(400).json({ message: 'process create failed' });}
+            
+             return res.status(201).json({ message: 'create process successfully' });
+        }catch(e){
+            return res.status(500).json({ message: "Invalid server" });
+
         }
-
-        const newProcess = process.map((_item) => ({
-            ..._item,
-            id: nanoid(),
-            createdAt: new Date(Date.now()),
-        }));
-
-        const matches = await this.matchService.getMatchById(matchId);
-
-        const newProcess1 = new Array<Process>();
-        if (matches[0].process === null) {
-            newProcess1.push(...newProcess);
-        } else {
-            newProcess1.push(...matches[0].process.concat(newProcess));
-            // console.log("OK!");
-            // console.log(newPlayers1);
-        }
-
-        const result = await this.matchService.updateMatch(
-            matches[0].id,
-            newProcess1
-        );
-        // console.log(result);
-
-        const newProcess3 = newProcess.map((_item) => ({
-            ..._item,
-            match: matchId,
-        }));
-
-        // console.log(newPlayers);
-
-        const result1 = await this.matchService.addProcess(newProcess3);
-        return res.status(200).json(newProcess3);
+            
     }
 
     async updateProcess(req: Request, res: Response) {
@@ -89,7 +79,31 @@ export class MatchController extends Controller<Match, string, MatchFilter> {
         if(!matches) return res.status(404).json({ err: "Match not found" });
         if(matches.length ===0) return res.status(200).json(matches);
 
+        const teamsInSeason = await this.matchService.getTeamBySeasonId(matches[0].seasonId);
+		if(!teamsInSeason){
+			return res.status(404).json({err: "Teams doest not exist"})
+		}
+		if(teamsInSeason.length ===0){
+			return res.status(200).json(matches[0])
+		}
 
+        const  playerOnTeams = await Promise.all(teamsInSeason.map(async team => await this.matchService.getPlayerByTeamId(team.id)))
+
+        for(let i = 0; i < teamsInSeason.length; i++){
+            teamsInSeason[i].players = playerOnTeams[i]
+        }
+        // const player= await this.matchService.getPlayerByTeamId(te)
+
+        for(const m of matches){
+			m.home = teamsInSeason.find((t: Team) => t.id === m.home)
+			m.away = teamsInSeason.find((t: Team) => t.id === m.away)
+		}
+        const processes = await this.matchService.getProcessByMatchId(matches[0].id);
+        if(processes.length === 0){
+            return res.status(200).json(matches[0])
+        }
+        matches[0].process = processes
+    
         
         return res.status(200).json(matches[0])
     }

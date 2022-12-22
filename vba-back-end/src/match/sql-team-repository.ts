@@ -19,4 +19,9 @@ export class SqlTeamRepository
     // return this.query<Team>("SELECT  m.id,  m.home,  m.away,  m.homeresult,  m.awayresult,  m.createdat,  m.matchday,  m.endmatch,  m.referee,  m.assistance, m.spectators ,t.id as teamid,  t.teamname,  t.teamlogo,  t.stadiumname,  t.stadiumpic,  t.description,  t.status,  t.color,  t.eliminated,  t.shortname,  t.createdat as teamcreatedat FROM  matches m INNER JOIN teams t    ON m.home  = t.id or m.away =t.id where m.id = $1 ORDER BY m.createdat",[matchId])
     return this.query<Team>("select * from teams where id = $1",[teamId])
   }
+
+  getTeamBySeasonId(seasonId: string): Promise<Team[]>{
+    // return this.query<Team>("SELECT  m.id,  m.home,  m.away,  m.homeresult,  m.awayresult,  m.createdat,  m.matchday,  m.endmatch,  m.referee,  m.assistance, m.spectators ,t.id as teamid,  t.teamname,  t.teamlogo,  t.stadiumname,  t.stadiumpic,  t.description,  t.status,  t.color,  t.eliminated,  t.shortname,  t.createdat as teamcreatedat FROM  matches m INNER JOIN teams t    ON m.home  = t.id or m.away =t.id where m.id = $1 ORDER BY m.createdat",[matchId])
+    return this.query<Team>("select * from teams where seasonid = $1",[seasonId])
+  }
 }

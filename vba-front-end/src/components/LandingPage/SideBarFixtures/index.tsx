@@ -3,7 +3,7 @@ import styles from './sideBarFixtures.module.scss';
 import classNames from 'classnames/bind';
 import { UpCommingMatchBar } from '../../Bar/UpCommingMatchBar';
 import { vbaContext } from '../../../Services/services';
-import { CustomTournament, Tournament } from '../../../Services/models';
+import { CustomTournament, Match, Round, Season, Tournament } from '../../../Services/models';
 import { dateFormat, timeFormat } from '../../../utils/dateFormat';
 
 const cx = classNames.bind(styles);
@@ -22,22 +22,15 @@ const getMatchById = (t: CustomTournament[], matchId: string, team: "team1" | "t
 }
 
 export const SidebarFixture = ({ seasonId }: SidebarFixtureProps) => {
-	const [upCommingMatches, setUpCommingMatches] = React.useState<CustomTournament[]>([]);
-	const [rounds, setRounds] = React.useState<string[]>([]);
-	const [matches, setMatches] = React.useState<string[]>([]);
+	const [upCommingMatches, setUpCommingMatches] = React.useState<Season>();
+
 
 	useEffect(() => {
 		(async () => {
 			if (seasonId) {
-				const res = await tournamentServices.getMergeTournamentById("WMlzXgVpPLOJzCrY1q7Fl", seasonId) as CustomTournament[];
-				setUpCommingMatches(res);
-
-				const roundArray = res.map((i: CustomTournament) => i.roundid)
-				const round1 = roundArray.filter((i, index) => { return roundArray.indexOf(i) === index; });
-				const matchArray = res.map((i: CustomTournament) => i.matchid)
-				const match1 = matchArray.filter((i, index) => { return matchArray.indexOf(i) === index; });
-				setMatches(match1 as string[])
-				setRounds(round1 as string[])
+				const res = await tournamentServices.getMergeTournamentById("uWvQv6nLYcPAyztGvzqyZ", seasonId);
+				setUpCommingMatches(res[0]);
+				console.log("33",res)
 			}
 
 
@@ -46,11 +39,11 @@ export const SidebarFixture = ({ seasonId }: SidebarFixtureProps) => {
 	return (
 		<div className={cx('wrapper')}>
 
-			{rounds.map((x: string, i: number) => {
+			{upCommingMatches && upCommingMatches?.rounds && upCommingMatches?.rounds.map((x: Round, i: number) => {
 				return (
 					<>
 						<header>
-							<div className={cx('__week')}>Match Week {getRoundByid(upCommingMatches, x)?.roundname}</div>
+							<div className={cx('__week')}>Match Week {x.roundname}</div>
 							<div className={cx('__logoWrapper')}>
 								<img
 									className={cx('__logoWrapper--adjust')}
@@ -63,17 +56,17 @@ export const SidebarFixture = ({ seasonId }: SidebarFixtureProps) => {
 							</div>
 						</header>
 						<div className={cx('__matchList')}>
-							<time>{dateFormat(getRoundByid(upCommingMatches, x)?.roundcreatedat)}</time>
+							<time>{dateFormat(x.createdat)}</time>
 							<div className={cx('__matchList--adjust')}>
-								{matches && matches.map((y: string) => {
+								{x.matches && x.matches.map((y: Match) => {
 									return (
 										<UpCommingMatchBar
-											id={y}
-											homeName={getMatchById(upCommingMatches, y, "team1")?.teamname ?? ''}
-											homeBadge={getMatchById(upCommingMatches, y, "team1")?.teamlogo ?? ""}
-											awayName={getMatchById(upCommingMatches, y, "team2")?.teamname ?? ''}
-											awayBadge={getMatchById(upCommingMatches, y, "team2")?.teamlogo ?? ""}
-											time={timeFormat(getMatchById(upCommingMatches, y, "team2")?.matchday as Date) ?? ""}
+											id={y.id}
+											homeName={y.home?.shortname ?? ''}
+											homeBadge={y.home?.teamlogo as string ?? ""}
+											awayName={y.away?.shortname ?? ''}
+											awayBadge={y.away?.teamlogo as string ?? ""}
+											time={timeFormat(y.matchday as Date) ?? ""}
 										></UpCommingMatchBar>
 									);
 								})}
