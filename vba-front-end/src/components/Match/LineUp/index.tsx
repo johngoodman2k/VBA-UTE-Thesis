@@ -14,11 +14,13 @@ const matchServices = vbaContext.getMatchServices();
 type LineUpProps = {
 	home?: Team;
 	away?: Team;
+	homeLineUp?: Player[];
+	awayLineUp?: Player[];
 };
 const defaultPlayer: Player = {} as any;
 defaultPlayer.lastName = 'Click for more details';
 
-export const LineUp = ({ home, away }: LineUpProps) => {
+export const LineUp = ({ home, away ,homeLineUp,awayLineUp}: LineUpProps) => {
 	const [playerInfo, setPlayerInfo] = useState<Player>();
 
 	const getPlayer = (player: Player) => {
@@ -31,16 +33,16 @@ export const LineUp = ({ home, away }: LineUpProps) => {
 		<div className='grid grid-cols-3 pt-4'>
 			<div className='px-4'>
 				<header className={`${cx('__header')}`}>
-					<a>
+					{home?.teamlogo && <a>
 						<div>
-							<img className='w-[5rem] h-[5rem] m-auto' src={home?.teamlogo as string}></img>
+							<img className='w-[5rem] h-[5rem] m-auto' src={home.teamlogo as string} alt={home.teamname?? "TeamLogo"}></img>
 						</div>
-					</a>
-					<div>{home?.teamname}</div>
+					</a>}
+					<div>{home?.teamname?? ""}</div>
 				</header>
 				<div>
 					<ul className='list-none'>
-						{home?.players?.map((x: Player) => (
+						{homeLineUp && homeLineUp.map((x: Player) => (
 							<PlayerLineUpBar getPlayer={getPlayer} side='home' player={x}></PlayerLineUpBar>
 						))}
 					</ul>
@@ -51,16 +53,16 @@ export const LineUp = ({ home, away }: LineUpProps) => {
 			</div>
 			<div className='px-4'>
 				<header className={`${cx('__header')}`}>
-					<a>
+				{away?.teamlogo && <a>
 						<div>
-							<img className='w-[5rem] h-[5rem] m-auto' src={away?.teamlogo as string}></img>
+							<img className='w-[5rem] h-[5rem] m-auto' src={away.teamlogo as string} alt={away.teamname?? "TeamLogo"}></img>
 						</div>
-					</a>
-					<div>{away?.teamname}</div>
+					</a>}
+					<div>{away?.teamname ?? ""}</div>
 				</header>
 				<div>
 					<ul className='list-none'>
-						{away?.players?.map((x: Player) => (
+						{awayLineUp && awayLineUp.map((x: Player) => (
 							<PlayerLineUpBar getPlayer={getPlayer} side='away' player={x}></PlayerLineUpBar>
 						))}
 					</ul>

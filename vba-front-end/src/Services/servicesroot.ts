@@ -17,9 +17,10 @@ export interface MatchServicesRoot {
 		obj: Match | Process | Date | MatchProcess,
 		globalHost?: string
 	): Promise<Match>;
-	addProcessToMatch(id: string | undefined, process: Process[], globalHost?: string): Promise<Process>;
+	addProcessToMatch(process: Process, globalHost?: string): Promise<Process>;
 	updateProcess(id: string | undefined, process: Process, globalHost?: string): Promise<Process>;
 	getMatchDetails(matchId:string):Promise<Match>;
+	updateMatch(matchId:string,match:Match):Promise<Match>;
 }
 
 export interface TeamServicesRoot {

@@ -138,6 +138,8 @@ export interface Match {
 	homeResult?: string;
 	awayResult?: string;
 	homeresult?: string;
+	homeLineUp?: string[] | Player[];
+	awayLineUp?: string[] | Player[];
 	awayresult?: string;
 	createdAt?: Date;
 	createdat?: Date;
@@ -146,7 +148,7 @@ export interface Match {
 	referee?: string;
 	spectators?: string;
 	assistance?: Player;
-	process: Process[];
+	process?: Process[];
 }
 
 export interface CustomTeam{
@@ -185,8 +187,8 @@ export interface Process {
     type?: string;
     mins?: number;
     quater?: string;
-    playerAttack?: string;
-    playerSupport?: string;
+    playerOne?: Player;
+    playerTwo?: Player;
     cardcolor?: string;
     side?: string;
     match?: string;

@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 export const dateFormat = (date?: Date | string) => {
 	if(!date) return;
-	console.log(date)
+	// console.log(date)
 	return format(new Date(date), 'dd MMMM yyyy');
 };
 
@@ -25,3 +25,12 @@ export const convertToDateTime = (date: Date |string |undefined):string |undefin
 	return datelc+"T"+time
 	
 }
+
+export const caculateAge = (dateOfBirth?: Date|string) =>{
+	if(!dateOfBirth) return 0;
+	let date = dateOfBirth as Date
+	if(typeof dateOfBirth==="string") date = new Date(dateOfBirth);
+	let now = new Date() 
+	let rs = now.getFullYear() - date.getFullYear()
+	return rs
+} 

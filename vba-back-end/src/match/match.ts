@@ -10,6 +10,8 @@ export interface Match {
     away?: string | Team;
     homeResult?: number;
     awayResult?: number;
+    homeLineUp?: Player[];
+    awayLineUp?: Player[];
     createdAt?: Date;
     matchDay?: Date;
     referee?: string;
@@ -25,8 +27,8 @@ export interface Process {
     type?: string;
     mins?: string;
     quater?: string;
-    playerAttack?: string;
-    playerSupport?: string;
+    playerOne?: string | Player;
+    playerTwo?: string | Player;
     cardcolor?: string;
     side?: string;
     match?: string;
@@ -36,15 +38,15 @@ export interface Process {
 }
 
 export interface Player {
-    name: string;
-    image: string;
-    shirtnumber: number;
-    id: string;
-    firstname: string;
-    lastname: string;
-    dateofbirth: Date;
-    createdat: Date;
-    teamid: string;
+    id?: string;
+    name?: string;
+    image?: string;
+    shirtnumber?: number;
+    firstname?: string;
+    lastname?: string;
+    dateofbirth?: Date;
+    createdat?: Date;
+    teamid?: string;
 }
 
 export interface MatchRepository extends Repository<Match, string> {
@@ -107,6 +109,8 @@ export const matchModel: Attributes = {
     createdAt: {
         type: "datetime",
     },
+    homeLineUp:{type: "array"},
+    awayLineUp:{type: "array"},
     matchDay: {},
     referee: { type: "string" },
     spectators: { type: "object" },
@@ -123,6 +127,8 @@ export interface MatchFilter extends Filter {
     away: string;
     homeResult: string;
     awayResult: string;
+    homeLineUp: Player[];
+    awayLineUp: Player[];
     createdAt: Date;
     matchDay: Date;
     referee: string;

@@ -7,8 +7,8 @@ export interface Process {
     type: string;
     mins: number;
     quater: string;
-    playerAttack: string;
-    playerSupport: string;
+    playerOne: string;
+    playerTwo: string;
     cardcolor: string;
     side: string;
     match: string;
@@ -44,8 +44,8 @@ export const processModel: Attributes = {
     type: { type: "string" },
     mins: { type: "number" },
     quater: { type: "string" },
-    playerAttack: { type: "string" },
-    playerSupport: { type: "string" },
+    playerOne: { type: "string" },
+    playerTwo: { type: "string" },
     cardcolor: { type: "string" },
     side: { type: "string" },
     match: { type: "string" },
@@ -59,8 +59,8 @@ export interface ProcessFilter extends Filter {
     type: string;
     mins: number;
     quater: string;
-    playerAttack: string;
-    playerSupport: string;
+    playerOne: string;
+    playerTwo: string;
     cardcolor: string;
     side: string;
     match: string;

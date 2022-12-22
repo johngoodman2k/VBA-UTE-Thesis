@@ -1,57 +1,186 @@
 import validator from "validator";
 import toastNotify from "../../../utils/toast";
 
-export const validate = (
-    name: string,
-    competitor: string,
-    startDate: string,
-    endDate: string,
+export const validateOffensive = (
+    type: string,
+    side: string,
+    option: string,
+    quater: string,
     description: string,
-    type: string
+    playerOne: string,
+    playerTwo: string,
+    mins: number,
 ) => {
-    const isName = validator.isEmpty(name);
-    if (isName) {
-        toastNotify("Please enter your tournament name", "error");
+    const isType = validator.isEmpty(type);
+    if (isType) {
+        toastNotify("Bạn chưa chọn loại", "error");
         return false;
     }
 
-    const isCompetitor = validator.isEmpty(competitor);
-    if (isCompetitor) {
-        toastNotify("Please choose your Competitor", "error");
+    const isSide = validator.isEmpty(side);
+    if (isSide) {
+        toastNotify("Bạn chưa chọn bên", "error");
         return false;
     }
-    const isStartDate = validator.isEmpty(startDate);
-    if (isStartDate) {
-        toastNotify("Please choose your start date", "error");
+    const isOffense = validator.isEmpty(option);
+    if (isOffense) {
+        toastNotify("Bạn chưa chọn loại tấn công", "error");
         return false;
     }
-    const isEndDate = validator.isEmpty(endDate);
-    if (isEndDate) {
-        toastNotify("Please choose your end date", "error");
+    const isQuater = validator.isEmpty(quater);
+    if (isQuater) {
+        toastNotify("Bạn chưa chọn quater", "error");
         return false;
     }
-    const isDescription = validator.isEmpty(description);
-    if (isDescription) {
-        toastNotify("You have not entered any description", "warn");
+    const isPlayerOne = validator.isEmpty(playerOne);
+    if (isPlayerOne) {
+        toastNotify("Bạn chưa chọn người ghi điểm", "error");
         return false;
     }
-    const isTournamentType = validator.isEmpty(type);
-    if (isTournamentType) {
-        toastNotify("Please choose your type", "error");
+    const isPlayerTwo = validator.isEmpty(playerTwo);
+    if (isPlayerTwo) {
+        toastNotify("Bạn chưa chọn người hỗ trợ", "error");
         return false;
     }
 
-    // const confirmPassword = validator.equals(passwordconfirm, password);
-    // if (!confirmPassword) {
-    //   toastNotify('Please enter right password', 'error');
-    //   return false;
-    // }
+    const isMins = validator.isEmpty(mins.toString());
+    if (isMins) {
+        toastNotify("Bạn chưa điền số phút", "error");
+        return false;
+    }
+
+
     return {
-        name,
-        competitor,
-        startDate,
-        endDate,
-        description,
         type,
+        side,
+        option,
+        quater,
+        description,
+        playerOne,
+        playerTwo,
+        mins,
     };
 };
+
+export const validateDefensive = (
+    type: string,
+    side: string,
+    option: string,
+    quater: string,
+    description: string,
+    playerOne: string,
+    mins: number,
+) => {
+    const isType = validator.isEmpty(type);
+    if (isType) {
+        toastNotify("Bạn chưa chọn loại", "error");
+        return false;
+    }
+
+    const isSide = validator.isEmpty(side);
+    if (isSide) {
+        toastNotify("Bạn chưa chọn bên", "error");
+        return false;
+    }
+    const isDefensive = validator.isEmpty(option);
+    if (isDefensive) {
+        toastNotify("Bạn chưa chọn loại phòng thủ", "error");
+        return false;
+    }
+    const isQuater = validator.isEmpty(quater);
+    if (isQuater) {
+        toastNotify("Bạn chưa chọn quater", "error");
+        return false;
+    }
+    const isPlayerOne = validator.isEmpty(playerOne);
+    if (isPlayerOne) {
+        toastNotify("Bạn chưa chọn người phòng thủ", "error");
+        return false;
+    }
+
+    const isMins = validator.isEmpty(mins.toString());
+    if (isMins) {
+        toastNotify("Bạn chưa điền số phút", "error");
+        return false;
+    }
+
+
+    return {
+        type,
+        side,
+        option,
+        quater,
+        description,
+        playerOne,
+        mins,
+    };
+};
+
+export const validateSub = (
+    type: string,
+    side: string,
+    quater: string,
+    playerOne: string,
+    playerTwo: string,
+    mins: number,
+) => {
+    const isType = validator.isEmpty(type);
+    if (isType) {
+        toastNotify("Bạn chưa chọn loại", "error");
+        return false;
+    }
+
+    const isSide = validator.isEmpty(side);
+    if (isSide) {
+        toastNotify("Bạn chưa chọn bên", "error");
+        return false;
+    }
+
+    const isQuater = validator.isEmpty(quater);
+    if (isQuater) {
+        toastNotify("Bạn chưa chọn quater", "error");
+        return false;
+    }
+    const isPlayerOne = validator.isEmpty(playerOne);
+    if (isPlayerOne) {
+        toastNotify("Bạn chưa chọn người vào sân", "error");
+        return false;
+    }
+    const isPlayerTwo = validator.isEmpty(playerTwo);
+    if (isPlayerTwo) {
+        toastNotify("Bạn chưa chọn người ra sân", "error");
+        return false;
+    }
+
+    const isMins = validator.isEmpty(mins.toString());
+    if (isMins) {
+        toastNotify("Bạn chưa điền số phút", "error");
+        return false;
+    }
+
+
+    return {
+        type,
+        side,
+        quater,
+        playerOne,
+        playerTwo,
+        mins,
+    };
+};
+
+export const validateLineUp = (
+    teamLineUp: string[]
+) => {
+    for(const t of teamLineUp){
+        if(t===""){
+            toastNotify("Bạn chưa chọn đủ 5 thành viên ra sân","error")
+            return false
+        }
+    }
+
+
+    return {
+        teamLineUp
+    }
+}

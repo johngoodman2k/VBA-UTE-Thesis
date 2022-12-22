@@ -36,25 +36,6 @@ const processServices = vbaContext.getProcessServices();
 const teamServices = vbaContext.getTeamServices();
 const playerServices = vbaContext.getPlayerServices();
 
-interface CustomProcess {
-	id?: string,
-	type?: string,
-	mins?: string | number,
-	quater?: string,
-	playerattack?: string,
-	playersupport?: string,
-	side?: string,
-	match?: string,
-	option?: string,
-	description?: string,
-	firstname?: string,
-	lastname?: string,
-	image?: string,
-	shirtnumber?: string | number,
-	country?: string,
-	playerid?: string,
-}
-
 // const getHomeTeam = (m:CustomMatch[]) =>{
 
 // 	return m.find((item)=> item.home === item.teamid)
@@ -64,17 +45,11 @@ interface CustomProcess {
 // 	return m.find((item)=> item.away === item.teamid)
 // }
 
-const getPlayerAttackByProcessId = (p: CustomProcess[], processId: string) => {
-	return p.find((item) => item.id === processId && item.playerattack === item.playerid)
-}
 
-const getPlayerSupportByProcessId = (p: CustomProcess[], processId: string) => {
-	return p.find((item) => item.id === processId && item.playersupport === item.playerid)
-}
 
-const getProcessById = (p: CustomProcess[], processId: string) => {
-	return p.find((item) => item.id === processId)
-}
+// const getProcessById = (p: Process[], processId: string) => {
+// 	return p.find((item) => item.id === processId)
+// }
 
 
 export const MatchDetailPage = () => {
@@ -133,8 +108,8 @@ export const MatchDetailPage = () => {
 	const [reload, setReload] = useState(false);
 
 	const [matchDetail, setMatchDetail] = useState<Match>();
-	const [processes, setProcesses] = useState<CustomProcess[]>([]);
-	const [processIdArray, setProcessIdArray] = useState<string[]>([]);
+	// const [processes, setProcesses] = useState<Process[]>([]);
+	// const [processIdArray, setProcessIdArray] = useState<string[]>([]);
 
 
 	const handleCloseModal = () => {
@@ -147,8 +122,8 @@ export const MatchDetailPage = () => {
 				const res = await matchServices.getMatchDetails(params.id);
 				setMatchDetail(res)
 				console.log("matches", res)
-				const res1 = await processServices.getProcessesByMatchId(params.id) as CustomProcess[];
-				setProcesses(res1);
+				// const res1 = await processServices.getProcessesByMatchId(params.id) as Process[];
+				// setProcesses(res1);
 				
 
 			}
@@ -300,6 +275,7 @@ export const MatchDetailPage = () => {
 										modalType='edit'
 										handleCloseModal={handleCloseModal}
 										matchId={params.id}
+										matchDetail={matchDetail}
 										homePlayers={matchDetail?.home?.players}
 										awayPlayers={matchDetail?.away?.players}></ControlModal>
 								</div>
@@ -338,21 +314,21 @@ export const MatchDetailPage = () => {
 												</a>
 												<div className={cx('__timeLine__crossbar')}>
 													<div className={cx('__timeLine__crossbar--adjust')}>HT</div>
-													{processIdArray.map((processId: string, i: number) => {
+													{matchDetail?.process && matchDetail?.process.map((process: Process, i: number) => {
 														return (
 
 															matchDetail && matchDetail.home && matchDetail.away &&
 
 															<MatchEventTimeLine
-																type={getProcessById(processes, processId)?.type ?? ""}
-																mins={getProcessById(processes, processId)?.mins as number ?? ""}
+																type={process.type ?? ""}
+																mins={process.mins as number ?? ""}
 																homeBadge={matchDetail.home.teamlogo as string ?? ""}
 																homeName={matchDetail.home.teamname ?? ""}
 																homeResult={matchDetail.homeresult ?? "0"}
 																awayBadge={matchDetail.away.teamlogo as string ?? ""}
 																awayName={matchDetail.away.teamname ?? ""}
 																awayResult={matchDetail.awayresult ?? "0"}
-																side={getProcessById(processes, processId)?.side ?? ""}
+																side={process.side ?? ""}
 															></MatchEventTimeLine>
 
 
@@ -402,23 +378,23 @@ export const MatchDetailPage = () => {
 									</ul>
 								</div>
 							</div>
-							{/* <div className={cx('_detailsWrapper')}>
+							<div className={cx('_detailsWrapper')}>
 								<div className={clickedId === 'stats' ? cx('__active') : cx('__inactive')}>
-									<GameLeaders></GameLeaders>
+									<GameLeaders home={matchDetail?.home} away={matchDetail?.away}></GameLeaders>
 									<TeamComparison></TeamComparison>
 								</div>
 								<div className={clickedId === 'lineUps' ? cx('__active') : cx('__inactive')}>
-									<LineUp home={matchDetail?.home} away={matchDetail?.away}></LineUp>
+									<LineUp homeLineUp={matchDetail?.homeLineUp as Player[]} awayLineUp={matchDetail?.awayLineUp as Player[]} home={matchDetail?.home} away={matchDetail?.away}></LineUp>
 								</div>
 
 								<div className={clickedId === 'PlayByPlay' ? cx('__active') : cx('__inactive')}>
 									<PlayByPlay
 										matchId={matchDetail?.id}
 										process={matchDetail?.process}
-										homePlayers={homePlayers}
-										awayPlayers={awayPlayers}></PlayByPlay>
+										home={matchDetail?.home}
+										away={matchDetail?.away}></PlayByPlay>
 								</div>
-							</div> */}
+							</div>
 						</div>
 					</div>
 				</section>

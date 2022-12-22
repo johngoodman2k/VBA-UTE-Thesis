@@ -10,7 +10,8 @@ import { id } from 'date-fns/locale';
 import process from 'process';
 import { MatchDetailPage } from '../../../pages/Client/MatchDetailPage';
 import { PlayerCard } from '../../Player/PlayerCard';
-import { validate } from './validate';
+import { validateOffensive,validateDefensive, validateSub, validateLineUp } from './validate';
+import toastNotify from '../../../utils/toast';
 const cx = classNames.bind(styles);
 
 type OffenseUpdateModalProps = {
@@ -78,47 +79,117 @@ export const ControlModal = ({
 	matchDetail,
 	handleCloseModal
 }: OffenseUpdateModalProps) => {
-	const [clickedId, setClickedId] = useState('');
+
+	const [typeSelected, setTypeSelected] = useState('offensive');
+	const [quaterSelected, setQuaterSelected] = useState('q1');
+	const [sideSelected, setSideSelected] = useState('home');
+
 	const [defenseType, setDefenseType] = useState('rebound');
 	const [offenseType, setOffenseType] = useState('2PT');
-	const [quaterSelected, setQuaterSelected] = useState('q1');
-	const [typeSelected, setTypeSelected] = useState('offensive');
-	const [sideSelected, setSideSelected] = useState('home');
+
+	const [playerOneSelected, setPlayerOneSelected] = useState('');
+	const [playerTwoSelected, setPlayerTwoSelected] = useState('')
+
 	const [playerSelected, setPlayerSelected] = useState('');
+
 	const [assistantSelected, setAssistantSelected] = useState('');
 	const [subInSelected, setSubInSelected] = useState('');
 	const [subOffSelected, setSubOffSelected] = useState('');
 
+	const [homeLineUp,setHomLineUp] = useState<[string,string,string,string,string]>(["","","","",""])
+	const [awayLineUp,setAwayLineUp] = useState<[string,string,string,string,string]>(["","","","",""])
+
+	// const handleChangeHomeLineUp = () =>{
+	// 	setHomLineUp()
+	// }
+
 	const onEdit = async (e: any) => {
 		e.preventDefault();
-		const type = typeSelected;
-		const side = sideSelected;
-		const offense = offenseType;
-		const defense = defenseType;
-		const quater = quaterSelected;
-		const des = e.target.des.value;
-
-		const assistant = assistantSelected
-		const player = playerSelected
-		const mins = e.target.mins.value;
-		const subIn = subInSelected
-		const subOff = subOffSelected
-		const checkType = type === 'offensive' ? offense : type === 'defensive' ? defense : 'sub';
-		const checkPlayer = subIn && subOff ? [subIn, subOff] : player && assistant ? [player, assistant] : player ? [player] : undefined;
-
-		console.log("typeSelected", typeSelected)
-		console.log("side", sideSelected)
-		console.log("offense", offenseType)
-		// console.log("defense", defenseType)
-		console.log("quater", quaterSelected)
-		console.log("des", des)
-		console.log("player", player)
-		console.log("mins", mins)
-
-		// const validata = validate(typeSelected,sideSelected,offenseType,quaterSelected)
 
 
-		// const res3 = await matchServices.addProcessToMatch(matchId, [process]);
+		// console.log("typeSelected", typeSelected)
+		// console.log("side", sideSelected)
+		// console.log("offense", offenseType)
+		// // console.log("defense", defenseType)
+		// console.log("quater", quaterSelected)
+		// console.log("des", description)
+		// console.log("mins", mins)
+		console.log(playerOneSelected)
+
+		if(typeSelected === "offensive"){
+			const description = e.target.des.value;
+			const mins = e.target.mins.value;
+			const validata = validateOffensive(typeSelected,sideSelected,offenseType,quaterSelected,description,playerOneSelected,playerTwoSelected,mins)
+			if(validata){
+				console.log(validata)
+				
+				try{
+					await matchServices.addProcessToMatch({match: matchId, ...validata} as Process);
+					if(handleCloseModal) handleCloseModal()
+				}catch(err){
+					toastNotify("Tạo chi tiết trận đấu thất bại","error")
+				}
+			}
+		}else if(typeSelected === "defensive"){
+			const description = e.target.des.value;
+			const mins = e.target.mins.value;
+			const validata = validateDefensive(typeSelected,sideSelected,defenseType,quaterSelected,description,playerOneSelected,mins)
+			if(validata){
+				console.log(validata)
+				
+				try{
+					await matchServices.addProcessToMatch({match: matchId, ...validata} as Process);
+					if(handleCloseModal) handleCloseModal()
+				}catch(err){
+					toastNotify("Tạo chi tiết trận đấu thất bại","error")
+				}
+			}
+		}else if(typeSelected === "sub"){
+			const mins = e.target.mins.value;
+			const validata = validateSub(typeSelected,sideSelected,quaterSelected,playerOneSelected,playerTwoSelected,mins)
+			if(validata){
+				console.log(validata)
+				
+				try{
+					await matchServices.addProcessToMatch({match: matchId, ...validata} as Process);
+					if(handleCloseModal) handleCloseModal()
+				}catch(err){
+					toastNotify("Tạo chi tiết trận đấu thất bại","error")
+				}
+			}
+		}else if(typeSelected === "lineup"){
+			if(sideSelected === "home"){
+				const validataHomeLineUp = validateLineUp(homeLineUp)
+				// const validataHomeLineUp = validateLineUp(homeLineUp)
+
+				if(validataHomeLineUp && matchId){
+					const newHomeLineUp = validataHomeLineUp.teamLineUp.map((t)=> {return {id: t}})
+					try{
+						await matchServices.updateMatch(matchId, {homeLineUp: newHomeLineUp} as Match );
+						if(handleCloseModal) handleCloseModal()
+					}catch(err){
+						toastNotify("Cập nhật đội hình thất bại","error")
+					}
+				}
+			}else {
+				const validataAwayLineUp = validateLineUp(awayLineUp)
+				// const validataHomeLineUp = validateLineUp(homeLineUp)
+
+				if(validataAwayLineUp && matchId){
+					const newAwayLineUp = validataAwayLineUp.teamLineUp.map((t)=> {return {id: t}})
+					try{
+						await matchServices.updateMatch(matchId, {awayLineUp: newAwayLineUp} as Match );
+						if(handleCloseModal) handleCloseModal()
+					}catch(err){
+						toastNotify("Cập nhật đội hình thất bại","error")
+					}
+				}
+			}
+			
+		}
+		
+
+
 
 
 
@@ -246,40 +317,38 @@ export const ControlModal = ({
 											<div className='inline'>*</div>
 										</label>
 										<input
+											id="offensive_des"
 											name='des'
 											defaultValue={process?.description}
 											className={`${cx('__modal__input--des')}`}></input>
 									</div>
 
 									<div className={`grid grid-cols-3   text-center ${cx('__modal__main')}`}>
+										
 										<PlayerSelect
 											required={true}
 											title='Ghi điểm'
-											sideSelected={sideSelected}
-											value={playerSelected}
+											value={playerOneSelected}
 											onChange={(e: any) => {
-												setPlayerSelected(e.target.value);
+												setPlayerOneSelected(e.target.value);
 											}}
-											homePlayers={homePlayers}
-											awayPlayers={awayPlayers}></PlayerSelect>
+											players={sideSelected==="home" ? homePlayers: awayPlayers}></PlayerSelect>
 
 										<PlayerSelect
 											required={true}
 											title='Hỗ trợ'
-											sideSelected={sideSelected}
-											value={assistantSelected}
+											value={playerTwoSelected}
 											onChange={(e: any) => {
-												setAssistantSelected(e.target.value);
+												setPlayerTwoSelected(e.target.value);
 											}}
-											homePlayers={homePlayers}
-											awayPlayers={awayPlayers}></PlayerSelect>
+											players={sideSelected==="home" ? homePlayers: awayPlayers}></PlayerSelect>
 
 										<div>
 											<label className={`${cx('__modal__title')}`}>
 												Thời gian&nbsp;
 												<div className='inline'>*</div>
 											</label>
-											<input type="number" id='mins' defaultValue={process?.mins} name="mins" className={`${cx('__modal__input--goal')}`}></input>
+											<input type="number" id='offensive_mins' defaultValue={process?.mins} name="mins" className={`${cx('__modal__input--goal')}`}></input>
 										</div>
 									</div>
 								</div>
@@ -316,7 +385,7 @@ export const ControlModal = ({
 											<div className='inline'>*</div>
 										</label>
 										<input
-											name='des'
+											name='defensive_des'
 											defaultValue={process?.description}
 											className={`${cx('__modal__input--des')}`}></input>
 									</div>
@@ -325,21 +394,19 @@ export const ControlModal = ({
 										<div>
 											<PlayerSelect
 												required={true}
-												title='Name'
-												sideSelected={sideSelected}
-												value={playerSelected}
+												title='Cầu thủ phòng thủ'
+												value={playerOneSelected}
 												onChange={(e: any) => {
-													setPlayerSelected(e.target.value);
+													setPlayerOneSelected(e.target.value);
 												}}
-												homePlayers={homePlayers}
-												awayPlayers={awayPlayers}></PlayerSelect>
+												players={sideSelected==="home" ? homePlayers: awayPlayers}></PlayerSelect>
 										</div>
 										<div>
 											<label className={`${cx('__modal__title')}`}>
 												Thời gian&nbsp;
 												<div className='inline'>*</div>
 											</label>
-											<input id='mins' defaultValue={process?.mins} className={`${cx('__modal__input--goal')}`}></input>
+											<input type="number" id='defensive_mins' name="mins" defaultValue={process?.mins} className={`${cx('__modal__input--goal')}`}></input>
 										</div>
 									</div>
 								</div>
@@ -357,57 +424,48 @@ export const ControlModal = ({
 									<div className='grid grid-cols-3 pt-4'>
 										<div className='px-4'>
 											<header className={`${cx('__header')}`}>
-												<a>
-													<div>
-														<img className='w-[5rem] h-[5rem] m-auto' src={"matchDetail?.home.teamlogo" as string}></img>
-													</div>
-												</a>
+												<div>
+													{matchDetail && matchDetail.home && matchDetail.home.teamlogo &&
+														<img className='w-[5rem] h-[5rem] m-auto' src={matchDetail.home.teamlogo as string} alt={ matchDetail.home.teamname ?? "TeamLogo"}></img>
+													}
+												</div>
 												<label className={`${cx('__modal__title')}`}>Đội hình ra sân</label>
+												
 												<PlayerSelect
 													required={false}
-													sideSelected={sideSelected}
-													value={playerSelected}
+													value={homeLineUp[0]}
 													onChange={(e: any) => {
-														setPlayerSelected(e.target.value);
+														setHomLineUp([e.target.value,homeLineUp[1],homeLineUp[2],homeLineUp[3],homeLineUp[4]]);
 													}}
-													homePlayers={homePlayers}
-													awayPlayers={awayPlayers}></PlayerSelect>
+													players={homePlayers}></PlayerSelect>
 												<PlayerSelect
 													required={false}
-													sideSelected={sideSelected}
-													value={playerSelected}
+													value={homeLineUp[1]}
 													onChange={(e: any) => {
-														setPlayerSelected(e.target.value);
+														setHomLineUp([homeLineUp[0],e.target.value,homeLineUp[2],homeLineUp[3],homeLineUp[4]]);
 													}}
-													homePlayers={homePlayers}
-													awayPlayers={awayPlayers}></PlayerSelect>
+													players={homePlayers}></PlayerSelect>
 												<PlayerSelect
 													required={false}
-													sideSelected={sideSelected}
-													value={playerSelected}
+													value={homeLineUp[2]}
 													onChange={(e: any) => {
-														setPlayerSelected(e.target.value);
+														setHomLineUp([homeLineUp[0],homeLineUp[1],e.target.value,homeLineUp[3],homeLineUp[4]]);
 													}}
-													homePlayers={homePlayers}
-													awayPlayers={awayPlayers}></PlayerSelect>
+													players={homePlayers}></PlayerSelect>
 												<PlayerSelect
 													required={false}
-													sideSelected={sideSelected}
-													value={playerSelected}
+													value={homeLineUp[3]}
 													onChange={(e: any) => {
-														setPlayerSelected(e.target.value);
+														setHomLineUp([homeLineUp[0],homeLineUp[1],homeLineUp[2],e.target.value,homeLineUp[4]]);
 													}}
-													homePlayers={homePlayers}
-													awayPlayers={awayPlayers}></PlayerSelect>
+													players={homePlayers}></PlayerSelect>
 												<PlayerSelect
 													required={false}
-													sideSelected={sideSelected}
-													value={playerSelected}
+													value={homeLineUp[4]}
 													onChange={(e: any) => {
-														setPlayerSelected(e.target.value);
+														setHomLineUp([homeLineUp[0],homeLineUp[1],homeLineUp[2],homeLineUp[3],e.target.value]);
 													}}
-													homePlayers={homePlayers}
-													awayPlayers={awayPlayers}></PlayerSelect>
+													players={homePlayers}></PlayerSelect>
 											</header>
 											<div>
 												<ul className='list-none'></ul>
@@ -419,32 +477,51 @@ export const ControlModal = ({
 									<div className='grid grid-cols-3 pt-4'>
 										<div className='px-4'>
 											<header className={`${cx('__header')}`}>
-												<a>
-													<div>
-
-														<img className='w-[5rem] h-[5rem] m-auto' src={"matchDetail?.away?.teamlogo" as string ?? ""}></img>
-													</div>
-												</a>
+									
+												<div>
+													{matchDetail && matchDetail.away && matchDetail.away.teamlogo &&
+														<img className='w-[5rem] h-[5rem] m-auto' src={matchDetail.away.teamlogo as string} alt={ matchDetail.away.teamname ?? "TeamLogo"}></img>
+													}
+												</div>
+										
 												<label className={`${cx('__modal__title')}`}>Đội hình ra sân</label>
 											</header>
-											<PlayerSelect
-												required={false}
-												sideSelected={sideSelected}
-												value={playerSelected}
-												onChange={(e: any) => {
-													setPlayerSelected(e.target.value);
-												}}
-												homePlayers={homePlayers}
-												awayPlayers={awayPlayers}></PlayerSelect>
-											<PlayerSelect
-												required={false}
-												sideSelected={sideSelected}
-												value={playerSelected}
-												onChange={(e: any) => {
-													setPlayerSelected(e.target.value);
-												}}
-												homePlayers={homePlayers}
-												awayPlayers={awayPlayers}></PlayerSelect>
+												<PlayerSelect
+													required={false}
+													value={awayLineUp[0]}
+													onChange={(e: any) => {
+														setAwayLineUp([e.target.value,awayLineUp[1],awayLineUp[2],awayLineUp[3],awayLineUp[4]]);
+													}}
+													players={awayPlayers}></PlayerSelect>
+													{/* <img className='w-[5rem] h-[5rem]'></img> */}
+												<PlayerSelect
+													required={false}
+													value={awayLineUp[1]}
+													onChange={(e: any) => {
+														setAwayLineUp([awayLineUp[0],e.target.value,awayLineUp[2],awayLineUp[3],awayLineUp[4]]);
+													}}
+													players={awayPlayers}></PlayerSelect>
+												<PlayerSelect
+													required={false}
+													value={awayLineUp[2]}
+													onChange={(e: any) => {
+														setAwayLineUp([awayLineUp[0],awayLineUp[1],e.target.value,awayLineUp[3],awayLineUp[4]]);
+													}}
+													players={awayPlayers}></PlayerSelect>
+												<PlayerSelect
+													required={false}
+													value={awayLineUp[3]}
+													onChange={(e: any) => {
+														setAwayLineUp([awayLineUp[0],awayLineUp[1],awayLineUp[2],e.target.value,awayLineUp[4]]);
+													}}
+													players={awayPlayers}></PlayerSelect>
+												<PlayerSelect
+													required={false}
+													value={awayLineUp[4]}
+													onChange={(e: any) => {
+														setAwayLineUp([awayLineUp[0],awayLineUp[1],awayLineUp[2],awayLineUp[3],e.target.value]);
+													}}
+													players={awayPlayers}></PlayerSelect>
 										</div>
 										<div className='col-span-2'>
 											{/* <PlayerCard player={getPlayerById(playerSelected)}></PlayerCard> */}
@@ -453,68 +530,61 @@ export const ControlModal = ({
 								)}
 							</>
 						) : (
+				
 							<div>
-								<div>
-									<EditorSelect
-										title='Chọn bên'
-										value={sideSelected}
+								<EditorSelect
+									title='Chọn bên'
+									value={sideSelected}
+									onChange={(e: any) => {
+										setSideSelected(e.target.value);
+									}}
+									options={sideOptions}></EditorSelect>
+								<EditorSelect
+									title='Quater'
+									value={quaterSelected}
+									onChange={(e: any) => {
+										setQuaterSelected(e.target.value);
+									}}
+									options={quaterOptions}></EditorSelect>
+								<div className={`grid grid-cols-3   text-center ${cx('__modal__main')}`}>
+									<PlayerSelect
+										required={true}
+										title='Vào sân'
+										value={playerOneSelected}
 										onChange={(e: any) => {
-											setSideSelected(e.target.value);
+											setPlayerOneSelected(e.target.value);
 										}}
-										options={sideOptions}></EditorSelect>
-
-									<EditorSelect
-										title='Quater'
-										value={quaterSelected}
-										onChange={(e: any) => {
-											setQuaterSelected(e.target.value);
-										}}
-										options={quaterOptions}></EditorSelect>
-
-									<div className={`grid grid-cols-3   text-center ${cx('__modal__main')}`}>
+										players={sideSelected==="home" ? homePlayers: awayPlayers}></PlayerSelect>
+									<div>
 										<PlayerSelect
 											required={true}
-											title='Vào sân'
-											sideSelected={sideSelected}
-											value={subInSelected}
+											title='Ra sân'
+											value={playerTwoSelected}
 											onChange={(e: any) => {
-												setSubInSelected(e.target.value);
+												setPlayerTwoSelected(e.target.value);
 											}}
-											homePlayers={homePlayers}
-											awayPlayers={awayPlayers}></PlayerSelect>
-										<div>
-											<PlayerSelect
-												required={true}
-												title='Ra sân'
-												sideSelected={sideSelected}
-												value={subOffSelected}
-												onChange={(e: any) => {
-													setSubOffSelected(e.target.value);
-												}}
-												homePlayers={homePlayers}
-												awayPlayers={awayPlayers}></PlayerSelect>
-										</div>
-
-										<div>
-											<label className={`${cx('__modal__title')}`}>
-												Thời gian&nbsp;
-												<div className='inline'>*</div>
-											</label>
-											<input id='mins' defaultValue={process?.mins} className={`${cx('__modal__input--goal')}`}></input>
-										</div>
+											players={sideSelected==="home" ? homePlayers: awayPlayers}></PlayerSelect>
+									</div>
+									<div>
+										<label className={`${cx('__modal__title')}`}>
+											Thời gian&nbsp;
+											<div className='inline'>*</div>
+										</label>
+										<input type="number" id='sub_mins' name='mins' defaultValue={process?.mins} className={`${cx('__modal__input--goal')}`}></input>
 									</div>
 								</div>
 							</div>
+						
 						)}
 						<div className="flex justify-end gap-4">
 									<button
 										id='modalVBA_save'
 										type='submit'
-										onClick={handleCloseModal}
 										className="text-[#ec8521] font-bold text-2xl">
 										Save
 									</button>
 									<button
+										type="button"
 										id='modalVBA_close'
 										onClick={handleCloseModal}
 										className="text-[#ec8521] font-bold text-2xl">

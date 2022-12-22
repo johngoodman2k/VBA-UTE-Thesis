@@ -51,7 +51,7 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 	app.patch('/matches/:id', ctx.match.patch); //ok
 	app.delete('/matches/:id', ctx.match.delete); //ok
 	app.post(
-		'/matches/addProcessToMatch/:matchId',
+		'/matches/addProcessToMatch',
 		ctx.match.addProcessToMatch //ok
 	);
 	app.get('/matches/getMatchDetails/:id', ctx.match.getMatchDetails); //ok

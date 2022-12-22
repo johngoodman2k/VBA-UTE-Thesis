@@ -15,12 +15,14 @@ type PlayByPlayBlockProps = {
 	process: Process;
 	handleOpenUpdateModal: () => void;
 	getProcess: (process: Process | undefined) => void;
+	// qCurrent?: string;
 };
 
 type Position = {
 	x: number;
 	y: number;
 };
+
 export const PlayByPlayBlock = (props: PlayByPlayBlockProps) => {
 	const context = useRef<any>();
 	const [show, setShow] = React.useState(false);
@@ -40,8 +42,7 @@ export const PlayByPlayBlock = (props: PlayByPlayBlockProps) => {
 	const sideCheck = cx('md:mb-1 text-sm flex', props.side === 'home' ? 'justify-start' : 'justify-end');
 
 	return (
-		<div className='-mx-4 md:mx-0'>
-			<h2 className='px-2 my-2 text-sm uppercase font-bold text-center text-black'>Q1 Start</h2>
+
 			<article className={sideCheck}>
 				<PlayByPlayEvent process={props.process} onContextMenu={handleContextMenu}></PlayByPlayEvent>
 				{show === true ? (
@@ -66,6 +67,5 @@ export const PlayByPlayBlock = (props: PlayByPlayBlockProps) => {
 					  ''
 					: ''} */}
 			</article>
-		</div>
 	);
 };

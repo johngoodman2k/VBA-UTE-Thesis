@@ -3,7 +3,7 @@ import { Controller, handleError, Log } from "express-ext";
 import { nanoid } from "nanoid";
 import { Team } from "../team/team";
 import { findAncestor } from "typescript";
-import { Match, MatchFilter, MatchService, Process } from "./match";
+import { Match, MatchFilter, MatchService, Player, Process } from "./match";
 
 export class MatchController extends Controller<Match, string, MatchFilter> {
     constructor(log: Log, protected matchService: MatchService) {
@@ -23,11 +23,8 @@ export class MatchController extends Controller<Match, string, MatchFilter> {
             if (!match || match.length === 0) {
                 return res.status(400).json({ err: 'Failed to get match' });
             }
-    
             //create process
-
             process.id = nanoid();
-    
             //add process to match
             if (!match[0].process) {
                 match[0].process = [];
@@ -79,30 +76,56 @@ export class MatchController extends Controller<Match, string, MatchFilter> {
         if(!matches) return res.status(404).json({ err: "Match not found" });
         if(matches.length ===0) return res.status(200).json(matches);
 
-        const teamsInSeason = await this.matchService.getTeamBySeasonId(matches[0].seasonId);
-		if(!teamsInSeason){
-			return res.status(404).json({err: "Teams doest not exist"})
-		}
-		if(teamsInSeason.length ===0){
-			return res.status(200).json(matches[0])
-		}
+        const homeTeam = await this.matchService.getTeamById(matches[0].home as string);
+        if(!homeTeam || homeTeam.length ===0) matches[0].home =[] as any
 
-        const  playerOnTeams = await Promise.all(teamsInSeason.map(async team => await this.matchService.getPlayerByTeamId(team.id)))
+        const awayTeam = await this.matchService.getTeamById(matches[0].away as string);
+        if(!awayTeam || awayTeam.length ===0) matches[0].away =[] as any
 
-        for(let i = 0; i < teamsInSeason.length; i++){
-            teamsInSeason[i].players = playerOnTeams[i]
+        const teamMerge = [homeTeam[0],awayTeam[0]]
+
+        const  playerOnTeams = await Promise.all(teamMerge.map(async team => await this.matchService.getPlayerByTeamId(team.id)))
+        teamMerge[0].players = playerOnTeams[0]
+        teamMerge[1].players = playerOnTeams[1]
+
+        let teamHomeString =[] as string[]
+        let teamAwayString =[] as string[]
+
+
+        if(matches[0].homeLineUp && matches[0].homeLineUp.length !== 0){
+            teamHomeString = matches[0].homeLineUp.map(pl => pl.id)
         }
+        if(matches[0].awayLineUp && matches[0].awayLineUp.length !== 0){
+            teamAwayString = matches[0].awayLineUp.map(pl => pl.id)
+        }
+
+
+       
+        const homeLineUp = teamMerge[0].players.map(pl => {if(teamHomeString.indexOf(pl.id) !== -1) return pl})
+    
+        const awayLineUp = teamMerge[1].players.map(pl => {if(teamAwayString.indexOf(pl.id) !== -1) return pl})
+
+        
+        matches[0].homeLineUp = homeLineUp
+        matches[0].awayLineUp =awayLineUp
         // const player= await this.matchService.getPlayerByTeamId(te)
 
-        for(const m of matches){
-			m.home = teamsInSeason.find((t: Team) => t.id === m.home)
-			m.away = teamsInSeason.find((t: Team) => t.id === m.away)
-		}
+
+		matches[0].home = teamMerge[0]
+		matches[0].away = teamMerge[1]
+		
         const processes = await this.matchService.getProcessByMatchId(matches[0].id);
         if(processes.length === 0){
             return res.status(200).json(matches[0])
         }
+
+        for(const p of processes){
+            p.playerOne = teamMerge[0].players.find(pl => pl.id === p.playerOne) as Player ?? teamMerge[1].players.find(pl => pl.id === p.playerOne)  as Player ?? p.playerOne
+            p.playerTwo = teamMerge[0].players.find(pl => pl.id === p.playerTwo) as Player ?? teamMerge[1].players.find(pl => pl.id === p.playerTwo)  as Player ?? p.playerTwo
+        }
+        
         matches[0].process = processes
+        
     
         
         return res.status(200).json(matches[0])

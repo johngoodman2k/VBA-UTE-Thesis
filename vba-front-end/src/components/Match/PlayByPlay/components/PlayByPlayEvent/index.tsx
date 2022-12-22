@@ -36,18 +36,19 @@ export const PlayByPlayEvent = (props: PlayByPlayEventProps) => {
 				<a className='items-center flex text-sm'>
 					<span className='items-center'>
 						<span className={`${cx('__pbpEvent__info__img')} `}>
-							<img
+							{props.process.playerOne?.image && <img
 								className={`${cx(
 									'__pbpEvent__info__img--adjust'
 								)}h-full w-full block object-cover `}
-								// src={props.process.player[0]?.image as string}
+								src={props.process.playerOne?.image as string}
 								alt=''
-							/>
+							/>}
 						</span>
 					</span>
 					<span className='px-1 capitalize leading-tight md:text-sm'>
-						{/* {props.process.playerAttack?.firstName + ' ' + props.process.player[0]?.lastName} */}
+						{props.process.playerOne?.firstname ?props.process.playerOne?.firstname + " " : "" } {props.process.playerOne?.lastname ?? ""}
 					</span>
+					
 				</a>
 			</div>
 		</div>
