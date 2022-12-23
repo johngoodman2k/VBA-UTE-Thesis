@@ -22,4 +22,8 @@ export class SqlPlayerRepository
     return this.query(getPlayerById, [player]);
   }
 
+  getPlayerByTeamId(teamId: string, ctx?: any): Promise<Player[]> {
+    return this.query("select * from players where teamid = $1", [teamId]);
+  }
+
 }

@@ -54,6 +54,7 @@ export interface TeamRepository extends Repository<Team, string> {
 
 export interface PlayerRepository extends Repository<Player, string> {
     getPlayerById(player: string, ctx?: any): Promise<Player[]>;
+    getPlayerByTeamId(teamId: string, ctx?: any): Promise<Player[]>;
 }
 export interface MatchRepository extends Repository<Match, string> {
     getMatchByIdTeamId(teamid:string,side: string):Promise<Match[]>
@@ -65,7 +66,8 @@ export interface TeamService extends Service<Team, string, TeamFilter> {
     createPlayerAndAddPlayerToTeam(player: Player, team: Team): Promise<number>
     getTeamsBySeasonId(seasonId: string):Promise<Team[]>;
     updateTeam( id:string,team:Team):Promise<number>;
-    getMatchByIdTeamId(teamid:string,side: string):Promise<Match[]>
+    getMatchByIdTeamId(teamid:string,side: string):Promise<Match[]>;
+    getPlayerByTeamId(teamId: string, ctx?: any): Promise<Player[]>
 
 }
 
