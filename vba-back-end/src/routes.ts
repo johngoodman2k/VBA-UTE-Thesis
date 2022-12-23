@@ -115,4 +115,11 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 	app.post('/authenticate/resetpassword', ctx.user.resetPassword);
 	app.post('/authenticate/checkotpfg', ctx.user.checkOtpFG);
 	app.get('/authenticate/user', authenToken, ctx.user.userInfo);
+
+	app.post('/posts/search', ctx.post.search); //xem xet
+	app.get('/posts/search', ctx.post.search); //ok
+	app.get('/posts/:id', ctx.post.load); //ok
+	app.post('/posts', ctx.post.create); //ok
+	app.put('/posts/:id', ctx.post.update); //ok
+	app.patch('/posts/:id', ctx.post.patch); //ok
 }

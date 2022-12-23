@@ -4,6 +4,7 @@ import {
 	AuthenticateServices,
 	MatchServices,
 	PlayerServices,
+	PostServices,
 	ProcessServices,
 	SeasonServices,
 	StandingsServices,
@@ -14,6 +15,7 @@ import {
 	AuthenticateServicesRoot,
 	MatchServicesRoot,
 	PlayerServicesRoot,
+	PostServicesRoot,
 	ProcessServicesRoot,
 	SeasonServicesRoot,
 	StandingsServicesRoot,
@@ -31,6 +33,8 @@ class VbaContext {
 	public authenticateServices?: AuthenticateServicesRoot;
 	public standingsServices?: StandingsServicesRoot;
 	public seasonServices?: SeasonServicesRoot;
+	public postServices?: PostServicesRoot;
+
 
 	getTournamentServices(): TournamentServicesRoot {
 		if (!this.tournamentServices) {
@@ -82,6 +86,12 @@ class VbaContext {
 			this.seasonServices = new SeasonServices('http://localhost:8080/seasons', httpRequest);
 		}
 		return this.seasonServices;
+	}
+	getPostServices(): PostServicesRoot {
+		if (!this.postServices) {
+			this.postServices = new PostServices('http://localhost:8080/posts', httpRequest);
+		}
+		return this.postServices;
 	}
 }
 export const vbaContext = new VbaContext();

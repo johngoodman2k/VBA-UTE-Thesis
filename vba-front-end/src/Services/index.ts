@@ -1,9 +1,10 @@
 import { HttpRequest } from 'axios-core';
-import { Match, Tournament, Process, Team, Player, MatchProcess, Result, User, Standings, Season } from './models';
+import { Match, Tournament, Process, Team, Player, MatchProcess, Result, User, Standings, Season, Post } from './models';
 import {
 	AuthenticateServicesRoot,
 	MatchServicesRoot,
 	PlayerServicesRoot,
+	PostServicesRoot,
 	ProcessServicesRoot,
 	SeasonServicesRoot,
 	StandingsServicesRoot,
@@ -225,5 +226,20 @@ export class SeasonServices implements SeasonServicesRoot {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.put<Result<Season>>(url,season)
 	}
+
+}
+
+export class PostServices implements PostServicesRoot {
+	constructor(private url: string, private httpRequest: HttpRequest) {
+		this.getAllPost = this.getAllPost.bind(this);
+
+
+	}
+	getAllPost(): Promise<Post[]>{
+		const url = `${this.url}/search`;
+		return this.httpRequest.get<Post[]>(url)
+	}
+
+
 
 }
