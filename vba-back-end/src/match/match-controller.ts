@@ -100,10 +100,21 @@ export class MatchController extends Controller<Match, string, MatchFilter> {
         }
 
 
-       
-        const homeLineUp = teamMerge[0].players.map(pl => {if(teamHomeString.indexOf(pl.id) !== -1) return pl})
-    
-        const awayLineUp = teamMerge[1].players.map(pl => {if(teamAwayString.indexOf(pl.id) !== -1) return pl})
+       const homeLineUp = [] as Player[]
+       const awayLineUp = [] as Player[]
+
+        // let homeLineUp = teamMerge[0].players.map(pl => {if(teamHomeString.indexOf(pl.id) !== -1) return pl})
+       for( const hp of teamMerge[0].players){
+            if(teamHomeString.indexOf(hp.id) !== -1){
+                homeLineUp.push(hp)
+            }
+       }
+       for( const ap of teamMerge[1].players){
+        if(teamAwayString.indexOf(ap.id) !== -1){
+            awayLineUp.push(ap)
+        }
+    }
+        // let awayLineUp = teamMerge[1].players.map(pl => {if(teamAwayString.indexOf(pl.id) !== -1) return pl})
 
         
         matches[0].homeLineUp = homeLineUp
@@ -118,7 +129,7 @@ export class MatchController extends Controller<Match, string, MatchFilter> {
         if(processes.length === 0){
             return res.status(200).json(matches[0])
         }
-
+``
         for(const p of processes){
             p.playerOne = teamMerge[0].players.find(pl => pl.id === p.playerOne) as Player ?? teamMerge[1].players.find(pl => pl.id === p.playerOne)  as Player ?? p.playerOne
             p.playerTwo = teamMerge[0].players.find(pl => pl.id === p.playerTwo) as Player ?? teamMerge[1].players.find(pl => pl.id === p.playerTwo)  as Player ?? p.playerTwo

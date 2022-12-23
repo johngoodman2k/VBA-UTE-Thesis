@@ -161,6 +161,7 @@ export const ControlModal = ({
 			if(sideSelected === "home"){
 				const validataHomeLineUp = validateLineUp(homeLineUp)
 				// const validataHomeLineUp = validateLineUp(homeLineUp)
+				console.log(validataHomeLineUp)
 
 				if(validataHomeLineUp && matchId){
 					const newHomeLineUp = validataHomeLineUp.teamLineUp.map((t)=> {return {id: t}})
@@ -177,6 +178,7 @@ export const ControlModal = ({
 
 				if(validataAwayLineUp && matchId){
 					const newAwayLineUp = validataAwayLineUp.teamLineUp.map((t)=> {return {id: t}})
+					console.log(newAwayLineUp)
 					try{
 						await matchServices.updateMatch(matchId, {awayLineUp: newAwayLineUp} as Match );
 						if(handleCloseModal) handleCloseModal()

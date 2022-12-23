@@ -16,21 +16,21 @@ export const PlayerCard = ({image,firstname,lastname,shirtnumber}:PlayerCardProp
 			)}`}>
 			{image &&<img
 				src={image}
-				alt={firstname&&"" + lastname&&""}
+				alt={firstname??"" + lastname??""}
 			/>}
 			<p
 				className={`text-center py-2.5 my-1.5 rounded-md text-white ${cx(
 					'__textBackground'
 				)}`}>
-				{firstname && ""}
+				{firstname ?? ""}
 				<br></br>
-				{lastname &&""}
+				{lastname ??""}
 			</p>
 			<p
 				className={`text-center py-2.5 my-1.5 rounded-md text-white ${cx(
 					'__textBackground'
 				)}`}>
-				{firstname+ " " && "" + shirtnumber && ""} 
+				{firstname+ " " ?? "" + shirtnumber  ??""} 
 			</p>
 		</div>
 	);
