@@ -52,10 +52,8 @@ export const LandingPageScroll = () => {
 
 			const res = await tournamentServices.getMergeTournamentById('uWvQv6nLYcPAyztGvzqyZ', 'AHLn-VnvtNsxFh6olzbCd')
 			console.log('54', res)
-			// if (res1 && res1.seasons) {
-			// 	const res2 = await standingsServices.getStandingsById(res1?.seasons[res1.seasons.length - 1].standingsId);
-			// 	setTournament(res1);
-			// 	setStandings(res2);
+			// const res1 = await standingsServices.getStandingsById('AHLn-VnvtNsxFh6olzbCd')
+			// setStandings(res1)
 			setTournament(res[0])
 			// }
 		})();

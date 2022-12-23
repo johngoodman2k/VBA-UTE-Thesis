@@ -45,9 +45,9 @@ export const PlayByPlayEvent = (props: PlayByPlayEventProps) => {
 						</span>
 					</span>
 					<span className='px-1 capitalize leading-tight md:text-sm'>
-						{props.process.playerOne?.firstname ? props.process.playerOne?.firstname + " " : ""} {props.process.playerOne?.lastname + " " ?? ""} {props.process.option + " " ?? ""}
-						{props.process.playerTwo ? `(${props.process.playerTwo.firstname ?? "" + props.process.playerTwo.lastname ?? ""} AST)` : ""}
-						{props.process.description !== "" ? `(${props.process.description})` : ""}
+						{props.process.playerOne?.firstname ? props.process.playerOne?.firstname + " " : ""} {props.process.playerOne?.lastname + " " ?? ""} {props.process.option + " " ?? ""} {props.process.description !== "" ? `(${props.process.description})` : ""}{props.process.playerTwo ? `(${props.process.playerTwo.firstname ?? "" + props.process.playerTwo.lastname ?? ""} AST)` : ""}
+
+
 					</span>
 
 				</a>

@@ -30,24 +30,24 @@ export const PlayerLineUpBar = (props: PlayerLineUpBar) => {
 	);
 
 	return (
-	
-			<li onClick={handleOnClick} className=''>
-				<div className={blockSideCheck}>
-					<div className={`${cx('__number')}`}>{props.player?.shirtnumber ?? ""}</div>
-					{props.player && props.player.image && <img className='w-[4rem] my-0 mx-5' src={props.player.image as string} alt={props.player.firstname ?? "playername"}></img>}
-					<div>
-						<span className='flex font-normal text-white text-lg'>
-							{props.player?.lastname ? props.player?.lastname +" ": "" }  {props.player?.firstname ?props.player?.firstname: ""}
-						</span>
-						<span className={nationalitySideCheck}>
-							{props.player?.country && <img
-								className='w-[30px] h-[20px] inline-block'
-								src={""}></img>}
-							{/* <span className={sideCheck}>{props.player.country ?? ""}</span> */}
-						</span>
-					</div>
+
+		<li onClick={handleOnClick} className=''>
+			<div className={blockSideCheck}>
+				<div className={`${cx('__number')}`}>{props.player?.shirtnumber ?? ""}</div>
+				{props.player && props.player.image && <img className='w-[4rem] my-0 mx-5 min-h-[96px]' src={props.player.image as string} alt={props.player.firstname ?? "playername"}></img>}
+				<div>
+					<span className='flex font-normal text-white text-lg'>
+						{props.player?.lastname ? props.player?.lastname + " " : ""}  {props.player?.firstname ? props.player?.firstname : ""}
+					</span>
+					<span className={nationalitySideCheck}>
+						{props.player?.country && <img
+							className='w-[30px] h-[20px] inline-block'
+							src={""}></img>}
+						{/* <span className={sideCheck}>{props.player.country ?? ""}</span> */}
+					</span>
 				</div>
-			</li>
-	
+			</div>
+		</li>
+
 	);
 };
