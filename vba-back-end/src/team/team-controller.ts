@@ -91,6 +91,11 @@ export class TeamController extends Controller<Team, string, TeamFilter> {
     if(!teams) return res.status(404).json({err: 'Teams not found'}) 
     if( teams.length ===0) return res.status(200).json(teams)
 
+    const players = await this.teamService.getPlayerByTeamId(teams[0].id)
+    if(!players) return res.status(404).json({err: 'Players not found'})
+
+    teams[0].players = players
+
     const m1 = await this.teamService.getMatchByIdTeamId(teams[0].id,"home")
     const m2 = await this.teamService.getMatchByIdTeamId(teams[0].id,"away")
     if(!m1 || !m2) return res.status(404).json({err: 'Matches not found'})
@@ -102,6 +107,7 @@ export class TeamController extends Controller<Team, string, TeamFilter> {
       m.home = allTeam.find(t => t.id === m.home)
       m.away = allTeam.find(t => t.id === m.away)
     }
+    
     return res.status(200).json(teams[0])
   }
 

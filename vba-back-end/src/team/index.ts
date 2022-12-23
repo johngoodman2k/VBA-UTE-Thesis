@@ -54,6 +54,9 @@ export class TeamManager
   getMatchByIdTeamId(teamid:string,side: string):Promise<Match[]>{
     return this.matchrepository.getMatchByIdTeamId(teamid,side);
   }
+  getPlayerByTeamId(teamId: string, ctx?: any): Promise<Player[]>{
+    return this.playerrepository.getPlayerByTeamId(teamId, ctx);
+  }
 }
 export function useTeamService(db: DB, mapper?: TemplateMap): TeamService {
   const query = useQuery("teams", mapper, teamModel, true);
