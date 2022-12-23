@@ -103,7 +103,7 @@ export interface Team {
 	createdAt?: Date;
 	color?: string;
 	shortname?: string;
-
+	matches?: Match[];
 	teamName?: string;
 	teamLogo?: string | File;
 	shortName?: string;
@@ -292,11 +292,11 @@ export interface CustomTournament {
 }
 
 export interface Post {
-    id?: string;
-    name?: string
-    tinydes?:string,
-    description?: string,
-    public?:boolean,
-    image?:string,
-    owner?: string,
+	id?: string;
+	name?: string
+	tinydes?: string,
+	description?: string,
+	public?: boolean,
+	image?: string,
+	owner?: string,
 }
