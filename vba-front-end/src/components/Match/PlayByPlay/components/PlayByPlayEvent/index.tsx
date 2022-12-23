@@ -30,9 +30,8 @@ export const PlayByPlayEvent = (props: PlayByPlayEventProps) => {
 				<span className='block'>{props.process.mins}</span>
 			</p>
 			<div
-				className={`${
-					(cx('__pbpEvent__info'), itemCheck)
-				} px-2 py-1 h-full flex-1 items-center flex text-sm `}>
+				className={`${(cx('__pbpEvent__info'), itemCheck)
+					} px-2 py-1 h-full flex-1 items-center flex text-sm `}>
 				<a className='items-center flex text-sm'>
 					<span className='items-center'>
 						<span className={`${cx('__pbpEvent__info__img')} `}>
@@ -46,9 +45,11 @@ export const PlayByPlayEvent = (props: PlayByPlayEventProps) => {
 						</span>
 					</span>
 					<span className='px-1 capitalize leading-tight md:text-sm'>
-						{props.process.playerOne?.firstname ?props.process.playerOne?.firstname + " " : "" } {props.process.playerOne?.lastname ?? ""}
+						{props.process.playerOne?.firstname ? props.process.playerOne?.firstname + " " : ""} {props.process.playerOne?.lastname + " " ?? ""} {props.process.option + " " ?? ""}
+						{props.process.playerTwo ? `(${props.process.playerTwo.firstname ?? "" + props.process.playerTwo.lastname ?? ""} AST)` : ""}
+						{props.process.description !== "" ? `(${props.process.description})` : ""}
 					</span>
-					
+
 				</a>
 			</div>
 		</div>

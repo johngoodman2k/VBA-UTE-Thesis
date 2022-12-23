@@ -124,7 +124,7 @@ export const MatchDetailPage = () => {
 				console.log("matches", res)
 				// const res1 = await processServices.getProcessesByMatchId(params.id) as Process[];
 				// setProcesses(res1);
-				
+
 
 			}
 		})();
@@ -294,11 +294,6 @@ export const MatchDetailPage = () => {
 													awayResult={matchDetail.awayresult ?? "0"}
 												/>
 											}
-
-
-
-
-
 											<SummarizeBox></SummarizeBox>
 											<div className={cx('__timeLine')}>
 												<a className={cx('__timeLine__team')}>
@@ -306,20 +301,21 @@ export const MatchDetailPage = () => {
 														<span className={cx('__timeLine__badge__block')}>
 															{matchDetail && matchDetail.home && <img
 																alt=""
-																src={matchDetail.home.teamlogo as string?? ""}
+																src={matchDetail.home.teamlogo as string ?? ""}
 																className={cx('__timeLine__badge--adjust')}></img>}
 														</span>
 													</span>
 													{matchDetail && matchDetail.home && matchDetail.home.teamname ? matchDetail.home.teamname : ""}
 												</a>
 												<div className={cx('__timeLine__crossbar')}>
-													<div className={cx('__timeLine__crossbar--adjust')}>HT</div>
+													{/* <div className={cx('__timeLine__crossbar--adjust')}>HT</div> */}
 													{matchDetail?.process && matchDetail?.process.map((process: Process, i: number) => {
 														return (
 
 															matchDetail && matchDetail.home && matchDetail.away &&
 
 															<MatchEventTimeLine
+																index={i + 1}
 																type={process.type ?? ""}
 																mins={process.mins as number ?? ""}
 																homeBadge={matchDetail.home.teamlogo as string ?? ""}

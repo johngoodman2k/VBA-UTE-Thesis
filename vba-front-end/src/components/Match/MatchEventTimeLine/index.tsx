@@ -22,6 +22,7 @@ type TournamentEventProps = {
 	awayName: string;
 	awayResult: string;
 	side: string;
+	index?: number;
 	// playerName?: string;
 	// playerImg?: string;
 	// playerNumber?: number;
@@ -65,8 +66,8 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
 			className={cx('tournamentEvent__block')}
 			style={
 				props.side === 'home'
-					? { left: `${props.mins}%` }
-					: { marginTop: '4rem' }
+					? { left: `calc(${props.index ? props.index : 0}*10%` }
+					: { left: `calc(${props.index ? props.index : 0}*10%` }
 			}>
 			<span>
 				{props.type === 'won' ? (
@@ -76,8 +77,8 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
 				)}
 			</span>
 
-			{props.mins}
-			<span></span>
+			{/* {props.mins}
+			<span></span> */}
 
 			<div className={cx('tournamentEvent__inforContainer')}>
 				<div className={cx('__wrapper')}>
