@@ -1,6 +1,6 @@
 import { Controller, handleError, Log } from "express-ext";
 import { Request, Response } from "express";
-import { Player, Team, TeamFilter, TeamService } from "./team";
+import { Match, Player, Team, TeamFilter, TeamService } from "./team";
 import { getTeamById } from "./query";
 import { nanoid } from "nanoid";
 import { deleteFile } from "../../common/deleteFile";
@@ -83,7 +83,26 @@ export class TeamController extends Controller<Team, string, TeamFilter> {
     if(saveUrlStadium) deleteFile(saveUrlStadium)
 
     return res.status(200).json(updateTeam)
+  }
+  async load(req: Request, res: Response){
+    const {id} = req.params
+    const teams = await this.teamService.getTeamById(id)
     
+    if(!teams) return res.status(404).json({err: 'Teams not found'}) 
+    if( teams.length ===0) return res.status(200).json(teams)
+
+    const m1 = await this.teamService.getMatchByIdTeamId(teams[0].id,"home")
+    const m2 = await this.teamService.getMatchByIdTeamId(teams[0].id,"away")
+    if(!m1 || !m2) return res.status(404).json({err: 'Matches not found'})
+
+    const m = m1.concat(m2)
+    teams[0].matches = m;
+    const allTeam = await this.teamService.all()
+    for(const m of teams[0].matches){
+      m.home = allTeam.find(t => t.id === m.home)
+      m.away = allTeam.find(t => t.id === m.away)
+    }
+    return res.status(200).json(teams[0])
   }
 
 

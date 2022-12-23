@@ -289,3 +289,13 @@ export interface CustomTournament {
 	stadiumname?:string;
 
 }
+
+export interface Post {
+    id?: string;
+    name?: string
+    tinydes?:string,
+    description?: string,
+    public?:boolean,
+    image?:string,
+    owner?: string,
+}

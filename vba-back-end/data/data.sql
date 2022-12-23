@@ -183,3 +183,18 @@ create table users
     createdAt timestamp with time zone default now(),
     constraint users_pkey primary key (id)
 );
+
+create table posts
+(
+    id character varying(40),
+    name character varying(200),
+    tinydes character varying(120),
+    description character varying(2000),
+    public boolean,
+    image character varying(360),
+    owner character varying(40),
+    createdAt timestamp with time zone default now(),
+    constraint posts_pkey primary key (id)
+);
+
+   

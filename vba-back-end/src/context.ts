@@ -13,6 +13,7 @@ import { StandingsController, useStandingsController } from "./standings/index";
 import { UserController, useUserController } from "./authenticate/index";
 
 import { config as Config, env as Env } from "./config";
+import { PostController, usePostController } from "./post/index";
 
 resources.createValidator = createValidator;
 
@@ -28,6 +29,7 @@ export interface ApplicationContext {
     process: ProcessController;
     season: SeasonController;
     standings: StandingsController;
+    post: PostController;
 }
 export function useContext(
     db: DB,
@@ -48,6 +50,8 @@ export function useContext(
     const process = useProcessController(logger.error, db);
     const season = useSeasonController(logger.error, db);
     const standings = useStandingsController(logger.error, db);
+    const post = usePostController(logger.error, db);
+
 
     return {
         health,
@@ -61,5 +65,6 @@ export function useContext(
         process,
         season,
         standings,
+        post
     };
 }

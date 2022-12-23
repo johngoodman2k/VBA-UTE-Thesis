@@ -8,10 +8,11 @@ import { TournamentManager } from '../TournamentManager';
 import { SeasonManager } from '../SeasonManager';
 import { TeamManager } from '../TeamManager';
 import { PlayerManager } from '../PlayerManager';
+import { NewsManager } from '../NewsManager';
 const cx = classNames.bind(styles);
 
 type AdminHomePageProps = {
-	manager: 'tournaments' | 'seasons' | 'teams' | 'players';
+	manager: 'tournaments' | 'seasons' | 'teams' | 'players' | 'news';
 };
 
 export const AdminHomePage = ({ manager }: AdminHomePageProps) => {
@@ -51,9 +52,9 @@ export const AdminHomePage = ({ manager }: AdminHomePageProps) => {
 						<SeasonManager></SeasonManager>
 					) : manager === 'teams' ? (
 						<TeamManager></TeamManager>
-					) : (
+					) : manager === 'players' ? (
 						<PlayerManager></PlayerManager>
-					)}
+					): 	<NewsManager></NewsManager>}
 				</section>
 			</div>
 		</div>

@@ -13,6 +13,7 @@ export interface Team {
     players: Player[];
     eliminated: boolean;
     shortName: string;
+    matches?: Match[];
     createdAt: Date;
 }
 
@@ -38,6 +39,12 @@ export interface Tournament {
     createdAt: Date;
 }
 
+export interface Match {
+    id?:string;
+    home?: string |Team;
+    away?:string | Team;
+}
+
 export interface TeamRepository extends Repository<Team, string> {
     createPlayerAndAddPlayerToTeam(player: Player, team: Team): Promise<number>
     getTeamById(teamId: string): Promise<Team[]>;
@@ -48,6 +55,9 @@ export interface TeamRepository extends Repository<Team, string> {
 export interface PlayerRepository extends Repository<Player, string> {
     getPlayerById(player: string, ctx?: any): Promise<Player[]>;
 }
+export interface MatchRepository extends Repository<Match, string> {
+    getMatchByIdTeamId(teamid:string,side: string):Promise<Match[]>
+}
 export interface TeamService extends Service<Team, string, TeamFilter> {
     // getTeamByTournamentId(tournamentId: string): Promise<Team[]>;
     getPlayerById(player: string, ctx?: any): Promise<Player[]>;
@@ -55,6 +65,7 @@ export interface TeamService extends Service<Team, string, TeamFilter> {
     createPlayerAndAddPlayerToTeam(player: Player, team: Team): Promise<number>
     getTeamsBySeasonId(seasonId: string):Promise<Team[]>;
     updateTeam( id:string,team:Team):Promise<number>;
+    getMatchByIdTeamId(teamid:string,side: string):Promise<Match[]>
 
 }
 
@@ -95,6 +106,7 @@ export interface TeamFilter extends Filter {
     players: Player[];
     eliminated: boolean;
     shortName: string;
+    matches: Match[];
     createdAt: Date;
     
 }

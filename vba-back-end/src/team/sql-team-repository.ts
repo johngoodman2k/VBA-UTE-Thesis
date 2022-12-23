@@ -12,7 +12,7 @@ export class SqlTeamRepository
   }
 
   getTeamById(teamId: string): Promise<Team[]> {
-    return this.query<Team>(getTeamById, [teamId]);
+    return this.query<Team>("select * from teams where id = $1", [teamId]);
   }
 
   getTeamsBySeasonId(seasonId: string):Promise<Team[]> {
