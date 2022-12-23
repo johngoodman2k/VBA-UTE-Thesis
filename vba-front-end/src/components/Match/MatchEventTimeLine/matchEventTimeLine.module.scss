@@ -1,4 +1,5 @@
 @import '/src/styles/Variables.scss';
+
 .__wrapper {
 	width: max-content;
 }
@@ -7,34 +8,39 @@
 	&__home {
 		bottom: 2.5rem;
 	}
+
 	&__away {
 		top: 2.5rem;
 	}
+
 	&__timeLine {
-		&__element {
-		}
+		&__element {}
 	}
+
 	&__block {
 		position: absolute;
 		display: inline-block;
 		top: 50%;
 		line-height: 3rem;
-		margin-top: -1.5rem;
+		// margin-top: -1.5rem;
 		width: 2rem;
 		margin-left: -1rem;
 		font-size: 0.8rem;
 		text-align: center;
 		cursor: pointer;
 	}
+
 	&__icon {
 		position: absolute;
 		left: 50%;
 		transform: translateX(-50%);
+
 		&--adjust {
 			width: 14px;
 			height: 14px;
 		}
 	}
+
 	&__inforContainer {
 		position: absolute;
 		bottom: 5.5rem;
@@ -47,20 +53,20 @@
 		transition: all 0.15s ease-out;
 		visibility: hidden;
 		z-index: 20;
+
 		&__header {
-			background: linear-gradient(
-				to right,
-				$primary-color,
-				$fourth-color,
-				$second-color,
-				$primary-color,
-				$third-color
-			);
+			background: linear-gradient(to right,
+					$primary-color,
+					$fourth-color,
+					$second-color,
+					$primary-color,
+					$third-color);
 			color: #fff;
 			padding: 0.7rem 1rem;
 			box-shadow: 0 5px 10px rgb(0 0 0 / 20%);
 			line-height: 2rem;
 		}
+
 		&__icon {
 			transform: none;
 			display: inline-block;
@@ -68,32 +74,38 @@
 			margin-right: 0.5rem;
 			position: relative;
 			top: -1px;
+
 			&--adjust {
 				width: 14px;
 				height: 14px;
 			}
 		}
+
 		&__time {
 			margin-right: 0.5rem;
 			display: inline-block;
 			vertical-align: middle;
 			color: #e90052;
 		}
+
 		&__teamScore {
 			color: hsla(0, 0%, 100%, 0.6);
 			text-align: right;
 			display: inline-block;
 			margin-left: 2rem;
 		}
+
 		&__team {
 			color: #fff;
 			display: inline-block;
 			height: auto;
 			text-decoration: none;
 		}
+
 		&__homeTeamBadge {
 			margin-right: 0.6rem;
 		}
+
 		&__awayTeamBadge {
 			margin-left: 0.6rem;
 		}
@@ -110,6 +122,7 @@
 				vertical-align: middle;
 				position: relative;
 				margin-bottom: 0.25rem;
+
 				&--adjust {
 					width: 24px;
 					height: 24px;
@@ -117,24 +130,30 @@
 				}
 			}
 		}
+
 		&__homeTeamName {
 			margin-right: 0.5rem;
 		}
+
 		&__awayTeamName {
 			margin-left: 0.5rem;
 		}
 	}
+
 	&__inforContent {
 		padding: 0.5rem 1rem;
+
 		&__scorerImage {
 			display: inline-block;
 			vertical-align: middle;
 			margin-right: 1rem;
 			width: 5rem;
 		}
+
 		&__scorerInfor {
 			display: inline-block;
 			vertical-align: middle;
+
 			&__name {
 				color: #37003c !important;
 				line-height: 1.8;
@@ -142,42 +161,52 @@
 				display: block;
 			}
 		}
+
 		&__assistInfor {
 			color: #76766f;
 			font-size: 1, 1rem;
 			line-height: 1.8;
 			font-weight: 400;
+
 			&--name {
 				text-decoration: none;
 				color: #76766f;
 			}
 		}
+
 		&__substitution {
 			width: 50%;
 			white-space: nowrap;
+
 			&__image {
 				margin-right: 0;
 				display: block;
 				vertical-align: middle;
 				width: 5rem;
+
 				&--subOut {
 					float: left;
 				}
+
 				&--subOn {
 					float: right;
 				}
 			}
+
 			&--subOut {
 				float: left;
 			}
+
 			&--subOn {
 				float: right;
 			}
+
 			&__playerInfor {
 				margin-left: 6rem;
 				display: block;
 				padding-top: 1.5rem;
 				position: relative;
+
 				&--subOn {
 					margin-left: 0;
 					margin-right: 6rem;
@@ -185,11 +214,13 @@
 					display: block;
 					position: relative;
 				}
+
 				&--name {
 					color: #37003c !important;
 					line-height: 1.8;
 					font-size: 0.8rem;
 					display: block;
+
 					&--subOn {
 						float: right;
 						padding-left: 2rem;
@@ -197,15 +228,18 @@
 					}
 				}
 			}
+
 			&__icon {
 				display: inline-block;
 				vertical-align: middle;
 				margin-left: 0.5rem;
 				margin-bottom: 0.3rem;
+
 				&--adjust {
 					width: 14px;
 					height: 14px;
 				}
+
 				&--subOn {
 					position: absolute;
 					left: 0.7rem;
