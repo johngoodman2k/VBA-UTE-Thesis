@@ -48,7 +48,7 @@ export const TeamInfoFixturesPage = () => {
 					{/* controller */}
 					<div className='my-8 container'>
 						<div className={`header-wrap justify-between w-full  flex`}>
-							<div id='filter-section' className='flex flex-col w-full '>
+							<div id='filter-section' className='flex flex-col w-full hidden '>
 								<h3 className='uppercase text-lg mb-2'>Tìm kiếm </h3>
 								<div className='flex m-0 w-full'>
 									<div className={`${cx('__filterByType')}`}>

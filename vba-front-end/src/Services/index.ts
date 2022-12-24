@@ -34,15 +34,15 @@ export class TournamentServices implements TournamentServicesRoot {
 		const url = `${this.url}`;
 		return this.httpRequest.post<Result<Tournament>>(url, tournament);
 	}
-	createSeasonAndAddToTournament(name:string,tournamentId:string):Promise<Result<Tournament[]>>{
+	createSeasonAndAddToTournament(name: string, tournamentId: string): Promise<Result<Tournament[]>> {
 		const url = `${this.url}/createSeasonAndAddToTournament`;
-		return this.httpRequest.post<Result<Tournament[]>>(url, {name:name,tournamentId:tournamentId});
+		return this.httpRequest.post<Result<Tournament[]>>(url, { name: name, tournamentId: tournamentId });
 	}
-	updateTournament(id:string,tournament:Tournament): Promise<number>{
+	updateTournament(id: string, tournament: Tournament): Promise<number> {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.put(url, tournament);
 	}
-	getMergeTournamentById(tournamentId:string, seasonId:string): Promise<Tournament[]>{
+	getMergeTournamentById(tournamentId: string, seasonId: string): Promise<Tournament[]> {
 		const url = `${this.url}/getMergeTournamentById/${tournamentId}/${seasonId}`;
 		return this.httpRequest.get<Tournament[]>(url);
 	}
@@ -81,13 +81,13 @@ export class MatchServices implements MatchServicesRoot {
 		const url = `${this.url}/updateProcess/${id}`;
 		return this.httpRequest.post<Process>(url, process);
 	}
-	getMatchDetails(matchId:string):Promise<Match>{
+	getMatchDetails(matchId: string): Promise<Match> {
 		const url = `${this.url}/getMatchDetails/${matchId}`;
 		return this.httpRequest.get<Match>(url);
 	}
-	updateMatch(matchId:string,match:Match):Promise<Match>{
+	updateMatch(matchId: string, match: Match): Promise<Match> {
 		const url = `${this.url}/${matchId}`;
-		return this.httpRequest.put<Match>(url,match);
+		return this.httpRequest.put<Match>(url, match);
 	}
 
 }
@@ -100,7 +100,7 @@ export class TeamServices implements TeamServicesRoot {
 		this.addPlayerToTeam = this.addPlayerToTeam.bind(this);
 		this.updateTeam = this.updateTeam.bind(this);
 
-		
+
 	}
 
 	getAllTeams(): Promise<Team[]> {
@@ -119,15 +119,15 @@ export class TeamServices implements TeamServicesRoot {
 
 	addPlayerToTeam(player: Player, globalHost?: string): Promise<number> {
 		const url = `${this.url}/addPlayerToTeam`;
-		return this.httpRequest.post(url, player,{headers: {'Content-Type': 'multipart/form-data'}});
+		return this.httpRequest.post(url, player, { headers: { 'Content-Type': 'multipart/form-data' } });
 	}
-	getTeamsBySeasonId(seasonId: string, globalHost?: string): Promise<Team[]>{
+	getTeamsBySeasonId(seasonId: string, globalHost?: string): Promise<Team[]> {
 		const url = `${this.url}/getTeamsBySeasonId/${seasonId}`;
 		return this.httpRequest.get<Team[]>(url)
 	}
-	updateTeam(id:string,team:Team):Promise<Team>{
+	updateTeam(id: string, team: Team): Promise<Team> {
 		const url = `${this.url}/${id}`;
-		return this.httpRequest.put<Team>(url,team,{headers: {'Content-Type': 'multipart/form-data'}})
+		return this.httpRequest.put<Team>(url, team, { headers: { 'Content-Type': 'multipart/form-data' } })
 	}
 
 }
@@ -138,7 +138,7 @@ export class PlayerServices implements PlayerServicesRoot {
 		this.getPlayerById = this.getPlayerById.bind(this);
 		this.getAllPlayers = this.getAllPlayers.bind(this);
 		this.updatePlayer = this.updatePlayer.bind(this);
-		
+
 	}
 
 	getPlayersByTeamId(teamid: string | undefined, globalHost?: string): Promise<Player[]> {
@@ -150,13 +150,13 @@ export class PlayerServices implements PlayerServicesRoot {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.get<Player>(url);
 	}
-	getAllPlayers(): Promise<Player[]>{
+	getAllPlayers(): Promise<Player[]> {
 		const url = `${this.url}/getall`;
 		return this.httpRequest.get<Player[]>(url);
 	}
-	updatePlayer(id:string,player:Player): Promise<Number>{
+	updatePlayer(id: string, player: Player): Promise<Number> {
 		const url = `${this.url}/${id}`;
-		return this.httpRequest.put(url,player,{headers: {'Content-Type': 'multipart/form-data'}});
+		return this.httpRequest.put(url, player, { headers: { 'Content-Type': 'multipart/form-data' } });
 	}
 
 }
@@ -171,7 +171,7 @@ export class ProcessServices implements ProcessServicesRoot {
 		const url = `${this.url}/process/${id}`;
 		return this.httpRequest.get<Process[]>(url);
 	}
-	getProcessesByMatchId(matchId:string):Promise<Process[]> {
+	getProcessesByMatchId(matchId: string): Promise<Process[]> {
 		const url = `${this.url}/getProcessesByMatchId/${matchId}`;
 		return this.httpRequest.get<Process[]>(url);
 	}
@@ -218,13 +218,13 @@ export class SeasonServices implements SeasonServicesRoot {
 		const url = `${this.url}/getSeasonByTournamentId/${tournamentId}`;
 		return this.httpRequest.get<Season[]>(url);
 	}
-	createTeamAndAddTeamToSeason(team: Team,seasonId:string):Promise<Result<Season[]>>{
+	createTeamAndAddTeamToSeason(team: Team, seasonId: string): Promise<Result<Season[]>> {
 		const url = `${this.url}/createTeamAndAddTeamToSeason`;
-		return this.httpRequest.post<Result<Season[]>>(url, team,{headers: {'Content-Type': 'multipart/form-data'}});
+		return this.httpRequest.post<Result<Season[]>>(url, team, { headers: { 'Content-Type': 'multipart/form-data' } });
 	}
-	updateSeason(id:string,season:Season):Promise<Result<Season>>{
+	updateSeason(id: string, season: Season): Promise<Result<Season>> {
 		const url = `${this.url}/${id}`;
-		return this.httpRequest.put<Result<Season>>(url,season)
+		return this.httpRequest.put<Result<Season>>(url, season)
 	}
 
 }
@@ -232,14 +232,18 @@ export class SeasonServices implements SeasonServicesRoot {
 export class PostServices implements PostServicesRoot {
 	constructor(private url: string, private httpRequest: HttpRequest) {
 		this.getAllPost = this.getAllPost.bind(this);
+		this.getPostById = this.getPostById.bind(this);
 
 
 	}
-	getAllPost(): Promise<Post[]>{
+	getAllPost(): Promise<Post[]> {
 		const url = `${this.url}/search`;
 		return this.httpRequest.get<Post[]>(url)
 	}
 
-
+	getPostById(id: string): Promise<Post> {
+		const url = `${this.url}/${id}`;
+		return this.httpRequest.get<Post>(url);
+	}
 
 }
