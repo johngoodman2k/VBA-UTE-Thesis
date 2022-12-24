@@ -8,6 +8,7 @@ const cx = classNames.bind(styles);
 interface NewsProps {
   title?: string;
   image?: string;
+  id?:string
 }
 // "https://teamnigma.com/wp-content/uploads/2020/11/Team-Nigma-Dota-Pot-650x650.jpg?x15147"
 
@@ -18,10 +19,10 @@ export const NewsBlock = (props: NewsProps) => {
        {props.image &&  <img alt="" className={cx("blockWarp__image")} src={props.image}></img>}
       </div>
       <div className={cx("blockWarp__textBlock")}>
-        <a href="/" className={cx("blockWarp__titleBlock")}>
+        <a href="/articles" className={cx("blockWarp__titleBlock")}>
           {props.title ?? ""}
         </a>
-        <a href="/" className={cx("blockWarp__detailtBlock")}>
+        <a href={`/articles/${props.id ?? ""}`} className={cx("blockWarp__detailtBlock")}>
           <div className={cx("blockWarp__arrow")}>
             <Arrow></Arrow>
           </div>

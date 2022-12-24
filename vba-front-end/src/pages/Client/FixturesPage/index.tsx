@@ -78,6 +78,10 @@ export const FixturesPage = () => {
 			}
 		})();
 	}, [params.id, seasonIdSelected]);
+
+	const handleGenerate = () =>{
+		// tournamentServices.GetGeneratedMatches(params.id, )
+	}
 	return (
 		<>
 			<ContentWrapper>
@@ -103,7 +107,7 @@ export const FixturesPage = () => {
 									</div>
 								</label>
 							</div>
-							<div> <ButtonTournament type={undefined} name='Generate' ></ButtonTournament></div>
+							<div> <ButtonTournament type={undefined} name='Generate' onClick={handleGenerate} ></ButtonTournament></div>
 
 						</div>
 

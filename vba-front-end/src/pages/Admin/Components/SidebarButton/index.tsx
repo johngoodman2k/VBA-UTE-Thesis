@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 
 type SidebarButtonProps = {
 	title: string;
-	to: 'tournaments' | 'seasons' | 'teams' | 'players';
+	to: 'tournaments' | 'seasons' | 'teams' | 'players' | 'news';
 };
 
 export const SidebarButton = ({ title, to }: SidebarButtonProps) => {

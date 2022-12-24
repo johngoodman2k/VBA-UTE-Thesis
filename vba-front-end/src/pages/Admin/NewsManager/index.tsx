@@ -37,9 +37,9 @@ export const NewsManager = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-					const res = await postServices.getAllPost();
-                    console.log(res)
-					// setListPost(res.list);
+					const res = await postServices.getAllPost() as any;
+                    console.log(res.list)
+					setListPost(res.list);
 			
 				console.log(listPost);
 			} catch (err) {
@@ -64,7 +64,7 @@ export const NewsManager = () => {
 
 			<div className='m-2 p-2 grid grid-cols-3 gap-[10rem]'>
 				{listPost.length > 0 ? (
-					listPost.map((post: Post, i: number) => <NewsBlock title={post.name} image={post.image}></NewsBlock>)
+					listPost.map((post: Post, i: number) => <NewsBlock id={post.id} title={post.name} image={post.image}></NewsBlock>)
 				) : (
 					<NoData content='Không có dữ liệu bài viết' />
 				)}
