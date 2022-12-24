@@ -34,7 +34,7 @@ export const Articles = () => {
 							</figure>
 
 							<h1 className={`${cx('__header__text')}`}>
-								{post?.description ?? ''}
+								{post?.name ?? ''}
 							</h1>
 							<div className={`${cx('__infor')}`}>
 								<div className={`${cx('__infor__text')}`}>

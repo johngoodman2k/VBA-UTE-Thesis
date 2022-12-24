@@ -143,7 +143,10 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 														className={
 															clickedId === 'merch' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<span className={cx('__item__text')}>Đăng nhập</span>
+													<Link to={'/signin'}>
+														<span className={cx('__item__text')}>Đăng nhập</span>
+													</Link>
+
 												</span>
 											</a>
 										</li>
