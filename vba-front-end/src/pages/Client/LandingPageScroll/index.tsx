@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './landingPageScroll.module.scss';
 import { Power3, gsap, Expo } from 'gsap';
@@ -134,16 +134,19 @@ export const LandingPageScroll = () => {
 							<div className='col-span-2 pt-12 mt-12'>
 
 								<NewsCard
-									heroImage={post[0].image}
-									heroTitle={post[0].name}
+									post0={post[0] ?? ''}
+									post1={post[1] ?? ''}
+									post2={post[2] ?? ''}
+									heroImage={post[0]?.image ?? ''}
+									heroTitle={post[0]?.name ?? ''}
 									heroType='News'
-									heroDescription={post[0].description}
-									firstContentDescription={post[1].description}
-									firstContentTitle={post[1].name}
-									firstContentImage={post[1].image}
-									secondContentTitle={post[2].name}
-									secondContentImage={post[2].image}
-									secondContentDescription={post[2].description}></NewsCard>
+									heroDescription={post[0]?.description ?? ''}
+									firstContentDescription={post[1]?.description ?? ''}
+									firstContentTitle={post[1]?.name ?? ''}
+									firstContentImage={post[1]?.image ?? ''}
+									secondContentTitle={post[2]?.name ?? ''}
+									secondContentImage={post[2]?.image ?? ''}
+									secondContentDescription={post[2]?.description ?? ''}></NewsCard>
 							</div>
 						</div>
 					</div>
@@ -164,21 +167,20 @@ export const LandingPageScroll = () => {
 				<section className='bg-red-100'>
 					<div className={`${cx('__newsHeader')}`}>TIN TỨC</div>
 					<div className='grid grid-cols-6 align-middle'>
-						<RelatedNews></RelatedNews>
-						<RelatedNews></RelatedNews>
-						<RelatedNews></RelatedNews>
-						<RelatedNews></RelatedNews>
-						<RelatedNews></RelatedNews>
-						<RelatedNews></RelatedNews>
+						{post.map((x: Post) =>
+							<Link to={`/articles/${x.id}`}>
+								<RelatedNews image={x.image}></RelatedNews>
+							</Link>
+						)}
 					</div>
-					<div className='grid grid-cols-6 align-middle '>
+					{/* <div className='grid grid-cols-6 align-middle '>
 						<RelatedNews></RelatedNews>
 						<RelatedNews></RelatedNews>
 						<RelatedNews></RelatedNews>
 						<RelatedNews></RelatedNews>
 						<RelatedNews></RelatedNews>
 						<RelatedNews></RelatedNews>
-					</div>
+					</div> */}
 				</section>
 
 				<Footer />

@@ -73,8 +73,8 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 															clickedId === 'stats' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
 													<Link
-														to={`/standings/${tournament && tournament.seasons ? tournament.seasons[0].standingsId : ''
-															}`}>
+														to={`/standings/${tournament && tournament.seasons ? tournament.seasons[0].standingsId : ''}`}
+													>
 														<span className={cx('__item__text')}>Bảng xếp hạng</span>
 													</Link>
 												</span>
