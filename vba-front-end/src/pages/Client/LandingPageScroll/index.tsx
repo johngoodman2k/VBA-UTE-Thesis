@@ -52,11 +52,12 @@ export const LandingPageScroll = () => {
 
 		(async () => {
 			const res = await tournamentServices.getMergeTournamentById('uWvQv6nLYcPAyztGvzqyZ', 'AHLn-VnvtNsxFh6olzbCd')
-			console.log('54', res)
 			const res1 = await postServices.getAllPost() as any
-			console.log('60', res1)
+			const res2 = await standingsServices.getStandingsBySeasonId('AHLn-VnvtNsxFh6olzbCd') as any
 			setTournament(res[0])
 			setPost(res1.list)
+			setStandings(res2[0])
+			console.log('61', res2)
 		})();
 	}, []);
 
