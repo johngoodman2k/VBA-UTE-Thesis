@@ -7,7 +7,7 @@ export interface Standings {
 	createdAt: Date;
 }
 
-interface Statistics {
+export interface Statistics {
 	teamId?: string;
 	played?: number;
 	won?: number;
