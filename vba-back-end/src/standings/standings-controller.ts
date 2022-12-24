@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Controller, Log } from "express-ext";
-import { Standings, StandingsFilter, StandingsService } from "./standings";
+import { Standings, StandingsFilter, StandingsService, Statistics } from "./standings";
 
 export class StandingsController extends Controller<
   Standings,
@@ -15,13 +15,12 @@ export class StandingsController extends Controller<
     const {seasonId} = req.params
 
     const standings = await this.standingsService.getStangdingsBySeasonId(seasonId)
-    if(standings) res.status(400).json({err: "Failed to get standings"})
+    if(!standings) res.status(400).json({err: "Failed to get standings"})
     const teams = await this.standingsService.getTeamsBySeasonId(seasonId)
     if(!teams || teams.length === 0) res.status(200).json(standings)
-    if(standings[0].statistics){
-      standings[0].statistics = []
-    }
+
     const newStandings = standings[0].statistics.map((item) => {return {...item,teams: teams}})
+    standings[0].statistics =  newStandings as any
     return res.status(200).json(newStandings)
   }
 
