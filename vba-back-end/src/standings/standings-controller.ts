@@ -9,11 +9,20 @@ export class StandingsController extends Controller<
 > {
   constructor(log: Log, protected standingsService: StandingsService) {
     super(log, standingsService);
+    this.getStandingsBySeasonId = this.getStandingsBySeasonId.bind(this);
   }
-  getStangdingsBySeasonId(req:Request,res:Response){
+  async getStandingsBySeasonId(req:Request,res:Response){
     const {seasonId} = req.params
 
-    const standings = this.standingsService.getStangdingsBySeasonId(seasonId)
+    const standings = await this.standingsService.getStangdingsBySeasonId(seasonId)
+    if(standings) res.status(400).json({err: "Failed to get standings"})
+    const teams = await this.standingsService.getTeamsBySeasonId(seasonId)
+    if(!teams || teams.length === 0) res.status(200).json(standings)
+    if(standings[0].statistics){
+      standings[0].statistics = []
+    }
+    const newStandings = standings[0].statistics.map((item) => {return {...item,teams: teams}})
+    return res.status(200).json(newStandings)
   }
 
 }

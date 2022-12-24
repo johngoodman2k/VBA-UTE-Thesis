@@ -7,11 +7,14 @@ import {
   standingsModel,
   StandingsRepository,
   StandingsService,
+  Team,
+  TeamRepository,
 } from "./standings";
 import { StandingsController } from "./standings-controller";
 // export * from "./standings";
 export { StandingsController };
 import { SqlStandingsRepository } from "./sql-standings-repository";
+import { SqlTeamRepository } from "./sql-team-repository";
 
 export class StandingsManager
   extends Manager<Standings, string, StandingsFilter>
@@ -19,12 +22,16 @@ export class StandingsManager
 {
   constructor(
     search: Search<Standings, StandingsFilter>,
-    protected repository: StandingsRepository
+    protected standingsrepository: StandingsRepository,
+    protected teamrepository: TeamRepository
   ) {
-    super(search, repository);
+    super(search, standingsrepository);
   }
   getStangdingsBySeasonId(seasonId:string):Promise<Standings[]>{
-    return this.repository.getStangdingsBySeasonId(seasonId)
+    return this.standingsrepository.getStangdingsBySeasonId(seasonId)
+  }
+  getTeamsBySeasonId(seasonId: string): Promise<Team[]>{
+    return this.teamrepository.getTeamsBySeasonId(seasonId)
   }
 }
 export function useStandingsService(db: DB): StandingsService {
@@ -34,8 +41,10 @@ export function useStandingsService(db: DB): StandingsService {
     standingsModel,
     postgres
   );
-  const repository = new SqlStandingsRepository(db);
-  return new StandingsManager(builder.search, repository);
+  const standingsrepository = new SqlStandingsRepository(db);
+  const teamrepository = new SqlTeamRepository(db);
+
+  return new StandingsManager(builder.search, standingsrepository,teamrepository);
 }
 export function useStandingsController(log: Log, db: DB): StandingsController {
   return new StandingsController(log, useStandingsService(db));

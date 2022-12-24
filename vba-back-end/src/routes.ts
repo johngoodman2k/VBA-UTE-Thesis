@@ -94,12 +94,13 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 
 	app.post('/standings/search', ctx.standings.search); //xem xet
 	app.get('/standings/search', ctx.standings.search); //ok
+	app.get('/standings/getStandingsBySeasonId/:seasonId', ctx.standings.getStandingsBySeasonId); //ok
 	app.get('/standings/:id', ctx.standings.load); //ok
 	app.post('/standings', ctx.standings.create); //ok
 	app.put('/standings/:id', ctx.standings.update); //ok
 	app.patch('/standings/:id', ctx.standings.patch); //ok
 	app.delete('/standings/:id', ctx.standings.delete); //ok
-	
+
 
 	app.post('/authenticate/search', ctx.user.search); //xem xet
 	app.get('/authenticate/search', ctx.user.search); //ok
