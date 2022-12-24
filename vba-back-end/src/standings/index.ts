@@ -19,9 +19,12 @@ export class StandingsManager
 {
   constructor(
     search: Search<Standings, StandingsFilter>,
-    repository: StandingsRepository
+    protected repository: StandingsRepository
   ) {
     super(search, repository);
+  }
+  getStangdingsBySeasonId(seasonId:string):Promise<Standings[]>{
+    return this.repository.getStangdingsBySeasonId(seasonId)
   }
 }
 export function useStandingsService(db: DB): StandingsService {

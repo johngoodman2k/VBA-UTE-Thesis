@@ -24,7 +24,10 @@ export interface PostService extends Service<Post, string, PostFilter> {
     createPost(post:Post,posts:Post[]):Promise<number>
 }
 export const postModel: Attributes = {
-    id: {type : "string"},
+    id: { key: true,
+        match: "equal",
+        type : "string"
+    },
     name: {type : "string"},
     tinydes:{type : "string"},
     description: {type : "string"},

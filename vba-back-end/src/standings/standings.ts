@@ -37,10 +37,12 @@ interface Team {
 
 export interface StandingsRepository extends Repository<Standings, string> {
 	//   getTeamByTournamentId(tournamentId: string): Promise<Standings[]>;
+	getStangdingsBySeasonId(seasonId:string):Promise<Standings[]>;
 }
 
 export interface StandingsService extends Service<Standings, string, StandingsFilter> {
 	//   getTeamByTournamentId(tournamentId: string): Promise<Standings[]>;
+	getStangdingsBySeasonId(seasonId:string):Promise<Standings[]>;
 }
 
 export const standingsModel: Attributes = {

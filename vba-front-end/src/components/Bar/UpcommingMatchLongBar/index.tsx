@@ -13,6 +13,9 @@ type UpcommingMatchLongBarProps = {
   team2Name: string;
   team2Image: string;
   stadium: string;
+  endmatch?: boolean;
+  team1Point?:string;
+  team2Point?:string;
 };
 
 export const UpcommingMatchLongBar = (props: UpcommingMatchLongBarProps) => {
@@ -32,7 +35,7 @@ export const UpcommingMatchLongBar = (props: UpcommingMatchLongBarProps) => {
                   alt=""
                 />
               </span>
-              <time>{props.time}</time>
+              <time>{props.endmatch === true ?props.team1Point + " - " + props.team2Point : props.time}</time>
               <span className={cx("__block__awayBadge")}>
                 <img
                   className={cx("__block__awayBadge--adjust")}
