@@ -7,7 +7,7 @@ import { NavigationBar } from '../../../components/Bar/NavigationBar';
 import { NewsCard } from '../../../components/News/NewsCard';
 import { Slider2 } from '../../../components/Slider/Slider2';
 import { RelatedNews } from '../../../components/NewsDetail/RelatedNews';
-import { Season, Standings, Team, Tournament } from '../../../Services/models';
+import { Post, Season, Standings, Team, Tournament } from '../../../Services/models';
 import { vbaContext } from '../../../Services/services';
 import { Link } from 'react-router-dom';
 import { LilStanding } from '../../../components/LilStanding';
@@ -17,12 +17,14 @@ const cx = classNames.bind(styles);
 const teamServices = vbaContext.getTeamServices();
 const tournamentServices = vbaContext.getTournamentServices();
 const standingsServices = vbaContext.getStandingsServices();
+const postServices = vbaContext.getPostServices();
 
 
 export const LandingPageScroll = () => {
 	const [teams, getTeams] = useState<Team[]>();
 	const [tournament, setTournament] = useState<Season>();
 	const [standings, setStandings] = useState<Standings>();
+	const [post, setPost] = useState<Post[]>([]);
 	gsap.registerPlugin(CSSRulePlugin);
 	let intro = useRef(null);
 	let container = useRef(null);
@@ -49,13 +51,12 @@ export const LandingPageScroll = () => {
 		);
 
 		(async () => {
-
 			const res = await tournamentServices.getMergeTournamentById('uWvQv6nLYcPAyztGvzqyZ', 'AHLn-VnvtNsxFh6olzbCd')
 			console.log('54', res)
-			// const res1 = await standingsServices.getStandingsById('AHLn-VnvtNsxFh6olzbCd')
-			// setStandings(res1)
+			const res1 = await postServices.getAllPost() as any
+			console.log('60', res1)
 			setTournament(res[0])
-			// }
+			setPost(res1.list)
 		})();
 	}, []);
 
@@ -131,17 +132,18 @@ export const LandingPageScroll = () => {
 								<LilStanding standings={standings}></LilStanding>
 							</nav>
 							<div className='col-span-2 pt-12 mt-12'>
+
 								<NewsCard
-									heroImage='http://api-news.vba.vn/storage/images/Game-35-Nha-Trang-Dolphins-Danang-Dragons%20.JPG'
-									heroTitle='DANANG DRAGONS KẾT THÚC HÀNH TRÌNH TẠI VBA 2022'
+									heroImage={post[0].image}
+									heroTitle={post[0].name}
 									heroType='News'
-									heroDescription='Nha Trang Dolphins có chiến thắng đậm nhất trong lịch sử đội bóng. Đội chủ nhà chiếm ưu thế tuyệt đối và vượt qua Danang Dragons với tỷ số 76-41. Kết quả này giúp Dolphins vươn lên vị trí thứ 2 trên bảng xếp hạng với thành tích 6 thắng 4 bại. Chỉ cần thêm một chiến thắng, Nha Trang Dolphins sẽ lần đầu tiên lọt vào bán kết VBA.'
-									firstContentDescription='Saigon Heat công thủ toàn diện, Coach Predrag Lukic rời sân'
-									firstContentTitle='SAIGON HEAT XÂY VỮNG NGÔI ĐẦU BẢNG'
-									firstContentImage='http://api-news.vba.vn/storage/images/Games-36-Saigon-Heat-Thang-Long-Warriors%20_3.JPG'
-									secondContentTitle='THANG LONG WARRIORS VƯƠN LÊN TOP 5'
-									secondContentImage='http://api-news.vba.vn/storage/images/Game-34-Ho-Chi-Minh-City-Wings-Thang-Long-Warriors%20_2.JPG'
-									secondContentDescription='Thang Long Warriors chưa bỏ cuộc trong cuộc đua nước rút vào top 4. '></NewsCard>
+									heroDescription={post[0].description}
+									firstContentDescription={post[1].description}
+									firstContentTitle={post[1].name}
+									firstContentImage={post[1].image}
+									secondContentTitle={post[2].name}
+									secondContentImage={post[2].image}
+									secondContentDescription={post[2].description}></NewsCard>
 							</div>
 						</div>
 					</div>

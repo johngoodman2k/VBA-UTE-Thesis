@@ -34,7 +34,9 @@ export const TeamUpCommingGames = ({ fixtures, id }: TeamUpCommingGamesProps) =>
 							<div className={`${cx('__content')}`}>
 								<div>
 									{fixtures?.map((x: Match) =>
-										<UpComingGamesBlock fixtures={x}></UpComingGamesBlock>
+										<Link to={`/fixtures/match/${x.id}`}>
+											<UpComingGamesBlock fixtures={x}></UpComingGamesBlock>
+										</Link>
 									)}
 								</div>
 							</div>
