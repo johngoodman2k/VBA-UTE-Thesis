@@ -16,6 +16,7 @@ import { SeasonServices } from '../../../Services';
 import { NoData } from '../../Admin/Components/NoData';
 import { ListItemAvatar } from '@mui/material';
 import ButtonTournament from '../Authentication/Components/ButtonTournament';
+import toastNotify from '../../../utils/toast';
 
 // import { getRoundApi } from "../Apis/getRoundApi.api";
 // import { TournamentHeading } from "../components/TournamentHeading";
@@ -44,6 +45,8 @@ export const FixturesPage = () => {
 	const [seasonIdSelected, setSeasonIdSelected] = useState<string>("")
 	const [seasonList, setSeasonList] = useState<Season[]>([])
 	const [rounds, setRounds] = useState<string[]>([]);
+	const [reload, setReload] = useState(false);
+
 
 
 	useEffect(() => {
@@ -77,10 +80,17 @@ export const FixturesPage = () => {
 
 			}
 		})();
-	}, [params.id, seasonIdSelected]);
+	}, [params.id, seasonIdSelected,reload]);
 
-	const handleGenerate = () =>{
-		// tournamentServices.GetGeneratedMatches(params.id, )
+	const handleGenerate = async () =>{
+		if(params.id)
+		try {
+			await tournamentServices.GetGeneratedMatches(params.id,seasonIdSelected)
+			toastNotify("Generated matches success", "success")
+			setReload(!reload)
+		} catch (error) {
+			toastNotify("Generated matches failed", "error")
+		}
 	}
 	return (
 		<>
@@ -141,6 +151,10 @@ export const FixturesPage = () => {
 															team2Name={y.away?.teamname ?? ""}
 															time={timeFormat(y.matchday ?? "").toString()}
 															stadium={y.home?.stadiumname ?? ""}
+															endmatch={y.endmatch}
+															team1Point={y.homeresult}
+															team2Point={y.awayresult}
+
 														></UpcommingMatchLongBar>
 													);
 												})}

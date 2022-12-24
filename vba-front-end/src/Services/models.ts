@@ -149,6 +149,7 @@ export interface Match {
 	spectators?: string;
 	assistance?: Player;
 	process?: Process[];
+	endmatch?:boolean;
 }
 
 export interface CustomTeam {

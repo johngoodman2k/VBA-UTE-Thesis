@@ -15,7 +15,7 @@ import { ContentWrapper } from '../../../components/Container/ContentWrapper';
 import { vbaContext } from '../../../Services/services';
 import { Match } from '../../../Services/models';
 import { dateFormat } from '../../../utils/dateFormat';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { convertCompilerOptionsFromJson } from 'typescript';
 import { RightClickModal } from '../../../components/Modal/RightClickModal';
 import { EditorSelect } from '../../../components/Utils/EditorSelect';
@@ -27,6 +27,7 @@ import { PlayByPlay } from '../../../components/Match/PlayByPlay';
 import { ControlModal } from '../../../components/Modal/ControlModal';
 import { hasPointerEvents } from '@testing-library/user-event/dist/utils';
 import { GameLeaders } from '../TeamInfoPage/GameLeaders';
+import toastNotify from '../../../utils/toast';
 
 const cx = classNames.bind(styles);
 
@@ -88,6 +89,7 @@ export const MatchDetailPage = () => {
 		{ name: 'Red', value: 'red' }
 	];
 	const params = useParams();
+	const navigate = useNavigate()
 	const [clickedId, setClickedId] = useState('');
 	// const [clickedType, setClickedType] = useState("");
 	const [cardType, setCardType] = useState('yellow');
@@ -182,6 +184,17 @@ export const MatchDetailPage = () => {
 
 	// 	setReload(!reload);
 	// };
+	const handleEndMatch =  async (e:any) =>{
+		if(params.id)
+		try {
+			await matchServices.updateMatch(params.id,{endmatch:true})
+			toastNotify("kết thúc trận đấu thành công","success")
+			navigate(`/fixtures/uWvQv6nLYcPAyztGvzqyZ`)
+		} catch (error) {
+			toastNotify("kết thúc trận đấu thất bại","error")
+		}
+		
+	}
 
 	return (
 		<>
@@ -260,7 +273,7 @@ export const MatchDetailPage = () => {
 											</li>
 											<li
 												id='edit'
-												onClick={(e: any) => (e.currentTarget.id === 'edit' ? setClickedId('edit') : '')}
+												onClick={handleEndMatch}
 												className={clickedId === 'edit' ? cx('__editActive') : ''}>
 												Kết thúc
 											</li>

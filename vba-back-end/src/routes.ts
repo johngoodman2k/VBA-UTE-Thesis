@@ -99,6 +99,7 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 	app.put('/standings/:id', ctx.standings.update); //ok
 	app.patch('/standings/:id', ctx.standings.patch); //ok
 	app.delete('/standings/:id', ctx.standings.delete); //ok
+	
 
 	app.post('/authenticate/search', ctx.user.search); //xem xet
 	app.get('/authenticate/search', ctx.user.search); //ok
