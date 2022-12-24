@@ -181,6 +181,7 @@ create table users
     otpFG character varying(40),
     activated boolean,
     createdAt timestamp with time zone default now(),
+    posts jsonb[],
     constraint users_pkey primary key (id)
 );
 

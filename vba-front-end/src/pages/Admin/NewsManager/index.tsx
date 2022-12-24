@@ -23,7 +23,6 @@ const postServices = vbaContext.getPostServices()
 
 
 export const NewsManager = () => {
-	const params = useParams();
 	const [listPost, setListPost] = useState<Post[]>([])
 	const [clicked, setClicked] = useState(false);
 	const [reload, setReload] = useState(false);

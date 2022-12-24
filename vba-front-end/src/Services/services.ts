@@ -93,5 +93,6 @@ class VbaContext {
 		}
 		return this.postServices;
 	}
+	
 }
 export const vbaContext = new VbaContext();
