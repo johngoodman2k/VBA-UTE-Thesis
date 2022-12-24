@@ -33,7 +33,7 @@ export const SignIn = () => {
 						// Cookies.set('jwt', res.token);
 						toastNotify('Welcome to VBA', 'success');
 						// setSuccess(success ? false : true);
-						// navigate('/');
+						navigate('/home');
 					}
 				})
 				.catch((e: any) => {

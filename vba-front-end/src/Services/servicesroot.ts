@@ -47,6 +47,7 @@ export interface ProcessServicesRoot {
 
 export interface StandingsServicesRoot {
 	getStandingsById(id: string | undefined, globalHost?: string): Promise<Standings>;
+	getStandingsBySeasonId(id: string | undefined): Promise<Standings>;
 }
 
 export interface AuthenticateServicesRoot {

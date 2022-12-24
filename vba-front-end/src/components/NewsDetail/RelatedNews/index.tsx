@@ -3,9 +3,14 @@ import styles from "./relatednews.module.scss";
 import classNames from "classnames/bind";
 import { ReactComponent as Arrow } from "../../../assets/svg/arrow1.svg";
 
+
+type RelatedNewsProps = {
+  image?: string;
+}
+
 const cx = classNames.bind(styles);
 
-export const RelatedNews = () => {
+export const RelatedNews = ({ image }: RelatedNewsProps) => {
   return (
     <div
       className={`w-[300px] h-[400px] relative ${cx("relatedNews")} mt-[50px]`}
@@ -16,13 +21,13 @@ export const RelatedNews = () => {
       >
         <img
           className="w-full h-full object-cover"
-          src="https://vinasport.com.vn/wp-content/uploads/2020/03/Logo-G2-eSports.jpg"
+          src={image}
           alt=""
         />
       </a>
       <a href="/" className={`${cx("relatedNews__titleBlock")}`}>
         <div className={`${cx("relatedNews__titleBlock--titleText")}`}>
-          creator
+          VBA
         </div>
         <button
           className={`p-2 mt-4 bg-cyan-500   ${cx(

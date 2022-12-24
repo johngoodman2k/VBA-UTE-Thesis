@@ -202,9 +202,14 @@ export class AuthenticateServices implements AuthenticateServicesRoot {
 export class StandingsServices implements StandingsServicesRoot {
 	constructor(private url: string, private httpRequest: HttpRequest) {
 		this.getStandingsById = this.getStandingsById.bind(this);
+		this.getStandingsBySeasonId = this.getStandingsBySeasonId.bind(this)
 	}
 	getStandingsById(id: string | undefined, globalHost?: string): Promise<Standings> {
 		const url = `${this.url}/${id}`;
+		return this.httpRequest.get<Standings>(url);
+	}
+	getStandingsBySeasonId(id: string | undefined, globalHost?: string): Promise<Standings> {
+		const url = `${this.url}/getStandingsBySeasonId/${id}`;
 		return this.httpRequest.get<Standings>(url);
 	}
 }

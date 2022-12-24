@@ -48,7 +48,7 @@ function App() {
 					<Route path='/calendar' element={<Calendar data={new Date(Date.now())} />} />
 					<Route path='/teaminfo/:id' element={<TeamInfoPage></TeamInfoPage>} />
 					<Route path='/teaminfofixtures/:id' element={<TeamInfoFixturesPage></TeamInfoFixturesPage>} />
-					<Route path='/articles' element={<Articles></Articles>} />
+					<Route path='/articles/:id' element={<Articles></Articles>} />
 					<Route path='/news' element={<News></News>} />
 					<Route path='/standings/:id' element={<StandingPage></StandingPage>} />
 					<Route path='/about' element={<AboutPage></AboutPage>} />
