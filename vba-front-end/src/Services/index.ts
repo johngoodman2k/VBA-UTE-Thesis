@@ -19,6 +19,7 @@ export class TournamentServices implements TournamentServicesRoot {
 		this.createTournament = this.createTournament.bind(this);
 		this.createSeasonAndAddToTournament = this.createSeasonAndAddToTournament.bind(this);
 		this.getMergeTournamentById = this.getMergeTournamentById.bind(this);
+		this.GetGeneratedMatches = this.GetGeneratedMatches.bind(this);
 
 	}
 
@@ -46,6 +47,12 @@ export class TournamentServices implements TournamentServicesRoot {
 		const url = `${this.url}/getMergeTournamentById/${tournamentId}/${seasonId}`;
 		return this.httpRequest.get<Tournament[]>(url);
 	}
+	GetGeneratedMatches(tournamentId: string, seasonId: string): Promise<number> {
+		const url = `${this.url}/matches/${tournamentId}/${seasonId}`;
+		return this.httpRequest.get<number>(url);
+	}
+
+
 
 }
 
@@ -233,7 +240,7 @@ export class PostServices implements PostServicesRoot {
 	constructor(private url: string, private httpRequest: HttpRequest) {
 		this.getAllPost = this.getAllPost.bind(this);
 		this.getPostById = this.getPostById.bind(this);
-
+		this.createPost = this.createPost.bind(this);
 
 	}
 	getAllPost(): Promise<Post[]> {
@@ -245,5 +252,10 @@ export class PostServices implements PostServicesRoot {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.get<Post>(url);
 	}
+	createPost(post: Post): Promise<number> {
+		const url = `${this.url}`;
+		return this.httpRequest.post<number>(url, post, { headers: { 'Content-Type': 'multipart/form-data' } })
+	}
+
 
 }

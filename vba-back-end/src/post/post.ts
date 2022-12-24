@@ -11,18 +11,17 @@ export interface Post {
     owner?: string,
 }
 
-interface User {
+export interface User {
     id?:string
 }
 
 export interface PostRepository extends Repository<Post, string> {
-    
-}
+    createPost(post:Post,posts:Post[]):Promise<number>}
 export interface UserRepository extends Repository<User, string> {
     
 }
 export interface PostService extends Service<Post, string, PostFilter> {
-
+    createPost(post:Post,posts:Post[]):Promise<number>
 }
 export const postModel: Attributes = {
     id: {type : "string"},

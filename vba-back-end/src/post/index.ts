@@ -18,6 +18,9 @@ export class PostManager
     ) {
         super(search, postrepository);
     }
+    createPost(post:Post,posts:Post[]):Promise<number>{
+        return this.postrepository.createPost(post,posts)
+    }
 
 }
 export function usePostService(db: DB): PostService {

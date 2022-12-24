@@ -22,6 +22,8 @@ export const AdminSideBar = (props: AdminSideBarProps) => {
 				<SidebarButton title='mùa giải' to='seasons'></SidebarButton>
 				<SidebarButton title='đội' to='teams'></SidebarButton>
 				<SidebarButton title='cầu thủ' to='players'></SidebarButton>
+				<SidebarButton title='bài viết' to='news'></SidebarButton>
+
 			</div>
 		</section>
 	);

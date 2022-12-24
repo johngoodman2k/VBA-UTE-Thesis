@@ -14,6 +14,11 @@ export interface User {
     otp?: string;
     otpFG?: string;
     activated?: boolean;
+    posts?: Post;
+
+}
+export interface Post{
+    id? :string;
 }
 
 export interface UserRepository extends Repository<User, string> {
@@ -37,15 +42,12 @@ export const userModel: Attributes = {
     },
     username: {
         type: "string",
-        required: true,
     },
     password: {
         type: "string",
-        required: true,
     },
     email: {
         type: "string",
-        required: true,
     },
     name: {
         type: "string",
@@ -78,6 +80,9 @@ export const userModel: Attributes = {
         type: "boolean",
         default: false,
     },
+    posts:{
+        type: "array"
+    }
 };
 
 export interface UserFilter extends Filter {

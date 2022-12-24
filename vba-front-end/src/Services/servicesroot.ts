@@ -7,6 +7,7 @@ export interface TournamentServicesRoot {
 	createSeasonAndAddToTournament(name: string, tournamentId: string): Promise<Result<Tournament[]>>;
 	updateTournament(id: string, tournament: Tournament): Promise<number>;
 	getMergeTournamentById(tournamentId: string, seasonId: string): Promise<Season[]>
+	GetGeneratedMatches(tournamentId: string, seasonId: string): Promise<number>;
 
 }
 
@@ -64,5 +65,6 @@ export interface SeasonServicesRoot {
 export interface PostServicesRoot {
 	getAllPost(): Promise<Post[]>;
 	getPostById(id: string): Promise<Post>
+	createPost(post: Post): Promise<number>;
 
 }

@@ -9,12 +9,15 @@ import toastNotify from '../../../utils/toast';
 import { Player, Post } from '../../../Services/models';
 import { checkDuplicateObject } from '../../../utils/checker';
 import ReactFlagsSelect from "react-flags-select";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const cx = classNames.bind(styles);
 const teamServices = vbaContext.getTeamServices();
-const playerServices = vbaContext.getPlayerServices();
+const getPostServices = vbaContext.getPostServices();
 
 type createPostModal = {
 	title: string;
@@ -28,8 +31,12 @@ export const CreatePostModal = (props: createPostModal) => {
 	const [fileDataURL, setFileDataURL] = useState<any>(null);
 	const [file, setFile] = useState<File | undefined>();
 	const [countrySelected, setCountrySelected] = useState("");
+	const [editorDesciption, setEditorDescription] = useState("");
 
 
+	const modules = {
+		toolbar: ['bold', 'italic', 'underline', 'link', { list: 'ordered' }, { list: 'bullet' }, { color: [] }]
+	};
 	const onChangeImage = (e: any) => {
 		const file = e.target.files[0];
 		if (!file.type.match(imageMimeType)) return;
@@ -59,53 +66,45 @@ export const CreatePostModal = (props: createPostModal) => {
 	}, [file]);
 
 
-	const handleCreateOrEditPlayer = async (e: any) => {
+	const handleCreateOrEditPost = async (e: any) => {
 		e.preventDefault();
 		// console.log(96, props.postId)
 
-		// const firstName = e.target.firstname.value
-		// const lastName = e.target.lastname.value
-		// const dateOfBirth = e.target.dateofbirth.value
-		// const shirtNumber = e.target.shirtnumber.value
-		// const country = countrySelected
-		// const weight = e.target.weight.value
-		// const height = e.target.height.value
-		// const image = file
-		// const validata = validate(firstName, lastName, dateOfBirth, shirtNumber, country, weight, height, image)
+		const name = e.target.name.value
+		const tinydes = e.target.tinydes.value
+		const des = editorDesciption
+		const image = file
+		const validata = validate(name, tinydes,des, image)
 
 
-		// try {
-		// 	if (validata) {
-		// 		const formData = new FormData()
-		// 		formData.append("firstName", validata.firstName)
-		// 		formData.append("lastName", validata.lastName)
-		// 		formData.append("dateOfBirth", validata.dateOfBirth)
-		// 		formData.append("shirtNumber", validata.shirtNumber)
-		// 		formData.append("country", validata.country)
-		// 		formData.append("weight", validata.weight)
-		// 		formData.append("height", validata.height)
-		// 		formData.append("image", validata.image)
-		// 		if (props.player && props.player.id) {
-		// 			if (checkDuplicateObject(props.player, validata)) {
-		// 				toastNotify('Please change anything', 'warn');
-		// 			} else {
-		// 				const res = await playerServices.updatePlayer(props.player.id, formData as Player);
-		// 				toastNotify("Team have been updated", "success")
-		// 			}
+		try {
+			if (validata) {
+				const formData = new FormData()
+				formData.append("name", validata.name)
+				formData.append("tinydes", validata.tinydes)
+				formData.append("description", validata.description)
+				formData.append("image", validata.image)
+				if (props.post && props.post.id) {
+					if (checkDuplicateObject(props.post, validata)) {
+						toastNotify('Bạn chưa thay đổi nội dung để cập nhật', 'warn');
+					} else {
+						// const res = await playerServices.updatePlayer(props.post.id, formData as Player);
+						toastNotify("Bài viết đã được cập nhật thành công", "success")
+					}
 
-		// 		} else if (props.id) {
-		// 			formData.append("teamId", props.id)
-		// 			const res = await teamServices.addPlayerToTeam(formData as Player);
-		// 			toastNotify("Create player and add to team success", "success")
+				} else {
+					formData.append("owner", "1K1-DI-HD4wKhSWNbkEak-0QaS2")
+					const res = await getPostServices.createPost(formData as Post);
+					toastNotify("Tạo bài viết thành công", "success")
 
-		// 		}
-		// 		if (props.setReload)
-		// 			props.setReload(!props.reload)
-		// 		if (props.handleCloseModal) props.handleCloseModal()
-		// 	}
-		// } catch (e) {
-		// 	toastNotify("Create player and add to team failed", "error")
-		// }
+				}
+				if (props.setReload)
+					props.setReload(!props.reload)
+				if (props.handleCloseModal) props.handleCloseModal()
+			}
+		} catch (e) {
+			toastNotify("Create player and add to team failed", "error")
+		}
 	}
 
 	return (
@@ -117,61 +116,39 @@ export const CreatePostModal = (props: createPostModal) => {
 				</div>
 			</div>
 
-			<form onSubmit={handleCreateOrEditPlayer}>
+			<form onSubmit={handleCreateOrEditPost}>
 				<div className='flex flex-row'>
-					<div className='basis-3/6 flex flex-wrap'>
+					<div className='basis-4/6 flex flex-wrap'>
 						<div className='basis-1/2'>
-							<div className={cx('TitleTop')}>Họ</div>
-							<input id={props.title + "_firstname"} name="firstname" type='text' className={cx('Input', 'Input__Top')}></input>
+							<div className={cx('TitleTop')}>Tên bài viết</div>
+							<input id={props.title + "_name"} name="name" type='text' className={cx('Input', 'Input__Top')}></input>
 						</div>
 
 						<div className='basis-1/2'>
-							<div className={cx('TitleTop')}>Tên</div>
-							<input id={props.title + "_lastname"} name="lastname" type='text' className={cx('Input', 'Input__Top')}></input>
+						<div className={cx('TitleTop')}>Mô tả ngắn gọn</div>
+							<input id={props.title + "_tinydes"} name="tinydes" type='text' className={cx('Input', 'Input__Top')}></input>
+						</div>
+                      
+
+						<div className=' mt-1.5 w-full'>
+							<div className={cx('TitleTop')}>Mô tả chi tiết</div>
+							<ReactQuill
+									placeholder='Please enter campaign detail'
+									modules={modules}
+									value={editorDesciption}
+									onChange={setEditorDescription}
+									className={cx("ql-container","ql-toolbar")}
+								/>						
 						</div>
 
-						<div className='basis-1/2 mt-1.5'>
-							<div className={cx('TitleTop')}>Ngày sinh</div>
-							<input id={props.title + "_dayofbirth"} name="dateofbirth" type='date' className={cx('Input', 'Input__Top')}></input>
-						</div>
-
-						<div className='basis-1/2 mt-1.5'>
-							<div className={cx('TitleTop')}>Số áo</div>
-							<input id={props.title + "_shirtnumber"} name="shirtnumber" type='number' min="0" max="999" className={cx('Input', 'Input__Top')}></input>
-						</div>
+						
 
 						{/* <div className={cx('TitleTop')}>Country</div>
 							<input id={props.title+"_country"}  name="country" type='text' className={cx('Input', 'Input__Top', 'Input__Top--oneobject')}></input> */}
-						<div className=" text-black rounded mt-3 basis-1/2">
-							<div className={cx('TitleTop')}>Quốc tịch</div>
-							<ReactFlagsSelect
-								className={cx('Input', '', 'bg-white')}
-								selected={countrySelected}
-								onSelect={(code) => setCountrySelected(code)}
-							/>
-						</div>
-						<div className='basis-1/2 mt-1.5'>
-							<div className={cx('TitleTop')}>Kinh nghiệm</div>
-							<input id='' name="experience" type='number' min="0" max="999" className={cx('Input', 'Input__Top')}></input>
-						</div>
 
 
 					</div>
 
-					<div className='basis-1/6 flex flex-col'>
-						<div className='h-auto w-full'>
-							<div className={cx('TitleTop')}>Cân nặng(Kg)</div>
-							<input id={props.title + "_weight"} name="weight" type="number" min="20" max="200" className={cx('Input', 'Input__Top', 'Input__Top--oneobject')}></input>
-						</div>
-						<div className='h-auto w-full mt-1.5'>
-							<div className={cx('TitleTop')}>Chiều cao(m)</div>
-							<input id={props.title + "_height"} name="height" type='number' min="1" max="3" step="0.001" className={cx('Input', 'Input__Top', 'Input__Top--oneobject')}></input>
-						</div>
-						<div className='h-auto w-full mt-1.5'>
-							<div className={cx('TitleTop')}>Vị trí</div>
-							<input type='text' className={cx('Input', 'Input__Top', 'Input__Top--oneobject')}></input>
-						</div>
-					</div>
 
 					<div className='basis-2/6 flex flex-col '>
 						<div className={cx('TitleTop')}>Hình ảnh</div>
@@ -190,11 +167,11 @@ export const CreatePostModal = (props: createPostModal) => {
 								</div>
 							</div>
 							<div className={cx('ImageUploadWrap')}>
-								<label className={cx('Input__ButtonLabel')} htmlFor={props.postId ?? "upload_player"}>
+								<label className={cx('Input__ButtonLabel')} htmlFor={props.title ?? "upload_player"}>
 									Upload image
 								</label>
 								<input
-									id={props.postId ?? "upload_player"}
+									id={props.title ?? "upload_player"}
 									type='file'
 									accept='image/*'
 									onChange={onChangeImage}

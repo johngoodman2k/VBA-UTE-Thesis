@@ -119,7 +119,7 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 	app.post('/posts/search', ctx.post.search); //xem xet
 	app.get('/posts/search', ctx.post.search); //ok
 	app.get('/posts/:id', ctx.post.load); //ok
-	app.post('/posts', ctx.post.create); //ok
+	app.post('/posts',upload.single("image"),uploadFile ,ctx.post.create); //ok
 	app.put('/posts/:id', ctx.post.update); //ok
 	app.patch('/posts/:id', ctx.post.patch); //ok
 }
