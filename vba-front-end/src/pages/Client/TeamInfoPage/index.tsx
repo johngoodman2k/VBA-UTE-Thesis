@@ -13,16 +13,15 @@ const playerServices = vbaContext.getPlayerServices();
 const teamServices = vbaContext.getTeamServices();
 
 export const TeamInfoPage = () => {
-	const [players, setPlayers] = useState<Player[]>();
+	// const [players, setPlayers] = useState<Player[]>();
 	const [team, setTeam] = useState<Team>();
-	const param = useParams();
+	const param = useParams()
 	useEffect(() => {
 		(async () => {
-			const res = await playerServices.getPlayersByTeamId(param.id);
-			setPlayers(res);
 			if (param.id) {
 				const res1 = await teamServices.getTeamById(param.id);
 				setTeam(res1);
+				console.log(res1)
 			}
 		})();
 	}, []);
@@ -38,10 +37,10 @@ export const TeamInfoPage = () => {
 						<img src={team?.teamlogo as string} className={`${cx('__background__block--adjust')}`} alt='' />
 					</div>
 				</div>
-				<TeamUpCommingGames></TeamUpCommingGames>
-				<TeamRoster players={players}></TeamRoster>
-				<TeamProfile></TeamProfile>
+				<TeamUpCommingGames id={param.id} fixtures={team?.matches}></TeamUpCommingGames>
+				<TeamRoster players={team?.players}></TeamRoster>
+				<TeamProfile details={team}></TeamProfile>
 			</div>
-		</div>
+		</div >
 	);
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './teamRoster.module.scss';
 import { Player } from '../../../../Services/models';
-import { dateFormat } from '../../../../utils/dateFormat';
+import { calculateAge, dateFormat } from '../../../../utils/dateFormat';
 const cx = classNames.bind(styles);
 type teamRosterProps = {
 	players?: Player[];
@@ -44,7 +44,7 @@ export const TeamRoster = ({ players }: teamRosterProps) => {
 												</tr>
 											</thead>
 											<tbody>
-												{players?.map((x: any) => {
+												{players?.map((x) => {
 													return (
 														<tr
 															className={`${cx(
@@ -54,12 +54,12 @@ export const TeamRoster = ({ players }: teamRosterProps) => {
 																<a>{x.lastname + ' ' + x.firstname}</a>
 															</td>
 															<td className='!pl-8'>{x.shirtnumber}</td>
-															<td>C</td>
-															<td>1-2</td>
-															<td>20kg</td>
+															<td>-</td>
+															<td>{x.height}</td>
+															<td>{x.weight}</td>
 															<td>{dateFormat(x.dateofbirth)}</td>
-															<td>1</td>
-															<td>R</td>
+															<td>{calculateAge(x.dateofbirth)}</td>
+															<td>-</td>
 														</tr>
 													);
 												})}

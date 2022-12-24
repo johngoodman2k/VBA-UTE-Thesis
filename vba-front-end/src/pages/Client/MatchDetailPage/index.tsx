@@ -286,6 +286,8 @@ export const MatchDetailPage = () => {
 										<div className={cx('__scoreboxContainer')}>
 											{matchDetail && matchDetail.home && matchDetail.away &&
 												<MatchResultDetailBar
+													homeid={matchDetail.home.id ?? ""}
+													awayid={matchDetail.away.id ?? ""}
 													homeBadge={matchDetail.home.teamlogo as string ?? ""}
 													homeName={matchDetail.home.teamname ?? ""}
 													homeResult={matchDetail.homeresult ?? "0"}

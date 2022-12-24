@@ -2,9 +2,13 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './fantasyNews.module.scss';
 import { TeamInfoArticle } from './TeamInfoArticle';
+import { Team } from '../../../../../Services/models';
 const cx = classNames.bind(styles);
+type FantasyNewsProps = {
+	details?: Team
+}
 
-export const FantasyNews = () => {
+export const FantasyNews = ({ details }: FantasyNewsProps) => {
 	return (
 		<div className={`${cx('__container')}`}>
 			<section className={`${cx('__block')}`}>
@@ -20,8 +24,8 @@ export const FantasyNews = () => {
 						</div>
 					</div>
 					<div>
-						<TeamInfoArticle></TeamInfoArticle>
-						<TeamInfoArticle></TeamInfoArticle>
+						<TeamInfoArticle des={details}></TeamInfoArticle>
+
 					</div>
 				</div>
 			</section>

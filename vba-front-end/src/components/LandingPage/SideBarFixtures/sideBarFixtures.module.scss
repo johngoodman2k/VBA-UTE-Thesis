@@ -1,4 +1,5 @@
 @import "/src/styles/Variables.scss";
+
 .wrapper {
   position: relative;
   padding: 2.3rem 1rem 2rem;
@@ -19,11 +20,12 @@
 .__logoWrapper {
   display: inline-block;
   vertical-align: middle;
+
   &--adjust {
     width: 150px;
     height: 80px;
     display: block;
-    object-fit: cover;
+    object-fit: fit-content
   }
 }
 
@@ -34,7 +36,7 @@
 }
 
 .__matchList {
-  & > time {
+  &>time {
     text-align: center;
     display: block;
     padding: 0 1rem 0.8rem;
@@ -43,10 +45,12 @@
     font-weight: 600;
     margin-top: 1rem;
   }
+
   &--adjust {
     :nth-child(odd) {
       background-color: $second-color;
     }
+
     :nth-child(even) {
       background-color: $fourth-color;
     }

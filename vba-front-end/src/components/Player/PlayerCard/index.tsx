@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './playerCard.module.scss';
 import classNames from 'classnames/bind';
 import { Player } from '../../../Services/models';
+import { dateFormat } from '../../../utils/dateFormat';
 const cx = classNames.bind(styles);
 
 type PlayerCard = {
@@ -98,7 +99,23 @@ export const PlayerCard = ({ player }: PlayerCard) => {
 							<div>
 								<div className={`${cx('__dataBottom')}`}>
 									<div className={`${cx('__dataBottom--label')}`}>height</div>
-									<div className={`${cx('__dataBottom--info')}`}>6-10</div>
+									<div className={`${cx('__dataBottom--info')}`}>{player.height}</div>
+								</div>
+								<div className={`${cx('__dataBottom')}`}>
+									<div className={`${cx('__dataBottom--label')}`}>Weight</div>
+									<div className={`${cx('__dataBottom--info')}`}>{player.weight}</div>
+								</div>
+								<div className={`${cx('__dataBottom')}`}>
+									<div className={`${cx('__dataBottom--label')}`}>BirthDay</div>
+									<div className={`${cx('__dataBottom--info')}`}>{dateFormat(player.dateofbirth)}</div>
+								</div>
+								<div className={`${cx('__dataBottom')}`}>
+									<div className={`${cx('__dataBottom--label')}`}>country</div>
+									<div className={`${cx('__dataBottom--info')}`}>{player.country}</div>
+								</div>
+								{/* <div className={`${cx('__dataBottom')}`}>
+									<div className={`${cx('__dataBottom--label')}`}>height</div>
+									<div className={`${cx('__dataBottom--info')}`}>{player.}</div>
 								</div>
 								<div className={`${cx('__dataBottom')}`}>
 									<div className={`${cx('__dataBottom--label')}`}>height</div>
@@ -107,23 +124,7 @@ export const PlayerCard = ({ player }: PlayerCard) => {
 								<div className={`${cx('__dataBottom')}`}>
 									<div className={`${cx('__dataBottom--label')}`}>height</div>
 									<div className={`${cx('__dataBottom--info')}`}>6-10</div>
-								</div>
-								<div className={`${cx('__dataBottom')}`}>
-									<div className={`${cx('__dataBottom--label')}`}>height</div>
-									<div className={`${cx('__dataBottom--info')}`}>6-10</div>
-								</div>
-								<div className={`${cx('__dataBottom')}`}>
-									<div className={`${cx('__dataBottom--label')}`}>height</div>
-									<div className={`${cx('__dataBottom--info')}`}>6-10</div>
-								</div>
-								<div className={`${cx('__dataBottom')}`}>
-									<div className={`${cx('__dataBottom--label')}`}>height</div>
-									<div className={`${cx('__dataBottom--info')}`}>6-10</div>
-								</div>
-								<div className={`${cx('__dataBottom')}`}>
-									<div className={`${cx('__dataBottom--label')}`}>height</div>
-									<div className={`${cx('__dataBottom--info')}`}>6-10</div>
-								</div>
+								</div> */}
 							</div>
 						</div>
 					</div>

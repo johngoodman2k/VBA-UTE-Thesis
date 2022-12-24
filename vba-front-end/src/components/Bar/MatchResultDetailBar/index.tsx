@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './matchResultDetailBar.module.scss';
 import { RightClickModal } from '../../Modal/RightClickModal';
+import { Link } from 'react-router-dom';
 
 type MatchResultDetailBarProps = {
 	homeBadge?: string;
@@ -10,6 +11,8 @@ type MatchResultDetailBarProps = {
 	awayBadge: string;
 	awayName: string;
 	awayResult: string;
+	homeid?: string;
+	awayid?: string;
 };
 
 const cx = classNames.bind(styles);
@@ -32,15 +35,18 @@ export const MatchResultDetailBar = (props: MatchResultDetailBarProps) => {
 	return (
 		<div className={cx('__container')}>
 			<div className={cx('__team', 'home')}>
-				<a onContextMenu={handleContextMenu} className={cx('home__badgeContainer')}>
-					<span className={cx('home__badgeContainer__image')}>
-						<img className={cx('home__badgeContainer__image--adjust')} src={props.homeBadge}></img>
-					</span>
-				</a>
+				<Link to={`/teaminfo/${props.homeid}`}>
+					<a onContextMenu={handleContextMenu} className={cx('home__badgeContainer')}>
+						<span className={cx('home__badgeContainer__image')}>
+							<img className={cx('home__badgeContainer__image--adjust')} src={props.homeBadge}></img>
+						</span>
+					</a>
 
-				<a onContextMenu={handleContextMenu} href='' className={cx('teamName', 'teamName__home')}>
-					<span className={cx('teamName--adjust')}>{props.homeName}</span>
-				</a>
+
+					<a onContextMenu={handleContextMenu} href='' className={cx('teamName', 'teamName__home')}>
+						<span className={cx('teamName--adjust')}>{props.homeName}</span>
+					</a>
+				</Link>
 			</div>
 
 			<div className={cx('__scoreContainer')}>
@@ -50,14 +56,16 @@ export const MatchResultDetailBar = (props: MatchResultDetailBarProps) => {
 			</div>
 
 			<div className={cx('__team', 'away')} onContextMenu={handleContextMenu}>
-				<a href='' className={cx('teamName', 'teamName__away')}>
-					<span className={cx('teamName--adjust')}>{props.awayName}</span>
-				</a>
-				<a className={cx('away__badgeContainer')}>
-					<span className={cx('away__badgeContainer__image')}>
-						<img className={cx('away__badgeContainer__image--adjust')} src={props.awayBadge}></img>
-					</span>
-				</a>
+				<Link to={`/teaminfo/${props.awayid}`}>
+					<a href='' className={cx('teamName', 'teamName__away')}>
+						<span className={cx('teamName--adjust')}>{props.awayName}</span>
+					</a>
+					<a className={cx('away__badgeContainer')}>
+						<span className={cx('away__badgeContainer__image')}>
+							<img className={cx('away__badgeContainer__image--adjust')} src={props.awayBadge}></img>
+						</span>
+					</a>
+				</Link>
 			</div>
 
 			{show === true ? <RightClickModal x={positions.x} y={positions.y}></RightClickModal> : ''}

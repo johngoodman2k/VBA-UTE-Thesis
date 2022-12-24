@@ -46,8 +46,8 @@ export interface Tournament {
 	id?: string;
 	name?: string;
 	description?: string;
-	startDate?: Date| string;
-	endDate?: Date |string;
+	startDate?: Date | string;
+	endDate?: Date | string;
 	type?: string;
 	competitor?: string;
 	seasons?: Season[];
@@ -73,7 +73,7 @@ export interface Round {
 
 	matches?: Match[];
 	createdAt?: Date;
-	createdat?:Date
+	createdat?: Date
 }
 // export interface Match {
 //   id: string;
@@ -90,9 +90,9 @@ export interface Round {
 export interface Team {
 	id?: string;
 	teamname?: string;
-	teamlogo?: string |File;
+	teamlogo?: string | File;
 	stadiumname?: string;
-	stadiumpic?: string |File;
+	stadiumpic?: string | File;
 	description?: string;
 	status?: string;
 	eliminated?: boolean;
@@ -102,11 +102,11 @@ export interface Team {
 	seasonId?: string
 	createdAt?: Date;
 	color?: string;
-	shortname?:string;
-
-    teamName?: string;
-    teamLogo?: string|File;
-    shortName?: string;
+	shortname?: string;
+	matches?: Match[];
+	teamName?: string;
+	teamLogo?: string | File;
+	shortName?: string;
 }
 
 
@@ -130,11 +130,11 @@ export interface TeamStandings {
 export interface Match {
 	id?: string;
 	tournamentId?: string;
-	seasonid?:string;
-	seasonId?:string;
+	seasonid?: string;
+	seasonId?: string;
 	round?: string;
-	home?: Team ;
-	away?: Team ;
+	home?: Team;
+	away?: Team;
 	homeResult?: string;
 	awayResult?: string;
 	homeresult?: string;
@@ -151,29 +151,29 @@ export interface Match {
 	process?: Process[];
 }
 
-export interface CustomTeam{
-	id?:string,
-	teamname?:string,
-	teamlogo?:string,
-	stadiumname?:string,
-	stadiumpic?:string,
-	description?:string,
-	status?:string,
-	color?:string,
-	seasonid?:string,
-	eliminated?:boolean,
-	shortname?:string,
-	createdat?:Date,
-	playerid?:string,
-	firstname?:string,
-	lastname?:string,
-	dateofbirth?:Date,
-	image?:string,
-	shirtnumber?:number,
-	height?:number,
-	weight?:number,
-	teamid?:string,
-	country?:string,
+export interface CustomTeam {
+	id?: string,
+	teamname?: string,
+	teamlogo?: string,
+	stadiumname?: string,
+	stadiumpic?: string,
+	description?: string,
+	status?: string,
+	color?: string,
+	seasonid?: string,
+	eliminated?: boolean,
+	shortname?: string,
+	createdat?: Date,
+	playerid?: string,
+	firstname?: string,
+	lastname?: string,
+	dateofbirth?: Date,
+	image?: string,
+	shirtnumber?: number,
+	height?: number,
+	weight?: number,
+	teamid?: string,
+	country?: string,
 }
 
 export interface MatchProcess {
@@ -183,39 +183,40 @@ export interface MatchProcess {
 }
 
 export interface Process {
-    id?: string;
-    type?: string;
-    mins?: number;
-    quater?: string;
-    playerOne?: Player;
-    playerTwo?: Player;
-    cardcolor?: string;
-    side?: string;
-    match?: string;
-    option?: string;
-    description?: string;
-    createdAt?: Date;
+	id?: string;
+	type?: string;
+	mins?: number;
+	quater?: string;
+	playerOne?: Player;
+	playerTwo?: Player;
+	cardcolor?: string;
+	side?: string;
+	match?: string;
+	option?: string;
+	description?: string;
+	createdAt?: Date;
 }
 export interface Player {
-    id?: string;
-    firstName?: string;
-    lastName?: string;
-    dateOfBirth?: Date;
-    image?: File | string;
-    shirtNumber?: number;
-    height?:number;
-    weight?:number;
-    createdAt?: Date;
-    teamId?: string;
-	country?:string;
+	id?: string;
+	firstName?: string;
+	lastName?: string;
+	dateOfBirth?: Date;
+	image?: File | string;
+	shirtNumber?: number;
+	height?: number;
+	weight?: number;
+	createdAt?: Date;
+	teamId?: string;
+	country?: string;
 
 	flag?: string;
 	firstname?: string;
-    lastname?: string;
+	lastname?: string;
 	shirtnumber?: number;
-    createdat?: Date;
+	createdat?: Date;
 
-	teamlogo?:string;
+	teamlogo?: string;
+	dateofbirth?: string;
 }
 
 export interface Standings {
@@ -266,36 +267,36 @@ export interface Result<T> {
 
 export interface CustomTournament {
 	id?: string;
-	name?:string;
-	description?:string;
-	startdate?:string | Date;
-	enddate?:string | Date;
-	type?:string;
-	competitor?:string;
-	seasonid?:string;
-	seasonname?:string;
-	roundname?:string;
-	roundid?:string;
-	roundcreatedat?:Date | string;
-	teamname?:string;
-	teamlogo?:string;
-	matchday?:string|Date;
+	name?: string;
+	description?: string;
+	startdate?: string | Date;
+	enddate?: string | Date;
+	type?: string;
+	competitor?: string;
+	seasonid?: string;
+	seasonname?: string;
+	roundname?: string;
+	roundid?: string;
+	roundcreatedat?: Date | string;
+	teamname?: string;
+	teamlogo?: string;
+	matchday?: string | Date;
 
 	matchid?: string;
-	matchhome?:string;
-	matchaway?:string;
-	teamid?:string;
+	matchhome?: string;
+	matchaway?: string;
+	teamid?: string;
 
-	stadiumname?:string;
+	stadiumname?: string;
 
 }
 
 export interface Post {
-    id?: string;
-    name?: string
-    tinydes?:string,
-    description?: string,
-    public?:boolean,
-    image?:string,
-    owner?: string,
+	id?: string;
+	name?: string
+	tinydes?: string,
+	description?: string,
+	public?: boolean,
+	image?: string,
+	owner?: string,
 }

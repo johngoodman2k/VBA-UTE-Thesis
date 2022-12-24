@@ -30,7 +30,7 @@ export const SidebarFixture = ({ seasonId }: SidebarFixtureProps) => {
 			if (seasonId) {
 				const res = await tournamentServices.getMergeTournamentById("uWvQv6nLYcPAyztGvzqyZ", seasonId);
 				setUpCommingMatches(res[0]);
-				console.log("33",res)
+				console.log("33", res)
 			}
 
 
@@ -47,7 +47,7 @@ export const SidebarFixture = ({ seasonId }: SidebarFixtureProps) => {
 							<div className={cx('__logoWrapper')}>
 								<img
 									className={cx('__logoWrapper--adjust')}
-									src='https://logos-world.net/wp-content/uploads/2020/11/National-Basketball-Association-Logo-1969-2017.png'
+									src='https://vba.vn/assets/img/svg/vba-logo.svg'
 									alt=''
 								/>
 							</div>

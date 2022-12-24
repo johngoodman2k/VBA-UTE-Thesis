@@ -14,7 +14,7 @@ type NavigationBarProps = {
 };
 export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 	const [clickedId, setClickedId] = useState('');
-
+	console.log('17', tournament)
 	return (
 		<>
 			<header
@@ -37,7 +37,9 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 														className={
 															clickedId === 'home' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<span className={cx('__item__text')}>Trang chủ</span>
+													<Link to={'/home'}>
+														<span className={cx('__item__text')}>Trang chủ</span>
+													</Link>
 												</span>
 											</a>
 										</li>
@@ -124,7 +126,7 @@ export const NavigationBar = ({ ref, tournament }: NavigationBarProps) => {
 														className={
 															clickedId === 'fixtures' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<Link to={`/fixtures/${tournament && tournament.seasons ? tournament?.seasons[0].id : ' '}`}>
+													<Link to={`/fixtures/uWvQv6nLYcPAyztGvzqyZ`}>
 														<span className={cx('__item__text')}>Lịch thi đấu</span>
 													</Link>
 												</span>
