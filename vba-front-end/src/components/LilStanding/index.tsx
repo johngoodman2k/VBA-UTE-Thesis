@@ -58,10 +58,12 @@ export const LilStanding = ({ standings }: LilStandingTypes) => {
 														<span className={`${cx('_teamRank')}`}>1</span>
 														<div className={`${cx('_teamLogoBlock')}`}>
 															<div className='min-w-full  relative'>
-																<img src={x.team.teamLogo} className='block min-w-full'></img>
+																{x.teams && x.teams.teamLogo &&
+																	<img src={x.teams.teamLogo as string} className='block min-w-full'></img>
+																}
 															</div>
 														</div>
-														<span>{x.team.teamName}</span>
+														<span>{x.teams && x.teams.teamName ? x.teams.teamName : ''}</span>
 													</a>
 												</td>
 												<td>13</td>

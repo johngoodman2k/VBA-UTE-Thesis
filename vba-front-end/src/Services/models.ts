@@ -149,7 +149,7 @@ export interface Match {
 	spectators?: string;
 	assistance?: Player;
 	process?: Process[];
-	endmatch?:boolean;
+	endmatch?: boolean;
 }
 
 export interface CustomTeam {
@@ -228,7 +228,7 @@ export interface Standings {
 }
 
 export interface Statistics {
-	team: TeamStandings;
+	teamId?: string;
 	played?: number;
 	won?: number;
 	drawn?: number;
@@ -236,6 +236,7 @@ export interface Statistics {
 	home?: Point;
 	road?: Point;
 	matchResult: number[];
+	teams?: Team;
 }
 
 interface Point {

@@ -15,9 +15,9 @@ const StandingPage = () => {
 	const [standings, setStandings] = useState<Standings>();
 	useEffect(() => {
 		(async () => {
-			const res = await standingsServices.getStandingsById(params.id);
+			const res = await standingsServices.getStandingsBySeasonId(params.id);
 			setStandings(res);
-			console.log('standing', res);
+			console.log('standing1', res);
 		})();
 	}, [params.id]);
 	return (
@@ -70,50 +70,51 @@ const StandingPage = () => {
 									</tr>
 								</thead>
 								<tbody className={`${cx('standings-box-body')}`}>
-									{standings?.statistics.map((x: Statistics) => {
-										return (
-											<>
-												<tr>
-													<td className={`${cx('standings-button__tooltip')}`}>
-														<span className={`${cx('standings-position__value text-adjust')}`}>1</span>
-														{/* <span
+									{standings?.statistics && standings?.statistics.map((x: Statistics) =>
+
+										<>
+											<tr>
+												<td className={`${cx('standings-button__tooltip')}`}>
+													<span className={`${cx('standings-position__value text-adjust')}`}>1</span>
+													{/* <span
 									className={`${cx('standings-position__before')}`}></span> */}
-													</td>
-													<td scope='row' className=''>
-														<a>
-															<span>
+												</td>
+												<td scope='row' className=''>
+													<a>
+														<span>
+															{x.teams && x.teams.teamLogo &&
 																<img
-																	src={x.team.teamLogo}
-																	className={`${cx('standings-team__pic', 'inline-block')}`}></img>
-															</span>
-															<span className={`${cx('standings-team__name')}`}>{x.team.teamName}</span>
-														</a>
-													</td>
-													<td className={cx('text-adjust')}>10</td>
-													<td className={cx('text-adjust')}>10</td>
-													<td className={cx('text-adjust')}>10</td>
-													<td className={cx('text-adjust')}>100%</td>
-													<td className={cx('text-adjust')}>13-2</td>
-													<td className={cx('text-adjust')}>14-3</td>
-													<td className={cx('text-adjust')}>8-2</td>
+																	src={x.teams.teamLogo as string}
+																	className={`${cx('standings-team__pic', 'inline-block')}`}></img>}
+														</span>
+														<span className={`${cx('standings-team__name')}`}>{x.teams && x.teams.teamName ? x.teams.teamName : ''}</span>
+													</a>
+												</td>
+												<td className={cx('text-adjust')}>10</td>
+												<td className={cx('text-adjust')}>10</td>
+												<td className={cx('text-adjust')}>10</td>
+												<td className={cx('text-adjust')}>100%</td>
+												<td className={cx('text-adjust')}>13-2</td>
+												<td className={cx('text-adjust')}>14-3</td>
+												<td className={cx('text-adjust')}>8-2</td>
 
-													<td className={`${cx('standings-form')}`}>
-														<ul>
-															<li className={`${cx('standings-form__won')}`}>W</li>
-														</ul>
-													</td>
-												</tr>
+												<td className={`${cx('standings-form')}`}>
+													<ul>
+														<li className={`${cx('standings-form__won')}`}>W</li>
+													</ul>
+												</td>
+											</tr>
 
-												{/* <tr>
+											{/* <tr>
 													<td className={`${cx('standings-button_tooltip')}`}>
 														<span className={`${cx('standings-position__value')}`}>2</span>
 														<span
 									className={`${cx('standings-position__before')}`}></span>
 													</td>
 												</tr> */}
-											</>
-										);
-									})}
+										</>
+
+									)}
 								</tbody>
 							</table>
 						</>

@@ -25,6 +25,7 @@ export const LandingPageScroll = () => {
 	const [tournament, setTournament] = useState<Season>();
 	const [standings, setStandings] = useState<Standings>();
 	const [post, setPost] = useState<Post[]>([]);
+	const [standingsId, setStandingsId] = useState<string>("")
 	gsap.registerPlugin(CSSRulePlugin);
 	let intro = useRef(null);
 	let container = useRef(null);
@@ -52,11 +53,13 @@ export const LandingPageScroll = () => {
 
 		(async () => {
 			const res = await tournamentServices.getMergeTournamentById('uWvQv6nLYcPAyztGvzqyZ', 'AHLn-VnvtNsxFh6olzbCd')
-			console.log('54', res)
 			const res1 = await postServices.getAllPost() as any
-			console.log('60', res1)
+			const res2 = await standingsServices.getStandingsBySeasonId('AHLn-VnvtNsxFh6olzbCd') as any
 			setTournament(res[0])
 			setPost(res1.list)
+			setStandings(res2[0])
+			setStandingsId(res2[0].seasonId)
+			console.log('61', res2)
 		})();
 	}, []);
 
@@ -71,7 +74,7 @@ export const LandingPageScroll = () => {
 							ref={(el: any) => {
 								header = el;
 							}}>
-							<NavigationBar tournament={tournament} />
+							<NavigationBar id={standingsId} tournament={tournament} />
 						</div>
 
 						<div className={cx('__intro')}>
