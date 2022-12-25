@@ -7,11 +7,13 @@ import {
     playerModel,
     PlayerRepository,
     PlayerService,
+    TeamRepository,
 } from "./player";
 import { PlayerController } from "./player-controller";
 export * from "./player";
 export { PlayerController };
 import { SqlPlayerRepository } from "./sql-player-repository";
+import { SqlTeamRepository } from "./sql-team-repository";
 
 export class PlayerManager
     extends Manager<Player, string, PlayerFilter>
@@ -19,7 +21,9 @@ export class PlayerManager
 {
     constructor(
         search: Search<Player, PlayerFilter>,
-        protected playerrepository: PlayerRepository
+        protected playerrepository: PlayerRepository,
+        protected teamrepository: TeamRepository
+
     ) {
         super(search, playerrepository);
     }
@@ -33,6 +37,9 @@ export class PlayerManager
     getAllPlayer():Promise<Player[]>{
         return this.playerrepository.getAllPlayer();
     }
+    deletePlayerOnTeam(teamId:string,playerId:string):Promise<number>{
+        return this.teamrepository.deletePlayerOnTeam(teamId,playerId);
+    }
 
 }
 export function usePlayerService(db: DB): PlayerService {
@@ -44,7 +51,9 @@ export function usePlayerService(db: DB): PlayerService {
         buildQuery
     );
     const playerrepository = new SqlPlayerRepository(db);
-    return new PlayerManager(builder.search, playerrepository);
+    const teamrepository = new SqlTeamRepository(db);
+
+    return new PlayerManager(builder.search, playerrepository,teamrepository);
 }
 export function usePlayerController(log: Log, db: DB): PlayerController {
     return new PlayerController(log, usePlayerService(db));

@@ -15,6 +15,11 @@ export interface Player {
     country: string;
 }
 
+export interface Team{
+    id:string;
+    players: {id: string}[];
+}
+
 export interface PlayerFilter extends Filter{
     id: string;
     firstName: string;
@@ -34,10 +39,14 @@ export interface PlayerRepository extends Repository<Player, string> {
     updatePlayer(id:string,player:Player):Promise<number>;
     getAllPlayer():Promise<Player[]>;
 }
+export interface TeamRepository extends Repository<Team, string> {
+    deletePlayerOnTeam(teamId:string,playerId:string):Promise<number>;
+}
 export interface PlayerService extends Service<Player, string, PlayerFilter> {
     getPlayersByTeamId(teamId: string): Promise<Player[]>;
     updatePlayer(id:string,player:Player):Promise<number>;
     getAllPlayer():Promise<Player[]>;
+    deletePlayerOnTeam(teamId:string,playerId:string):Promise<number>;
 }
 export const playerModel: Attributes = {
     id: {

@@ -31,13 +31,15 @@ export interface TeamServicesRoot {
 	addPlayerToTeam(player: Player, globalHost?: string): Promise<number>;
 	getTeamsBySeasonId(seasonId: string, globalHost?: string): Promise<Team[]>;
 	updateTeam(id: string, team: Team): Promise<Team>;
+	deleteTeam(id:string):Promise<number>;
 }
 
 export interface PlayerServicesRoot {
 	getPlayersByTeamId(id: string | undefined, globalHost?: string): Promise<Player[]>;
 	getPlayerById(id: string | undefined): Promise<Player>;
 	getAllPlayers(): Promise<Player[]>;
-	updatePlayer(id: string, player: Player): Promise<Number>;
+	updatePlayer(id: string, player: Player): Promise<number>;
+	deletePlayer(id:string):Promise<number>;
 }
 
 export interface ProcessServicesRoot {
@@ -60,7 +62,7 @@ export interface SeasonServicesRoot {
 	getSeasonByTournamentId(tournamentId: string): Promise<Season[]>;
 	createTeamAndAddTeamToSeason(team: Team, seasonId: string): Promise<Result<Season[]>>
 	updateSeason(id: string, season: Season): Promise<Result<Season>>
-
+	deleteSeason(id:string):Promise<number>
 }
 
 export interface PostServicesRoot {

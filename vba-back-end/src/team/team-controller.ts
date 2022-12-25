@@ -111,5 +111,15 @@ export class TeamController extends Controller<Team, string, TeamFilter> {
     return res.status(200).json(teams[0])
   }
 
+  async delete(req: Request, res: Response) {
+    const {id} = req.params
+    const team = await this.teamService.load(id)
+    const isDelete = await this.teamService.delete(id)
+    if(isDelete ===0) return res.status(400).json({err:"Delete failed"})
+    await deleteFile(team.stadiumpic)
+    await deleteFile(team.teamLogo)
+    
+    return res.status(200).json({message: "Delete successfully"})
+  }
 
 }

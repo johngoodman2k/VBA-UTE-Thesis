@@ -19,9 +19,9 @@ export class StandingsController extends Controller<
     const teams = await this.standingsService.getTeamsBySeasonId(seasonId)
     if(!teams || teams.length === 0) res.status(200).json(standings)
 
-    const newStandings = standings[0].statistics.map((item) => {return {...item,teams: teams}})
+    const newStandings = standings[0].statistics.map((item,i) => {return {...item,teams: teams[i]}})
     standings[0].statistics =  newStandings as any
-    return res.status(200).json(newStandings)
+    return res.status(200).json(standings)
   }
 
 }

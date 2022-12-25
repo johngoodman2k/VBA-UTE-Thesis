@@ -17,6 +17,19 @@ export interface Team {
     createdAt: Date;
 }
 
+export interface Season {
+    id?:string;
+    teams?: {id:string}[];
+    standingsid?: string;
+
+}
+
+export interface Standings {
+    id?:string;
+    statistics?: {teamId:string}[];
+}
+
+
 export interface Player {
     id?: string;
     firstName?: string;

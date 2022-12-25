@@ -27,9 +27,9 @@ export const CustomSelectBar = ({ addNext, styles, handleAdd, handleEdit, handle
 				<div className={cx('dropdown-list__item')} onClick={handleEdit}>
 					Edit
 				</div>
-				<div className={cx('dropdown-list__item')} onClick={handleDelete}>
+				{handleDelete && <div className={cx('dropdown-list__item')} onClick={handleDelete}>
 					Delete
-				</div>
+				</div>}
 			</div>
 		</div>
 	);

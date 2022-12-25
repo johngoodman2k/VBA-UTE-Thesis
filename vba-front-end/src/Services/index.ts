@@ -136,6 +136,10 @@ export class TeamServices implements TeamServicesRoot {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.put<Team>(url, team, { headers: { 'Content-Type': 'multipart/form-data' } })
 	}
+	deleteTeam(id:string):Promise<number>{
+		const url = `${this.url}/${id}`;
+		return this.httpRequest.delete(url)
+	}
 
 }
 
@@ -145,7 +149,7 @@ export class PlayerServices implements PlayerServicesRoot {
 		this.getPlayerById = this.getPlayerById.bind(this);
 		this.getAllPlayers = this.getAllPlayers.bind(this);
 		this.updatePlayer = this.updatePlayer.bind(this);
-
+		this.deletePlayer = this.deletePlayer.bind(this);
 	}
 
 	getPlayersByTeamId(teamid: string | undefined, globalHost?: string): Promise<Player[]> {
@@ -161,9 +165,14 @@ export class PlayerServices implements PlayerServicesRoot {
 		const url = `${this.url}/getall`;
 		return this.httpRequest.get<Player[]>(url);
 	}
-	updatePlayer(id: string, player: Player): Promise<Number> {
+	updatePlayer(id: string, player: Player): Promise<number> {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.put(url, player, { headers: { 'Content-Type': 'multipart/form-data' } });
+	}
+	deletePlayer(id:string):Promise<number>{
+		const url = `${this.url}/${id}`;
+		return this.httpRequest.delete(url);
+
 	}
 
 }
@@ -237,6 +246,10 @@ export class SeasonServices implements SeasonServicesRoot {
 	updateSeason(id: string, season: Season): Promise<Result<Season>> {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.put<Result<Season>>(url, season)
+	}
+	deleteSeason(id:string):Promise<number>{
+		const url = `${this.url}/${id}`;
+		return this.httpRequest.delete(url)
 	}
 
 }

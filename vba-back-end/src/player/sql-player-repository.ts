@@ -25,6 +25,7 @@ export class SqlPlayerRepository
   getAllPlayer():Promise<Player[]>{
     return this.query<Player>('SELECT firstname, lastname, dateofbirth, image, shirtnumber, height, weight, country, teams.teamlogo FROM players INNER JOIN teams  ON players.teamid  = teams.id ORDER BY players.createdat')
   }
+  
 }
 
 // select * from players where teams @> $1`

@@ -32,22 +32,23 @@ export class MatchController extends Controller<Match, string, MatchFilter> {
             match[0].process.push({ id: process.id });
             if(process.type && process.type === "offensive"){
                 if(process.option === "3PT"){
+                    if(!match[0].homeResult)
                     if(process.side === "home"){
-                        match[0].homeResult += 3
+                        match[0].homeResult = match[0].homeResult+  3
                     }else{
-                        match[0].awayResult += 3
+                        match[0].awayResult = match[0].awayResult+  3
                     }
                 }else if (process.option === "2PT"){
                     if(process.side === "home"){
-                        match[0].homeResult += 2 
+                        match[0].homeResult = match[0].homeResult + 2 
                     }else{
-                        match[0].awayResult += 2 
+                        match[0].awayResult  = match[0].awayResult + 2 
                     }
                 }else{
                     if(process.side === "FT"){
-                        match[0].homeResult += 1 
+                        match[0].homeResult =  match[0].homeResult +  1 
                     }else{
-                        match[0].awayResult += 1 
+                        match[0].awayResult =  match[0].awayResult + 1 
                     }
                 }
             }

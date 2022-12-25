@@ -303,13 +303,13 @@ export const MatchDetailPage = () => {
 													awayid={matchDetail.away.id ?? ""}
 													homeBadge={matchDetail.home.teamlogo as string ?? ""}
 													homeName={matchDetail.home.teamname ?? ""}
-													homeResult={matchDetail.homeresult ?? "0"}
+													homeResult={matchDetail.homeResult ?? "0"}
 													awayBadge={matchDetail.away.teamlogo as string ?? ""}
 													awayName={matchDetail.away.teamname ?? ""}
-													awayResult={matchDetail.awayresult ?? "0"}
+													awayResult={matchDetail.awayResult ?? "0"}
 												/>
 											}
-											<SummarizeBox></SummarizeBox>
+											<SummarizeBox processes={matchDetail?.process} homeName={matchDetail?.home?.teamname} awayName={matchDetail?.away?.teamname}></SummarizeBox>
 											<div className={cx('__timeLine')}>
 												<a className={cx('__timeLine__team')}>
 													<span className={cx('__timeLine__badge')}>
@@ -335,10 +335,10 @@ export const MatchDetailPage = () => {
 																mins={process.mins as number ?? ""}
 																homeBadge={matchDetail.home.teamlogo as string ?? ""}
 																homeName={matchDetail.home.teamname ?? ""}
-																homeResult={matchDetail.homeresult ?? "0"}
+																homeResult={matchDetail.homeResult ?? "0"}
 																awayBadge={matchDetail.away.teamlogo as string ?? ""}
 																awayName={matchDetail.away.teamname ?? ""}
-																awayResult={matchDetail.awayresult ?? "0"}
+																awayResult={matchDetail.awayResult ?? "0"}
 																side={process.side ?? ""}
 															></MatchEventTimeLine>
 

@@ -5,6 +5,7 @@ import { Player } from '../../../../Services/models';
 import { converMToFeet } from '../../../../utils/convert';
 import { CreatePlayerModal } from '../../../../components/Modal/CreatePlayerModal';
 import { Link } from 'react-router-dom';
+import { vbaContext } from '../../../../Services/services';
 const cx = classNames.bind(styles);
 type AdminPlayerCardProps = {
 	reload?: boolean;
@@ -13,13 +14,29 @@ type AdminPlayerCardProps = {
 	teamImage?: string;
 };
 
+const playerServices = vbaContext.getPlayerServices()
+
 export const AdminPlayerCard = ({ reload, setReload, player, teamImage }: AdminPlayerCardProps) => {
 	const [openEditModal, setOpenEditModal] = useState(false)
 	const handleEditPlayer = () => {
 		setOpenEditModal(true)
 	}
+	const handleDeletePlayer = async ()=>{
+		if(player && player.id)
+		await playerServices.deletePlayer(player.id)
+		if(setReload)setReload(!reload)
+	}
 	return (
 		<div className='relative basis-1/5 group  bg-black rounded-md text-white overflow-hidden'>
+			<button
+				type="button"
+				onClick={handleDeletePlayer}
+				className={`${cx(
+					'text-center uppercase tracking-wider text-transparent group-hover:text-[#f23333] font-light text-[2rem] leading-[4.25rem] font-[Teko] m-0 z-[5] absolute top-[5%] left-[5%]',
+					'_number'
+				)}`}>
+				X
+			</button>
 			<div onClick={handleEditPlayer} className="hover:cursor-pointer">
 				<img src={player ? player.image as string : 'https://i.ibb.co/dKPn924/hieu-thanh.png'} className='w-full max-w-full h-auto block'></img>
 

@@ -31,13 +31,13 @@ export const PlayerManager = () => {
 	useEffect(() => {
 		(async () => {
 			try {
-				let res: any;
+				let res: Player[];
 				let res1: Team
 				if (params && params.id) {
-					res = await playerServices.getPlayersByTeamId(params.id);
+					// res = await playerServices.getPlayersByTeamId(params.id);
 					res1 = await teamServices.getTeamById(params.id)
 					setTeam(res1)
-					setListPlayer(res);
+					// setListPlayer(res);
 
 				} else {
 					res = await playerServices.getAllPlayers();
@@ -72,13 +72,22 @@ export const PlayerManager = () => {
 
 			</div>
 
-			<div className='m-2 p-2 grid grid-cols-4 align-middle gap-12'>
-				{listPlayer.length > 0 ? (
-					listPlayer.map((player: Player, i: number) => <AdminPlayerCard teamImage={team?.teamLogo as string} reload={reload} setReload={setReload} player={player}></AdminPlayerCard>)
+			{params.id ?  <div className='m-2 p-2 grid grid-cols-4 align-middle gap-12'>
+				{team && team.players &&team.players.length !== 0 ? (
+					team.players.map((player: Player, i: number) => <AdminPlayerCard teamImage={team?.teamlogo as string} reload={reload} setReload={setReload} player={player}></AdminPlayerCard>)
 				) : (
 					<NoData content='No Data Team' />
 				)}
 			</div>
+			:<div className='m-2 p-2 grid grid-cols-4 align-middle gap-12'>
+				{listPlayer.length > 0 ? (
+					listPlayer.map((player: Player, i: number) => <AdminPlayerCard teamImage={team?.teamlogo as string} reload={reload} setReload={setReload} player={player}></AdminPlayerCard>)
+				) : (
+					<NoData content='No Data Team' />
+				)}
+			</div>
+			}
+			
 		</>
 	);
 };

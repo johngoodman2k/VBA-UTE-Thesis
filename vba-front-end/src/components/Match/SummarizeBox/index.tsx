@@ -1,9 +1,71 @@
 import React from 'react';
 import styles from './summarizeBox.module.scss';
 import classNames from 'classnames/bind';
+import { Process } from '../../../Services/models';
 const cx = classNames.bind(styles);
+interface Result {
+	q1: number;
+	q2:number;
+	q3: number;
+	q4:number;
+	final:number;
+}
 
-export const SummarizeBox = () => {
+const addPoint = (process: Process,rs:Result, offset: number)=>{
+	if(process.quater=== 'q1'){
+		rs.q1 = rs.q1+offset
+	}else if(process.quater=== 'q2'){
+		rs.q2 = rs.q2+offset
+
+	}else if(process.quater=== 'q3'){
+		rs.q3 = rs.q3+offset
+
+	}else if(process.quater=== 'q4'){
+		rs.q4 = rs.q4+offset
+	}
+}
+
+const pointerMapping = (process?: Process[]):{home:Result,away: Result} | undefined =>{
+	if(!process || process.length === 0) return;
+	let home = {q1: 0,q2: 0,q3: 0,q4: 0, final: 0}
+	let away = {q1: 0,q2: 0,q3: 0,q4: 0, final: 0}
+
+	for(const p of process){
+		if(p.type === 'offensive'){
+			if(p.side === "home"){
+				if(p.option === '3PT'){
+					addPoint(p,home,3)
+				}
+				else if(p.option === '2PT'){
+					addPoint(p,home,2)
+				}else {
+					addPoint(p,home,1)
+				}
+			}else {
+				if(p.option === '3PT'){
+					addPoint(p,away,3)
+				}
+				else if(p.option === '2PT'){
+					addPoint(p,away,2)
+				}else {
+					addPoint(p,away,1)
+				}
+			}	
+		}
+	}
+	home.final = home.q1 + home.q2 + home.q3 + home.q4
+	away.final = away.q1 + away.q2 + away.q3 + away.q4
+
+	return {home, away}
+}
+type SummarizeBoxProps = {
+	processes?: Process[],
+	homeName?: string,
+	awayName?: string,
+
+}
+
+export const SummarizeBox = ({processes,homeName,awayName}:SummarizeBoxProps) => {
 	return (
 		<div className='container p-7'>
 			<section className='mb-6 rounded '>
@@ -23,26 +85,26 @@ export const SummarizeBox = () => {
 									<th className=' pb-2 font-normal text-right'>FINAL</th>
 								</tr>
 							</thead>
-							<tbody className='text-lg'>
+							<tbody className='text-lg text-left'>
 								<tr className=''>
 									<td>
-										<span className='font-bold text-third-color'>HNB</span>
+										<span className='font-bold text-third-color'>{homeName??""}</span>
 									</td>
-									<td className='text-right'>23</td>
-									<td className='text-right'>24</td>
-									<td className='text-right'>22</td>
-									<td className='text-right'>23</td>
-									<td className='text-right'>113</td>
+									<td className='text-right'>{pointerMapping(processes)?.home.q1 ?? ""}</td>
+									<td className='text-right'>{pointerMapping(processes)?.home.q2 ?? ""}</td>
+									<td className='text-right'>{pointerMapping(processes)?.home.q3 ?? ""}</td>
+									<td className='text-right'>{pointerMapping(processes)?.home.q4 ?? ""}</td>
+									<td className='text-right'>{pointerMapping(processes)?.home.final ?? ""}</td>
 								</tr>
 								<tr className=''>
 									<td>
-										<span className='font-bold text-third-color'>NTD</span>
+										<span className='font-bold text-third-color'>{awayName ?? ""}</span>
 									</td>
-									<td className='text-right'>21</td>
-									<td className='text-right'>12</td>
-									<td className='text-right'>31</td>
-									<td className='text-right'>12</td>
-									<td className='text-right'>80</td>
+									<td className='text-right'>{pointerMapping(processes)?.away.q1 ?? ""}</td>
+									<td className='text-right'>{pointerMapping(processes)?.away.q2 ?? ""}</td>
+									<td className='text-right'>{pointerMapping(processes)?.away.q3 ?? ""}</td>
+									<td className='text-right'>{pointerMapping(processes)?.away.q4 ?? ""}</td>
+									<td className='text-right'>{pointerMapping(processes)?.away.final ?? ""}</td>
 								</tr>
 							</tbody>
 						</table>

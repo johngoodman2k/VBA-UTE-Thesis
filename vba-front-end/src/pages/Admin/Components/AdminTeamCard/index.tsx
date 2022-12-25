@@ -13,6 +13,8 @@ import { CreateTournamentModal } from '../../../../components/Modal/CreateTourna
 import { Team, Tournament } from '../../../../Services/models';
 import { CreatePlayerModal } from '../../../../components/Modal/CreatePlayerModal';
 import { CreateTeamModal } from '../../../../components/Modal/CreateTeamModal';
+import { vbaContext } from '../../../../Services/services';
+import toastNotify from '../../../../utils/toast';
 const cx = classNames.bind(styles);
 
 type AdminTeamCardProps = {
@@ -23,6 +25,7 @@ type AdminTeamCardProps = {
 	tournamentPic?: string;
 	tournament?: Tournament;
 };
+
 
 export const AdminTeamCard = (props: AdminTeamCardProps) => {
 	const [openSeasonModal, setOpenSeasonModal] = useState(false)
@@ -58,6 +61,18 @@ export const AdminTeamCard = (props: AdminTeamCardProps) => {
 	const handleCloseTeamEditModal = () => {
 		setOpenTeamEditModal(false)
 	}
+	
+	const handleDeleteTeam = async () =>{
+		if(props.team && props.team.id){
+			const isdelete  = await vbaContext.getTeamServices().deleteTeam(props.team.id)
+			if(isdelete === 0) {toastNotify("Xóa thất bại ","error")}
+			else {
+				toastNotify("Xóa thành công ","success");
+				if(props.setReload) props.setReload(!props.reload)
+			}
+		}
+	}
+
 	return (
 		<div className=''>
 			{props.type === 'tournament' ? (
@@ -102,7 +117,7 @@ export const AdminTeamCard = (props: AdminTeamCardProps) => {
 			) : props.type === 'team' && props.team ? (
 				<div className={`${cx('team__card-box')}`}>
 					<div className='absolute z-20 right-8 top-8	'>
-						<CustomSelectBar icon={<img src={clocklogo} className="w-[50px] h-[50px] object-cover bg-transparent" />} addNext='Player' handleAdd={handleAddTeam} handleEdit={handleEditTeam}></CustomSelectBar>
+						<CustomSelectBar icon={<img src={clocklogo} className="w-[50px] h-[50px] object-cover bg-transparent" />} addNext='Player' handleAdd={handleAddTeam} handleEdit={handleEditTeam} handleDelete={handleDeleteTeam}></CustomSelectBar>
 					</div>
 					<div className={`${cx('team__card-image')}`}>
 						<span>

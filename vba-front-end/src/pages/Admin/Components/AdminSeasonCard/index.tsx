@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { CreateSeasonModal } from '../../../../components/Modal/CreateSeasonModal';
 import { CreateTeamModal } from '../../../../components/Modal/CreateTeamModal';
 import { Season } from '../../../../Services/models';
+import { vbaContext } from '../../../../Services/services';
+import toastNotify from '../../../../utils/toast';
 import { CustomSelectBar } from '../CustomSelectBar';
 
 type AdminSeasonCardProps = {
@@ -21,7 +23,16 @@ export const AdminSeasonCard = ({season,reload,setReload }: AdminSeasonCardProps
 	const handleEdit =()=>{
 		setOpenModalEdit(true)
 	}
-	const handleDelete = ()=>{}
+	const handleDelete = async ()=>{
+		if(season && season.id){
+			const isdelete  = await vbaContext.getSeasonServices().deleteSeason(season.id)
+			if(isdelete === 0) {toastNotify("Xóa thất bại ","error")}
+			else {
+				toastNotify("Xóa thành công ","success");
+				if(setReload) setReload(!reload)
+			}
+		}
+	}
 
 	const handleCloseModalAdd =()=>{
 		setOpenModalAdd(false)
@@ -29,11 +40,12 @@ export const AdminSeasonCard = ({season,reload,setReload }: AdminSeasonCardProps
 	const handleCloseModalEdit =()=>{
 		setOpenModalEdit(false)
 	}
+
 	return (
 		<>
 		<div className='relative basis-1/5  w-full transition duration-300 ease-in-out delay-150 bg-black hover:text-white hover:-translate-y-1'>
 			<div className='absolute z-20 right-8 top-8	'>
-				<CustomSelectBar addNext='Team' handleAdd={handleAdd} handleEdit={handleEdit} handleDelete={handleDelete}></CustomSelectBar>
+				<CustomSelectBar addNext='Team'  handleAdd={handleAdd} handleEdit={handleEdit} handleDelete={handleDelete}></CustomSelectBar>
 			</div>
 			<Link to={`../seasons/${season?.id??""}`} >
 
