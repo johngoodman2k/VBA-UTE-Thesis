@@ -3,7 +3,9 @@ import classNames from 'classnames/bind';
 import styles from './navigationBar.module.scss';
 import { Link } from 'react-router-dom';
 import { Tournament } from '../../../Services/models';
+import LogoHome from '../../../assets/images/toronto-raptors-logo.png'
 const cx = classNames.bind(styles);
+
 // type NavigationBarProps = {
 //   children: any;
 // };
@@ -88,7 +90,7 @@ export const NavigationBar = ({ ref, tournament, id }: NavigationBarProps) => {
 							<div className={`${cx('__center__inner')}`}>
 								<div className='inline-block align-middle leading-4'>
 									<a className='relative inline-block max-w-[100%] max-h-[130px] h-[128px]'>
-										<img src='https://vba.vn/assets/img/svg/vba-logo.svg' className='m-center h-full w-auto'></img>
+										<img src={LogoHome} className='m-center h-full w-auto'></img>
 									</a>
 								</div>
 							</div>
