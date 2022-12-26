@@ -45,4 +45,5 @@ export class SqlTournamentRepository extends Repository<Tournament, string> impl
 	getMergeTournamentById(tournamentId: string,seasonId:string):Promise<Season[]>{
 		return this.query<Season>('select  s.id, s.name, s.status, s.tournamentid, s.standingsid, s.rounds, s.createdat from seasons s inner join tournaments t on t.id = s.tournamentid where s.id = $2 and t.id =$1',[tournamentId,seasonId])
 	}
+
 }
