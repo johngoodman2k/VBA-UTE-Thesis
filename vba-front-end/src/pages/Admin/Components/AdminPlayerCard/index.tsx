@@ -56,10 +56,10 @@ export const AdminPlayerCard = ({ reload, setReload, player, teamImage }: AdminP
 					{player ? player.lastName ?? player.lastname : ""}
 					<span className='block mt-1'>{player ? player.firstName ?? player.firstname : ""}</span>
 				</p>
-				<p className='pb-4 ml-0 text-left uppercase font-bold text-xs '>Foward</p>
+				<p className='pb-4 ml-0 text-left uppercase font-bold text-xs '>{player ? player.position : ""}</p>
 				<p className=' text-left uppercase font-normal text-sm !leading-4 text-xl !ml-0 my-2'>
 					Cân nặng
-					<span className='block font-extrabold my-2'>{player ? player.weight + " KG" : undefined}</span>
+					<span className='block font-extrabold my-2'>{player ? player.weight + " KG" : ""}</span>
 				</p>
 				<p className=' text-left uppercase font-normal text-sm !leading-4 text-xl !ml-0 my-2'>
 					Chiều cao

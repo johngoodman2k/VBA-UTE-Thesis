@@ -50,25 +50,14 @@ export interface Team {
 }
 
 export interface Player {
-	id: string;
-	firstName: string;
-	lastName: string;
-	dateOfBirth: Date;
-	image: string;
-	shirtNumber: number;
-	createdAt: Date;
-	teamId: string;
+	id?: string;
+	image?: string;
+	teamid?: string;
 }
 
 export interface Tournament {
-	id: string;
-	name: string;
-	description: string;
-	startDate?: string;
-	endDate?: string;
-	type: string;
-	status: string;
-	createdAt: Date;
+	id?: string;
+	seasons?:{id:string}[];
 }
 
 export interface Standings {
@@ -92,6 +81,7 @@ interface Point {
 	won: number;
 	lost: number;
 }
+
 
 export interface SeasonRepository extends Repository<Season, string> {
 	getSeasonById(seasonId: string): Promise<Season[]>;

@@ -4,6 +4,8 @@ import { nanoid } from "nanoid";
 import { Team } from "../team/team";
 import { findAncestor } from "typescript";
 import { Match, MatchFilter, MatchService, Player, Process } from "./match";
+import { ParamsDictionary } from "express-serve-static-core";
+import { ParsedQs } from "qs";
 
 export class MatchController extends Controller<Match, string, MatchFilter> {
     constructor(log: Log, protected matchService: MatchService) {
@@ -11,6 +13,7 @@ export class MatchController extends Controller<Match, string, MatchFilter> {
         this.addProcessToMatch = this.addProcessToMatch.bind(this);
         this.updateProcess = this.updateProcess.bind(this);
         this.getMatchDetails = this.getMatchDetails.bind(this);    
+        this.endMatch = this.endMatch.bind(this);        
     }
 
     async addProcessToMatch(req: Request, res: Response) {
@@ -158,9 +161,21 @@ export class MatchController extends Controller<Match, string, MatchFilter> {
         }
         
         matches[0].process = processes
-        
-    
-        
+   
         return res.status(200).json(matches[0])
+    }
+    async endMatch(req: Request, res: Response) {
+        const match = req.body as Match
+
+        const isEndMatch = await this.matchService.endMatch(match)
+
+        if(isEndMatch ===0) {
+            return res.status(400).json({err: "End Match Failed"})
+        }
+
+        return res.status(200).json({message: "End Match Success"})
+
+        
+     
     }
 }

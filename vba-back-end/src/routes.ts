@@ -22,6 +22,10 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 		'/tournaments/matches/:tournamentId/:seasonId',
 		ctx.tournament.GetGeneratedMatches //ok
 	);
+	// app.get(
+	// 	'/tournaments/matches/:tournamentId/:seasonId',
+	// 	ctx.tournament.GetGeneratedMatches //ok
+	// );
 	app.get(
 		'/tournaments/getMergeTournamentById/:tournamentId/:seasonId',
 		ctx.tournament.getMergeTournamentById //ok
@@ -55,6 +59,9 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 		ctx.match.addProcessToMatch //ok
 	);
 	app.get('/matches/getMatchDetails/:id', ctx.match.getMatchDetails); //ok
+	app.post('/matches/endMatch', ctx.match.endMatch); //ok
+
+	
 
 	app.post('/teams/search', ctx.team.search); //xem xet
 	app.get('/teams/search', ctx.team.search); //used

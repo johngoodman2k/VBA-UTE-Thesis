@@ -187,9 +187,20 @@ export const MatchDetailPage = () => {
 	const handleEndMatch =  async (e:any) =>{
 		if(params.id)
 		try {
-			await matchServices.updateMatch(params.id,{endmatch:true})
-			toastNotify("kết thúc trận đấu thành công","success")
-			navigate(`/fixtures/uWvQv6nLYcPAyztGvzqyZ`)
+			if(matchDetail){
+				const matchUpdated:Match = {
+					id: matchDetail.id,
+					endmatch:matchDetail.endmatch,
+					home:matchDetail.home,
+					away: matchDetail.away,
+					homeResult: matchDetail.homeResult,
+					awayResult: matchDetail.awayResult
+				}
+				await matchServices.endMatch(matchUpdated)
+				toastNotify("kết thúc trận đấu thành công","success")
+				navigate(`/fixtures/uWvQv6nLYcPAyztGvzqyZ`)
+			}
+
 		} catch (error) {
 			toastNotify("kết thúc trận đấu thất bại","error")
 		}
@@ -290,7 +301,10 @@ export const MatchDetailPage = () => {
 										matchId={params.id}
 										matchDetail={matchDetail}
 										homePlayers={matchDetail?.home?.players}
-										awayPlayers={matchDetail?.away?.players}></ControlModal>
+										awayPlayers={matchDetail?.away?.players}
+										reload={reload}
+										setReload={setReload}></ControlModal>
+										
 								</div>
 
 								{/* scorebox */}

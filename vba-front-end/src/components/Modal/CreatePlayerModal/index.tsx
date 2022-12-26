@@ -28,6 +28,7 @@ export const CreatePlayerModal = (props: createPlayerProps) => {
 	const [fileDataURL, setFileDataURL] = useState<any>(null);
 	const [file, setFile] = useState<File | undefined>();
 	const [countrySelected, setCountrySelected] = useState("");
+	const [position,setPosition] = useState("");
 
 
 	const onChangeImage = (e: any) => {
@@ -71,7 +72,9 @@ export const CreatePlayerModal = (props: createPlayerProps) => {
 		const weight = e.target.weight.value
 		const height = e.target.height.value
 		const image = file
-		const validata = validate(firstName, lastName, dateOfBirth, shirtNumber, country, weight, height, image)
+		const experience = e.target.experience.value
+
+		const validata = validate(firstName, lastName, dateOfBirth, shirtNumber, country, weight, height,experience,position ,image)
 
 
 		try {
@@ -84,6 +87,8 @@ export const CreatePlayerModal = (props: createPlayerProps) => {
 				formData.append("country", validata.country)
 				formData.append("weight", validata.weight)
 				formData.append("height", validata.height)
+				formData.append("experience", validata.experience)
+				formData.append("position", validata.position)
 				formData.append("image", validata.image)
 				if (props.player && props.player.id) {
 					if (checkDuplicateObject(props.player, validata)) {
@@ -142,17 +147,17 @@ export const CreatePlayerModal = (props: createPlayerProps) => {
 
 						{/* <div className={cx('TitleTop')}>Country</div>
 							<input id={props.title+"_country"}  name="country" type='text' className={cx('Input', 'Input__Top', 'Input__Top--oneobject')}></input> */}
-						<div className=" text-black rounded mt-3 basis-1/2">
+						<div className=" text-black rounded  mt-3 basis-1/2 ">
 							<div className={cx('TitleTop')}>Quốc tịch</div>
 							<ReactFlagsSelect
-								className={cx('Input', '', 'bg-white')}
+								className={cx('Input','Country' , 'bg-white')}
 								selected={countrySelected}
 								onSelect={(code) => setCountrySelected(code)}
 							/>
 						</div>
 						<div className='basis-1/2 mt-1.5'>
 							<div className={cx('TitleTop')}>Kinh nghiệm</div>
-							<input id='' name="experience" type='number' min="0" max="999" className={cx('Input', 'Input__Top')}></input>
+							<input id='experience' name="experience" type='number' min="0" max="999" className={cx('Input', 'Input__Top')}></input>
 						</div>
 
 
@@ -168,8 +173,12 @@ export const CreatePlayerModal = (props: createPlayerProps) => {
 							<input id={props.title + "_height"} name="height" type='number' min="1" max="3" step="0.001" className={cx('Input', 'Input__Top', 'Input__Top--oneobject')}></input>
 						</div>
 						<div className='h-auto w-full mt-1.5'>
-							<div className={cx('TitleTop')}>Vị trí</div>
-							<input type='text' className={cx('Input', 'Input__Top', 'Input__Top--oneobject')}></input>
+							<label className={cx('TitleTop')} htmlFor="player_position">Vị trí</label>
+							<select name="player-position" value={position} onChange={(e)=> setPosition(e.target.value)} className={cx('Input', 'Input__Top', 'Input__Top--oneobject','Position')}>
+								<option value="Foward">Tiền phong</option>
+								<option value="Guard">Tiền vệ</option>
+								<option value="Center">Trung phong</option>
+							</select>
 						</div>
 					</div>
 

@@ -3,6 +3,7 @@ import { buildToInsert, buildToUpdate, DB, Repository } from "query-core";
 import { getTeamById } from "./query";
 import { Player, Season, Standings, Team, teamModel, TeamRepository } from "./team";
 import { Statement } from "pg-extension";
+import { deleteFile } from "../../common/deleteFile";
 
 export class SqlTeamRepository
   extends Repository<Team, string>
@@ -41,6 +42,12 @@ export class SqlTeamRepository
       params: [id]
     }
     const stmt = [q1,q2] as Statement[]
+
+    const saveUrlPlayer = []
+    const players = await this.query<Player>("select * from players where teamid = $1",[team[0].id])
+    for(const p of players){
+      saveUrlPlayer.push(p.image)
+    }
     const season = await this.query<Season>("select * from seasons where id = $1",[team[0]["seasonid"]])
     if(season && season.length !==0){
       if(!season[0].teams) season[0].teams = [];
@@ -74,7 +81,19 @@ export class SqlTeamRepository
         stmt.push(q4);
       }
     }
-    return this.execBatch(stmt).then(c => c>0?1:0)
+    const exec = await this.execBatch(stmt)
+    if(exec > 0){
+      await deleteFile(team[0].stadiumpic)
+      await deleteFile(team[0]["teamlogo"])
+      if(saveUrlPlayer.length !==0){
+        await Promise.all(saveUrlPlayer.map(r => deleteFile(r)))
+      }
+      return 1;
+    }else{
+      return 0;
+    }
+
+
   }
 
 }

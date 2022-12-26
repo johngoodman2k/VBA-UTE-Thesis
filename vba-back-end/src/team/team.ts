@@ -105,6 +105,11 @@ export const teamModel: Attributes = {
     },
     shortName: { type: "string" },
     players: { type: "array" },
+    won:{type: "number"},
+    lost:{type: "number"},
+    drawn:{type: "number"},
+    homepoint:{},
+    awaypoint:{},
     createdAt: { type: "datetime", default: new Date(Date.now()) },
 };
 

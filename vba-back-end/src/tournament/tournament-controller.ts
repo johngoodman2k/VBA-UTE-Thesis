@@ -13,6 +13,8 @@ import {
 	randomTeam,
 	splitTheTeam
 } from './query';
+import { ParamsDictionary } from 'express-serve-static-core';
+import { ParsedQs } from 'qs';
 
 export class TournamentController extends Controller<Tournament, string, TournamentFilter> {
 	constructor(log: Log, protected tournamentService: TournamentService) {
@@ -334,5 +336,23 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 		const rs = seasons.map((s) => {return {...s , rounds: rounds,teams: teamsInSeason}}) as Season[]
 		// seasons[0].rounds =rounds;
 		return res.status(200).json(rs)
+	}
+
+	async generatePlayOff(req: Request, res: Response) {
+		const {seasonId } = req.params;
+
+		const season = await this.tournamentService.getSeasonById(seasonId);
+		if (!season || season.length === 0) {
+			return res.status(400).json({ err: 'Failed to get season' });
+		}
+		
+		const teams = await this.tournamentService.getTeamBySeasonId(seasonId);
+		if (!teams || teams.length < 2 ) {
+			return res.status(400).json({ error: 'Need more team in season to generate' });
+		}
+		
+		
+
+		
 	}
 }

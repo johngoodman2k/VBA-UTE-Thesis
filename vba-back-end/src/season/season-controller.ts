@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { Controller, handleError, Log } from 'express-ext';
+import { ParamsDictionary } from 'express-serve-static-core';
 import { nanoid } from 'nanoid';
+import { ParsedQs } from 'qs';
 import {deleteFile} from "../../common/deleteFile"
 import { Season, SeasonFilter, SeasonService, Team } from './season';
 
@@ -70,5 +72,12 @@ export class SeasonController extends Controller<Season, string, SeasonFilter> {
 		if (!seasons) return res.status(400).json({ message: "can't get seasons in this tournament" });
 
 		 return res.status(200).json(seasons);
+	}
+	async delete(req: Request, res: Response) {
+		const {id} = req.params;
+		const isDelete = await this.seasonService.delete(id)
+
+		if(isDelete === 0) return res.status(400).json({err: "Delete failed"})
+		return res.status(200).json({message: "Delete successfully"})
 	}
 }

@@ -11,6 +11,7 @@ import {
     PlayerRepository,
     Process,
     ProcessRepository,
+    Team,
     TeamRepository,
 } from "./match";
 import { MatchController } from "./match-controller";
@@ -19,7 +20,6 @@ export { MatchController };
 import { SqlMatchRepository } from "./sql-match-repository";
 import { SqlTeamRepository } from "./sql-team-repository";
 import { SqlProcessRepository } from "./sql-process-repository";
-import { Team } from "../team/team";
 import { SqlPlayerRepository } from "./sql-player-repository";
 
 export class MatchManager
@@ -34,6 +34,9 @@ export class MatchManager
         protected playerRepository: PlayerRepository
     ) {
         super(search, matchRepository);
+    }
+    endMatch(match: Match): Promise<number> {
+        return this.matchRepository.endMatch(match)
     }
 
     updateMatch(id: string, process: Process[], ctx?: any): Promise<Match[]> {

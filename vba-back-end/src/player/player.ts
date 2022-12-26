@@ -13,6 +13,8 @@ export interface Player {
     createdAt: Date;
     teamId: string;
     country: string;
+    position:string;
+    experience:string;
 }
 
 export interface Team{
@@ -61,6 +63,8 @@ export const playerModel: Attributes = {
     height: { type: "number" },
     weight: { type: "number" },
     shirtNumber: { type: "number" },
+    position:{type: "string"},
+    experience:{type: "string"},
     country: {type: "string"},
     createdAt: { type: "datetime" },
     teamId: {},

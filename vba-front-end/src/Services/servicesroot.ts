@@ -22,6 +22,8 @@ export interface MatchServicesRoot {
 	updateProcess(id: string | undefined, process: Process, globalHost?: string): Promise<Process>;
 	getMatchDetails(matchId: string): Promise<Match>;
 	updateMatch(matchId: string, match: Match): Promise<Match>;
+	endMatch(match:Match): Promise<number>;
+
 }
 
 export interface TeamServicesRoot {

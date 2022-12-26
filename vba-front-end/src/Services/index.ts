@@ -64,6 +64,7 @@ export class MatchServices implements MatchServicesRoot {
 		this.updateProcess = this.updateProcess.bind(this);
 		this.getMatchDetails = this.getMatchDetails.bind(this);
 		this.updateMatch = this.updateMatch.bind(this);
+		this.endMatch = this.endMatch.bind(this);
 
 	}
 
@@ -95,6 +96,10 @@ export class MatchServices implements MatchServicesRoot {
 	updateMatch(matchId: string, match: Match): Promise<Match> {
 		const url = `${this.url}/${matchId}`;
 		return this.httpRequest.put<Match>(url, match);
+	}
+	endMatch(match:Match): Promise<number> {
+		const url = `${this.url}/endMatch`;
+		return this.httpRequest.post(url, match);
 	}
 
 }

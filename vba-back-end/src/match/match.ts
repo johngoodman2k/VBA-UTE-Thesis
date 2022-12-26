@@ -1,13 +1,12 @@
 import { Attributes, DateRange, Filter, Repository, Service } from "onecore";
 // import { Player } from "../player/player";
-import { Team } from "../team/team";
 
 export interface Match {
     id?: string;
     seasonId?: string;
     round?: string;
-    home?: string | Team;
-    away?: string | Team;
+    home?: Team;
+    away?: Team;
     homeResult?: number;
     awayResult?: number;
     homeLineUp?: Player[];
@@ -37,6 +36,22 @@ export interface Process {
     createdAt?: Date;
 }
 
+export interface Team {
+    id?:string;
+    won?: number;
+    lost?: number;
+    drawn?: number;
+    homepoint?: Point;
+    awaypoint?:Point;
+
+    players?: Player[];
+
+}
+export interface Point {
+    won?:number;
+    lost?:number;
+}
+
 export interface Player {
     id?: string;
     name?: string;
@@ -53,7 +68,8 @@ export interface MatchRepository extends Repository<Match, string> {
     updateMatch(id: string, process: Process[], ctx?: any): Promise<Match[]>;
     getMatchById(matchId: string): Promise<Match[]>;
     getMatchDetails(matchId: string): Promise<Match[]>;
-    createProcessAndAddProcessToMatch(process:Process,match:Match):Promise<number>
+    createProcessAndAddProcessToMatch(process:Process,match:Match):Promise<number>;
+    endMatch(match: Match): Promise<number>;
 }
 export interface ProcessRepository extends Repository<Process, string> {
     addProcess(process: Process[], ctx?: any): Promise<number>;
@@ -83,7 +99,8 @@ export interface MatchService extends Service<Match, string, MatchFilter> {
     getTeamBySeasonId(seasonId: string): Promise<Team[]>;
     getProcessByMatchId(matchId:string): Promise<Process[]>;
     getPlayerByTeamId(teamId:string):Promise<Player[]>;
-    createProcessAndAddProcessToMatch(process:Process,match:Match):Promise<number>
+    createProcessAndAddProcessToMatch(process:Process,match:Match):Promise<number>;
+    endMatch(match: Match): Promise<number>;
 }
 
 export const matchModel: Attributes = {

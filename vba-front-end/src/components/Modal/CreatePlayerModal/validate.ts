@@ -3,47 +3,58 @@ import toastNotify from '../../../utils/toast';
 
 
 
-export const validate = (firstName:string,lastName:string,dateOfBirth:string,shirtNumber:string,country:string,weight:string,height:string,image?:File) => {
+export const validate = (firstName:string,lastName:string,dateOfBirth:string,shirtNumber:string,country:string,weight:string,height:string,experience:string,position:string,image?:File) => {
 	const firstname = validator.isEmpty(firstName);
 	if (firstname) {
-		toastNotify('Please enter your first name', 'error');
+		toastNotify('Vui lòng nhập họ', 'error');
 		return false;
 	}
 	const lastname = validator.isEmpty(lastName);
 	if (lastname) {
-		toastNotify('Please enter your last name', 'error');
+		toastNotify('Vui lòng nhập tên', 'error');
 		return false;
 	}
 	const dateofbirth = validator.isEmpty(dateOfBirth);
 	if (dateofbirth) {
-		toastNotify('Please chosse your date of birth', 'error');
+		toastNotify('Vui lòng chọn ngày sinh của cầu thủ', 'error');
 		return false;
 	}
 	const shirtnumber = validator.isEmpty(shirtNumber);
 	if (shirtnumber) {
-		toastNotify('Please enter your shirt number', 'error');
+		toastNotify('Vui lòng điền số áo cho cầu thủ', 'error');
 		return false;
 	}
 
 	const isCountry = validator.isEmpty(country);
 	if (isCountry) {
-		toastNotify('Please enter your country', 'error');
+		toastNotify('Vui lòng chọn quốc tịch cho cầu thủ', 'error');
 		return false;
 	}
 
 	const isWeight = validator.isEmpty(weight);
 	if (isWeight) {
-		toastNotify('Please enter your weight', 'error');
+		toastNotify('Vui lòng điền số cân nậng của cầu thủ', 'error');
 		return false;
 	}
 	const isHeight = validator.isEmpty(height);
 	if (isHeight) {
-		toastNotify('Please enter your height', 'error');
+		toastNotify('Vui lòng điền số chiều cao của cầu thủ', 'error');
+		return false;
+	}
+	const isExperience = validator.isEmpty(experience);
+	if (isExperience) {
+		toastNotify('Vui lòng điền số kinh nghiệm của cầu thủ', 'error');
+		return false;
+	}
+
+	const isPosition = validator.isEmpty(position);
+	if (isPosition) {
+		toastNotify('Vui lòng chọn vị trí cho cầu thủ', 'error');
 		return false;
 	}
 
 	if (!image) {
-        toastNotify("Please choose your player image", "error");
+        toastNotify("Vui lòng chọn hình cầu thủ", "error");
         return false;
     }
 	
@@ -55,6 +66,8 @@ export const validate = (firstName:string,lastName:string,dateOfBirth:string,shi
 		country,
 		weight,
 		height,
+		experience,
+		position,
 		image
 	};
 };

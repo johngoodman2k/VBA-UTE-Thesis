@@ -51,15 +51,10 @@ export class PlayerController extends Controller<Player, string, PlayerFilter> {
 
   async delete(req: Request, res: Response) {
     const {id} = req.params
-    const player =  await this.playerService.load(id)
-    if(!player) return res.status(400).json({err: 'Fail to load player'})
-    const isDelete = await this.playerService.delete(id)
-    if(isDelete === 0) return res.status(400).json({err: "Delete failed"})
-    await deleteFile(player.image)
 
-    const isDeleteOnTeam = await this.playerService.deletePlayerOnTeam(player.teamId,player.id)
-    if(isDeleteOnTeam === 0) return res.status(400).json({err: "Delete failed"})
-    
+    const isDelete = await this.playerService.delete(id)
+    if(isDelete ===0) return res.status(400).json({err: "Delete player failed"})
+  
     return res.status(200).json({message: "Delete successfully"})
   }
 }

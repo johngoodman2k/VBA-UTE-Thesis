@@ -22,6 +22,8 @@ type OffenseUpdateModalProps = {
 	process?: Process;
 	matchDetail?: Match | undefined;
 	handleCloseModal?: () => void;
+	setReload?:React.Dispatch<React.SetStateAction<boolean>>
+	reload?:boolean;
 };
 // type ProcessProps = {
 // 	id?: string;
@@ -77,7 +79,9 @@ export const ControlModal = ({
 	awayPlayers,
 	process,
 	matchDetail,
-	handleCloseModal
+	handleCloseModal,
+	setReload,
+	reload
 }: OffenseUpdateModalProps) => {
 
 	const [typeSelected, setTypeSelected] = useState('offensive');
@@ -125,6 +129,7 @@ export const ControlModal = ({
 
 				try {
 					await matchServices.addProcessToMatch({ match: matchId, ...validata } as Process);
+					if(setReload) setReload(!reload)
 					if (handleCloseModal) handleCloseModal()
 				} catch (err) {
 					toastNotify("Tạo chi tiết trận đấu thất bại", "error")
@@ -139,6 +144,7 @@ export const ControlModal = ({
 
 				try {
 					await matchServices.addProcessToMatch({ match: matchId, ...validata } as Process);
+					if(setReload) setReload(!reload)
 					if (handleCloseModal) handleCloseModal()
 				} catch (err) {
 					toastNotify("Tạo chi tiết trận đấu thất bại", "error")
@@ -152,6 +158,7 @@ export const ControlModal = ({
 
 				try {
 					await matchServices.addProcessToMatch({ match: matchId, ...validata } as Process);
+					if(setReload) setReload(!reload)
 					if (handleCloseModal) handleCloseModal()
 				} catch (err) {
 					toastNotify("Tạo chi tiết trận đấu thất bại", "error")
@@ -167,6 +174,7 @@ export const ControlModal = ({
 					const newHomeLineUp = validataHomeLineUp.teamLineUp.map((t) => { return { id: t } })
 					try {
 						await matchServices.updateMatch(matchId, { homeLineUp: newHomeLineUp } as Match);
+						if(setReload) setReload(!reload)
 						if (handleCloseModal) handleCloseModal()
 					} catch (err) {
 						toastNotify("Cập nhật đội hình thất bại", "error")
@@ -181,6 +189,7 @@ export const ControlModal = ({
 					console.log(newAwayLineUp)
 					try{
 						await matchServices.updateMatch(matchId, {awayLineUp: newAwayLineUp} as Match );
+						if(setReload) setReload(!reload)
 						if(handleCloseModal) handleCloseModal()
 					}catch(err){
 						toastNotify("Cập nhật đội hình thất bại","error")

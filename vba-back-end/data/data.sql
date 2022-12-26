@@ -86,8 +86,13 @@ create table teams (
     seasonId character varying(40),
     eliminated boolean default false,
     shortName character varying(40),
-    players json[],
+    players jsonb[],
     createdAt timestamp with time zone default now(),
+    won integer DEFAULT 0,
+    lost integer DEFAULT 0,
+    drawn integer DEFAULT 0,
+    homePoint jsonb,
+    awayPoint jsonb,
     constraint teams_pkey primary key (id)
 ); 
 
@@ -126,6 +131,8 @@ create table players
     createdAt  timestamp with time zone default now(),
     teamId character varying(40),
     country character varying(100),
+    position character  varying(200),
+    experience character varying(200),
     constraint player_pkey primary key (id)
 );
 --player

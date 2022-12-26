@@ -150,6 +150,7 @@ export interface Match {
 	assistance?: Player;
 	process?: Process[];
 	endmatch?: boolean;
+
 }
 
 export interface CustomTeam {
@@ -218,6 +219,8 @@ export interface Player {
 
 	teamlogo?: string;
 	dateofbirth?: string;
+	position?: string;
+	experience?:string;
 }
 
 export interface Standings {

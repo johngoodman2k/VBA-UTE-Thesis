@@ -1,5 +1,7 @@
+import { Statement } from "pg-extension";
 import { buildToUpdate, DB, Repository } from "query-core";
-import { Player, playerModel, PlayerRepository } from "./player";
+import { deleteFile } from "../../common/deleteFile";
+import { Player, playerModel, PlayerRepository, Team } from "./player";
 import { getPlayersByTeamId } from "./query";
 
 export class SqlPlayerRepository
@@ -25,7 +27,43 @@ export class SqlPlayerRepository
   getAllPlayer():Promise<Player[]>{
     return this.query<Player>('SELECT firstname, lastname, dateofbirth, image, shirtnumber, height, weight, country, teams.teamlogo FROM players INNER JOIN teams  ON players.teamid  = teams.id ORDER BY players.createdat')
   }
-  
+  async delete(id: string, ctx?: any): Promise<number> {
+    const player = await this.query<Player>("select * from players where id = $1", [id])
+    if(!player || player.length ===0) return 0;
+    const q1 = {
+		  query: "delete from players where id = $1",
+		  params: [id]
+		}
+
+    const stmt = [q1] as Statement[]
+
+    const team = await this.query<Team>("select * from teams where id = $1",[player[0]["teamid"]])
+		if(team && team.length !==0){
+		  if(!team[0].players) team[0].players = [];
+		  let players = []
+		  for(const p of team[0].players){
+			if(p.id !== id){
+				players.push(p);
+			}
+		  }
+		  if(players.length===0) players = null
+		  const q2 = {
+			  query: `UPDATE teams SET players=$2 WHERE $1 <@ ANY(players)`,
+			  params: [{id: id}, players]
+		  }
+		  stmt.push(q2);
+		}
+
+    const exec = await this.execBatch(stmt)
+    if(exec >0){
+      if(player[0].image){
+        await deleteFile(player[0].image)
+      }
+      return 1;
+    }else{
+      return 0;
+    }
+  }
 }
 
 // select * from players where teams @> $1`
