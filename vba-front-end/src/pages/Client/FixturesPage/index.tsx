@@ -7,7 +7,7 @@ import { NavigationBar } from '../../../components/Bar/NavigationBar';
 import { UpcommingMatchLongBar } from '../../../components/Bar/UpcommingMatchLongBar';
 import { CustomTournament, Match, Round, Season, Tournament } from '../../../Services/models';
 import userEvent from '@testing-library/user-event';
-
+import LogoHome from '../../../assets/images/toronto-raptors-logo.png'
 import { vbaContext } from '../../../Services/services';
 import { dateFormat, timeFormat } from '../../../utils/dateFormat';
 import { useParams } from 'react-router-dom';
@@ -80,17 +80,17 @@ export const FixturesPage = () => {
 
 			}
 		})();
-	}, [params.id, seasonIdSelected,reload]);
+	}, [params.id, seasonIdSelected, reload]);
 
-	const handleGenerate = async () =>{
-		if(params.id)
-		try {
-			await tournamentServices.GetGeneratedMatches(params.id,seasonIdSelected)
-			toastNotify("Generated matches success", "success")
-			setReload(!reload)
-		} catch (error) {
-			toastNotify("Generated matches failed", "error")
-		}
+	const handleGenerate = async () => {
+		if (params.id)
+			try {
+				await tournamentServices.GetGeneratedMatches(params.id, seasonIdSelected)
+				toastNotify("Generated matches success", "success")
+				setReload(!reload)
+			} catch (error) {
+				toastNotify("Generated matches failed", "error")
+			}
 	}
 	return (
 		<>
@@ -118,6 +118,7 @@ export const FixturesPage = () => {
 								</label>
 							</div>
 							<div> <ButtonTournament type={undefined} name='Generate' onClick={handleGenerate} ></ButtonTournament></div>
+							<div> <ButtonTournament type={undefined} name='Play OFF' onClick={handleGenerate} ></ButtonTournament></div>
 
 						</div>
 
@@ -129,9 +130,10 @@ export const FixturesPage = () => {
 										<div className={`${cx('__main-fixturesHeader--competition')}`}>
 											<img
 												className={`${cx('__main-fixturesHeader--competition---image')}`}
-												src='https://vba.vn/assets/img/svg/vba-logo.svg'
+												src={LogoHome}
 												alt=''
 											/>
+
 										</div>
 										<div className={`${cx('__main-fixturesHeader--localtime')}`}>
 											Thời gian được hiển thị theo <strong>khu vực của bạn</strong>

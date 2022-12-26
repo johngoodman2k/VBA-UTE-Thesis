@@ -6,8 +6,9 @@
     padding-left: 1rem;
     padding-right: 1rem;
   }
-  &-content {
-  }
+
+  &-content {}
+
   &-fixturesHeader {
     position: relative;
     padding: 2.3rem 1rem 2rem;
@@ -15,6 +16,7 @@
     text-align: center;
     border-radius: 3px 3px 0 0;
     box-shadow: 0 1px 4px 0 rgb(0 0 0 / 15%);
+
     &--week {
       font-size: 0.9rem;
       margin-bottom: 0.8rem;
@@ -22,26 +24,32 @@
       text-align: center;
       color: #ff2882;
     }
+
     &--competition {
       display: inline-block;
       vertical-align: middle;
+
       &---image {
         width: 150px;
         height: 60px;
         display: block;
+        object-fit: contain;
       }
     }
+
     &--localtime {
       padding-top: 1rem;
       font-size: 0.7rem;
       color: #6c6c6c;
     }
   }
+
   &-matchListContainer {
     &--list {
       margin-bottom: 6rem;
       border-top: 1px solid #efefef;
     }
+
     &--time {
       &---text {
         margin: 1rem 3rem 1rem 3rem;
@@ -57,40 +65,42 @@
 }
 
 .__selection {
-	margin-bottom: 0px;
-	height: 100%;
-	margin-right: 5px;
-	display: inline-block;
-	&__button {
-		width: 100%;
-		height: 100%;
-		background-color: rgb(255, 255, 255);
-		color: rgb(102, 102, 102);
-		padding: 13px;
-		font-size: 14px;
-		outline: none;
-		border: 1px solid rgb(223, 223, 223);
-		font-weight: 800;
-		text-transform: uppercase;
-		appearance: none;
-		&::before {
-		}
-	}
+  margin-bottom: 0px;
+  height: 100%;
+  margin-right: 5px;
+  display: inline-block;
+
+  &__button {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(255, 255, 255);
+    color: rgb(102, 102, 102);
+    padding: 13px;
+    font-size: 14px;
+    outline: none;
+    border: 1px solid rgb(223, 223, 223);
+    font-weight: 800;
+    text-transform: uppercase;
+    appearance: none;
+
+    &::before {}
+  }
 }
+
 .__arrow {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	top: 0px;
-	right: 5px;
-	width: 50px;
-	height: 100%;
-	text-align: center;
-	font-size: 18px;
-	line-height: 50px;
-	color: rgba(0, 0, 0, 0.5);
-	background-color: rgba(255, 255, 255, 0.1);
-	pointer-events: none;
-	border-left: 1px solid rgb(223, 223, 223);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  width: 50px;
+  height: 100%;
+  text-align: center;
+  font-size: 18px;
+  line-height: 50px;
+  color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  border-left: 1px solid rgb(223, 223, 223);
 }
