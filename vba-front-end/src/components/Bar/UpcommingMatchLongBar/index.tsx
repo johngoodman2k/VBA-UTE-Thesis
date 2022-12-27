@@ -1,5 +1,8 @@
 import React from "react";
 import { ReactComponent as StadiumLogo } from "../../../assets/images/stadium.svg";
+import  LogoTeam from "../../../assets/images/utah-jazz-note-logo.png";
+
+
 import classNames from "classnames/bind";
 import styles from "./upCommingMatchLongBar.module.scss";
 import { Link } from "react-router-dom";
@@ -31,7 +34,7 @@ export const UpcommingMatchLongBar = (props: UpcommingMatchLongBarProps) => {
               <span className={cx("__block__homeBadge")}>
                 <img
                   className={cx("__block__homeBadge--adjust")}
-                  src={props.team1Image}
+                  src={props.team1Image !== "" ? props.team1Image : LogoTeam}
                   alt=""
                 />
               </span>
@@ -39,7 +42,7 @@ export const UpcommingMatchLongBar = (props: UpcommingMatchLongBarProps) => {
               <span className={cx("__block__awayBadge")}>
                 <img
                   className={cx("__block__awayBadge--adjust")}
-                  src={props.team2Image}
+                  src={props.team2Image !== "" ? props.team2Image : LogoTeam}
                   alt=""
                 />
               </span>

@@ -190,8 +190,8 @@ export const convertTeamsGeneratedToMatches = (
         matches.push({
             id: nanoid(),
             seasonId: seasonId,
-            home: teamDuo[0]?.id ?? teamDuo[0]?.teamname ?? "",
-            away: teamDuo[1]?.id ?? teamDuo[1]?.teamname ?? "",
+            home: teamDuo[0]?.id?? teamDuo[0]?.teamname ?? "",
+            away: teamDuo[1]?.id??teamDuo[1]?.teamname ?? "",
             homeResult: 0,
             awayResult: 0,
             round: round,

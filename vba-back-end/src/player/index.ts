@@ -37,9 +37,7 @@ export class PlayerManager
     getAllPlayer():Promise<Player[]>{
         return this.playerrepository.getAllPlayer();
     }
-    deletePlayerOnTeam(teamId:string,playerId:string):Promise<number>{
-        return this.teamrepository.deletePlayerOnTeam(teamId,playerId);
-    }
+
 
 }
 export function usePlayerService(db: DB): PlayerService {

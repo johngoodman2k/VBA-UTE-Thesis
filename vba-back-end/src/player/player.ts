@@ -42,13 +42,11 @@ export interface PlayerRepository extends Repository<Player, string> {
     getAllPlayer():Promise<Player[]>;
 }
 export interface TeamRepository extends Repository<Team, string> {
-    deletePlayerOnTeam(teamId:string,playerId:string):Promise<number>;
 }
 export interface PlayerService extends Service<Player, string, PlayerFilter> {
     getPlayersByTeamId(teamId: string): Promise<Player[]>;
     updatePlayer(id:string,player:Player):Promise<number>;
     getAllPlayer():Promise<Player[]>;
-    deletePlayerOnTeam(teamId:string,playerId:string):Promise<number>;
 }
 export const playerModel: Attributes = {
     id: {

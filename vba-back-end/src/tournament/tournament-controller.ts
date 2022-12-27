@@ -158,52 +158,32 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 			matchesArray.push(...newMatches);
 
 			roundArray = [
-				...roundArray,
 				{
 					id: roundId,
 					matches: matchesSaveToRound,
-					roundname: `1/${newTeam.length}`,
+					roundname: newTeam.length ===8?"Tứ kết":newTeam.length ===4 ? "Bán kết" : newTeam.length ===2 ? "Chung kết":`1/${newTeam.length}`,
 					seasonId: season[0].id,
 					createdAt: new Date(Date.now())
 				}
 			];
 
 			let round = 2;
-			let remainingTeams = newTeam.length / 2;
-			const flag = remainingTeams;
+			let remainingTeams = newTeam.length / 2; //remainingTeams= 2
+			const flag = remainingTeams; // flag =2
 			let newTeam1 = [];
 
-			while (remainingTeams >= 1) {
+			while (remainingTeams > 1) {
 				const roundId1 = nanoid();
 
-				for (let i = 0; i < remainingTeams - 1; i++) {
+				for (let i = 0; i < remainingTeams; i++) { 
 					newTeam1.push({
 						teamname: 'W' + '#' + (i + 1) + ' ' + '1/' + remainingTeams * 2
 					});
 				}
-				if (remainingTeams === flag && teamPlayWithGhostTeam) {
-					newTeam1.push(teamPlayWithGhostTeam);
-				} else {
-					const lastTeam = {
-						teamname: 'W' + '#' + remainingTeams + ' ' + '1/' + remainingTeams * 2
-					};
-					newTeam1.push(lastTeam);
 
-					// newTeam1.push(teamPlayWithGhostTeam);
-				}
 
-				if (remainingTeams === 1) {
-					const bronzeMatchTeam1 = {
-						teamname: 'L' + '#' + 1 + ' ' + '1/' + remainingTeams * 2
-					};
-					const bronzeMatchTeam2 = {
-						teamname: 'L' + '#' + 2 + ' ' + '1/' + remainingTeams * 2
-					};
-					newTeam1.push(bronzeMatchTeam1, bronzeMatchTeam2);
-				}
-
+				
 				const teamSplited = splitTheTeam(newTeam1);
-
 				const matches = convertTeamsGeneratedToMatches(teamSplited, season[0].id, roundId1, 'elimination', round);
 				const matchesSaveToRound = matches.map((match) => {return {id: match.id}})
 
@@ -214,14 +194,16 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 					{
 						id: roundId1,
 						matches: matchesSaveToRound,
-						roundname: `1/${remainingTeams}`,
+						roundname: remainingTeams ===8?"Tứ kết":remainingTeams ===4 ? "Bán kết" : remainingTeams ===2 ? "Chung kết":`1/${remainingTeams}`,
 						seasonId: season[0].id,
 						createdAt: new Date(Date.now())
 					}
 				];
+				newTeam1 =[]
 				remainingTeams = remainingTeams / 2;
 				round++;
 			}
+
 		}
 
 		// return res.status(200).json(roundArray);
@@ -324,8 +306,8 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 		}
 
 		for(const m of matchesInSeason){
-			m.home = teamsInSeason.find((t: Team) => t.id === m.home)
-			m.away = teamsInSeason.find((t: Team) => t.id === m.away)
+			m.home = teamsInSeason.find((t: Team) => t.id === m.home) ?? m.home
+			m.away = teamsInSeason.find((t: Team) => t.id === m.away) ?? m.away
 		}
 		
 		for(const r of rounds){

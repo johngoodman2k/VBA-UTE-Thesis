@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/bd72da44-a58a-4e62-bdd0-0a37ba6ab3e0/AppServices/subscriptions/bd72da44-a58a-4e62-bdd0-0a37ba6ab3e0/resourceGroups/HCMUTE/providers/Microsoft.Web/sites/vba-ute",
+    "appService.deploySubpath": "."
+}

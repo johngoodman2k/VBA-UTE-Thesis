@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import styles from './fixturesPage.module.scss';
 import { NavigationBar } from '../../../components/Bar/NavigationBar';
 import { UpcommingMatchLongBar } from '../../../components/Bar/UpcommingMatchLongBar';
-import { CustomTournament, Match, Round, Season, Tournament } from '../../../Services/models';
+import { CustomTournament, Match, Round, Season, Team, Tournament } from '../../../Services/models';
 import userEvent from '@testing-library/user-event';
 import LogoHome from '../../../assets/images/toronto-raptors-logo.png'
 import { vbaContext } from '../../../Services/services';
@@ -147,11 +147,11 @@ export const FixturesPage = () => {
 													return (
 														<UpcommingMatchLongBar
 															id={y.id}
-															team1Name={y.home?.teamname ?? ""}
+															team1Name={y.home?.teamname ?? y["home"] as string ??""}
 															team1Image={y.home?.teamlogo as string ?? ""}
 															team2Image={y.away?.teamlogo as string ?? ""}
-															team2Name={y.away?.teamname ?? ""}
-															time={timeFormat(y.matchday ?? "").toString()}
+															team2Name={y.away?.teamname ?? y["away"] as string ??  ""}
+															time={timeFormat(y.matchday ??  "").toString()}
 															stadium={y.home?.stadiumname ?? ""}
 															endmatch={y.endmatch}
 															team1Point={y.homeresult}
