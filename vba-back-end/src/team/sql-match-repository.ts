@@ -22,7 +22,7 @@ export class SqlMatchRepository
   }
 
   getMatchByIdTeamId(teamid:string,side: string):Promise<Match[]>{
-    return this.query<Match>(`select * from matches where ${side} = $1`,[teamid])
+    return this.query<Match>(`select * from matches where ${side} = $1 order by matchday asc`,[teamid])
   }
 
 

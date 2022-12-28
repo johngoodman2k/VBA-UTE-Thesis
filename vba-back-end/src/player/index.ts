@@ -7,6 +7,7 @@ import {
     playerModel,
     PlayerRepository,
     PlayerService,
+    Team,
     TeamRepository,
 } from "./player";
 import { PlayerController } from "./player-controller";
@@ -14,6 +15,7 @@ export * from "./player";
 export { PlayerController };
 import { SqlPlayerRepository } from "./sql-player-repository";
 import { SqlTeamRepository } from "./sql-team-repository";
+import { Tenant } from "firebase-admin/lib/auth/tenant";
 
 export class PlayerManager
     extends Manager<Player, string, PlayerFilter>
@@ -36,6 +38,9 @@ export class PlayerManager
     }
     getAllPlayer():Promise<Player[]>{
         return this.playerrepository.getAllPlayer();
+    }
+    getTeamById(teamId: string): Promise<Team>{
+        return this.teamrepository.getTeamById(teamId)
     }
 
 

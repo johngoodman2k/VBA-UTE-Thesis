@@ -169,7 +169,7 @@ export class PlayerServices implements PlayerServicesRoot {
 		return this.httpRequest.get<Player[]>(url);
 	}
 
-	getPlayerById(id: string | undefined): Promise<Player> {
+	getPlayerById(id: string): Promise<Player> {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.get<Player>(url);
 	}

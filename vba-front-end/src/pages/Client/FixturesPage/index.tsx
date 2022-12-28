@@ -17,6 +17,7 @@ import { NoData } from '../../Admin/Components/NoData';
 import { ListItemAvatar } from '@mui/material';
 import ButtonTournament from '../Authentication/Components/ButtonTournament';
 import toastNotify from '../../../utils/toast';
+import { match } from 'assert';
 
 // import { getRoundApi } from "../Apis/getRoundApi.api";
 // import { TournamentHeading } from "../components/TournamentHeading";
@@ -108,21 +109,31 @@ export const FixturesPage = () => {
 	const handleNextRound = async () =>{
 		if(season && season.rounds && season.rounds.length >0){
 			const round = season?.rounds.filter((r => r.playoff))
-			let saveRoundId;
+			let saveRound= [];
 			console.log(round)
 			for(const r of round){
 				if(r.matches && r.matches.length >0 && r.matches[0].home && r.matches[0].home.length <=20){
-					saveRoundId = r.id;
-					break;
+					saveRound.push(r);
+					
 				}
 			}
-			console.log(saveRoundId)
+			let roundNextId;
+			for(const sr of saveRound){
+				let flag = 0
+				if(sr.matches && sr.matches.length >0 && sr.matches.length > flag){
+					roundNextId= sr.id
+					flag = sr.matches.length
+				}
+			}
+
+
+			console.log(roundNextId)
 			try{
-				if(saveRoundId) {
-					const c = await tournamentServices.nextRound(saveRoundId)
+				if(roundNextId) {
+					const c = await tournamentServices.nextRound(roundNextId)
 					if(c !==0){
 						toastNotify("Khởi tạo vòng playoff tiếp theo thành công", "success")
-
+						setReload(!reload)
 					}else{
 						toastNotify("Khởi tạo vòng playoff tiếp theo thất bại", "error")
 					}
@@ -180,11 +191,19 @@ export const FixturesPage = () => {
 						return false
 					}
 				}
+
+				if(r.roundname ==="Chung kết" &&( r.matches[0].home?.length as any >=20 || r.matches[0].home?.id?.length as any >=20)){
+					return false
+				}
 			}
+			
 		}
+
 		
 		return true;
 	}
+
+
 
 	return (
 		<>

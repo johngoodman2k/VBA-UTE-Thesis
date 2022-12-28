@@ -441,7 +441,7 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 		roundBefore.matches = matchBefore
 
 		for(let i =0 ;i < round.matches.length; i++){
-			for(let j = 0 ;j < roundBefore.matches.length;j+=2){
+			for(let j = i*2 ;j < roundBefore.matches.length;j++){
 				if(!roundBefore.matches[j].endmatch) return res.status(400).json({message: "Please all match before next round"})
 				if(roundBefore.matches[j].homeResult >= roundBefore.matches[j].awayResult){
 					round.matches[i].home = roundBefore.matches[j].home
@@ -456,11 +456,13 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 				else{
 					round.matches[i].away = roundBefore.matches[j+1].away
 				}
+				break;
 			}
 		}
 
 		
-		return this.tournamentService.updateRound(round)
+
+		return this.tournamentService.updateMatch(round.matches)
 		
 	}
 }

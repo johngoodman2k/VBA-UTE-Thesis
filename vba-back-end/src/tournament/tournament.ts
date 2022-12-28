@@ -106,6 +106,7 @@ export interface MatchRepository extends Repository<Match, string> {
 	buildToInsertMatches(matches: Match[], ctx?: any): Promise<number>;
 	getMatchesBySeasonId(matchId:string):Promise<Match[]>;
 	getMatchesByRoundId(roundId:string):Promise<Match[]>;
+	updateMatch(matches: Match[]):Promise<number>;
 }
 
 export interface RoundRepository extends Repository<Round, string> {
@@ -114,7 +115,6 @@ export interface RoundRepository extends Repository<Round, string> {
 	buildToInsertRound(rounds: Round[], ctx?: any): Promise<number>;
 	getRoundById(id:string):Promise<Round>;
 	getRoundPlayOff():Promise<Round[]>;
-	updateRound(round:Round):Promise<number>;
 }
 export interface TeamRepository extends Repository<Team, string> {
 	getTeamAndSortWon(seasonId: string):Promise<Team[]>;
@@ -148,8 +148,7 @@ export interface TournamentService extends Service<Tournament, string, Tournamen
 	getRoundById(id:string):Promise<Round>;
 	getMatchesByRoundId(roundId:string):Promise<Match[]>;
 	getRoundPlayOff():Promise<Round[]>;
-	updateRound(round:Round):Promise<number>;
-}
+	updateMatch(matches: Match[]):Promise<number>}
 
 export const tournamentModel: Attributes = {
 	id: {

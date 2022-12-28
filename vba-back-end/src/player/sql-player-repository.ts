@@ -15,7 +15,7 @@ export class SqlPlayerRepository
   getPlayersByTeamId(teamId: string): Promise<Player[]> {
     return this.query<Player>("select * from players where teamid = $1", [
       teamId,
-    ]);
+    ],this.map);
   }
 
   updatePlayer(id:string,player:Player):Promise<number>{

@@ -39,7 +39,7 @@ export interface TeamServicesRoot {
 
 export interface PlayerServicesRoot {
 	getPlayersByTeamId(id: string | undefined, globalHost?: string): Promise<Player[]>;
-	getPlayerById(id: string | undefined): Promise<Player>;
+	getPlayerById(id: string): Promise<Player> ;
 	getAllPlayers(): Promise<Player[]>;
 	updatePlayer(id: string, player: Player): Promise<number>;
 	deletePlayer(id:string):Promise<number>;

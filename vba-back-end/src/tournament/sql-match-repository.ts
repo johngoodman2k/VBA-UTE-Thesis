@@ -1,7 +1,7 @@
 import { handleError } from "express-ext";
 import { matchModel } from "../match/match";
-import { param } from "pg-extension";
-import { buildToInsertBatch, DB, Repository } from "query-core";
+import { param, Statement } from "pg-extension";
+import { buildToInsertBatch, buildToUpdate, DB, Repository } from "query-core";
 import { MatchRepository, Match } from "./tournament";
 // import { Match } from "../match/match";
 
@@ -31,5 +31,13 @@ export class SqlMatchRepository
   }
   getMatchesByRoundId(roundId:string):Promise<Match[]>{
     return this.query<Match>("select *from matches where round =$1",[roundId],this.map)
+  }
+  updateMatch(matches: Match[]):Promise<number>{
+    const stmt = [] as Statement[]
+    for(const m of matches){
+      const q = buildToUpdate(m, "matches",matchModel,this.param)
+      stmt.push(q)
+    }
+    return this.execBatch(stmt)
   }
 }

@@ -11,7 +11,9 @@ export class PlayerController extends Controller<Player, string, PlayerFilter> {
     this.getPlayersByTeamId = this.getPlayersByTeamId.bind(this);
     this.update = this.update.bind(this);
     this.getAllPlayer = this.getAllPlayer.bind(this);
+    this.load = this.load.bind(this);
 
+    
     
   }
 
@@ -56,5 +58,25 @@ export class PlayerController extends Controller<Player, string, PlayerFilter> {
     if(isDelete ===0) return res.status(400).json({err: "Delete player failed"})
   
     return res.status(200).json({message: "Delete successfully"})
+  }
+  async load(req: Request, res: Response) {
+    const {id} = req.params
+    const player = await this.playerService.load(id)
+    if(!player) return res.status(400).json({err: "Player not found"})
+    
+    const team = await this.playerService.getTeamById(player.teamId)
+    if(!team) return res.status(400).json({err: "Team not found"})
+
+    const playerByTeam = await this.playerService.getPlayersByTeamId(team.id)
+    if(!playerByTeam || playerByTeam.length ===0) {
+      team.players = []
+      player["teams"] = team
+      return res.status(200).json(player)
+    }
+
+    team.players = playerByTeam
+    player["teams"] = team
+    return res.status(200).json(player)
+
   }
 }

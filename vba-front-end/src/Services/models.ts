@@ -223,6 +223,7 @@ export interface Player {
 	dateofbirth?: string;
 	position?: string;
 	experience?:string;
+	teams?:Team
 }
 
 export interface Standings {

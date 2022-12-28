@@ -97,9 +97,10 @@ export class TournamentManager extends Manager<Tournament, string, TournamentFil
 	getRoundPlayOff():Promise<Round[]>{
 		return this.roundRepository.getRoundPlayOff()
 	}
-	updateRound(round:Round):Promise<number>{
-		return this.roundRepository.updateRound(round)
+	updateMatch(matches: Match[]):Promise<number>{
+		return this.matchRepository.updateMatch(matches)
 	}
+
 }
 export function useTournamentService(db: DB, mapper?: TemplateMap): TournamentService {
 	const query = useQuery('tournaments', mapper, tournamentModel, true);

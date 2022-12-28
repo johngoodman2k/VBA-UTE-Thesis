@@ -11,6 +11,9 @@ export class SqlTeamRepository
     super(db, "teams", teamModel);
 
   }
+  getTeamById(teamId: string): Promise<Team>{
+    return this.load(teamId)
+  }
 }
 
 // select * from players where teams @> $1`

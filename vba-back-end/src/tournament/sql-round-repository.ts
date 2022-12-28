@@ -37,7 +37,4 @@ export class SqlRoundRepository
   getRoundPlayOff():Promise<Round[]>{
     return this.query("select * from rounds where playoff = true",[],this.map)
   }
-  updateRound(round:Round):Promise<number>{
-    return this.update(round)
-  }
 }
