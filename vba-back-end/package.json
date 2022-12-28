@@ -5,6 +5,7 @@
   "main": "",
   "scripts": {
     "start": "nodemon --exec ts-node-dev src/app",
+    "build": "npx tsc",
     "dev": "nodemon --exec ts-node-dev src/app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

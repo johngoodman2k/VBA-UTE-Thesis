@@ -103,6 +103,7 @@ create table rounds
     roundname character varying(120),
     seasonId character varying(120),
     matches jsonb[],
+    playoff boolean,
     createdAt timestamp with time zone default now(),
     constraint rounds_pkey primary key (id)
 );

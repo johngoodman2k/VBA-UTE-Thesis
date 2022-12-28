@@ -14,7 +14,17 @@ export interface Team {
     eliminated: boolean;
     shortName: string;
     matches?: Match[];
+    won:number,
+    lost:number,
+    drawn:number,
+    homepoint:Point,
+    awaypoint:Point,
     createdAt: Date;
+}
+
+interface Point{
+    won?:number;
+    lost?:number
 }
 
 export interface Season {

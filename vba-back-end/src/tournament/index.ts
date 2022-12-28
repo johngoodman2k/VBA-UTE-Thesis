@@ -85,6 +85,21 @@ export class TournamentManager extends Manager<Tournament, string, TournamentFil
 	getMatchesBySeasonId(matchId:string):Promise<Match[]>{
 		return this.matchRepository.getMatchesBySeasonId(matchId);
 	}
+	getTeamAndSortWon(seasonId: string):Promise<Team[]>{
+		return this.teamRepository.getTeamAndSortWon(seasonId)
+	}
+	getRoundById(id:string):Promise<Round>{
+		return this.roundRepository.getRoundById(id)
+	}
+	getMatchesByRoundId(roundId:string):Promise<Match[]>{
+		return this.matchRepository.getMatchesByRoundId(roundId)
+	}
+	getRoundPlayOff():Promise<Round[]>{
+		return this.roundRepository.getRoundPlayOff()
+	}
+	updateRound(round:Round):Promise<number>{
+		return this.roundRepository.updateRound(round)
+	}
 }
 export function useTournamentService(db: DB, mapper?: TemplateMap): TournamentService {
 	const query = useQuery('tournaments', mapper, tournamentModel, true);

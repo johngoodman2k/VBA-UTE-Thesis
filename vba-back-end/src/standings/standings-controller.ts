@@ -15,10 +15,12 @@ export class StandingsController extends Controller<
     const { seasonId } = req.params
 
     const standings = await this.standingsService.getStangdingsBySeasonId(seasonId)
-    if (!standings) res.status(400).json({ err: "Failed to get standings" })
+    if (!standings ) res.status(400).json({ err: "Failed to get standings" })
+    if(standings.length  ===0  || standings[0].statistics.length===0) res.status(200).json(standings)
     const teams = await this.standingsService.getTeamsBySeasonId(seasonId)
     if (!teams || teams.length === 0) res.status(200).json(standings)
 
+   
     const newStandings = standings[0].statistics.map((item,i) => {return {...item,teams: teams[i]}})
     standings[0].statistics =  newStandings as any
     return res.status(200).json(standings)

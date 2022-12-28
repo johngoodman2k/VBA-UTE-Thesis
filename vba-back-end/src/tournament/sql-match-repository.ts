@@ -29,4 +29,7 @@ export class SqlMatchRepository
   getMatchesBySeasonId(matchId:string):Promise<Match[]>{
     return this.query<Match>("select *from matches where seasonId =$1",[matchId])
   }
+  getMatchesByRoundId(roundId:string):Promise<Match[]>{
+    return this.query<Match>("select *from matches where round =$1",[roundId],this.map)
+  }
 }

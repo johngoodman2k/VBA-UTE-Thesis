@@ -30,9 +30,12 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 		'/tournaments/getMergeTournamentById/:tournamentId/:seasonId',
 		ctx.tournament.getMergeTournamentById //ok
 	);
-	
+	app.post('/tournaments/generatePlayOff/:seasonId', ctx.tournament.generatePlayOff); //ok
 
 	app.post('/tournaments/createSeasonAndAddToTournament', ctx.tournament.createSeasonAndAddToTournament); //ok
+	app.get('/tournaments/nextRound/:id', ctx.tournament.nextRound); //ok
+
+	
 
 	app.post('/players/search', ctx.player.search); //xem xet
 	app.get('/players/search', ctx.player.search); //used

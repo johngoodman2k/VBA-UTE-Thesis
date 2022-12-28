@@ -33,4 +33,10 @@ export class SqlTeamRepository
             [seasonId]
         );
     }
+    getTeamAndSortWon(seasonId: string):Promise<Team[]>{
+        return this.query<Team>(
+            `select * from teams where seasonid = $1 order by won desc`,
+            [seasonId]
+        );
+    }
 }

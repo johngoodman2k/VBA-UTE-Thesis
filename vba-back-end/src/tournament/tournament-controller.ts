@@ -13,8 +13,6 @@ import {
 	randomTeam,
 	splitTheTeam
 } from './query';
-import { ParamsDictionary } from 'express-serve-static-core';
-import { ParsedQs } from 'qs';
 
 export class TournamentController extends Controller<Tournament, string, TournamentFilter> {
 	constructor(log: Log, protected tournamentService: TournamentService) {
@@ -23,8 +21,10 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 		this.GetAllTournament = this.GetAllTournament.bind(this);
 		this.createSeasonAndAddToTournament = this.createSeasonAndAddToTournament.bind(this);
 		this.getMergeTournamentById  = this.getMergeTournamentById.bind(this);
-		// this.createTournament = this.createTournament.bind(this);
-		// this. = this.getTeamByTournament.bind(this);
+		this.generatePlayOff = this.generatePlayOff.bind(this)
+		this.nextRound = this.nextRound.bind(this)
+
+		
 	}
 
 	async GetGeneratedMatches(req: Request, res: Response) {
@@ -160,6 +160,7 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 			roundArray = [
 				{
 					id: roundId,
+					playoff:true,
 					matches: matchesSaveToRound,
 					roundname: newTeam.length ===8?"Tứ kết":newTeam.length ===4 ? "Bán kết" : newTeam.length ===2 ? "Chung kết":`1/${newTeam.length}`,
 					seasonId: season[0].id,
@@ -193,6 +194,7 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 					...roundArray,
 					{
 						id: roundId1,
+						playoff:true,
 						matches: matchesSaveToRound,
 						roundname: remainingTeams ===8?"Tứ kết":remainingTeams ===4 ? "Bán kết" : remainingTeams ===2 ? "Chung kết":`1/${remainingTeams}`,
 						seasonId: season[0].id,
@@ -321,20 +323,144 @@ export class TournamentController extends Controller<Tournament, string, Tournam
 	}
 
 	async generatePlayOff(req: Request, res: Response) {
-		const {seasonId } = req.params;
+		const {seasonId} = req.params;
+		const {teamNumber} = req.body
+
+		if(teamNumber%3 === 0 || teamNumber%2 !== 0){
+			return res.status(400).json({err: 'Số lượng đội cần generate phải là bội số của 2 và không chia hết cho 3'})
+		}
 
 		const season = await this.tournamentService.getSeasonById(seasonId);
 		if (!season || season.length === 0) {
 			return res.status(400).json({ err: 'Failed to get season' });
 		}
 		
-		const teams = await this.tournamentService.getTeamBySeasonId(seasonId);
-		if (!teams || teams.length < 2 ) {
+		const teams = await this.tournamentService.getTeamAndSortWon(seasonId);
+		if (!teams || teams.length <2 ) {
 			return res.status(400).json({ error: 'Need more team in season to generate' });
 		}
-		
-		
 
+		// if(teams.length %3 === 0 || teams.length %4 !== 0) return  res.status(400).json({err: 'Số lượng team'})	
+		if(teamNumber > teams.length && (teams.length%3 === 0 || teams.length%2 !== 0)){
+			return res.status(400).json({err: 'Số lượng đội cần generate phải là bội số của 2 và không chia hết cho 3'})
+		}
+
+		let teamSave = teams.slice(0,teamNumber)
+		let matchesArray = [];
+		let roundArray = [];
+
+		const newTeam = randomTeam(teamSave);
+		const newTeamGenerated = splitTheTeam(newTeam);
+		const roundId = nanoid();
+
+
+		const matches = convertTeamsGeneratedToMatches(newTeamGenerated, season[0].id, roundId, 'elimination', 1);
+
+		const newMatches = checkGhostTeamAndRemove(matches);
+		const matchesSaveToRound = newMatches.map((match) => {return {id: match.id}})
+
+		matchesArray.push(...newMatches);
+
+		roundArray = [
+			{
+				id: roundId,
+				playoff:true,
+				matches: matchesSaveToRound,
+				roundname: newTeam.length ===8?"Tứ kết":newTeam.length ===4 ? "Bán kết" : newTeam.length ===2 ? "Chung kết":`1/${newTeam.length}`,
+				seasonId: season[0].id,
+				createdAt: new Date(Date.now())
+			}
+		];
+
+		let round = 2;
+		let remainingTeams = newTeam.length / 2; //remainingTeams= 2
+		let newTeam1 = [];
+
+		while (remainingTeams > 1) {
+			const roundId1 = nanoid();
+
+			for (let i = 0; i < remainingTeams; i++) { 
+				newTeam1.push({
+					teamname: 'W' + '#' + (i + 1) + ' ' + '1/' + remainingTeams * 2
+				});
+			}
+
+
+			
+			const teamSplited = splitTheTeam(newTeam1);
+			const matches = convertTeamsGeneratedToMatches(teamSplited, season[0].id, roundId1, 'elimination', round);
+			const matchesSaveToRound = matches.map((match) => {return {id: match.id}})
+
+			matchesArray.push(...matches);
+
+			roundArray = [
+				...roundArray,
+				{
+					id: roundId1,
+					playoff:true,
+					matches: matchesSaveToRound,
+					roundname: remainingTeams ===8?"Tứ kết":remainingTeams ===4 ? "Bán kết" : remainingTeams ===2 ? "Chung kết":`1/${remainingTeams}`,
+					seasonId: season[0].id,
+					createdAt: new Date(Date.now())
+				}
+			];
+			newTeam1 =[]
+			remainingTeams = remainingTeams / 2;
+			round++;
+		}
+		const newRoundArray = roundArray.map((round) => {return {id: round.id}})
+		season[0].rounds = newRoundArray as any
+
+
+		const rs = this.tournamentService.createGenerate(matchesArray,roundArray,season[0])
+
+		return res.status(200).json(rs);
+	}
+
+	async nextRound(req: Request, res: Response) {
+		const {id} =req.params
+
+		const roundPlayOff = await this.tournamentService.getRoundPlayOff();
+		if(!roundPlayOff || roundPlayOff.length===0) return res.status(400).json({err: "Failed to get round"})
+
+		const round = roundPlayOff.find(round => round.id === id);
+		if(!round) return res.status(400).json({err: "Failed to get round"})
+
+		const match = await this.tournamentService.getMatchesByRoundId(id);
+		if(!match || match.length ===0) return res.status(200).json(round)
+		round.matches = match
+
+		const	roundBefore = roundPlayOff.find(r => {
+			if(r.matches && (r.matches.length === round.matches.length *2)){
+				return true
+			}
+		})
+		if(!roundBefore) return res.status(400).json({err: "Can not next round"})
+
+		const matchBefore = await this.tournamentService.getMatchesByRoundId(roundBefore.id)
+		roundBefore.matches = matchBefore
+
+		for(let i =0 ;i < round.matches.length; i++){
+			for(let j = 0 ;j < roundBefore.matches.length;j+=2){
+				if(!roundBefore.matches[j].endmatch) return res.status(400).json({message: "Please all match before next round"})
+				if(roundBefore.matches[j].homeResult >= roundBefore.matches[j].awayResult){
+					round.matches[i].home = roundBefore.matches[j].home
+				}
+				else{
+					round.matches[i].home = roundBefore.matches[j].away
+				}
+
+				if(roundBefore.matches[j+1].homeResult >= roundBefore.matches[j+1].awayResult){
+					round.matches[i].away = roundBefore.matches[j+1].home
+				}
+				else{
+					round.matches[i].away = roundBefore.matches[j+1].away
+				}
+			}
+		}
+
+		
+		return this.tournamentService.updateRound(round)
 		
 	}
 }

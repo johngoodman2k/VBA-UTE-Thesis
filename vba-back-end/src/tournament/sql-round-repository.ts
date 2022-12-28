@@ -31,4 +31,13 @@ export class SqlRoundRepository
       return this.exec(stmt.query, stmt.params, ctx);
     }
   }
+  getRoundById(id:string):Promise<Round>{
+    return this.load(id)
+  }
+  getRoundPlayOff():Promise<Round[]>{
+    return this.query("select * from rounds where playoff = true",[],this.map)
+  }
+  updateRound(round:Round):Promise<number>{
+    return this.update(round)
+  }
 }

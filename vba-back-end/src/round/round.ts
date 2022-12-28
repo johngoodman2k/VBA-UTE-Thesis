@@ -7,6 +7,7 @@ export interface Round {
   roundname: string;
   seasonId: string;
   matches: Match[];
+  playoff: boolean;
   createdAt: Date;
 }
 
@@ -23,6 +24,7 @@ export const roundModel: Attributes = {
     required: true,
   },
   matches: { type: "array" },
+  playoff:{type: "boolean", default: false},
   createdAt: { type: "datetime" },
 };
 
