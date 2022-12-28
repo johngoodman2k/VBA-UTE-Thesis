@@ -28,6 +28,7 @@ import { ControlModal } from '../../../components/Modal/ControlModal';
 import { hasPointerEvents } from '@testing-library/user-event/dist/utils';
 import { GameLeaders } from '../TeamInfoPage/GameLeaders';
 import toastNotify from '../../../utils/toast';
+import { Loading } from '../../../components/Loading';
 
 const cx = classNames.bind(styles);
 
@@ -110,6 +111,8 @@ export const MatchDetailPage = () => {
 	const [reload, setReload] = useState(false);
 
 	const [matchDetail, setMatchDetail] = useState<Match>();
+	const [done, setDone] = useState(false);
+	const [loading, setLoading] = useState(false);
 	// const [processes, setProcesses] = useState<Process[]>([]);
 	// const [processIdArray, setProcessIdArray] = useState<string[]>([]);
 
@@ -120,96 +123,62 @@ export const MatchDetailPage = () => {
 
 	useEffect(() => {
 		(async () => {
-			if (params.id) {
-				const res = await matchServices.getMatchDetails(params.id);
-				setMatchDetail(res)
-				console.log("matches", res)
-				// const res1 = await processServices.getProcessesByMatchId(params.id) as Process[];
-				// setProcesses(res1);
-
-
+			try {
+				if (params.id) {
+					const res = await matchServices.getMatchDetails(params.id);
+					setMatchDetail(res)
+					console.log("matches", res)
+					// const res1 = await processServices.getProcessesByMatchId(params.id) as Process[];
+					// setProcesses(res1);
+					setLoading(true);
+					setTimeout(() => {
+						setDone(true);
+					}, 1000);
+					console.log('70', done)
+				}
+			}
+			catch (e) {
+				setLoading(true);
+				setTimeout(() => {
+					setDone(true);
+				}, 1000);
+				console.log('70', done)
 			}
 		})();
 	}, [params.id, sideSelected, reload]);
-
 	const getPlayerById = (id: string): Player | undefined => {
 		let player = homePlayers.find((p: any) => p.id === id);
 		if (!player) player = awayPlayers.find((p: any) => p.id === id);
 		return player;
 	};
-
 	const [show, setShow] = React.useState(false);
 	const [positions, setPositions] = React.useState({ x: 0, y: 0 });
-
-	// const createMatchEvent = async (e: any) => {
-	// 	e.preventDefault();
-	// 	const type = typeSelected;
-	// 	const side = sideSelected;
-	// 	const offense = offenseType;
-	// 	const defense = defenseType;
-	// 	const quater = quaterSelected;
-	// 	const des = e.target.des.value;
-	// 	const assistant = getPlayerById(assistantSelected);
-	// 	const player = getPlayerById(playerSelected);
-	// 	let homeResult = '';
-	// 	let awayResult = '';
-	// 	const mins = e.target.mins.value;
-	// 	// const description = e.target.des
-	// 	// let card = '';
-	// 	const subIn = getPlayerById(subInSelected);
-	// 	const subOff = getPlayerById(subOffSelected);
-
-	// 	const checkType =
-	// 		type === 'offensive' ? offense : type === 'defensive' ? defense : null;
-
-	// 	const checkPlayer =
-	// 		type === 'sub'
-	// 			? [subIn, subOff]
-	// 			: type === 'offensive'
-	// 			? [player, assistant]
-	// 			: [player];
-
-	// 	const process = {
-	// 		type: type,
-	// 		side: side,
-	// 		option: checkType,
-	// 		quater: quater,
-	// 		des: des,
-	// 		mins: mins,
-	// 		player: checkPlayer,
-	// 		description:
-	// 	};
-	// 	const res3 = await matchServices.addProcessToMatch(params.id, [process]);
-	// 	console.log('168', res3);
-
-	// 	setReload(!reload);
-	// };
-	const handleEndMatch =  async (e:any) =>{
-		if(params.id)
-		try {
-			if(matchDetail){
-				const matchUpdated:Match = {
-					id: matchDetail.id,
-					endmatch:matchDetail.endmatch,
-					home:matchDetail.home,
-					away: matchDetail.away,
-					homeResult: matchDetail.homeResult,
-					awayResult: matchDetail.awayResult
+	const handleEndMatch = async (e: any) => {
+		if (params.id)
+			try {
+				if (matchDetail) {
+					const matchUpdated: Match = {
+						id: matchDetail.id,
+						endmatch: matchDetail.endmatch,
+						home: matchDetail.home,
+						away: matchDetail.away,
+						homeResult: matchDetail.homeResult,
+						awayResult: matchDetail.awayResult
+					}
+					await matchServices.endMatch(matchUpdated)
+					toastNotify("kết thúc trận đấu thành công", "success")
+					navigate(`/fixtures/uWvQv6nLYcPAyztGvzqyZ`)
 				}
-				await matchServices.endMatch(matchUpdated)
-				toastNotify("kết thúc trận đấu thành công","success")
-				navigate(`/fixtures/uWvQv6nLYcPAyztGvzqyZ`)
+
+			} catch (error) {
+				toastNotify("kết thúc trận đấu thất bại", "error")
 			}
 
-		} catch (error) {
-			toastNotify("kết thúc trận đấu thất bại","error")
-		}
-		
 	}
 
 	return (
 		<>
-			<ContentWrapper>
+			{!done ? (<Loading loading={loading}></Loading>) : <ContentWrapper>
 				<section className='grid grid-cols-5'>
 					<div className={`${cx('__nav')} `}>
 						<SidebarFixture seasonId={matchDetail?.seasonId}></SidebarFixture>
@@ -304,7 +273,7 @@ export const MatchDetailPage = () => {
 										awayPlayers={matchDetail?.away?.players}
 										reload={reload}
 										setReload={setReload}></ControlModal>
-										
+
 								</div>
 
 								{/* scorebox */}
@@ -423,7 +392,8 @@ export const MatchDetailPage = () => {
 						</div>
 					</div>
 				</section>
-			</ContentWrapper>
+			</ContentWrapper>}
+
 		</>
 	);
 };

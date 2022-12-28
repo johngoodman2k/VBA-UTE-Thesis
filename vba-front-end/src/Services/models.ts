@@ -74,7 +74,7 @@ export interface Round {
 	matches?: Match[];
 	createdAt?: Date;
 	createdat?: Date;
-	playoff:boolean;
+	playoff: boolean;
 }
 // export interface Match {
 //   id: string;
@@ -109,6 +109,12 @@ export interface Team {
 	teamName?: string;
 	teamLogo?: string | File;
 	shortName?: string;
+	won?: number,
+	lost?: number,
+	drawn?: number,
+	homepoint?: Point,
+	awaypoint?: Point,
+	matchResult?: string[];
 }
 
 
@@ -236,18 +242,12 @@ export interface Standings {
 export interface Statistics {
 	teamId?: string;
 	played?: number;
-	won?: number;
-	drawn?: number;
-	lost?: number;
-	home?: Point;
-	road?: Point;
-	matchResult: number[];
 	teams?: Team;
 }
 
 interface Point {
-	won: number;
-	lost: number;
+	won?: number;
+	lost?: number;
 }
 
 export interface User {

@@ -5,24 +5,49 @@ import { LilStanding } from '../../../components/LilStanding';
 import { StandingsServices } from '../../../Services';
 import { vbaContext } from '../../../Services/services';
 import { Standings, Statistics } from '../../../Services/models';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { Loading } from '../../../components/Loading';
 
 const cx = classNames.bind(styles);
 
 const standingsServices = vbaContext.getStandingsServices();
 const StandingPage = () => {
+	const cacuWin = (win?: number, lost?: number): string => {
+		if (!win || !lost) return 0 + ''
+		const total = win + lost;
+		if (total === 0) return 0 + ""
+		return ((win / total) * 100) + "";
+	}
 	const params = useParams();
 	const [standings, setStandings] = useState<Standings>();
+	const [done, setDone] = useState(false);
+	const [loading, setLoading] = useState(false);
+
 	useEffect(() => {
 		(async () => {
-			const res = await standingsServices.getStandingsBySeasonId(params.id);
-			setStandings(res);
-			console.log('standing1', res);
+			try {
+				const res = await standingsServices.getStandingsBySeasonId(params.id);
+				if (res && res.length > 0) {
+					setStandings(res[0]);
+					console.log('standing1', res);
+				}
+				setLoading(true);
+				setTimeout(() => {
+					setDone(true);
+				}, 1000);
+			}
+			catch (e) {
+				setLoading(true);
+				setTimeout(() => {
+					setDone(true);
+				}, 1000);
+			}
+
 		})();
 	}, [params.id]);
 	return (
 		<>
-			<div className={`${cx('_background')}`}>
+			{!done ? (<Loading loading={loading}></Loading>) : (<div className={`${cx('_background')}`}>
 				<div className={`${cx('container', 'xxl:px-0', 'md:p-[1.75rem]')}`}>
 					<section className={`${cx('standings-header')}`}>Bảng xếp hạng VBA 2022-2023</section>
 					<div className={`${cx('standings-box')}`}>
@@ -61,59 +86,50 @@ const StandingPage = () => {
 										<th>
 											<div>Sân khách</div>
 										</th>
-										<th>
+										{/* <th>
 											<div>Last 10</div>
-										</th>
+										</th> */}
 										<th>
 											<div>Form</div>
 										</th>
 									</tr>
 								</thead>
 								<tbody className={`${cx('standings-box-body')}`}>
-									{standings?.statistics && standings?.statistics.map((x: Statistics) =>
+									{standings?.statistics && standings?.statistics.map((x: Statistics, index: number) =>
+									(
 
-										<>
-											<tr>
-												<td className={`${cx('standings-button__tooltip')}`}>
-													<span className={`${cx('standings-position__value text-adjust')}`}>1</span>
-													{/* <span
-									className={`${cx('standings-position__before')}`}></span> */}
-												</td>
-												<td scope='row' className=''>
-													<a>
-														<span>
-															{x.teams && x.teams.teamLogo &&
-																<img
-																	src={x.teams.teamLogo as string}
-																	className={`${cx('standings-team__pic', 'inline-block')}`}></img>}
-														</span>
-														<span className={`${cx('standings-team__name')}`}>{x.teams && x.teams.teamName ? x.teams.teamName : ''}</span>
-													</a>
-												</td>
-												<td className={cx('text-adjust')}>10</td>
-												<td className={cx('text-adjust')}>10</td>
-												<td className={cx('text-adjust')}>10</td>
-												<td className={cx('text-adjust')}>100%</td>
-												<td className={cx('text-adjust')}>13-2</td>
-												<td className={cx('text-adjust')}>14-3</td>
-												<td className={cx('text-adjust')}>8-2</td>
+										<tr>
+											<td className={`${cx('standings-button__tooltip')}`}>
+												<span className={`${cx('standings-position__value text-adjust')}`}>{index + 1}</span>
+											</td>
+											<td scope='row' className=''>
+												<Link to={`/teaminfo/${x.teams?.id}`}>
+													<span>
+														{x.teams && x.teams.teamLogo &&
+															<img
+																src={x.teams.teamLogo as string}
+																className={`${cx('standings-team__pic', 'inline-block')}`}></img>}
+													</span>
+													<span className={`${cx('standings-team__name')}`}>{x.teams && x.teams.teamName ? x.teams.teamName : ''}</span>
+												</Link>
+											</td>
+											<td className={cx('text-adjust')}>{x.played && x.played !== 0 ? x.played : '-'}</td>
+											<td className={cx('text-adjust')}>{x.teams?.won}</td>
+											<td className={cx('text-adjust')}>{x.teams?.lost}</td>
+											<td className={cx('text-adjust')}>{cacuWin(x.teams?.won, x.teams?.lost)}</td>
+											<td className={cx('text-adjust')}>{x.teams?.homePoint?.won ? x.teams?.homePoint?.won : '0'}-{x.teams?.homePoint?.lost ? x.teams?.homePoint?.lost : '0'}</td>
+											<td className={cx('text-adjust')}>{x.teams?.awayPoint?.won ? x.teams?.awayPoint?.won : '0'}-{x.teams?.awayPoint?.lost ? x.teams?.awayPoint?.lost : '0'}</td>
+											{/* <td className={cx('text-adjust')}>{x.teams}</td> */}
 
-												<td className={`${cx('standings-form')}`}>
-													<ul>
-														<li className={`${cx('standings-form__won')}`}>W</li>
-													</ul>
-												</td>
-											</tr>
+											<td className={`${cx('standings-form')}`}>
+												<ul>
+													{x.teams?.matchResult && x.teams?.matchResult.length > 0 && x.teams.matchResult.map((y: string) => (<li className={y === "W" ? `${cx('standings-form__won')}` : `${cx('standings-form__lost')}`}>{y}</li>))}
 
-											{/* <tr>
-													<td className={`${cx('standings-button_tooltip')}`}>
-														<span className={`${cx('standings-position__value')}`}>2</span>
-														<span
-									className={`${cx('standings-position__before')}`}></span>
-													</td>
-												</tr> */}
-										</>
+												</ul>
+											</td>
+										</tr>
 
+									)
 									)}
 								</tbody>
 							</table>
@@ -326,7 +342,8 @@ const StandingPage = () => {
 						</section>
 					</div>
 				</div>
-			</div>
+			</div>)}
+
 		</>
 	);
 };

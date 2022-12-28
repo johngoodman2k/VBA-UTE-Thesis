@@ -17,6 +17,7 @@
 		scroll-snap-align: start;
 	}
 }
+
 .__sectionAdjust {
 	background-image: url(https://teamnigma.com/wp-content/uploads/2020/07/Nigma-Pattern-Smaller.png);
 	background-repeat: repeat;
@@ -29,14 +30,16 @@
 	padding-top: 2rem;
 	padding-bottom: 8rem;
 }
+
 .__hero {
 	display: grid;
 	grid-template-columns: [left-start] 50vw [left-end right-start] 50vw [right-end];
 	grid-template-rows: 100vh;
 	position: relative;
 }
+
 .__header__block {
-	opacity: 0;
+
 	z-index: 110;
 }
 
@@ -49,6 +52,7 @@
 	align-items: center;
 	transition: background-color 1s 0.3 ease-in-out;
 	position: relative;
+
 	&__title {
 		// color: black;
 		display: inline-block;
@@ -61,6 +65,7 @@
 		z-index: 2;
 		text-align: left;
 	}
+
 	&__book {
 		overflow: hidden;
 		position: relative;
@@ -89,8 +94,8 @@
 		background-repeat: repeat;
 		background-position: 0 0;
 	}
-	& h1 {
-	}
+
+	& h1 {}
 }
 
 .__right {
