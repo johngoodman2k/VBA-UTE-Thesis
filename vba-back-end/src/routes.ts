@@ -111,7 +111,7 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 	app.patch('/standings/:id', ctx.standings.patch); //ok
 	app.delete('/standings/:id', ctx.standings.delete); //ok
 
-
+	app.get('/authenticate/user', authenToken, ctx.user.userInfo);
 	app.post('/authenticate/search', ctx.user.search); //xem xet
 	app.get('/authenticate/search', ctx.user.search); //ok
 	app.get('/authenticate/:id', ctx.user.load); //ok
@@ -126,7 +126,6 @@ export function routes(app: Application, ctx: ApplicationContext): void {
 	app.post('/authenticate/forgetPassword', ctx.user.forgetPassword);
 	app.post('/authenticate/resetpassword', ctx.user.resetPassword);
 	app.post('/authenticate/checkotpfg', ctx.user.checkOtpFG);
-	app.get('/authenticate/user', authenToken, ctx.user.userInfo);
 
 	app.post('/posts/search', ctx.post.search); //xem xet
 	app.get('/posts/search', ctx.post.search); //ok

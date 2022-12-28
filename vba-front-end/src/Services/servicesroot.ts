@@ -58,6 +58,7 @@ export interface StandingsServicesRoot {
 export interface AuthenticateServicesRoot {
 	signUpApi(user: User): Promise<Result<User>>;
 	signInApi(user: User): Promise<Result<User>>;
+	userInfo(token:string):Promise<User>;
 }
 export interface SeasonServicesRoot {
 	getAllSeason(): Promise<Season[]>;

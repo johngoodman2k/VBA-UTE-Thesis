@@ -1,7 +1,7 @@
 import './App.css';
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import { BrowserRouter, Routes, Route  } from 'react-router-dom';
+import React, {useState,useEffect} from 'react';
 import Calendar from './components/Calendar';
 import { NewsContainer } from './components/News/NewsContainer';
 import PlayerCard1 from './components/Player/PlayerCard1';
@@ -30,16 +30,34 @@ import { OTPForgotPassword } from './pages/Client/Authentication/OTPForgotPasswo
 import { NewPassword } from './pages/Client/Authentication/NewPassword';
 import { ForgotPassword } from './pages/Client/Authentication/ForgotPassword';
 import { AboutPage } from './pages/Client/AboutPage';
+import Cookies from 'js-cookie';
+import { vbaContext } from './Services/services';
+import { User } from './Services/models';
+import { NavigationBar } from './components/Bar/NavigationBar';
 
+const cookies =  Cookies.get("role")
 function App() {
+
 	return (
 		<>
 			<ToastContainer></ToastContainer>
 			<BrowserRouter>
 				<Routes>
+					{cookies === "1" &&
+						<Route path='/admin'>
+							<Route path='tournaments' element={<AdminHomePage manager='tournaments'></AdminHomePage>} />
+							<Route path='news' element={<AdminHomePage manager='news'></AdminHomePage>} />
+							<Route path='tournaments/:id' element={<AdminHomePage manager='seasons'></AdminHomePage>} />
+							<Route path='seasons' element={<AdminHomePage manager='seasons'></AdminHomePage>} />
+							<Route path='seasons/:id' element={<AdminHomePage manager='teams'></AdminHomePage>} />
+							<Route path='teams' element={<AdminHomePage manager='teams'></AdminHomePage>} />
+							<Route path='teams/:id' element={<AdminHomePage manager='players'></AdminHomePage>} />
+							<Route path='players' element={<AdminHomePage manager='players'></AdminHomePage>} />
+						</Route>
+					}
+
 					<Route path='fixtures/match/:id' element={<MatchDetailPage />} />
 					<Route path='/fixtures/:id' element={<FixturesPage></FixturesPage>} />
-
 					<Route path='/home' element={<LandingPageScroll />} />
 					<Route path='/player' element={<PlayerInformation />} />
 					<Route path='/player/:id' element={<PlayerInformation />} />
@@ -52,17 +70,8 @@ function App() {
 					<Route path='/news' element={<News></News>} />
 					<Route path='/standings/:id' element={<StandingPage></StandingPage>} />
 					<Route path='/about' element={<AboutPage></AboutPage>} />
-
-					<Route path='/admin'>
-						<Route path='tournaments' element={<AdminHomePage manager='tournaments'></AdminHomePage>} />
-						<Route path='news' element={<AdminHomePage manager='news'></AdminHomePage>} />
-						<Route path='tournaments/:id' element={<AdminHomePage manager='seasons'></AdminHomePage>} />
-						<Route path='seasons' element={<AdminHomePage manager='seasons'></AdminHomePage>} />
-						<Route path='seasons/:id' element={<AdminHomePage manager='teams'></AdminHomePage>} />
-						<Route path='teams' element={<AdminHomePage manager='teams'></AdminHomePage>} />
-						<Route path='teams/:id' element={<AdminHomePage manager='players'></AdminHomePage>} />
-						<Route path='players' element={<AdminHomePage manager='players'></AdminHomePage>} />
-					</Route>
+					
+					
 
 					{/* <Route path='/ticketpage' element={<TicketPage></TicketPage>} />
 					<Route path='/ticketdetailspage' element={<TicketDetailsPage></TicketDetailsPage>} /> */}
@@ -73,6 +82,7 @@ function App() {
 					<Route path='/newpassword' element={<NewPassword></NewPassword>} />
 					<Route path='/forgotpassword' element={<ForgotPassword></ForgotPassword>} />
 
+					
 				</Routes>
 			</BrowserRouter>
 		</>

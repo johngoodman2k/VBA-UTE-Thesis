@@ -209,6 +209,7 @@ export class AuthenticateServices implements AuthenticateServicesRoot {
 	constructor(private url: string, private httpRequest: HttpRequest) {
 		this.signUpApi = this.signUpApi.bind(this);
 		this.signInApi = this.signInApi.bind(this);
+		this.userInfo = this.userInfo.bind(this);
 	}
 	signUpApi(user: User): Promise<Result<User>> {
 		const url = `${this.url}/signUp`;
@@ -217,6 +218,10 @@ export class AuthenticateServices implements AuthenticateServicesRoot {
 	signInApi(user: User): Promise<Result<User>> {
 		const url = `${this.url}/signIn`;
 		return this.httpRequest.post<Result<User>>(url, user);
+	}
+	userInfo(token:string):Promise<User>{
+		const url = `${this.url}/user`;
+		return this.httpRequest.get(url,{ headers: { Authorization: 'Bearer ' + token } }); 
 	}
 }
 

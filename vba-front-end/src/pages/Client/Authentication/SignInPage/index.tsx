@@ -14,9 +14,15 @@ import { vbaContext } from '../../../../Services/services';
 import validate from './validate';
 import toastNotify from '../../../../utils/toast';
 import { Result, User } from '../../../../Services/models';
+import Cookies from 'js-cookie';
+import { setRef } from '@mui/material';
 const authenticateServices = vbaContext.getAuthenticateServices();
 
 const cx = classNames.bind(styles);
+// type SignInProps = {
+// 	setSuccessLogin: React.Dispatch<React.SetStateAction<boolean>>;
+// 	successLogin: boolean;
+// }
 export const SignIn = () => {
 	const navigate = useNavigate();
 	const signin = async (e: any) => {
@@ -28,9 +34,20 @@ export const SignIn = () => {
 		if (isvaliddata) {
 			const res = authenticateServices
 				.signInApi({ username: username, password: password })
-				.then((r: Result<User>) => {
+				.then(async (r: any) => {
 					if (r.success) {
-						// Cookies.set('jwt', res.token);
+						Cookies.set('jwt', r.token);
+						
+						const cookies = Cookies.get('jwt');
+						console.log(cookies)
+						if(cookies){
+							const user = await vbaContext.getAuthenticateServices().userInfo(cookies)
+							Cookies.set('name', user.name?? "");
+							Cookies.set('role', user.role?.toString()?? "");
+
+						}
+						
+
 						toastNotify('Welcome to VBA', 'success');
 						// setSuccess(success ? false : true);
 						navigate('/home');

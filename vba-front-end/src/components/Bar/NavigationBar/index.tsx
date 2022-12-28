@@ -4,6 +4,7 @@ import styles from './navigationBar.module.scss';
 import { Link } from 'react-router-dom';
 import { Tournament } from '../../../Services/models';
 import LogoHome from '../../../assets/images/toronto-raptors-logo.png'
+import Cookies from 'js-cookie';
 const cx = classNames.bind(styles);
 
 // type NavigationBarProps = {
@@ -14,9 +15,17 @@ type NavigationBarProps = {
 	id?: string;
 	tournament?: Tournament;
 };
+const nameCoki =  Cookies.get("name")
+const roleCoki =  Cookies.get("role")
+
 export const NavigationBar = ({ tournament, id }: NavigationBarProps) => {
 	const [clickedId, setClickedId] = useState('');
 	console.log('17', tournament)
+	const handleLogout = () =>{
+		Cookies.set("jwt","")
+		Cookies.set("name","")
+		Cookies.set("role","")
+	}
 	return (
 		<>
 			<header
@@ -145,9 +154,9 @@ export const NavigationBar = ({ tournament, id }: NavigationBarProps) => {
 														className={
 															clickedId === 'merch' ? cx('__item__hover', '__active') : cx('__item__hover')
 														}></span>
-													<Link to={'/signin'}>
+													{!nameCoki ?<Link to={'/signin'}>
 														<span className={cx('__item__text')}>Đăng nhập</span>
-													</Link>
+													</Link>: <a onClick={handleLogout} href="/signin" className={cx('__item__text')}>{nameCoki}</a>}
 
 												</span>
 											</a>
