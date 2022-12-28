@@ -375,7 +375,7 @@ export const MatchDetailPage = () => {
 							<div className={cx('_detailsWrapper')}>
 								<div className={clickedId === 'stats' ? cx('__active') : cx('__inactive')}>
 									<GameLeaders home={matchDetail?.home} away={matchDetail?.away}></GameLeaders>
-									<TeamComparison></TeamComparison>
+									{/* <TeamComparison></TeamComparison> */}
 								</div>
 								<div className={clickedId === 'lineUps' ? cx('__active') : cx('__inactive')}>
 									<LineUp homeLineUp={matchDetail?.homeLineUp as Player[]} awayLineUp={matchDetail?.awayLineUp as Player[]} home={matchDetail?.home} away={matchDetail?.away}></LineUp>

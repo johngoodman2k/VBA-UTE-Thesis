@@ -13,10 +13,21 @@ const cx = classNames.bind(styles);
 const standingsServices = vbaContext.getStandingsServices();
 const StandingPage = () => {
 	const cacuWin = (win?: number, lost?: number): string => {
-		if (!win || !lost) return 0 + ''
+		if (!win && !lost) return 0 + ''
+		if (!lost) return 100 + ''
+		if (!win) return 0 + ''
 		const total = win + lost;
 		if (total === 0) return 0 + ""
 		return ((win / total) * 100) + "";
+	}
+	const cacuPlayed = (win?: number, lost?: number): string => {
+		if (!win && !lost)
+			return '-';
+		if (!win)
+			return lost + ''
+		if (!lost)
+			return win + ''
+		return (win + lost) + ''
 	}
 	const params = useParams();
 	const [standings, setStandings] = useState<Standings>();
@@ -113,12 +124,12 @@ const StandingPage = () => {
 													<span className={`${cx('standings-team__name')}`}>{x.teams && x.teams.teamName ? x.teams.teamName : ''}</span>
 												</Link>
 											</td>
-											<td className={cx('text-adjust')}>{x.played && x.played !== 0 ? x.played : '-'}</td>
+											<td className={cx('text-adjust')}>{cacuPlayed(x.teams?.won, x.teams?.lost)}</td>
 											<td className={cx('text-adjust')}>{x.teams?.won}</td>
 											<td className={cx('text-adjust')}>{x.teams?.lost}</td>
 											<td className={cx('text-adjust')}>{cacuWin(x.teams?.won, x.teams?.lost)}</td>
-											<td className={cx('text-adjust')}>{x.teams?.homePoint?.won ? x.teams?.homePoint?.won : '0'}-{x.teams?.homePoint?.lost ? x.teams?.homePoint?.lost : '0'}</td>
-											<td className={cx('text-adjust')}>{x.teams?.awayPoint?.won ? x.teams?.awayPoint?.won : '0'}-{x.teams?.awayPoint?.lost ? x.teams?.awayPoint?.lost : '0'}</td>
+											<td className={cx('text-adjust')}>{x.teams?.homepoint?.won ? x.teams?.homepoint?.won : '0'}-{x.teams?.homepoint?.lost ? x.teams?.homepoint?.lost : '0'}</td>
+											<td className={cx('text-adjust')}>{x.teams?.awaypoint?.won ? x.teams?.awaypoint?.won : '0'}-{x.teams?.awaypoint?.lost ? x.teams?.awaypoint?.lost : '0'}</td>
 											{/* <td className={cx('text-adjust')}>{x.teams}</td> */}
 
 											<td className={`${cx('standings-form')}`}>
