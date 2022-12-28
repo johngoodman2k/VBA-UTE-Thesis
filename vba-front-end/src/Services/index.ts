@@ -20,7 +20,8 @@ export class TournamentServices implements TournamentServicesRoot {
 		this.createSeasonAndAddToTournament = this.createSeasonAndAddToTournament.bind(this);
 		this.getMergeTournamentById = this.getMergeTournamentById.bind(this);
 		this.GetGeneratedMatches = this.GetGeneratedMatches.bind(this);
-
+		this.nextRound = this.nextRound.bind(this);
+		
 	}
 
 	getTournamentById(id: string | undefined, globalHost?: string): Promise<Tournament> {
@@ -51,9 +52,15 @@ export class TournamentServices implements TournamentServicesRoot {
 		const url = `${this.url}/matches/${tournamentId}/${seasonId}`;
 		return this.httpRequest.get<number>(url);
 	}
-
-
-
+	generatePlayOff(seasonId:string,teamNumber:number):Promise<number>{
+		const url = `${this.url}/generatePlayOff/${seasonId}`;
+		return this.httpRequest.post(url,{teamNumber:teamNumber});
+	}
+	nextRound(id:string):Promise<number>{
+		const url = `${this.url}/nextRound/${id}`;
+		return this.httpRequest.get(url);
+		
+	}
 }
 
 export class MatchServices implements MatchServicesRoot {

@@ -4,11 +4,12 @@ type ButtonTournamentProps = {
 	onClick?: () => void;
 	type: 'button' | 'submit' | 'reset' | undefined;
 	name: string;
+	style?: React.CSSProperties;
 };
 export default function ButtonTournament(props: ButtonTournamentProps) {
 	return (
-		<>
-			<div className='buttonTournament-block'>
+		
+			<div style={props.style} className='buttonTournament-block'>
 				<button type={props.type} className='buttonTournament' onClick={props.onClick}>
 					<span></span>
 					<span></span>
@@ -17,6 +18,6 @@ export default function ButtonTournament(props: ButtonTournamentProps) {
 					{props.name}
 				</button>
 			</div>
-		</>
+	
 	);
 }

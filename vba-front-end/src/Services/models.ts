@@ -73,7 +73,8 @@ export interface Round {
 
 	matches?: Match[];
 	createdAt?: Date;
-	createdat?: Date
+	createdat?: Date;
+	playoff:boolean;
 }
 // export interface Match {
 //   id: string;
@@ -88,6 +89,7 @@ export interface Round {
 // }
 
 export interface Team {
+	[x: string]: any;
 	id?: string;
 	teamname?: string;
 	teamlogo?: string | File;

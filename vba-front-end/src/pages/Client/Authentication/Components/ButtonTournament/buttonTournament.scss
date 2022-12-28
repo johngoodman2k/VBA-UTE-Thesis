@@ -3,7 +3,7 @@
 	display: inline-block;
 	padding: 15px 30px;
 	background-color: transparent;
-	color: $third-color;
+	color: inherit;
 	font-family: Teko;
 	cursor: pointer;
 	border: none;
@@ -12,6 +12,7 @@
 	font-weight: 600;
 	text-transform: uppercase;
 	&-block {
+		color:$third-color;
 		margin: 0 10px;
 	}
 

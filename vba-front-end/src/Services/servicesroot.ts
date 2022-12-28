@@ -8,7 +8,8 @@ export interface TournamentServicesRoot {
 	updateTournament(id: string, tournament: Tournament): Promise<number>;
 	getMergeTournamentById(tournamentId: string, seasonId: string): Promise<Season[]>
 	GetGeneratedMatches(tournamentId: string, seasonId: string): Promise<number>;
-
+	generatePlayOff(seasonId:string,teamNumber:number):Promise<number>;
+	nextRound(id:string):Promise<number>;
 }
 
 export interface MatchServicesRoot {

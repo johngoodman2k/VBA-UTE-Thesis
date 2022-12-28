@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "start": "nodemon --exec ts-node-dev src/app",
-    "build": "npx tsc",
+    "build": "webpack --config webpack.config.js",
     "dev": "nodemon --exec ts-node-dev src/app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

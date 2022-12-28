@@ -58,13 +58,15 @@ export const FixturesPage = () => {
 					setSeasonList(res1)
 					if (seasonIdSelected && seasonIdSelected !== "") {
 						const res = await tournamentServices.getMergeTournamentById(params.id, seasonIdSelected);
-						setSeason(res[0]);
+						if(!res[0]) setSeason(res as any);
+						else{setSeason(res[0]);}
 
 						console.log("60", res)
 					} else {
 						console.log(70, res1)
 						const res = await tournamentServices.getMergeTournamentById(params.id, res1[0].id ?? "")
-						setSeason(res[0]);
+						if(!res[0]) setSeason(res as any);
+						else{setSeason(res[0]);}
 
 						console.log("80", res)
 
@@ -92,6 +94,98 @@ export const FixturesPage = () => {
 				toastNotify("Generated matches failed", "error")
 			}
 	}
+
+	const handlePlayerOff = async () => {
+		if (params.id)
+			try {
+				await tournamentServices.generatePlayOff(seasonIdSelected,8)
+				toastNotify("Tạo các trận playeroff thành công", "success")
+				setReload(!reload)
+			} catch (error) {
+				toastNotify("Tạo các trận playeroff thất bại", "error")
+			}
+	}
+	const handleNextRound = async () =>{
+		if(season && season.rounds && season.rounds.length >0){
+			const round = season?.rounds.filter((r => r.playoff))
+			let saveRoundId;
+			console.log(round)
+			for(const r of round){
+				if(r.matches && r.matches.length >0 && r.matches[0].home && r.matches[0].home.length <=20){
+					saveRoundId = r.id;
+					break;
+				}
+			}
+			console.log(saveRoundId)
+			try{
+				if(saveRoundId) {
+					const c = await tournamentServices.nextRound(saveRoundId)
+					if(c !==0){
+						toastNotify("Khởi tạo vòng playoff tiếp theo thành công", "success")
+
+					}else{
+						toastNotify("Khởi tạo vòng playoff tiếp theo thất bại", "error")
+					}
+				}
+			}catch(error){
+				toastNotify("Khởi tạo vòng playoff tiếp theo thất bại", "error")
+
+			}
+
+		}
+	}
+
+	const isGenerate = (season?: Season):boolean =>{
+
+		if(!season || !season.rounds || season.rounds.length >0 ) return false;
+
+		return true;
+	}
+
+	const isPlayOff = (season?: Season):boolean =>{
+
+		if(!season || !season.rounds || season.rounds.length ===0 ) return false;
+
+		const findPlayOff = season.rounds.find(r=> {
+
+			
+			if(r.matches){
+				for(const m of r.matches){
+					if(!m.endmatch){
+						return true
+					}
+				}
+			}
+			if(!r.playoff){
+				return false
+			}
+			return true
+		})
+		if(findPlayOff) return false
+		return true;
+	}
+
+	const isNextRound = (season?: Season):boolean =>{
+
+		if(isPlayOff(season) || isGenerate(season)) return false;
+
+		if(!season || !season.rounds) return false
+		const round = season?.rounds.filter((r => r.playoff))
+		if(!round || round.length ===0) return false
+		for(const r of round){
+			if(r.matches && r.matches.length >0 ){
+				for(const m of r.matches){
+					if(!m.endmatch && m.home?.length as any >= 20){
+						console.log(176)
+						return false
+					}
+				}
+			}
+		}
+		
+		return true;
+	}
+
 	return (
 		<>
 			<ContentWrapper>
@@ -117,8 +211,9 @@ export const FixturesPage = () => {
 									</div>
 								</label>
 							</div>
-							<div> <ButtonTournament type={undefined} name='Generate' onClick={handleGenerate} ></ButtonTournament></div>
-							<div> <ButtonTournament type={undefined} name='Play OFF' onClick={handleGenerate} ></ButtonTournament></div>
+							<ButtonTournament style={isGenerate(season)? undefined: {backgroundColor: "#999999",color: "white"}} type="button" name='Generate' onClick={isGenerate(season) ? handleGenerate: undefined} ></ButtonTournament>
+							<ButtonTournament style={isPlayOff(season)? undefined: {backgroundColor: "#999999",color: "white"}} type="button" name='Play OFF' onClick={isPlayOff(season) ?handlePlayerOff :undefined} ></ButtonTournament>
+							<ButtonTournament  style={isNextRound(season)? undefined: {backgroundColor: "#999999",color: "white"}} type="button" name='Next Round' onClick={isNextRound(season) ?handleNextRound:undefined} ></ButtonTournament>
 
 						</div>
 
@@ -147,10 +242,10 @@ export const FixturesPage = () => {
 													return (
 														<UpcommingMatchLongBar
 															id={y.id}
-															team1Name={y.home?.teamname ?? y["home"] as string ??""}
+															team1Name={y.home?.teamname ?? y["home"] as any ??""}
 															team1Image={y.home?.teamlogo as string ?? ""}
 															team2Image={y.away?.teamlogo as string ?? ""}
-															team2Name={y.away?.teamname ?? y["away"] as string ??  ""}
+															team2Name={y.away?.teamname ?? y["away"] as any ??  ""}
 															time={timeFormat(y.matchday ??  "").toString()}
 															stadium={y.home?.stadiumname ?? ""}
 															endmatch={y.endmatch}
