@@ -30,11 +30,11 @@ export const PlayerCard = ({ player }: PlayerCard) => {
 
 							<div className={cx('__playerInfo')}>
 								<div className={cx('__playerNumAndPos')}>
-									<div className={cx('__playerNum')}>#{player.shirtNumber}</div>
-									<div>Foward</div>
+									<div className={cx('__playerNum')}>#{player.shirtnumber}</div>
+									<div>{player.position}</div>
 								</div>
 								<div className={cx('__playerName')}>
-									<span>{player.lastName + ' ' + player.firstName}</span>
+									<span>{player.lastname + ' ' + player.firstname}</span>
 								</div>
 							</div>
 						</div>
@@ -45,8 +45,8 @@ export const PlayerCard = ({ player }: PlayerCard) => {
 								)} light-secondary-border w-full `}>
 								<thead>
 									<tr>
-										<th className={`${cx('__staticTableHeader')}`}>Season</th>
-										<th className={`${cx('__staticTableHeader')}`}>Carrer</th>
+										<th className={`${cx('__staticTableHeader')}`}>Details</th>
+										<th className={`${cx('__staticTableHeader')}`}>Details</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -54,20 +54,20 @@ export const PlayerCard = ({ player }: PlayerCard) => {
 										<td>
 											<div className={`${cx('__statsItem')}`}>
 												<span className={`${cx('__statsItem--labelHeader')}`}>
-													Games
+													Country
 												</span>
 												<span className={`${cx('__statsItem--labelInfo')}`}>
-													55
+													{player.country}
 												</span>
 											</div>
 										</td>
 										<td>
 											<div className={`${cx('__statsItem')}`}>
 												<span className={`${cx('__statsItem--labelHeader')}`}>
-													Games
+													EXP
 												</span>
 												<span className={`${cx('__statsItem--labelInfo')}`}>
-													55
+													{player.experience}
 												</span>
 											</div>
 										</td>
@@ -76,10 +76,10 @@ export const PlayerCard = ({ player }: PlayerCard) => {
 										<td>
 											<div className={`${cx('__statsItem')}`}>
 												<span className={`${cx('__statsItem--labelHeader')}`}>
-													Games
+													POS
 												</span>
 												<span className={`${cx('__statsItem--labelInfo')}`}>
-													55
+													{player.position}
 												</span>
 											</div>
 										</td>
@@ -89,7 +89,7 @@ export const PlayerCard = ({ player }: PlayerCard) => {
 													Games
 												</span>
 												<span className={`${cx('__statsItem--labelInfo')}`}>
-													55
+													-
 												</span>
 											</div>
 										</td>

@@ -21,7 +21,7 @@ export class TournamentServices implements TournamentServicesRoot {
 		this.getMergeTournamentById = this.getMergeTournamentById.bind(this);
 		this.GetGeneratedMatches = this.GetGeneratedMatches.bind(this);
 		this.nextRound = this.nextRound.bind(this);
-		
+
 	}
 
 	getTournamentById(id: string | undefined, globalHost?: string): Promise<Tournament> {
@@ -52,14 +52,14 @@ export class TournamentServices implements TournamentServicesRoot {
 		const url = `${this.url}/matches/${tournamentId}/${seasonId}`;
 		return this.httpRequest.get<number>(url);
 	}
-	generatePlayOff(seasonId:string,teamNumber:number):Promise<number>{
+	generatePlayOff(seasonId: string, teamNumber: number): Promise<number> {
 		const url = `${this.url}/generatePlayOff/${seasonId}`;
-		return this.httpRequest.post(url,{teamNumber:teamNumber});
+		return this.httpRequest.post(url, { teamNumber: teamNumber });
 	}
-	nextRound(id:string):Promise<number>{
+	nextRound(id: string): Promise<number> {
 		const url = `${this.url}/nextRound/${id}`;
 		return this.httpRequest.get(url);
-		
+
 	}
 }
 
@@ -104,7 +104,7 @@ export class MatchServices implements MatchServicesRoot {
 		const url = `${this.url}/${matchId}`;
 		return this.httpRequest.put<Match>(url, match);
 	}
-	endMatch(match:Match): Promise<number> {
+	endMatch(match: Match): Promise<number> {
 		const url = `${this.url}/endMatch`;
 		return this.httpRequest.post(url, match);
 	}
@@ -148,7 +148,7 @@ export class TeamServices implements TeamServicesRoot {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.put<Team>(url, team, { headers: { 'Content-Type': 'multipart/form-data' } })
 	}
-	deleteTeam(id:string):Promise<number>{
+	deleteTeam(id: string): Promise<number> {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.delete(url)
 	}
@@ -181,7 +181,7 @@ export class PlayerServices implements PlayerServicesRoot {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.put(url, player, { headers: { 'Content-Type': 'multipart/form-data' } });
 	}
-	deletePlayer(id:string):Promise<number>{
+	deletePlayer(id: string): Promise<number> {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.delete(url);
 
@@ -229,9 +229,9 @@ export class StandingsServices implements StandingsServicesRoot {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.get<Standings>(url);
 	}
-	getStandingsBySeasonId(id: string | undefined, globalHost?: string): Promise<Standings> {
+	getStandingsBySeasonId(id: string | undefined, globalHost?: string): Promise<Standings[]> {
 		const url = `${this.url}/getStandingsBySeasonId/${id}`;
-		return this.httpRequest.get<Standings>(url);
+		return this.httpRequest.get<Standings[]>(url);
 	}
 }
 
@@ -259,7 +259,7 @@ export class SeasonServices implements SeasonServicesRoot {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.put<Result<Season>>(url, season)
 	}
-	deleteSeason(id:string):Promise<number>{
+	deleteSeason(id: string): Promise<number> {
 		const url = `${this.url}/${id}`;
 		return this.httpRequest.delete(url)
 	}

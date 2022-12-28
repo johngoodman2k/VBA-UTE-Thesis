@@ -46,16 +46,16 @@ export const LilStanding = ({ standings }: LilStandingTypes) => {
 										<th className=' text-left min-w-[160px] w-[160px]'>Đội</th>
 										<th>W</th>
 										<th>L</th>
-										<th className='text-right'>Last 10</th>
+										<th className='text-right'>Sân nhà</th>
 									</tr>
 								</thead>
 								<tbody className={`${cx('_tableBody')}`}>
-									{standings?.statistics?.map((x: Statistics) => {
+									{standings?.statistics?.map((x: Statistics, index: number) => {
 										return (
 											<tr className='text-left'>
 												<td className='p-2'>
 													<a href='' className={`${cx('_teamBar')}`}>
-														<span className={`${cx('_teamRank')}`}>1</span>
+														<span className={`${cx('_teamRank')}`}>{index + 1}</span>
 														<div className={`${cx('_teamLogoBlock')}`}>
 															<div className='min-w-full  relative'>
 																{x.teams && x.teams.teamLogo &&
@@ -66,16 +66,12 @@ export const LilStanding = ({ standings }: LilStandingTypes) => {
 														<span>{x.teams && x.teams.teamName ? x.teams.teamName : ''}</span>
 													</a>
 												</td>
-												<td>13</td>
-												<td>3</td>
+												<td>{x.teams?.won}</td>
+												<td>{x.teams?.lost}</td>
 												<td>
-													{test.map((x: any) => {
-														return (
-															<div className={`${cx('_lastTen', checkLastTen(x.won, x.lost), 'ml-auto')}`}>
-																{x.won} - {x.lost}
-															</div>
-														);
-													})}
+													<div className={`${cx('_lastTen', checkLastTen(x.teams?.homePoint?.won ? x.teams?.homePoint?.won : '0', x.teams?.homePoint?.lost ? x.teams?.homePoint?.lost : '0'), 'ml-auto')}`}>
+														{x.teams?.homePoint?.won ? x.teams?.homePoint?.won : '0'}-{x.teams?.homePoint?.lost ? x.teams?.homePoint?.lost : '0'}
+													</div>
 												</td>
 											</tr>
 										);

@@ -8,8 +8,8 @@ export interface TournamentServicesRoot {
 	updateTournament(id: string, tournament: Tournament): Promise<number>;
 	getMergeTournamentById(tournamentId: string, seasonId: string): Promise<Season[]>
 	GetGeneratedMatches(tournamentId: string, seasonId: string): Promise<number>;
-	generatePlayOff(seasonId:string,teamNumber:number):Promise<number>;
-	nextRound(id:string):Promise<number>;
+	generatePlayOff(seasonId: string, teamNumber: number): Promise<number>;
+	nextRound(id: string): Promise<number>;
 }
 
 export interface MatchServicesRoot {
@@ -23,7 +23,7 @@ export interface MatchServicesRoot {
 	updateProcess(id: string | undefined, process: Process, globalHost?: string): Promise<Process>;
 	getMatchDetails(matchId: string): Promise<Match>;
 	updateMatch(matchId: string, match: Match): Promise<Match>;
-	endMatch(match:Match): Promise<number>;
+	endMatch(match: Match): Promise<number>;
 
 }
 
@@ -34,7 +34,7 @@ export interface TeamServicesRoot {
 	addPlayerToTeam(player: Player, globalHost?: string): Promise<number>;
 	getTeamsBySeasonId(seasonId: string, globalHost?: string): Promise<Team[]>;
 	updateTeam(id: string, team: Team): Promise<Team>;
-	deleteTeam(id:string):Promise<number>;
+	deleteTeam(id: string): Promise<number>;
 }
 
 export interface PlayerServicesRoot {
@@ -42,7 +42,7 @@ export interface PlayerServicesRoot {
 	getPlayerById(id: string | undefined): Promise<Player>;
 	getAllPlayers(): Promise<Player[]>;
 	updatePlayer(id: string, player: Player): Promise<number>;
-	deletePlayer(id:string):Promise<number>;
+	deletePlayer(id: string): Promise<number>;
 }
 
 export interface ProcessServicesRoot {
@@ -52,7 +52,7 @@ export interface ProcessServicesRoot {
 
 export interface StandingsServicesRoot {
 	getStandingsById(id: string | undefined, globalHost?: string): Promise<Standings>;
-	getStandingsBySeasonId(id: string | undefined): Promise<Standings>;
+	getStandingsBySeasonId(id: string | undefined): Promise<Standings[]>;
 }
 
 export interface AuthenticateServicesRoot {
@@ -65,7 +65,7 @@ export interface SeasonServicesRoot {
 	getSeasonByTournamentId(tournamentId: string): Promise<Season[]>;
 	createTeamAndAddTeamToSeason(team: Team, seasonId: string): Promise<Result<Season[]>>
 	updateSeason(id: string, season: Season): Promise<Result<Season>>
-	deleteSeason(id:string):Promise<number>
+	deleteSeason(id: string): Promise<number>
 }
 
 export interface PostServicesRoot {

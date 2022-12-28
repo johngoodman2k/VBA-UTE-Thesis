@@ -10,17 +10,17 @@ const cx = classNames.bind(styles);
 //   children: any;
 // };
 type NavigationBarProps = {
-	ref?: (e: any) => void;
+
 	id?: string;
 	tournament?: Tournament;
 };
-export const NavigationBar = ({ ref, tournament, id }: NavigationBarProps) => {
+export const NavigationBar = ({ tournament, id }: NavigationBarProps) => {
 	const [clickedId, setClickedId] = useState('');
 	console.log('17', tournament)
 	return (
 		<>
 			<header
-				ref={ref}
+
 				className={`m-0 p-0 z-[110] relative w-full inline-block box-border align-middle ${cx('__wrapper')}`}>
 				<div className={cx('__block')}>
 					<div className='relavitve w-full h-full p-0 pl-[5%] pr-[5%] text-third-color'>
