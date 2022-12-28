@@ -163,7 +163,7 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
 									<span className='bg-white p-2 mr-2'>
 										<span className='top-0 inline-block align-middle relatve mb-1'>
 											<img
-												src='http://api-news.vba.vn/storage/images/hanoi-buffaloes-logo.png'
+												src={props.homeBadge}
 												className='w-40 h-40'></img>
 										</span>
 									</span>
@@ -179,7 +179,7 @@ export const MatchEventTimeLine = (props: TournamentEventProps) => {
 									<span className='bg-white p-2 mr-2'>
 										<span className='top-0 inline-block align-middle relatve mb-1'>
 											<img
-												src='http://api-news.vba.vn/storage/images/ctc-white.png'
+												src={props.awayBadge}
 												className='w-40 h-40'></img>
 										</span>
 									</span>

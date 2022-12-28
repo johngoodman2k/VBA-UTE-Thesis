@@ -18,6 +18,7 @@ import { ListItemAvatar } from '@mui/material';
 import ButtonTournament from '../Authentication/Components/ButtonTournament';
 import toastNotify from '../../../utils/toast';
 import { match } from 'assert';
+import { Loading } from '../../../components/Loading';
 
 // import { getRoundApi } from "../Apis/getRoundApi.api";
 // import { TournamentHeading } from "../components/TournamentHeading";
@@ -47,41 +48,57 @@ export const FixturesPage = () => {
 	const [seasonList, setSeasonList] = useState<Season[]>([])
 	const [rounds, setRounds] = useState<string[]>([]);
 	const [reload, setReload] = useState(false);
+	const [done, setDone] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 
 
 	useEffect(() => {
 		(async () => {
-			if (params.id) {
-				const res1 = await seasonServices.getSeasonByTournamentId(params.id)
-				if (res1 && res1.length !== 0) {
-					// setSeasonIdSelected(res1[0].id?? "")
-					setSeasonList(res1)
-					if (seasonIdSelected && seasonIdSelected !== "") {
-						const res = await tournamentServices.getMergeTournamentById(params.id, seasonIdSelected);
-						if(!res[0]) setSeason(res as any);
-						else{setSeason(res[0]);}
+			try {
+				if (params.id) {
+					const res1 = await seasonServices.getSeasonByTournamentId(params.id)
+					if (res1 && res1.length !== 0) {
+						// setSeasonIdSelected(res1[0].id?? "")
+						setSeasonList(res1)
+						if (seasonIdSelected && seasonIdSelected !== "") {
+							const res = await tournamentServices.getMergeTournamentById(params.id, seasonIdSelected);
+							if (!res[0]) setSeason(res as any);
+							else { setSeason(res[0]); }
 
-						console.log("60", res)
-					} else {
-						console.log(70, res1)
-						const res = await tournamentServices.getMergeTournamentById(params.id, res1[0].id ?? "")
-						if(!res[0]) setSeason(res as any);
-						else{setSeason(res[0]);}
+							console.log("60", res)
+						} else {
+							console.log(70, res1)
+							const res = await tournamentServices.getMergeTournamentById(params.id, res1[0].id ?? "")
+							if (!res[0]) setSeason(res as any);
+							else { setSeason(res[0]); }
 
-						console.log("80", res)
+							console.log("80", res)
+
+						}
+
 
 					}
+					setLoading(true);
+					setTimeout(() => {
+						setDone(true);
+					}, 1000);
+					// }else{
+					// 	const res = await tournamentServices.getTournamentById(params.id);
+					// 	setTournament(res);
 
-					console.log(res1)
+					// }
+
 				}
-				// }else{
-				// 	const res = await tournamentServices.getTournamentById(params.id);
-				// 	setTournament(res);
-
-				// }
-
 			}
+			catch (e) {
+				setLoading(true);
+				setTimeout(() => {
+					setDone(true);
+				}, 1000);
+				console.log('70', done)
+			}
+
 		})();
 	}, [params.id, seasonIdSelected, reload]);
 
@@ -99,46 +116,46 @@ export const FixturesPage = () => {
 	const handlePlayerOff = async () => {
 		if (params.id)
 			try {
-				await tournamentServices.generatePlayOff(seasonIdSelected,8)
+				await tournamentServices.generatePlayOff(seasonIdSelected, 4)
 				toastNotify("Tạo các trận playeroff thành công", "success")
 				setReload(!reload)
 			} catch (error) {
 				toastNotify("Tạo các trận playeroff thất bại", "error")
 			}
 	}
-	const handleNextRound = async () =>{
-		if(season && season.rounds && season.rounds.length >0){
+	const handleNextRound = async () => {
+		if (season && season.rounds && season.rounds.length > 0) {
 			const round = season?.rounds.filter((r => r.playoff))
-			let saveRound= [];
+			let saveRound = [];
 			console.log(round)
-			for(const r of round){
-				if(r.matches && r.matches.length >0 && r.matches[0].home && r.matches[0].home.length <=20){
+			for (const r of round) {
+				if (r.matches && r.matches.length > 0 && r.matches[0].home && r.matches[0].home.length <= 20) {
 					saveRound.push(r);
-					
+
 				}
 			}
 			let roundNextId;
-			for(const sr of saveRound){
+			for (const sr of saveRound) {
 				let flag = 0
-				if(sr.matches && sr.matches.length >0 && sr.matches.length > flag){
-					roundNextId= sr.id
+				if (sr.matches && sr.matches.length > 0 && sr.matches.length > flag) {
+					roundNextId = sr.id
 					flag = sr.matches.length
 				}
 			}
 
 
 			console.log(roundNextId)
-			try{
-				if(roundNextId) {
+			try {
+				if (roundNextId) {
 					const c = await tournamentServices.nextRound(roundNextId)
-					if(c !==0){
+					if (c !== 0) {
 						toastNotify("Khởi tạo vòng playoff tiếp theo thành công", "success")
 						setReload(!reload)
-					}else{
+					} else {
 						toastNotify("Khởi tạo vòng playoff tiếp theo thất bại", "error")
 					}
 				}
-			}catch(error){
+			} catch (error) {
 				toastNotify("Khởi tạo vòng playoff tiếp theo thất bại", "error")
 
 			}
@@ -146,60 +163,57 @@ export const FixturesPage = () => {
 		}
 	}
 
-	const isGenerate = (season?: Season):boolean =>{
+	const isGenerate = (season?: Season): boolean => {
 
-		if(!season || !season.rounds || season.rounds.length >0 ) return false;
+		if (!season || !season.rounds || season.rounds.length > 0) return false;
 
 		return true;
 	}
 
-	const isPlayOff = (season?: Season):boolean =>{
+	const isPlayOff = (season?: Season): boolean => {
 
-		if(!season || !season.rounds || season.rounds.length ===0 ) return false;
+		if (!season || !season.rounds || season.rounds.length === 0) return false;
 
-		const findPlayOff = season.rounds.find(r=> {
+		const findPlayOff = season.rounds.find(r => {
 
-			
-			if(r.matches){
-				for(const m of r.matches){
-					if(!m.endmatch){
+
+			if (r.matches) {
+				for (const m of r.matches) {
+					if (!m.endmatch) {
 						return true
 					}
 				}
 			}
-			if(!r.playoff){
+			if (!r.playoff) {
 				return false
 			}
 			return true
 		})
-		if(findPlayOff) return false
+		if (findPlayOff) return false
 		return true;
 	}
 
-	const isNextRound = (season?: Season):boolean =>{
+	const isNextRound = (season?: Season): boolean => {
 
-		if(isPlayOff(season) || isGenerate(season)) return false;
+		if (isPlayOff(season) || isGenerate(season)) return false;
 
-		if(!season || !season.rounds) return false
+		if (!season || !season.rounds) return false
 		const round = season?.rounds.filter((r => r.playoff))
-		if(!round || round.length ===0) return false
-		for(const r of round){
-			if(r.matches && r.matches.length >0 ){
-				for(const m of r.matches){
-					if(!m.endmatch && m.home?.length as any >= 20){
+		if (!round || round.length === 0) return false
+		for (const r of round) {
+			if (r.matches && r.matches.length > 0) {
+				for (const m of r.matches) {
+					if (!m.endmatch && m.home?.length as any >= 20) {
 						console.log(176)
 						return false
 					}
 				}
-
-				if(r.roundname ==="Chung kết" &&( r.matches[0].home?.length as any >=20 || r.matches[0].home?.id?.length as any >=20)){
+				if (r.roundname === "Chung kết" && (r.matches[0].home?.length as any >= 20 || r.matches[0].home?.id?.length as any >= 20)) {
 					return false
 				}
 			}
-			
-		}
 
-		
+		}
 		return true;
 	}
 
@@ -207,7 +221,7 @@ export const FixturesPage = () => {
 
 	return (
 		<>
-			<ContentWrapper>
+			{!done ? (<Loading loading={loading}></Loading>) : (<ContentWrapper>
 				<NavigationBar></NavigationBar>
 				<div className={`${cx('__main-wrapper')}`}>
 					<div className={`${cx('__main-fixturesHeader')}`}>
@@ -230,9 +244,9 @@ export const FixturesPage = () => {
 									</div>
 								</label>
 							</div>
-							<ButtonTournament style={isGenerate(season)? undefined: {backgroundColor: "#999999",color: "white"}} type="button" name='Generate' onClick={isGenerate(season) ? handleGenerate: undefined} ></ButtonTournament>
-							<ButtonTournament style={isPlayOff(season)? undefined: {backgroundColor: "#999999",color: "white"}} type="button" name='Play OFF' onClick={isPlayOff(season) ?handlePlayerOff :undefined} ></ButtonTournament>
-							<ButtonTournament  style={isNextRound(season)? undefined: {backgroundColor: "#999999",color: "white"}} type="button" name='Next Round' onClick={isNextRound(season) ?handleNextRound:undefined} ></ButtonTournament>
+							<ButtonTournament style={isGenerate(season) ? undefined : { backgroundColor: "#999999", color: "white" }} type="button" name='Generate' onClick={isGenerate(season) ? handleGenerate : undefined} ></ButtonTournament>
+							<ButtonTournament style={isPlayOff(season) ? undefined : { backgroundColor: "#999999", color: "white" }} type="button" name='Play OFF' onClick={isPlayOff(season) ? handlePlayerOff : undefined} ></ButtonTournament>
+							<ButtonTournament style={isNextRound(season) ? undefined : { backgroundColor: "#999999", color: "white" }} type="button" name='Next Round' onClick={isNextRound(season) ? handleNextRound : undefined} ></ButtonTournament>
 
 						</div>
 
@@ -261,11 +275,11 @@ export const FixturesPage = () => {
 													return (
 														<UpcommingMatchLongBar
 															id={y.id}
-															team1Name={y.home?.teamname ?? y["home"] as any ??""}
+															team1Name={y.home?.teamname ?? y["home"] as any ?? ""}
 															team1Image={y.home?.teamlogo as string ?? ""}
 															team2Image={y.away?.teamlogo as string ?? ""}
-															team2Name={y.away?.teamname ?? y["away"] as any ??  ""}
-															time={timeFormat(y.matchday ??  "").toString()}
+															team2Name={y.away?.teamname ?? y["away"] as any ?? ""}
+															time={timeFormat(y.matchday ?? "").toString()}
 															stadium={y.home?.stadiumname ?? ""}
 															endmatch={y.endmatch}
 															team1Point={y.homeresult}
@@ -283,7 +297,8 @@ export const FixturesPage = () => {
 						})}
 					</div>
 				</div>
-			</ContentWrapper>
+			</ContentWrapper>)}
+
 		</>
 	);
 };

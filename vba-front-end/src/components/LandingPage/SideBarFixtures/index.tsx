@@ -5,6 +5,7 @@ import { UpCommingMatchBar } from '../../Bar/UpCommingMatchBar';
 import { vbaContext } from '../../../Services/services';
 import { CustomTournament, Match, Round, Season, Tournament } from '../../../Services/models';
 import { dateFormat, timeFormat } from '../../../utils/dateFormat';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const tournamentServices = vbaContext.getTournamentServices();
@@ -45,11 +46,14 @@ export const SidebarFixture = ({ seasonId }: SidebarFixtureProps) => {
 						<header>
 							<div className={cx('__week')}>Match Week {x.roundname}</div>
 							<div className={cx('__logoWrapper')}>
-								<img
-									className={cx('__logoWrapper--adjust')}
-									src='https://vba.vn/assets/img/svg/vba-logo.svg'
-									alt=''
-								/>
+								<Link to={'/home'}>
+									<img
+										className={cx('__logoWrapper--adjust')}
+										src='https://vba.vn/assets/img/svg/vba-logo.svg'
+										alt=''
+									/>
+								</Link>
+
 							</div>
 							<div className={cx('__localTime')}>
 								Thời gian được hiển thị theo <strong>khu vực của bạn</strong>

@@ -89,9 +89,12 @@ export const NavigationBar = ({ tournament, id }: NavigationBarProps) => {
 						<div className={` absolute  w-full left-0 text-center h-full align-middle   ${cx('__center')}`}>
 							<div className={`${cx('__center__inner')}`}>
 								<div className='inline-block align-middle leading-4'>
-									<a className='relative inline-block max-w-[100%] max-h-[130px] h-[128px]'>
-										<img src={LogoHome} className='m-center h-full w-auto'></img>
-									</a>
+									<Link to={'/home'}>
+										<a className='relative inline-block max-w-[100%] max-h-[130px] h-[128px]'>
+											<img src={LogoHome} className='m-center h-full w-auto'></img>
+										</a>
+									</Link>
+
 								</div>
 							</div>
 						</div>
